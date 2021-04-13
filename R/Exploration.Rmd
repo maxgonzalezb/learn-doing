@@ -1,0 +1,44 @@
+---
+title: "Exploration"
+author: "Maximiliano Gonzalez"
+date: "07-04-2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Existing Classifications of Types of Project
+
+I fisr examine the types of projects I have in the sample. Around 30\% are infraestructure projects. While almost 18% corresponds to residential. I examine more in detail the three types of projects. 
+In regardsm to size, the average of the winning bid for comercial and indistrial projects is higher, because of a concentration of projects of higher size above the mean. However, overall there are no big differences between the distributions. 
+
+The classification of generic product is a hierarchical breakdown of the previous classifications into more detailed classifications, for the case of comertial, which is only coded as civil works.The ONU product classification is redundant, it is a different coding for the same variable. 
+
+It is not easy to be thorough in regards to the types of projects there are in the sample. 
+
+```{r cars}
+#Table of first classification
+
+#Table of first and second classification 
+```
+
+I find that the detailed classification is not very reliable. First, the "housing" category includes cultural patrimony, cesfam, schools, and sports, so it is not very useful to filter by this item.The same happens with the "building"category, as buildings are sometimes sporting places. what can be said is that housing projects are almost always found under the correct category but the category is filled with other types of projects. This problem is true in general for all cateogries, they do not provide a true picture of what kinds of projects are in it, except for the "Street improvement".  The most clean classification is the one regarding streets. 
+
+Overall, we can say that housing projects and streets are almost certainly found in the respective classifications. However, only in the street classification we can be sure of what types of projects we are dealing with. In conclusion, the thematic classification of the projects is of little value to select types of projects. 
+
+Another interesting take is which kinds of institutions auction projects. However, this requires considerable cleaning since there are no simple identifiers. 
+
+##Own-Made Project Classification
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
