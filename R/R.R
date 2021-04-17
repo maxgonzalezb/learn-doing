@@ -76,13 +76,64 @@ contractors.statistics=df%>%group_by(RutProveedor,NombreProveedor)%>%summarise(f
 mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0))
 
 
-###Create Datasets
-start=5
+#Create Datasets
+start=0
 split1=2
 split2=2
 merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
+  mutate(logWinpre=log(winspre+1))
+skim(merged.wins)
 
-#Begin Analysis
+#Begin Regression Analysis with outcome variable as probability
+head(merged.wins)
+
+##Nonparametric
+lm.nonp.bin<-lm(probWinpost~(winspre>0),data = merged.wins)
+robust.nonp.bin<- vcovHC(lm.nonp.bin, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.nonp.bin)
+
+##First specification
+robust.spec1.cont<- vcovHC(lm.spec1.cont, type = "HC1")%>%diag()%>%sqrt()
+lm.spec1.cont<-lm(probWinpost~log(winspre+1),data = merged.wins)
+
+lm.spec1.bin<-lm(probWinpost~(winspre>0),data = merged.wins)
+robust.spec1.bin<- vcovHC(lm.spec1.bin, type = "HC1")%>%diag()%>%sqrt()
+
+##Second specification. Outcome is p2 winning probability. OLS. With F.E controls
+lm.spec2.cont<-lm(probWinpost~log(winspre+1)+idperiodpost,data = merged.wins)
+robust.spec2.cont<- vcovHC(lm.spec2.cont, type = "HC1")%>%diag()%>%sqrt()
+
+lm.spec2.bin<-lm(probWinpost~(winspre>0)+idperiodpost,data = merged.wins)
+robust.spec2.bin<- vcovHC(lm.spec2.bin, type = "HC1")%>%diag()%>%sqrt()
+
+##Third specification Firm FE by type
+
+
+
+#Instrumental Variables
+#First specification
+iv.spec1.cont<-ivreg(probWinpost~logWinpre|(winspre_close),data=merged.wins)
+robustiv.spec1.cont<- vcovHC(iv.spec1.cont, type = "HC1")%>%diag()%>%sqrt()
+summary(iv.spec1.cont)
+
+iv.spec1.bin<-ivreg(probWinpost~(winspre>0)|(winspre_close),data=merged.wins)
+robustiv.spec1.bin<- vcovHC(iv.spec1.bin, type = "HC1")%>%diag()%>%sqrt()
+summary(iv.spec1.bin)
+
+#Second specification
+iv.spec2.cont<-ivreg(probWinpost~logWinpre|(winspre_close)+idperiodpost,data=merged.wins)
+robustiv.spec2.cont<- vcovHC(iv.spec2.cont, type = "HC1")%>%diag()%>%sqrt()
+summary(iv.spec2.cont)
+
+iv.spec2.bin<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_close+idperiodpost),data=merged.wins)
+robustiv.spec2.bin<- vcovHC(iv.spec1.bin, type = "HC1")%>%diag()%>%sqrt()
+summary(iv.spec2.bin)
+
+#Create Simple Table of Outcomes
+stargazer(lm.spec1.bin,lm.spec1.cont,lm.spec1.cont,robust.spec2.cont,iv.spec1.cont,iv.spec2.cont, type = "latex",
+          se = list(NULL, c(robust.spec1.bin,robust.spec1.cont,robust.spec2.cont,robustiv.spec1.cont,robustiv.spec2.cont)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
 
 
 
@@ -92,21 +143,7 @@ merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+?stargazer
 
 
 
@@ -176,7 +213,7 @@ plotDisc.2
 
 
 #III. Linear Regression Models
-                                  =merged.wins%>%mutate(logWinpre=log(winspre+1),logWinpre.close=log(winspre_close+1))
+                            qa      =merged.wins%>%mutate(logWinpre=log(winspre+1),logWinpre.close=log(winspre_close+1))
 ##Binary Linear Model
 lm1<-lm(probWinpost~winsprebin,data=merged.wins)
 summary(lm1)

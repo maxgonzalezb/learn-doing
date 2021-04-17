@@ -1,4 +1,6 @@
 #functions
+
+
 generateDfBidsSummary<-function(bids){
 
 df=bids
@@ -83,7 +85,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2){
   
 }
 
-createMultiPeriodDataset<-function(df,start,stop,split1,split2){
+createMultiPeriodDataset<-function(df,start,split1,split2){
 i=0
 maxcutoff=ymd(max(df$FechaInicio))
 cutoff2=ymd(min(df$FechaInicio))
@@ -103,6 +105,6 @@ while (cutoff2<=maxcutoff) {
 
   
   
-  
+  return(multiperiod.mergedwins)
   
 }
