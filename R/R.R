@@ -45,7 +45,6 @@ df=df%>%mutate(TypeOrganism=case_when(grepl(x=NombreOrganismo_clean,pattern = 'm
                                       grepl(x=NombreOrganismo_clean,pattern = 'armada de chile',fixed = T)  == T ~ "Army,Navy",
                                       TRUE~'Other'))
 
-
 pre.summarybids=generateDfBidsSummary(bids = df)
 
 
@@ -54,6 +53,7 @@ df=df%>%filter(cantidadOferta==1&CantidadAdjudicada<=1,montoOferta>=1e6)
 df=df%>%filter(MontoEstimado>thresholdSize)
 df.repetidos=df%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Nombre,NombreOrganismo,montoOferta,NombreProveedor)%>%mutate(n=length(NombreProveedor))%>%filter(n>1)
 df=df%>%filter(!Codigo%in%(df.repetidos$Codigo))
+save(df,file = 'C:\\repos\\learn-doing\\data\\contractData.Rdata')
 post.summarybids=generateDfBidsSummary(bids = df)
 
 #Create Firm datasets
@@ -75,12 +75,11 @@ contractors.statistics=df%>%group_by(RutProveedor,NombreProveedor)%>%summarise(f
                                                                                montoTot=sum(montoOferta[CantidadAdjudicada>=1]))%>%arrange(-montoTot)%>%ungroup()%>%
 mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0))
 
-
 #Create Datasets
 start=0
 split1=2
 split2=2
-merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+#merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )
 merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
 merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
   mutate(logWinpre=log(winspre+1))
@@ -88,18 +87,41 @@ skim(merged.wins)
 
 #Begin Regression Analysis with outcome variable as probability
 head(merged.wins)
+##OLS Specs
+##1
+lm.1<-lm(probWinpost~(winspre>0),data = merged.wins)
+robust.lm1<- vcovHC(lm.1, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.1)
 
-##Nonparametric
-lm.nonp.bin<-lm(probWinpost~(winspre>0),data = merged.wins)
-robust.nonp.bin<- vcovHC(lm.nonp.bin, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.nonp.bin)
+##2
+lm.2<-lm(probWinpost~winspre,data = merged.wins)
+robust.lm.2<- vcovHC(lm.2, type = "HC1")%>%diag()%>%sqrt()
+summary(robust.lm.2)
 
-##First specification
-robust.spec1.cont<- vcovHC(lm.spec1.cont, type = "HC1")%>%diag()%>%sqrt()
-lm.spec1.cont<-lm(probWinpost~log(winspre+1),data = merged.wins)
+##3
+lm.3<-lm(probWinpost~poly(winspre,2),data = merged.wins)
+robust.spec1.lm.3<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
 
-lm.spec1.bin<-lm(probWinpost~(winspre>0),data = merged.wins)
-robust.spec1.bin<- vcovHC(lm.spec1.bin, type = "HC1")%>%diag()%>%sqrt()
+##3
+lm.3<-lm(probWinpost~poly(winspre,2),data = merged.wins)
+robust.spec1.lm.3<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+
+##4
+lm.4<-lm(probWinpost~(winspre>0),data = merged.wins)
+robust.spec1.lm.4<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+
+##5
+lm.4<-lm(probWinpost~winspre,data = merged.wins)
+robust.spec1.lm.4<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+
+##6
+lm.4<-lm(probWinpost~poly(winspre,2),data = merged.wins)
+robust.spec1.lm.4<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+
+
+
+
+
 
 ##Second specification. Outcome is p2 winning probability. OLS. With F.E controls
 lm.spec2.cont<-lm(probWinpost~log(winspre+1)+idperiodpost,data = merged.wins)

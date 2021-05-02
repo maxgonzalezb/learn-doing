@@ -5,13 +5,23 @@ date: "07-04-2021"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup2, include=T}
+library(tm)
+library(topicmodels)
+library(wordcloud2)
+library(broom)
+library(tidytext)
+library(caret)
+knitr::opts_chunk$set(echo = F)
+source('C:\\repos\\learn-doing\\R\\functions.R')
+
+slice.projects=df%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%ungroup%>%mutate(percentile=ntile(montoOferta,100))%>%mutate()
+rm(df)
 ```
 
 ## Existing Classifications of Types of Project
 
-I fisr examine the types of projects I have in the sample. Around 30\% are infraestructure projects. While almost 18% corresponds to residential. I examine more in detail the three types of projects. 
+I first examine the types of projects I have in the sample. Around 30\% are infraestructure projects. While almost 18% corresponds to residential. I examine more in detail the three types of projects. 
 In regardsm to size, the average of the winning bid for comercial and indistrial projects is higher, because of a concentration of projects of higher size above the mean. However, overall there are no big differences between the distributions. 
 
 The classification of generic product is a hierarchical breakdown of the previous classifications into more detailed classifications, for the case of comertial, which is only coded as civil works.The ONU product classification is redundant, it is a different coding for the same variable. 
@@ -30,15 +40,90 @@ Overall, we can say that housing projects and streets are almost certainly found
 
 Another interesting take is which kinds of institutions auction projects. However, this requires considerable cleaning since there are no simple identifiers. 
 
-##Own-Made Project Classification
+## Exploring Types of Buyers
+here I study which types of government units develop projects. I rely in a  user-defined classification of the government units. The next table displays the types of project by government unit. Municipalities develop around 80\% of the projects in the sample.
+
+Municipality projects ar around 140MM CLP, around 40\% of the mean in the total sample. The next important group are ministers, with 10\% opf the projects but almost 40\%of the total amount. An important buyer in the sample is the Child School Borad(JUNJI) which develops on itself around 5\% of the total amount of construction projects. The number of offerers does not differ significantly across the different units.  
 
 
-## Including Plots
+```{r organisms, echo=FALSE}
+organisms.table=slice.projects%>%group_by(TypeOrganism)%>%count()%>%arrange(-n)%>%ungroup()%>%mutate(prc=round(n/sum(n),2))
 
-You can also embed plots, for example:
+organisms.table.detailed=slice.projects%>%group_by(TypeOrganism)%>%summarise(n=length(Codigo),size.mean=mean(`Monto Estimado Adjudicado`,na.rm=T)/1000,time.mean=mean(TiempoDuracionContrato),offers.mean=mean(NumeroOferentes),totsize.per=sum(`Monto Estimado Adjudicado`,na.rm=T))%>%arrange(-n)%>%ungroup()%>%mutate(totsize.per=totsize.per/sum(totsize.per))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Exploring types of project by project name
+
+Now we turn to investigate what types of projects are developed in the sample. This is not immediate because as it was seen before there are no readily avalaible descriptive measures. We employ the name of the contract to gain some insight into what types of projects are being developed. 
+
+First, the most common terms are usually tied to types of construction(construction, improvement, conservation) and types of work(hospitals, schools, etc.)
+
+From the most common terms across categories we can see that project for munipalities are in the areas of social facilities(social sedes), urban development(parks, courts), and housing projects(construction, villa). In the Ministry area we have mostly health projects(hospital, cesfam) and infraestructure-related words(work). As expected, child board projects are closely related to daycare facilities, both for toddlers and infants. 
+
+
+```{r projnames, echo=FALSE}
+##Understand the most common words across topics
+project.names=slice.projects%>%dplyr::select(Codigo,Nombre)
+colnames(project.names)<-c('doc_id','text')
+corpus <- DataframeSource(project.names)
+
+corpus=VCorpus(corpus)
+corpus <- tm_map(corpus, content_transformer(function(x) iconv(x = x,from = "latin1",to= "ASCII", sub="@")))
+corpus <- tm_map(corpus, content_transformer(function(x) gsub('\\S+@\\S+', '', x)))
+
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, content_transformer(removePunctuation))
+corpus <- tm_map(corpus, content_transformer(stripWhitespace))
+corpus <- tm_map(corpus, content_transformer(removeNumbers))
+corpus <- tm_map(corpus, removeWords, words = c(stopwords("es")))
+
+dtm<-DocumentTermMatrix(corpus)
+freq.term=tidy(dtm)%>%group_by(term)%>%summarise(count=sum(count))%>%arrange(-count)
+freq.term.merged=tidy(dtm)%>%left_join(slice.projects%>%mutate(Codigo=as.character(Codigo)),by=c('document'='Codigo'))
+
+freq.type.table=freq.term.merged%>%group_by(term,TypeOrganism)%>%count()%>%arrange(-n)%>%ungroup()%>%group_by(TypeOrganism)%>%arrange(TypeOrganism,-n)%>%slice_head(n = 10)%>%mutate(ranking=seq_len(10))%>%pivot_wider(names_from = TypeOrganism,values_from=term,id_cols = ranking)
+
+##Topic Modelling
+
+total_docs=length(corpus)
+k.folds<- 5
+folds <- createFolds(1:total_docs, k = k.folds, list = F, returnTrain = FALSE)
+candidates=c(2,3,5,8,10)
+cv.results=data.frame()
+
+
+for (k in candidates) {
+print(k)
+cv.results.intra=data.frame()
+for (i in seq_len(k.folds)) {
+train.corpus=corpus[folds!=i]  
+test=corpus[folds==i]
+dtm.train=DocumentTermMatrix(train.corpus)
+raw.sum=apply(dtm.train,1,FUN=sum) #sum by raw each raw of the table
+dtm.train=dtm.train[raw.sum!=0,]
+
+dtm.test=DocumentTermMatrix(test)
+raw.sum=apply(dtm.test,1,FUN=sum) #sum by raw each raw of the table
+dtm.test=dtm.test[raw.sum!=0,]
+
+lda.fitted=LDA(x = dtm.train,k)
+perp.iter=topicmodels::perplexity(lda.fitted,newdata =  dtm.test)
+cv.results.intra=rbind(data.frame(k=k,i=i,perplexity=perp.iter),cv.results.intra)
+}
+cv.results.intra=cv.results.intra%>%group_by(k)%>%summarise(mean.perp=mean(perplexity))
+cv.results=rbind(cv.results.intra,cv.results)
+}
+
+ggplot(cv.results,aes(x=k,y=mean.perp))+geom_point()+geom_line()+theme_bw()+ggtitle('Perplexity by Number of topics')+xlab('Number of topics')+ylab('Mean Perplexity')
+
+## Create a dictionary of values: construccion, etc. Tipos de proyecto. Crear un grafico de bubble con tipoconstru-tipoproyecto.
+
+
+## Dimension reduction, color by unit. 
+
+
+```
+
+

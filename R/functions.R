@@ -48,22 +48,20 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2){
   cutoff0=ymd(min(df$FechaInicio)) + years(start)
   cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
   cutoff2=cutoff1 + years(split2)
-  df.period1=df%>%filter(FechaInicio<=cutoff1&FechaInicio>=cutoff0)
-  df.period2=df%>%filter(FechaInicio>cutoff1&FechaInicio<=cutoff2)
+  df.period1=df%>%filter(FechaInicio<cutoff1&FechaInicio>=cutoff0)
+  df.period2=df%>%filter(FechaInicio>=cutoff1&FechaInicio<=cutoff2)
   
-  #create winning statistics of each period
+  #Create winning statistics of each period
   ##Create Winning Statistics for first period
   df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)
   
- 
   #Add an ID column
   period1=paste0(cutoff0,"/",cutoff1)
   period2=paste0(cutoff1,"/",cutoff2)
   df.period1.wins=df.period1.wins%>%mutate(idperiod=period1)
   df.period2.wins=df.period2.wins%>%mutate(idperiod=period2)
-  
   
    ##Calculate narrow victories
   df.period1.difs=df.period1%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes))%>%left_join(df.difs)
@@ -71,7 +69,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2){
   #df.period1.difs=df.period1%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(RutProveedor=RutProveedor[winner=='Seleccionada'],NumeroOferentes=max(NumeroOferentes))
   df.period1.difs.close=(df.period1.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
   df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
-  nrow(df.period1.difs.close)/nrow(df.period1.wins)
+
   df.period1.wins.close=df.period1.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
   df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
   
