@@ -1,0 +1,5 @@
+PWD C:\repos\learn-doing\thesis
+INPUT C:\Users\maxgo\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT chapLBD.tex
+OUTPUT C:\repos\learn-doing\thesis\output\chapLBD.log
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm

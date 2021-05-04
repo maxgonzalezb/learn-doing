@@ -9,6 +9,8 @@ library(kableExtra)
 library(stargazer)
 library(sandwich)
 library(skimr)
+library(stargazer)
+
 
 source('C:\\repos\\learn-doing\\R\\functions.R')
 
@@ -59,7 +61,7 @@ post.summarybids=generateDfBidsSummary(bids = df)
 #Create Firm datasets
 df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
 df.wins=df%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)
-
+df.names=df%>%dplyr::select(RutProveedor,NombreProveedor)%>%group_by(RutProveedor,NombreProveedor)%>%slice(1)
 #General Statistics
 
 
@@ -76,51 +78,96 @@ contractors.statistics=df%>%group_by(RutProveedor,NombreProveedor)%>%summarise(f
 mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0))
 
 #Create Datasets
+
+#First Analysis of Experience
 start=0
 split1=2
 split2=2
-#merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
 merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
 merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
-  mutate(logWinpre=log(winspre+1))
-skim(merged.wins)
+mutate(logWinpre=log(winspre+1))
+
+##Second analysis of the Experience
+merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
+table(merged.wins$idperiodpre)
+
+
+head(merged.wins)
 
 #Begin Regression Analysis with outcome variable as probability
 head(merged.wins)
+
 ##OLS Specs
 ##1
 lm.1<-lm(probWinpost~(winspre>0),data = merged.wins)
-robust.lm1<- vcovHC(lm.1, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.1)
+robust.lm.1<- vcovHC(lm.1, type = "HC1")%>%diag()%>%sqrt()
+summary(lm1)
 
 ##2
 lm.2<-lm(probWinpost~winspre,data = merged.wins)
-robust.lm.2<- vcovHC(lm.2, type = "HC1")%>%diag()%>%sqrt()
-summary(robust.lm.2)
+robust.lm2<- vcovHC(lm.2, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.2)
 
 ##3
 lm.3<-lm(probWinpost~poly(winspre,2),data = merged.wins)
-robust.spec1.lm.3<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
-
-##3
-lm.3<-lm(probWinpost~poly(winspre,2),data = merged.wins)
-robust.spec1.lm.3<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+robust.lm3<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.3)
 
 ##4
-lm.4<-lm(probWinpost~(winspre>0),data = merged.wins)
-robust.spec1.lm.4<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+lm.4<-lm(probWinpost~(winspre>0)+idperiodpost+paretoIndpost,data = merged.wins)
+robust.lm4<- vcovHC(lm.4, type = "HC1")%>%diag()%>%sqrt()
 
 ##5
-lm.4<-lm(probWinpost~winspre,data = merged.wins)
-robust.spec1.lm.4<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+lm.5<-lm(probWinpost~winspre+idperiodpost+paretoIndpost,data = merged.wins)
+robust.lm5<- vcovHC(lm.5, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.5)
 
 ##6
-lm.4<-lm(probWinpost~poly(winspre,2),data = merged.wins)
-robust.spec1.lm.4<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
+lm.6<-lm(probWinpost~poly(winspre,2)+idperiodpost+paretoIndpost,data = merged.wins)
+robust.lm6<- vcovHC(lm.6, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.6)
 
+#Create Simple Table of Outcomes
+stargazer(lm.1,lm.2,lm.3,lm.4,lm.5,lm.6, type = "latex",
+          se = list(NULL, c(robust.lm1,robust.lm2,robust.lm3,robust.lm4,robust.lm5,robust.lm6)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+          title="Regression for OLS and IV specifications",
+          dep.var.labels=c("Share of Contracts won in t"),
+          covariate.labels=c("Experience in (t-1) >0",'Experience in (t-1)','(Experience in (t-1))^2'),
+          add.lines = list(c("Fixed effects", "No", "No",'No','Yes','Yes','Yes')))
+##IV Specs
+##7
+lm.7<-ivreg(probWinpost~(winspre>0)|(winspre_close),data=merged.wins)
+robust.lm.7<- vcovHC(lm.7, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.7)
 
+##8
+lm.8<-ivreg(probWinpost~winspre|(winspre_close),data=merged.wins)
+robust.lm.8<- vcovHC(lm.8, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.8)
 
+##9
+lm.9<-ivreg(probWinpost~poly(winspre,2)|poly(winspre_close,2),data=merged.wins)
+robust.lm.9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.9)
 
+##10
+lm.10<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_close)+idperiodpost,data=merged.wins)
+robust.lm.10<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.10)
+
+##11
+lm.11<-ivreg(probWinpost~(winspre)+idperiodpost|(winspre_close+idperiodpost),data=merged.wins)
+robust.lm.11<- vcovHC(lm.11, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.11)
+
+##12
+lm.12<-ivreg(probWinpost~poly(winspre,2)+idperiodpost|poly(winspre_close,2)+idperiodpost,data=merged.wins)
+robust.lm.12<- vcovHC(lm.12, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.12)
+
+stargazer(lm.7,lm.8,lm.9,lm.10,lm.11,lm.12, type = "latex",
+          se = list(NULL, c(robust.lm.1,robust.lm.2,robust.lm.3,robust.lm.5,robust.lm.5,robust.lm.6)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
 
 
 ##Second specification. Outcome is p2 winning probability. OLS. With F.E controls

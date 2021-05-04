@@ -54,14 +54,17 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2){
   #Create winning statistics of each period
   ##Create Winning Statistics for first period
   df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
-  df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)
-  df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)
+  df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
   
   #Add an ID column
   period1=paste0(cutoff0,"/",cutoff1)
   period2=paste0(cutoff1,"/",cutoff2)
-  df.period1.wins=df.period1.wins%>%mutate(idperiod=period1)
-  df.period2.wins=df.period2.wins%>%mutate(idperiod=period2)
+  
+  #Add A Pareto Variable
+  df.period1.wins=df.period1.wins%>%ungroup()%>%mutate(idperiod=period1)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(rank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(rank<=0.20,yes='BIGF',no='NONBIGF'))
+  df.period2.wins=df.period2.wins%>%ungroup()%>%mutate(idperiod=period2)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(rank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(rank<=0.20,yes='BIGF',no='NONBIGF'))
+  
   
    ##Calculate narrow victories
   df.period1.difs=df.period1%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes))%>%left_join(df.difs)
@@ -73,7 +76,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2){
   df.period1.wins.close=df.period1.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
   df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
   
-  merged.wins=df.period1.wins%>%left_join(df.period2.wins,suffix = c('pre','post'),by = 'RutProveedor')%>%mutate_if(is.numeric, replace_na, 0)%>%filter(ofertaspost >0)%>%
+  merged.wins=df.period2.wins%>%left_join(df.period1.wins,suffix = c('post','pre'),by = 'RutProveedor')%>%mutate_if(is.numeric, replace_na, 0)%>%filter(ofertaspost >0)%>%
     mutate(winsprebin=as.numeric(winspre>0))%>%left_join(df.period1.wins.close,by = 'RutProveedor')%>%mutate(winspre_close= replace_na(winspre_close,0))
   
   
@@ -106,3 +109,32 @@ while (cutoff2<=maxcutoff) {
   return(multiperiod.mergedwins)
   
 }
+
+
+createAnnualizedWins<-function(df,start,split1,split2){
+i=0
+maxcutoff=ymd(max(df$FechaInicio))
+cutoff2=ymd(min(df$FechaInicio))
+multiperiod.mergedwins=data.frame()
+while (cutoff2<=maxcutoff) {
+  #Do stuff
+  newstart=start+i
+  two.period.mergedwins=createTwoPeriodDataset(df,start = start, split1 =(i+1),split2=split2 )
+  ##Refresh
+  cutoff0=ymd(min(df$FechaInicio)) + years(i)
+  cutoff1=cutoff0 + years(split1)
+  cutoff2=cutoff1 + years(split2)
+  i=i+1
+  multiperiod.mergedwins=rbind(multiperiod.mergedwins,two.period.mergedwins)
+  print(cutoff2)
+} 
+
+
+
+return(multiperiod.mergedwins)
+
+}
+
+
+  
+

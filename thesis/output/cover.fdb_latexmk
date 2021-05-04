@@ -1,0 +1,9 @@
+# Fdb version 3
+["pdflatex"] 1620081382 "cover.tex" "output/cover.pdf" "cover" 1620081383
+  "C:/Users/maxgo/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1613167785 10010370 47465fa8401c76ebdeea6336661b8afa ""
+  "abstract.tex" 1618775028 928 14b0c917731dd3de7cddbe19aa897a6d ""
+  "cover.tex" 1620081382 5211 5f87e66e170436d4b6a369a462c456a2 ""
+  "output/cover.aux" 1620081305 469 13652eb0f32fa755d42e963ede65b416 ""
+  (generated)
+  "output/cover.pdf"
+  "output/cover.log"

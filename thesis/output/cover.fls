@@ -1,0 +1,7 @@
+PWD C:\repos\learn-doing\thesis
+INPUT C:\Users\maxgo\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT cover.tex
+OUTPUT C:\repos\learn-doing\thesis\output\cover.log
+OUTPUT C:\repos\learn-doing\thesis\output\cover.pdf
+INPUT abstract.tex
+INPUT abstract.tex
