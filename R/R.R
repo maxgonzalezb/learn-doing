@@ -62,7 +62,18 @@ post.summarybids=generateDfBidsSummary(bids = df)
 df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
 df.wins=df%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)
 df.names=df%>%dplyr::select(RutProveedor,NombreProveedor)%>%group_by(RutProveedor,NombreProveedor)%>%slice(1)
+
+#Study how are the close wins
+df.difs.ind=df.difs%>%mutate(isClose=ifelse(dif<0.005,yes='Close Win','No Close Win'))
+df=df%>%left_join(df.difs.ind)
+comparison.1=df%>%filter(isClose=='No Close Win')%>%generateDfBidsSummary()%>%dplyr::select('mean','std')%>%rename('mean_notClose'='mean','std_notClose'='std')
+comparison.2=df%>%filter(isClose=='Close Win')%>%generateDfBidsSummary()%>%dplyr::select(name,'mean','std')%>%rename('mean_close'='mean','std_close'='std')%>%cbind(comparison.1)%>%select(name,mean_notClose,mean_close,std_notClose,std_close)
+colnames(comparison.2)<-c('Variable','Mean (Not close win)','Mean (Close win)','Sd (Not close win)','Sd (Close win)')
+create_kable(comparison.2,caption = "Comparison between close and non-close wins")
+
 #General Statistics
+
+
 
 
 
@@ -88,9 +99,6 @@ merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=spl
 merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
 mutate(logWinpre=log(winspre+1))
 
-##Second analysis of the Experience
-merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
-table(merged.wins$idperiodpre)
 
 
 head(merged.wins)
@@ -133,8 +141,9 @@ stargazer(lm.1,lm.2,lm.3,lm.4,lm.5,lm.6, type = "latex",
           se = list(NULL, c(robust.lm1,robust.lm2,robust.lm3,robust.lm4,robust.lm5,robust.lm6)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
           title="Regression for OLS and IV specifications",
           dep.var.labels=c("Share of Contracts won in t"),
-          covariate.labels=c("Experience in (t-1) >0",'Experience in (t-1)','(Experience in (t-1))^2'),
+          covariate.labels=c("Experience in (t-1)",'Experience in (t-1)','(Experience in (t-1))^2'),
           add.lines = list(c("Fixed effects", "No", "No",'No','Yes','Yes','Yes')))
+
 ##IV Specs
 ##7
 lm.7<-ivreg(probWinpost~(winspre>0)|(winspre_close),data=merged.wins)
@@ -168,6 +177,122 @@ summary(lm.12)
 
 stargazer(lm.7,lm.8,lm.9,lm.10,lm.11,lm.12, type = "latex",
           se = list(NULL, c(robust.lm.1,robust.lm.2,robust.lm.3,robust.lm.5,robust.lm.5,robust.lm.6)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
+
+
+##Second analysis, experience as annual experience. 
+##Second analysis of the Experience
+merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
+table(merged.wins$idperiodpost)
+hist(merged.wins$annualwins)
+
+##1
+lm.13<-lm(probWinpost~(annualwinspre>0),data = merged.wins)
+robust.lm13<- vcovHC(lm.13, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.13)
+
+##2
+lm.14<-lm(probWinpost~annualwinspre,data = merged.wins)
+robust.lm.14<- vcovHC(lm.14, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.14)
+
+##3
+lm.15<-lm(probWinpost~poly(annualwinspre,2),data = merged.wins)
+robust.lm15<- vcovHC(lm.15, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.15)
+
+##4
+lm.16<-lm(probWinpost~(annualwinspre>0)+idperiodpost+paretoIndpost,data = merged.wins)
+robust.lm16<- vcovHC(lm.16, type = "HC1")%>%diag()%>%sqrt()
+
+##5
+lm.17<-lm(probWinpost~annualwinspre+idperiodpost+paretoIndpost,data = merged.wins)
+robust.lm17<- vcovHC(lm.17, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.17)
+
+##6
+lm.18<-lm(probWinpost~poly(annualwinspre,2)+idperiodpost+paretoIndpost,data = merged.wins)
+robust.lm18<- vcovHC(lm.18, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.18)
+
+## Robustness checks
+#Period Durations: Outcomes are one and three years
+start=0
+split1=2
+split2=2
+merged.wins.original=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2)
+merged.wins.original.annualized=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
+split2=1
+merged.wins.1=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+merged.wins.1.annualized=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
+split2=3
+merged.wins.3=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+merged.wins.3.annualized=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
+
+lm.19<-lm(probWinpost~(winspre)+idperiodpost,data = merged.wins.original)
+robust.lm19<- vcovHC(lm.19, type = "HC1")%>%diag()%>%sqrt()
+lm.20<-lm(probWinpost~winspre+idperiodpost,data = merged.wins.1)
+robust.lm20<- vcovHC(lm.20, type = "HC1")%>%diag()%>%sqrt()
+lm.21<-lm(probWinpost~winspre+idperiodpost,data = merged.wins.2)
+robust.lm21<- vcovHC(lm.21, type = "HC1")%>%diag()%>%sqrt()
+
+lm.22<-lm(probWinpost~(annualwinspre)+idperiodpost,data = merged.wins.original.annualized)
+robust.lm22<- vcovHC(lm.22, type = "HC1")%>%diag()%>%sqrt()
+lm.23<-lm(probWinpost~annualwinspre+idperiodpost,data = merged.wins.1.annualized)
+robust.lm23<- vcovHC(lm.23, type = "HC1")%>%diag()%>%sqrt()
+lm.24<-lm(probWinpost~annualwinspre+idperiodpost,data = merged.wins.3.annualized)
+robust.lm24<- vcovHC(lm.24, type = "HC1")%>%diag()%>%sqrt()
+
+stargazer(lm.19,lm.20,lm.21,lm.22,lm.23,lm.24, type = "latex",
+          se = list(NULL, c(robust.lm19,robust.lm20,robust.lm21,robust.lm22,robust.lm23,robust.lm24)),
+          dep.var.caption ="Contracts Won/Contracts Bid in Outcome Period",
+          dep.var.labels   = "Outcome period of length (years):",
+          column.labels = c("1", "2 (Original)","3","1", "2 (Original)","3"),
+          omit='idperiodpost',
+          model.numbers = FALSE,
+          covariate.labels=c("Experience",'Annualized Cumulative Experience'),
+          omit.stat = c( "f","adj.rsq"),title="Robustness checks for duration of outcomes period of interest")
+
+library(purrr)
+## Robustness checks: close wins
+close_wins_vector=c(thresholdClose=seq(0.001,0.03,by = 0.001))
+##Revisar como puede haber diferencia de cero
+start=0
+split1=2
+split2=2
+robustness_close_wins=close_wins_vector%>%map_dfr(function(x) (createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x )%>%
+                                                                    ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost))%>%tidy()%>%
+                                                                 filter(term=='winspre')%>%mutate(thresholdClose=x)))%>%mutate(model='Linear Experience')
+
+
+robustness_close_wins=robustness_close_wins%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)
+p1<-ggplot(robustness_close_wins,aes(x=thresholdClose,y=estimate))+geom_line(color='darkblue',lwd=1.5)+geom_vline(xintercept = 0.005,color='red')+#geom_point(color='darkblue')+
+  geom_line(aes(y=lower95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+geom_line(aes(y=upper95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+ylim(0.01,0.03)+theme_bw()+xlab('Threshold for a close win (Percentage)')+ylab('Experience Estimate')
+
+png(filename="C:\\repos\\learn-doing\\R\\Output\\robustness_threshold.png",width = 4, height = 3,
+    units = "in",res=1000)
+p1
+dev.off()
+
+?ivreg
+?geom_line
+
+
+merged.wins%>%ivreg(data=.,formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost))
+
+
+summary(ivreg(data=merged.wins,formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost)))
+                                                                                                                                           %>%(function(x) (lm(probWinpost~winspre+idperiodpost,data=x))%>%map(function(y) (tidy(y)%>%dplyr::select(term,p.value)%>%filter(term=='winspre')%>%mutate(thresholdClose=x)))))
+uk=close_wins_vector%>%map(function(x) createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x ))%>%map(function(x) lm(winspre+idperiodpost,data=x))
+ak=uk%>%map(function(x) lm(probWinpost~winspre+idperiodpost,data=x))%>%map(function(y) (tidy(y)%>%dplyr::select(term,p.value)%>%filter(term=='winspre')%>%mutate(thresholdClose=x)))
+
+library(broom)
+tyest1=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = param )
+merged.wins%>%lm(formula=probWinpost~winspre+idperiodpost)
+
+
+table(merged.wins.2$idperiodpost)
+
+
 
 
 ##Second specification. Outcome is p2 winning probability. OLS. With F.E controls

@@ -35,6 +35,27 @@ In order to identify the causal experience of experience on outcomes, we employ 
 
 In the next table we examine whether close wins are different from the population in several types of metrics. We can see that in most aspects these bids are not exceedingly different from the rest of the sample, so we expect that the only difference between these close wins and regular ones is the difference in bids and there are no underlying project characteristics that could explain them.
 
+\begin{table}[!h]
+\caption{Robustness checks for the duration of outcomes' computation period}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}[t]{ccccc}
+\toprule
+Variable & Mean (Not close win) & Mean (Close win) & Sd (Not close win) & Sd (Close win)\\
+\midrule
+Bid & 6.3e+08 & 3.32e+10 & 1.06e+10 & 8.11e+12\\
+Bid\_Winning & 3.18e+08 & 2.37e+08 & 3.56e+09 & 2.62e+09\\
+Difference between 1st bid and 2nd (\%) & 0.14 & 0.0186 & 0.115 & 0.0147\\
+Number of Bidders & 3.86 & 4.08 & 2.12 & 2.23\\
+Year & 2020 & 2020 & 2.92 & 2.89\\
+Offers made by Firm & 4.4 & 6.17 & 7.34 & 11.2\\
+Win prob. by Firm & 0.191 & 0.171 & 0.3 & 0.274\\
+Offers won by Firm & 0.972 & 1.37 & 2.1 & 3.23\\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
 Our designs employs close wins in past periods to instrument total wins (experience). Clearly, both measures are correlated since every extra unit of experience increases the probability of having at least one close win. Moreover, close wins should not be correlated with cost measures, as they are attributed to random factors, such as risk-aversion differences between firms, random approximation differences between engineering teams in each firm, etc. and thus we should also have a valid instrument.
 
 
@@ -64,3 +85,60 @@ The next table shows the results with a different measure of experience.
 \section{Experience and Firm Size}
 
 \section{Robustness checks}
+Several of our choices in the previous section admit several arbitrary choices. In this section we consider several extensions in parameters which could influence the results obtained before. We consider robustness checks in the following areas:
+\subsection{Periods of outcomes}
+In the previous section, we measured outcomes occuring in two year periods. We now consider outcomes occuring in one and three year periods as well. Note that in this part we only vary the length of the period where outcomes are computed and we maintain the procedure to compute experience as before. Table shows outcomes computed for periods of 1, 2(the original specifications) and 3 years. The first three columns employ the experience measured in the two-period previous to the outcome period while the 3-6 compute experience as annualized cumulative experience as discussed in the previous section.
+
+\begin{table}[!htbp] \centering
+\caption{Regression for OLS and IV specifications}
+\label{}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{\extracolsep{5pt}}lcccccc}
+\\[-1.8ex]\hline
+\hline \\[-1.8ex]
+& \multicolumn{6}{c}{Contracts Won/Contracts Bid in Outcome Period} \\
+\cline{2-7}
+\\[-1.8ex] & \multicolumn{6}{c}{Outcome period of length (years):} \\
+& 1 & 2 (Original) & 3 & 1 & 2 (Original) & 3 \\
+\hline \\[-1.8ex]
+Experience & 0.022$^{***}$ & 0.020$^{***}$ & 0.023$^{***}$ &  &  &  \\
+& (0.001) & (0.001) & (0.001) &  &  &  \\
+& & & & & & \\
+Annualized Cumulative Experience &  &  &  & 0.060$^{***}$ & 0.058$^{***}$ & 0.061$^{***}$ \\
+&  &  &  & (0.002) & (0.002) & (0.002) \\
+& & & & & & \\
+Constant & 0.270$^{***}$ & 0.309$^{***}$ & 0.256$^{***}$ & 0.281$^{***}$ & 0.257$^{***}$ & 0.260$^{***}$ \\
+& (0.005) & (0.005) & (0.004) & (0.005) & (0.007) & (0.004) \\
+& & & & & & \\
+\hline \\[-1.8ex]
+Observations & 38,739 & 29,415 & 43,453 & 37,623 & 28,234 & 42,358 \\
+R$^{2}$ & 0.028 & 0.031 & 0.025 & 0.026 & 0.028 & 0.023 \\
+Residual Std. Error & 0.316 (df = 38730) & 0.338 (df = 29405) & 0.305 (df = 43445) & 0.320 (df = 37614) & 0.342 (df = 28224) & 0.309 (df = 42350) \\
+\hline
+\hline \\[-1.8ex]
+\textit{Note:}  & \multicolumn{6}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
+\end{tabular}
+
+}
+\end{table}
+
+
+\subsection{Periods of experience computation}
+Periods of experience computation: for the first measure of experience, we consider computing experience over 1-year periods, since before we only considered two-year periods.
+
+
+
+
+%\item Different measures of experience: we consider time measures of experience instead of number of contracts won. We consider as the explanatory variab
+
+\subsection{Definition of a close win}
+In the previous section, we considered close wins as wins where the winning contractor submitted a bid that was not more than 0.05\% below the runner up. Now, we sensibilize our main coefficient to different values of this parameter.
+
+ The plot in   displays the coefficient of interest considering the two types of experience measures' considered. The specifications consider linear effect of experience and fixed effects by period. It can be seen that results are robust to a range of the threshold for considering a win as a close wins. Note that the results remain significant across the different values of the parameters, even when  employ our lower bound for the threshold(0.01\%) where we have less close wins. As expected, the standard error increases towards this bound while but decreases towards  less stringent definitions of close wins (because of the increase in power in the instrument). Finally, note across that all confidence intervals at 95\% remain within 0.0180 and 0.0275.
+
+ \begin{figure}[H]
+         \centering
+         \includegraphics[scale=1]{robustness_threshold.png}
+         \caption{Robustness analysis for threshold of close wins}
+         \label{fig:close_wins_robust}
+     \end{figure}
