@@ -10,6 +10,8 @@ library(stargazer)
 library(sandwich)
 library(skimr)
 library(stargazer)
+library(purrr)
+library(broom)
 
 
 source('C:\\repos\\learn-doing\\R\\functions.R')
@@ -19,11 +21,11 @@ thresholdSize=20e6
 
 df = read_feather('C:\\repos\\learn-doing\\data\\lic_construccion_feather.feather') %>%
                   rename(estadoOferta=`Estado Oferta`,montoOferta = `Valor Total Ofertado`, winner = `Oferta seleccionada`,cantidadOferta=`Cantidad Ofertada`,tipoAdquisicion=`Tipo de Adquisición`)
-glimpse(df)
-skim(df)
+#glimpse(df)
+#skim(df)
 
 #Accepted Offers? Be careful computing statistics, should not eliminate straight away. TODO:desert lics. 
-
+colnames(df)
 #Cleaning
 #df <- read.csv("C:/repos/public-procurement/bids.csv", encoding="CP1252")
 df=df%>%mutate(FechaInicio=as.Date(FechaInicio))%>%mutate(year=year(FechaInicio),MCA_MPO=montoOferta/MontoEstimado)
@@ -49,14 +51,19 @@ df=df%>%mutate(TypeOrganism=case_when(grepl(x=NombreOrganismo_clean,pattern = 'm
 
 pre.summarybids=generateDfBidsSummary(bids = df)
 
-
+#Indicators about missing data
+df$MontoEstimado
 #Filtering
-df=df%>%filter(cantidadOferta==1&CantidadAdjudicada<=1,montoOferta>=1e6)
+df=df%>%filter(cantidadOferta==1&CantidadAdjudicada<=1)%>%filter(montoOferta>=10e6)
 df=df%>%filter(MontoEstimado>thresholdSize)
-df.repetidos=df%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Nombre,NombreOrganismo,montoOferta,NombreProveedor)%>%mutate(n=length(NombreProveedor))%>%filter(n>1)
+
+#Create unique ID
+df=df%>%mutate(id=paste0(Codigo,RutProveedor))
+df.repetidos=df%>%group_by(id)%>%select(Codigo,Nombre,NombreOrganismo,montoOferta,NombreProveedor,FechaInicio)%>%mutate(n=length(NombreProveedor))%>%filter(n>1)
 df=df%>%filter(!Codigo%in%(df.repetidos$Codigo))
+#df.repetidos.3=df%>%group_by(id2)%>%select(Codigo,Nombre,NombreOrganismo,montoOferta,NombreProveedor,FechaInicio)%>%mutate(n=length(NombreProveedor))%>%filter(n>1)
 save(df,file = 'C:\\repos\\learn-doing\\data\\contractData.Rdata')
-post.summarybids=generateDfBidsSummary(bids = df)
+post.summarybids=generateDfBidsSummary(bids = df)%>%select(-per_complete)%>%create_kable(caption = 'Descriptive Statistics')
 
 #Create Firm datasets
 df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
@@ -71,9 +78,12 @@ comparison.2=df%>%filter(isClose=='Close Win')%>%generateDfBidsSummary()%>%dplyr
 colnames(comparison.2)<-c('Variable','Mean (Not close win)','Mean (Close win)','Sd (Not close win)','Sd (Close win)')
 create_kable(comparison.2,caption = "Comparison between close and non-close wins")
 
+#Check about the problem of non-monetary wins.
+problem=df%>%group_by(Codigo)%>%summarise(islowest=ifelse((montoOferta[winner=='Seleccionada'])[1]==min(montoOferta),1,0))
+df.difs.islow=df.difs.ind%>%left_join(problem)%>%mutate(decsize=ntile(x = ganador,n=5))
+df.difs.islow%>%group_by(isClose,islowest)%>%summarise(meandif=sum(islowest,na.rm = T))
+
 #General Statistics
-
-
 
 
 
@@ -94,22 +104,17 @@ mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0
 start=0
 split1=2
 split2=2
-merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
+#merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
 merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
 merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
 mutate(logWinpre=log(winspre+1))
 
 
-
-head(merged.wins)
-
 #Begin Regression Analysis with outcome variable as probability
-head(merged.wins)
-
 ##OLS Specs
 ##1
 lm.1<-lm(probWinpost~(winspre>0),data = merged.wins)
-robust.lm.1<- vcovHC(lm.1, type = "HC1")%>%diag()%>%sqrt()
+robust.lm1<- vcovHC(lm.1, type = "HC1")%>%diag()%>%sqrt()
 summary(lm1)
 
 ##2
@@ -123,16 +128,16 @@ robust.lm3<- vcovHC(lm.3, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.3)
 
 ##4
-lm.4<-lm(probWinpost~(winspre>0)+idperiodpost+paretoIndpost,data = merged.wins)
+lm.4<-lm(probWinpost~(winspre>0)+idperiodpost,data = merged.wins)
 robust.lm4<- vcovHC(lm.4, type = "HC1")%>%diag()%>%sqrt()
 
 ##5
-lm.5<-lm(probWinpost~winspre+idperiodpost+paretoIndpost,data = merged.wins)
+lm.5<-lm(probWinpost~winspre+idperiodpost,data = merged.wins)
 robust.lm5<- vcovHC(lm.5, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.5)
 
 ##6
-lm.6<-lm(probWinpost~poly(winspre,2)+idperiodpost+paretoIndpost,data = merged.wins)
+lm.6<-lm(probWinpost~winspre+I(winspre^2)+idperiodpost,data = merged.wins)
 robust.lm6<- vcovHC(lm.6, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.6)
 
@@ -147,72 +152,139 @@ stargazer(lm.1,lm.2,lm.3,lm.4,lm.5,lm.6, type = "latex",
 ##IV Specs
 ##7
 lm.7<-ivreg(probWinpost~(winspre>0)|(winspre_close),data=merged.wins)
-robust.lm.7<- vcovHC(lm.7, type = "HC1")%>%diag()%>%sqrt()
+robust.lm7<- vcovHC(lm.7, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.7)
 
 ##8
 lm.8<-ivreg(probWinpost~winspre|(winspre_close),data=merged.wins)
-robust.lm.8<- vcovHC(lm.8, type = "HC1")%>%diag()%>%sqrt()
+robust.lm8<- vcovHC(lm.8, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.8)
 
 ##9
-lm.9<-ivreg(probWinpost~poly(winspre,2)|poly(winspre_close,2),data=merged.wins)
-robust.lm.9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
+lm.9<-ivreg(probWinpost~winspre+I(winspre^2)|winspre_close+I(winspre_close^2),data=merged.wins)
+robust.lm9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.9)
 
 ##10
 lm.10<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_close)+idperiodpost,data=merged.wins)
-robust.lm.10<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
+robust.lm10<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.10)
 
 ##11
 lm.11<-ivreg(probWinpost~(winspre)+idperiodpost|(winspre_close+idperiodpost),data=merged.wins)
-robust.lm.11<- vcovHC(lm.11, type = "HC1")%>%diag()%>%sqrt()
+robust.lm11<- vcovHC(lm.11, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.11)
 
 ##12
-lm.12<-ivreg(probWinpost~poly(winspre,2)+idperiodpost|poly(winspre_close,2)+idperiodpost,data=merged.wins)
-robust.lm.12<- vcovHC(lm.12, type = "HC1")%>%diag()%>%sqrt()
+lm.12<-ivreg(probWinpost~idperiodpost+winspre+I(winspre^2)|winspre_close+I(winspre_close^2)+idperiodpost,data=merged.wins)
+robust.lm12<- vcovHC(lm.12, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.12)
 
 stargazer(lm.7,lm.8,lm.9,lm.10,lm.11,lm.12, type = "latex",
-          se = list(NULL, c(robust.lm.1,robust.lm.2,robust.lm.3,robust.lm.5,robust.lm.5,robust.lm.6)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
+          se = list(NULL, c(robust.lm7,robust.lm8,robust.lm9,robust.lm10,robust.lm11,robust.lm12)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
+
+#Chosen Output
+#Table
+stargazer(lm.4,lm.5,lm.6,lm.10,lm.11,lm.12, type = "latex",
+          se = list(NULL, c(robust.lm4,robust.lm5,robust.lm6,robust.lm10,robust.lm11,robust.lm12)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+          title="Regression for OLS and IV specifications",
+          dep.var.labels=c("Share of Contracts won in t"),
+          covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
+          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))
+
+#Plot
+x=seq(0,10,length.out = 1000)
+newdata=data.frame(winspre=x,a=x^2,idperiodpost='2019-01-04/2021-01-04')%>%rename('I(winspre^2)'='a')
+p1=predict.lm(object = lm.4,type = 'response',interval = 'confidence' ,newdata = newdata)%>%as.data.frame()%>%mutate(x=x,type='binary')%>%pivot_longer(cols = c(fit,lwr,upr))
+p2=predict.lm(object = lm.5,type = 'response',interval = 'confidence' ,newdata = newdata)%>%as.data.frame()%>%mutate(x=x,type='linear')%>%pivot_longer(cols = c(fit,lwr,upr))
+p3=predict.lm(object = lm.6,type = 'response',interval = 'confidence' ,newdata = newdata)%>%as.data.frame()%>%mutate(x=x,type='quadratic')%>%pivot_longer(cols = c(fit,lwr,upr))
+exp1_lastperiod=rbind(p1,p2,p3)%>%mutate(estimate=ifelse(name=='fit','estimate','confidence int.'))%>%mutate(alpha=ifelse(name=='fit',1,0.5))
+plot_fit=ggplot(exp1_lastperiod,aes(x=x,y=value,color=type,linetype=estimate,group=interaction(type, estimate,name)))+
+  geom_line(lwd=0.7)+theme_bw()+scale_x_continuous(breaks = seq(0,11,1),limits = c(0,10))+xlab('Experience')+ylab('Share of contracts won')+
+  labs(linetype='',color='')+
+scale_linetype_manual(values=c("dotted", "solid"))
+png(filename="C:\\repos\\learn-doing\\R\\Output\\fit_sample.png",width = 7, height = 3.5,
+    units = "in",res=1000)
+plot_fit
+dev.off()
 
 
-##Second analysis, experience as annual experience. 
+
+
+1##Second analysis, experience as annual experience. 
 ##Second analysis of the Experience
 merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
 table(merged.wins$idperiodpost)
 hist(merged.wins$annualwins)
 
-##1
+##13
 lm.13<-lm(probWinpost~(annualwinspre>0),data = merged.wins)
 robust.lm13<- vcovHC(lm.13, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.13)
 
-##2
+##14
 lm.14<-lm(probWinpost~annualwinspre,data = merged.wins)
 robust.lm.14<- vcovHC(lm.14, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.14)
 
-##3
+##15
 lm.15<-lm(probWinpost~poly(annualwinspre,2),data = merged.wins)
 robust.lm15<- vcovHC(lm.15, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.15)
 
-##4
-lm.16<-lm(probWinpost~(annualwinspre>0)+idperiodpost+paretoIndpost,data = merged.wins)
+##16
+lm.16<-lm(probWinpost~(annualwinspre>0)+idperiodpost,data = merged.wins)
 robust.lm16<- vcovHC(lm.16, type = "HC1")%>%diag()%>%sqrt()
 
-##5
-lm.17<-lm(probWinpost~annualwinspre+idperiodpost+paretoIndpost,data = merged.wins)
+##17
+lm.17<-lm(probWinpost~annualwinspre+idperiodpost,data = merged.wins)
 robust.lm17<- vcovHC(lm.17, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.17)
 
-##6
-lm.18<-lm(probWinpost~poly(annualwinspre,2)+idperiodpost+paretoIndpost,data = merged.wins)
+##18
+lm.18<-lm(probWinpost~(annualwinspre)+I(annualwinspre^2)+idperiodpost,data = merged.wins)
 robust.lm18<- vcovHC(lm.18, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.18)
+
+#IVs
+##19
+lm.19<-ivreg(probWinpost~(annualwinspre>0)|(annualwinspre_close),data=merged.wins)
+robust.lm19<- vcovHC(lm.19, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.18)
+
+##20
+lm.20<-ivreg(probWinpost~annualwinspre|(annualwinspre_close),data=merged.wins)
+robust.lm20<- vcovHC(lm.20, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.20)
+
+##21
+lm.21<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)|annualwinspre_close+I(annualwinspre_close^2),data=merged.wins)
+robust.lm21<- vcovHC(lm.21, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.21)
+
+##22
+lm.22<-ivreg(probWinpost~(annualwinspre>0)+idperiodpost|(annualwinspre_close)+idperiodpost,data=merged.wins)
+robust.lm22<- vcovHC(lm.22, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.22)
+
+##23
+lm.23<-ivreg(probWinpost~(annualwinspre)+idperiodpost|(annualwinspre_close+idperiodpost),data=merged.wins)
+robust.lm23<- vcovHC(lm.23, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.23)
+
+##24
+lm.24<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)+idperiodpost|annualwinspre+I(annualwinspre_close^2)+idperiodpost,data=merged.wins)
+robust.lm24<- vcovHC(lm.24, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.24)
+
+#Chosen Output II
+stargazer(lm.16,lm.17,lm.18,lm.22,lm.23,lm.24, type = "latex",
+          se = list(NULL, c(robust.lm16,robust.lm17,robust.lm18,robust.lm22,robust.lm23,robust.lm24)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+          title="Regression for OLS and IV specifications",
+          dep.var.labels=c("Share of Contracts won in t"),
+          covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
+          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))
+
 
 ## Robustness checks
 #Period Durations: Outcomes are one and three years
@@ -252,7 +324,6 @@ stargazer(lm.19,lm.20,lm.21,lm.22,lm.23,lm.24, type = "latex",
           covariate.labels=c("Experience",'Annualized Cumulative Experience'),
           omit.stat = c( "f","adj.rsq"),title="Robustness checks for duration of outcomes period of interest")
 
-library(purrr)
 ## Robustness checks: close wins
 close_wins_vector=c(thresholdClose=seq(0.001,0.03,by = 0.001))
 ##Revisar como puede haber diferencia de cero
@@ -265,24 +336,98 @@ robustness_close_wins=close_wins_vector%>%map_dfr(function(x) (createMultiPeriod
 
 
 robustness_close_wins=robustness_close_wins%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)
-p1<-ggplot(robustness_close_wins,aes(x=thresholdClose,y=estimate))+geom_line(color='darkblue',lwd=1.5)+geom_vline(xintercept = 0.005,color='red')+#geom_point(color='darkblue')+
-  geom_line(aes(y=lower95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+geom_line(aes(y=upper95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+ylim(0.01,0.03)+theme_bw()+xlab('Threshold for a close win (Percentage)')+ylab('Experience Estimate')
+p1<-ggplot(robustness_close_wins,aes(x=thresholdClose,y=estimate))+geom_line(color='darkblue',lwd=1.3)+geom_vline(xintercept = 0.005,color='red')+#geom_point(color='darkblue')+
+  geom_line(aes(y=lower95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+geom_line(aes(y=upper95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+ylim(0.01,0.03)+theme_bw()+
+  xlab('Threshold for a close win (Percentage)')+ylab('Experience Estimate')+annotate(geom="text", x=0.014, y=0.012, label="Main specification threshold",
+                                                                                        color="red")
 
-png(filename="C:\\repos\\learn-doing\\R\\Output\\robustness_threshold.png",width = 4, height = 3,
+png(filename="C:\\repos\\learn-doing\\R\\Output\\robustness_threshold.png",width = 5, height = 3.2,
     units = "in",res=1000)
 p1
 dev.off()
 
-?ivreg
-?geom_line
 
+## Effect of firm size
+load('C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')
+categories=read_xlsx(path = 'C:\\repos\\learn-doing\\data\\SII\\company_categories.xlsx',na = 'NA')%>%round()
+#CReate description of firms in file
+df.merge=df%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
+  mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(FechaInicio))%>%left_join(directory.simplifed,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))%>%filter(!is.na(tramo))
+df.summary.categories=df.merge%>%group_by(RutProveedor_clean)%>%summarise(totsales=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'])/length(unique(anocomercial)),numOfertas=length(Codigo)/length(unique(anocomercial)),tramo=max(tramo))%>%
+                      group_by(tramo)%>%summarise(numfirms=length(RutProveedor_clean),totsales.average=(mean(totsales,na.rm = T))/29000,numOffertas.mean=mean(numOfertas))
+colnames(df.summary.categories)<-c('Category','Sample Number of Firms','Sample Average Annual Sales (CLP UF)','Average Number of Annual Offers')
+df.summary.categories=df.summary.categories[,1:3]%>%left_join(categories[,1:3])%>%round()
+df.summary.categories%>%kable(format = 'latex',booktabs=T,table.envir = 'table',caption = 'Sample Firm descriptive statistics with statutory sales thresholds per category')%>%column_spec(column = 2:6,width='3.5cm')%>%
+  kable_styling(latex_options="scale_down",full_width = F)%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_tax_categories_data.txt")
+
+start=0
+split1=2
+split2=2
+#merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
+merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+load(file='C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')                           
+
+#Create merge with size dataset
+merged.wins.juridicas=merged.wins%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
+                mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(idperiodpost))
+merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplifed,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
+merged.wins.juridicas=merged.wins.juridicas%>%filter(!is.na(tramo)&tramo>1)%>%mutate(tramo.group=tramo)
+
+#Compare juridical-non juridical firms
+uk=merged.wins.juridicas%>%group_by(tramo,winspre)%>%count()
+ggplot(merged.wins.juridicas,aes(x=winspre))+geom_density()+facet_grid(~tramo)+scale_y_log10()
+ggplot(merged.wins.juridicas,aes(x=winspre,color=as.factor(tramo)))+geom_density()+xlim(0,10)+scale_y_log10()
+
+ggplot(merged.wins.juridicas,aes(x=(winspre+1)))+geom_histogram()+xlim(0,10)+scale_y_log10()+facet_grid(~tramo)+
+  scale_x_continuous(breaks = c(0,5,8),limits = c(0,10))+theme_bw()
+  
+ #Investigate separately by sizes
+tramos=unique(merged.wins.juridicas$tramo.group)
+results.ols.binary=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~((winspre>0))+idperiodpost))%>%tidy()%>%
+                                      filter(term=='winspre > 0TRUE')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='Linear Experience')%>%arrange(tramo)
+results.iv.binary=tramos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
+                                     filter(term=='winspre > 0TRUE')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='Linear Experience')%>%arrange(tramo)
+
+
+results.ols.linear=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~(winspre)+idperiodpost))%>%
+                                      coeftest(.,vcov = vcovHC(., type = "HC1"))%>%tidy()%>%filter(term=='winspre')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='OLS')%>%
+                                    arrange(tramo)%>%mutate(significance=ifelse(p.value<0.05,yes='Yes','No'))
+
+results.iv.linear=tramos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost))%>%tidy()%>%
+  filter(term=='winspre')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='IV')%>%arrange(tramo)%>%mutate(significance=ifelse(p.value<0.05,yes='Yes','No'))
+
+final.results=results.ols.linear%>%rbind(results.iv.linear)%>%select(estimate,p.value,tramo,n,model,significance)
+plotsize=ggplot(final.results,aes(x=tramo,y=estimate,fill=significance))+geom_bar(stat = 'identity',position = 'dodge')+
+  theme_bw()+theme_classic()+scale_x_continuous(breaks = seq(1,13),limits = c(2,13))+
+  facet_wrap(~model)+theme(legend.position = 'bottom')+scale_fill_grey()+labs(fill='Significant at 0.05')+scale_y_continuous(breaks = seq(-0.1,0.05,by = 0.01),limits = c(-0.1,0.05))+
+   xlab('Sales Category')
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plotsize.png",width = 7, height = 3.5,
+    units = "in",res=1000)
+plotsize
+dev.off()
+
+
+#Output
+results.ols.linear.output=results.ols.linear%>%select(tramo,model,n, estimate,significance,p.value)%>%mutate(across(where(is.numeric), function(x) round(x,3)))
+colnames(results.ols.linear.output)<-c('Sales group','Model','Observations','Experience Estimate','Significant at 0.05','p-value')
+results.ols.linear.output%>%kable(format = 'latex',booktabs=T,table.envir = 'table')%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_sizes_explinear1.txt")
+
+
+
+tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(tramo.group==x&tramo>1),formula=(probWinpost~winspre+idperiodpost))%>%tidy()%>%
+  filter(term=='winspre')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x&tramo>1))))%>%mutate(model='Linear Experience')%>%arrange(tramo)
+merged.wins.juridicas$numtrab
 
 merged.wins%>%ivreg(data=.,formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost))
+directory.simplifed$tramo
+merged.wins2[1:100,c('RutProveedor','RutProveedor_clean','tramo')]%>%as.data.frame()
+merged.wins2%>%group_by(is.na(tramo))%>%summarise(count=length(tramo),avmonto=mean(montoTotalpost),medmonto=median(montoTotalpost),totmonto=sum(montoTotalpost))%>%ungroup()%>%mutate(totmonto=totmonto/(sum(totmonto)))
 
 
 summary(ivreg(data=merged.wins,formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost)))
-                                                                                                                                           %>%(function(x) (lm(probWinpost~winspre+idperiodpost,data=x))%>%map(function(y) (tidy(y)%>%dplyr::select(term,p.value)%>%filter(term=='winspre')%>%mutate(thresholdClose=x)))))
-uk=close_wins_vector%>%map(function(x) createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x ))%>%map(function(x) lm(winspre+idperiodpost,data=x))
+(function(x) (lm(probWinpost~winspre+idperiodpost,data=x))%>%map(function(y) (tidy(y)%>%dplyr::select(term,p.value)%>%filter(term=='winspre')%>%mutate(thresholdClose=x)))))
+1uk=close_wins_vector%>%map(function(x) createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x ))%>%map(function(x) lm(winspre+idperiodpost,data=x))
 ak=uk%>%map(function(x) lm(probWinpost~winspre+idperiodpost,data=x))%>%map(function(y) (tidy(y)%>%dplyr::select(term,p.value)%>%filter(term=='winspre')%>%mutate(thresholdClose=x)))
 
 library(broom)
@@ -450,3 +595,20 @@ create_kable(prelim.df,"Sample Descriptive Statistics")
 nrow(merged.wins)
   
 
+# merged.wins$idperiodpost
+# est_binary=(summary(lm.4)$coefficients['winspre > 0TRUE', 2])
+# binary_low=confint(lm.4,)['winspre > 0TRUE',1]
+# binary_high=confint(lm.4,)['winspre > 0TRUE',2]
+# 
+# se_linear=(summary(lm.5)$coefficients['winspre', 2])
+# linear_low=confint(lm.5,)['winspre',1]
+# linear_high=confint(lm.5,)['winspre',2]
+# 
+# se_quadratic.1=(summary(lm.6)$coefficients['winspre', 2])
+# se_quadratic.2=(summary(lm.6)$coefficients['I(winspre^2', 2])
+# quadratic.1_low=confint(lm.5)['winspre',1]
+# quadratic_high=effects_binary+se_binary*2
+# 
+# confidence_binary=data.frame(binary_low,binary_high)%>%mutate(model='linear',type='confidence')
+# confidence_linear=data.frame(binary_low,binary_high)%>%mutate(model='linear',type='confidence')
+# confidece_qadratic=data.frame(binary_low,binary_high)%>%mutate(model='linear',type='confidence')

@@ -3,6 +3,8 @@ title: "Exploration"
 author: "Maximiliano Gonzalez"
 date: "07-04-2021"
 output: pdf_document
+header-includes:
+- \graphicspath{{"C:\\repos\\covid-measures-uml\\Presentation\\presentation-figure"}}
 ---
 
 ```{r setup2, include=T}

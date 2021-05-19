@@ -1,4 +1,55 @@
+library(readxl)
+createDirectoryofCompanies<-function(){
+directory=data.frame()
+for (h in seq_len(10)) {
+  a<-read_xlsx('C:\\repos\\mop-auctions\\DATA\\Tratados\\empresas\\PUB_Empresas_2005_2014_102020.xlsx',sheet = h)
+  directory=a%>%bind_rows(directory)
+  print(h)
+}
+
+colnames(directory)<-c('ano','rutcontratista','dv','razon','tramo','numtrab'
+                       ,'inicioact','fechaterm','tipoterm','tipocon','subtipocon',
+                       'tramocap','tramocapneg','rubro','subrubro','actividad','emp.region','emp.provincia','emp.comuna')
+
+
+directory.simplifed=directory%>%select(1,2,5,6,7,8,17,18,19)#group_by(rutcontratista)%>%filter(!is.na(inicioact))%>%slice(1)#%>%
+directory.simplifed=directory.simplifed%>%mutate(inicioact.year=year(inicioact))
+save(directory.simplifed,file='C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')                           
+}
+
+# function source: tm.r-forge.r-project.org/faq.html#Bigrams
+BigramTokenizer <- function(x) { 
+  unlist(
+    lapply(ngrams(words(x), 2), paste, collapse = " "), 
+    use.names = FALSE
+  ) 
+}
+
+
+
+
+
+
+
+
 #functions
+create_kable<-function(df,caption,numcols){
+  kable(
+    df, "latex",
+    booktabs = T,
+    linesep = "",
+    align = rep('c', numcols),
+    caption = caption
+  ) %>% kable_styling(latex_options = c("hold_position"))
+}
+create_kable_nocaption<-function(df,numcols){
+  kable(
+    df, "latex",
+    booktabs = T,
+    linesep = "",
+    align = rep('c', numcols),
+  ) %>% kable_styling(latex_options = c("hold_position"))
+}
 
 
 generateDfBidsSummary<-function(bids){
@@ -13,7 +64,7 @@ general.statistics=df%>%
   general.statistics.allbids=df%>%
     dplyr::select(Codigo,montoOferta)%>%
     group_by(Codigo)%>%pivot_longer(cols=montoOferta)%>%group_by(name)%>%summarise(N=length(Codigo),per_complete=length(name[!is.na(value)])/N,mean=mean(value),std=sd(value),
-                                                                                        max=max(value),min=min(value))%>%mutate(name=gsub(x=name,pattern = 'montoOferta',replacement = 'Bid'))
+                                                                                        max=max(value),min=min(value))%>%mutate(name=gsub(x=name,pattern = 'montoOferta',replacement = 'Bid (all)'))
   dif.statistics=df%>%left_join(df.difs)%>%
     filter(winner=='Seleccionada')%>%dplyr::select(Codigo,dif)%>%summarise(N=length(dif),per_complete=length(dif[!is.na(dif)])/N,mean=mean(dif,na.rm = T),std=sd(dif,na.rm = T),
                                                                            max=max(dif,na.rm = T),min=min(dif,na.rm = T))%>%mutate(name='dif')%>%as.data.frame()
@@ -22,7 +73,8 @@ general.statistics=rbind(general.statistics,dif.statistics,general.statistics.al
   
 general.statistics.output=general.statistics%>%arrange(name)%>%mutate(name=gsub(replacement = "Difference between 1st bid and 2nd (%)",pattern='dif',x=name),
                                                                      name=gsub(pattern = "montoOferta",replacement='Total Contract Amount',x=name),
-                                                                     name=gsub(pattern = "NumeroOferentes",replacement='Number of Bidders',x=name),
+                                                                     name=gsub(pattern = "Bid_Winning",replacement='Winning Bid',x=name),
+                                                                     name=gsub(pattern = "NumeroOferentes",replacement='Number of Bidders per Contract',x=name),
                                                                      name=gsub(pattern = "year",replacement='Year',x=name))%>%mutate_if(is.numeric, funs(as.character(signif(., 3))))
 
 df.wins=df%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)

@@ -7,6 +7,41 @@
 \chapter{Experience and Outcomes
 }
 The purpose of this chapter is to investigate how past experience affect current outcomes in the market for public construction projects. Section 1 outlines the empirical strategy, .
+
+\section{Data}
+Recall that our dataset consist in a set of bids submitted by firms in first-price, sealed bid auctions developed by the government in Chile between 2010 and 2020 for construction projects. The source and main characteristics of the dataset employed in the investigation were detailed in the previous section. Now we detail the specifics of the subset employed for the current sresearch question.
+
+ We further filter the dataset in the following way. we only consider contracts with and estimated price above 20.000.000 CLP to exclude extremely simple contracts, and proposals below 10.000.000 CLP as well. We also excluded contracts without an official estimate. We exclude non-single-item proposals. Finally, we exclude contracts with several proposals from a given contractor as we have no clear way of distinguisinh which was the last submitted one.
+
+As a result of the previous filtering steps we end with around 43,000 construction contracts, of the original sample of about 74,000 contracts. We excluded around 5\% of the original sample which had no  official estimate(which are excluded), and around 2\% which are not single-item proposals. By far the most important filtering step is excluding contracts with estimated values of less than 20.000.000 CLP, which excludes around 41\% of the original dataset (around 30,000 contracts). Finally, around a 1,200 contracts had multiple proposals from the same contractor. Note that some of the previous conditions overlapped among them.
+
+The table shows descriptive statistics for the final sample employed.
+\begin{table}[!h]
+
+\caption{Descriptive Statistics}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}[t]{cccccc}
+\toprule
+name & N & mean & std & max & min\\
+\midrule
+Bid (all) & 119000 & 1.73e+10 & 5.8e+12 & 2e+15 & 1e+07\\
+Winning Bid & 32200 & 2.27e+08 & 2.54e+09 & 2.47e+11 & 1e+07\\
+Difference between 1st bid and 2nd (\%) & 32200 & 0.0638 & 0.0859 & 0.984 & 0\\
+Number of Bidders per Contract & 32200 & 3.18 & 2.25 & 23 & 1\\
+Year & 32200 & 2020 & 2.89 & 2020 & 2010\\
+Offers made by Firm & 13800 & 8.64 & 18.5 & 846 & 1\\
+Win prob. by Firm & 13800 & 0.213 & 0.294 & 1 & 0\\
+Offers won by Firm & 13800 & 2.33 & 5.66 & 111 & 0\\
+\bottomrule
+\end{tabular}
+}
+\vskip 0.5mm
+{\raggedright \footnotesize \underline{Note:} The table shows sample summary statistics for the public construction dataset after filtering has been applied (see text). The difference between 1st(winning) and 2nd (runner-up) bid is only avalaible in approx. 70\% od the contracts, with two or more bidders. \par}
+\end{table}
+
+
+
 \section{Empirical Strategy}
 Our empirical strategy consists in a Regression Discontinuity design in which we compare the bidding outcomes of firms with varying degrees of previous experience in the market. Our main interest is the difference between the firms with some and the firms with none experience, but we consider also increasing measures of experience.
 
@@ -36,7 +71,7 @@ In order to identify the causal experience of experience on outcomes, we employ 
 In the next table we examine whether close wins are different from the population in several types of metrics. We can see that in most aspects these bids are not exceedingly different from the rest of the sample, so we expect that the only difference between these close wins and regular ones is the difference in bids and there are no underlying project characteristics that could explain them.
 
 \begin{table}[!h]
-\caption{Robustness checks for the duration of outcomes' computation period}
+\caption{Comparison of key statistics between close wins(<0.05\% difference between 1st and runner-up) and regular wins}
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}[t]{ccccc}
@@ -68,24 +103,140 @@ Our designs employs close wins in past periods to instrument total wins (experie
 
 \section{Main Results}
 
-The following table shows the results for specifications with the reduced form regression. It can be seen that .
+
+Table \ref{table1} shows the results for specifications with the reduced form regression and IV estimates for our first Experience computation measure (i.e. rolling two year periods) while Table \ref{tableExp2} shows the results for our way of computing experience (i.e. total annualized experience).
+
+In both tables, OLS results are in the first to third panels. The first panel shows that the OLS coefficient on the effect of having experience against not having experience (binary) is around 0.10, for both ways of computing experience. Our specification with linear returns on experience shows that experience renders a 0.02 and 0.05 increase in winning share per extra contract developed (for computations 1 and 2 respectively) . All the estimates for the experience-related coefficients are significant at 0.01 with robust standard errors.
+
+The IV results (fourth to sixth panels in each table) show that  the linear and quadratic estimates of the coefficients on experince generally stay within $\pm$ 0.03 of their OLS counterparts. There is however an increase in the binary measure of experience coefficient, for both computations of experience.
 
 \begin{table}[!htbp] \centering
-  \caption{Regression for OLS and IV specifications}
-  \label{}
+  \caption{Regression results for OLS and IV specifications where experience is computed in 2-year rolling periods}
+  \label{table1}
   \resizebox{\textwidth}{!}{
+  \begin{tabular}{@{\extracolsep{5pt}}lcccccc}
+  \\[-1.8ex]\hline
+  \hline \\[-1.8ex]
+   & \multicolumn{6}{c}{\textit{Dependent variable:}} \\
+  \cline{2-7}
+  \\[-1.8ex] & \multicolumn{6}{c}{Share of Contracts won in t} \\
+  \\[-1.8ex] & \multicolumn{3}{c}{\textit{OLS}} & \multicolumn{3}{c}{\textit{instrumental}} \\
+   & \multicolumn{3}{c}{\textit{}} & \multicolumn{3}{c}{\textit{variable}} \\
+  \\[-1.8ex] & (1) & (2) & (3) & (4) & (5) & (6)\\
+  \hline \\[-1.8ex]
+   Experience in (t-1) (Binary) & 0.119$^{***}$ &  &  & 0.178$^{***}$ &  &  \\
+    & (0.004) &  &  & (0.010) &  &  \\
+    & & & & & & \\
+   Experience in (t-1) (Linear) &  & 0.022$^{***}$ & 0.038$^{***}$ &  & 0.022$^{***}$ & 0.039$^{***}$ \\
+    &  & (0.002) & (0.001) &  & (0.001) & (0.003) \\
+    & & & & & & \\
+   (Experience in (t-1)) (Squared) &  &  & $-$0.001$^{***}$ &  &  & $-$0.001$^{***}$ \\
+    &  &  & (0.0001) &  &  & (0.0003) \\
+    & & & & & & \\
+   Constant & 0.260$^{***}$ & 0.276$^{***}$ & 0.270$^{***}$ & 0.245$^{***}$ & 0.276$^{***}$ & 0.269$^{***}$ \\
+    & (0.005) & (0.005) & (0.005) & (0.005) & (0.005) & (0.005) \\
+    & & & & & & \\
+  \hline \\[-1.8ex]
+  Fixed effects By period & Yes & Yes & Yes & Yes & Yes & Yes \\
+  Observations & 37,959 & 37,959 & 37,959 & 37,959 & 37,959 & 37,959 \\
+  R$^{2}$ & 0.035 & 0.028 & 0.034 & 0.028 & 0.028 & 0.034 \\
+  Residual Std. Error & 0.316 (df = 37950) & 0.317 (df = 37950) & 0.316 (df = 37949) & 0.317 (df = 37950) & 0.317 (df = 37950) & 0.316 (df = 37949) \\
+  \hline
+  \hline \\[-1.8ex]
+  \textit{Note:}  & \multicolumn{6}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
+  \end{tabular}
+
 }
 
 \end{table}
 
-The next table shows the results with a different measure of experience.
+The next table shows the  results with a different measure of experience.
+\begin{table}[!htbp] \centering
+  \caption{Regression results for OLS and IV specifications where experience is computed as past annualized contracts won.}
+  \label{tableExp2}
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{@{\extracolsep{5pt}}lcccccc}
+  \\[-1.8ex]\hline
+  \hline \\[-1.8ex]
+   & \multicolumn{6}{c}{\textit{Dependent variable:}} \\
+  \cline{2-7}
+  \\[-1.8ex] & \multicolumn{6}{c}{Share of Contracts won in t} \\
+  \\[-1.8ex] & \multicolumn{3}{c}{\textit{OLS}} & \multicolumn{3}{c}{\textit{instrumental}} \\
+   & \multicolumn{3}{c}{\textit{}} & \multicolumn{3}{c}{\textit{variable}} \\
+  \\[-1.8ex] & (1) & (2) & (3) & (4) & (5) & (6)\\
+  \hline \\[-1.8ex]
+   Experience in (t-1) (Binary) & 0.109$^{***}$ &  &  & 0.168$^{***}$ &  &  \\
+    & (0.004) &  &  & (0.010) &  &  \\
+    & & & & & & \\
+   Experience in (t-1) (Linear) &  & 0.059$^{***}$ & 0.107$^{***}$ &  & 0.057$^{***}$ & 0.108$^{***}$ \\
+    &  & (0.016) & (0.004) &  & (0.004) & (0.012) \\
+    & & & & & & \\
+   (Experience in (t-1)) (Squared) &  &  & $-$0.013$^{***}$ &  &  & $-$0.013$^{***}$ \\
+    &  &  & (0.001) &  &  & (0.003) \\
+    & & & & & & \\
+   Constant & 0.288$^{***}$ & 0.289$^{***}$ & 0.285$^{***}$ & 0.277$^{***}$ & 0.290$^{***}$ & 0.285$^{***}$ \\
+    & (0.005) & (0.006) & (0.005) & (0.006) & (0.005) & (0.005) \\
+    & & & & & & \\
+  \hline \\[-1.8ex]
+  Fixed effects By period & Yes & Yes & Yes & Yes & Yes & Yes \\
+  Observations & 36,844 & 36,844 & 36,844 & 36,844 & 36,844 & 36,844 \\
+  R$^{2}$ & 0.032 & 0.027 & 0.031 & 0.025 & 0.027 & 0.031 \\
+  Residual Std. Error & 0.321 (df = 36835) & 0.322 (df = 36835) & 0.321 (df = 36834) & 0.322 (df = 36835) & 0.322 (df = 36835) & 0.321 (df = 36834) \\
+  \hline
+  \hline \\[-1.8ex]
+  \textit{Note:}  & \multicolumn{6}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
+  \end{tabular}
+
+}
+
+\end{table}
+
+
+There does not seems to be conclusive evidence regarding different results when employing quadratic rather than linear functional forms. For example, Figure \ref{fig:fit_sample} shows the mean confidence intervals, employing as period fixed effects the last period in the sample. It can be seen that the fitted total predicted value does not seen to vary greatly from the linear to the quadratic specification.
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{fit_sample.png}
+        \caption{ \small Predicted values for the mean of the outcome variable (share of contracts won), by total experience accrued in the previous period. We employ fixed effects as in the last period of the dataset.}
+        \label{fig:fit_sample}
+    \end{figure}
+
+
+
 
 \section{Experience and Type of Project}
 
 \section{Experience and Firm Size}
+%In the literature about industrial organization and productivity, it has been studied the relation between firm size, innovation, and productivity. These investigations have concluded that smaller firms are more productive than bigger firms, however they are also more risky.
+An important variable in the investigation of the effect of experience should be firm size. First, it is possible that there are different levels of cost efficiency between small and big firms. As arguably bigger firms should have more experience on average, this could skew our estimates. A second concern is that we might expect experience to matter more for smaller firms, if there is a decreasing or "maximum" level effect of experience on future outcomes.
 
+If our identification strategy is correct, firm size should not be a problem for the reliability of the estimates obtained in the previous section, while the effect of experience by size is still unclear. In this section we attempt to develop specific estimates of the effect of experience for different levels of firm size. Developing intra-category estimates serves as both as an identification strategy and as  robustness check of our previous findings.
+
+ We follow the following approach. First we select a subsample from our original dataset which we can classify acoording to annual sales.  We obtain intra-category estimates of the effect of experience and interpret them. Finally, we discuss the results and some of the empirical challenges of controlling for size.
+
+In order to study and control for firm size we employ a publicily avalaible classification of firms according to their annual sales, maintained by the chilenan Tax Bureau Office (\textit{Servicio de Impuestos Internos}). Firms are categorized in 13 categories. Category number one  corresponds to 'tax data not enough to classify', but from catoegory two upo to thirteen, each category is defined by an increasing level of minimum yearly sales.  However, this data is avalaible only for non-individual firms. After merging with our initial sample,we are left with around 30\% of our original firm sample. Table \ref{tab:salescategories} shows how many firms do we have in our sample for each category, average annual sales for these firms, and statutory annual sales thresholds for each category. Note that we have much more firms at intermediate categories than extreme ones.
+
+% Table generated by script
+\input{C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt}
+
+We estimate the effect of linear experience with our first measure for each category of firms by OLS and IV. Specifications are the same as equation with period fixed effects. The results are presented graphically in \ref{fig:sizeestimates} (the coefficient for category two is omitted because it was much bigger than the rest and distorted the visualiztion). Full results are avalaible at the Appendix.
+
+We only obtain significant effects at intermediate sales categories' levels. However, everytime a coefficient is significant it is also positive. The results are not supreising given i) the reduced sample we are employing ii) the expected reduced importance of experience for very big firms.
+
+\begin{figure}
+  \includegraphics[scale=0.85]{plotsize.png}
+  \caption{Experience coefficient by tax sales category}
+  \label{fig:sizeestimates}
+\end{figure}
+
+Controlling for firm size is challenging mainly because of statistical reasons. First, firm size distribution in the sample is not uniform as there are less very small and very big firms. Second, the within-size distribution of experience within extreme categories has very few observations with more than five contracts of experience. Third, this sample is already smaller due to filtering single-person companies. Both factors make it hard to obtain per-category estimates with enough statistical power experience.
+
+%\resizebox{\textwidth}{!}{%
+%\input{C:/repos/learn-doing/thesis/tables/table_sizes_explinear1.txt}
+%}%
 \section{Robustness checks}
 Several of our choices in the previous section admit several arbitrary choices. In this section we consider several extensions in parameters which could influence the results obtained before. We consider robustness checks in the following areas:
+
 \subsection{Periods of outcomes}
 In the previous section, we measured outcomes occuring in two year periods. We now consider outcomes occuring in one and three year periods as well. Note that in this part we only vary the length of the period where outcomes are computed and we maintain the procedure to compute experience as before. Table shows outcomes computed for periods of 1, 2(the original specifications) and 3 years. The first three columns employ the experience measured in the two-period previous to the outcome period while the 3-6 compute experience as annualized cumulative experience as discussed in the previous section.
 
@@ -124,7 +275,11 @@ Residual Std. Error & 0.316 (df = 38730) & 0.338 (df = 29405) & 0.305 (df = 4344
 
 
 \subsection{Periods of experience computation}
-Periods of experience computation: for the first measure of experience, we consider computing experience over 1-year periods, since before we only considered two-year periods.
+For the first measure of experience, we consider computing experience over 1-year periods. The original specification considered computing experience in two-year rolling periods.
+
+In practice, considering longer periods to compute outcomes decreases the variance of th
+
+
 
 
 
@@ -134,7 +289,7 @@ Periods of experience computation: for the first measure of experience, we consi
 \subsection{Definition of a close win}
 In the previous section, we considered close wins as wins where the winning contractor submitted a bid that was not more than 0.05\% below the runner up. Now, we sensibilize our main coefficient to different values of this parameter.
 
- The plot in   displays the coefficient of interest considering the two types of experience measures' considered. The specifications consider linear effect of experience and fixed effects by period. It can be seen that results are robust to a range of the threshold for considering a win as a close wins. Note that the results remain significant across the different values of the parameters, even when  employ our lower bound for the threshold(0.01\%) where we have less close wins. As expected, the standard error increases towards this bound while but decreases towards  less stringent definitions of close wins (because of the increase in power in the instrument). Finally, note across that all confidence intervals at 95\% remain within 0.0180 and 0.0275.
+ The plot in  \ref{fig:close_wins_robust} displays the coefficient of interest in the IV specification as we vary the threshold for a close win. The specifications consider linear effect of experience and fixed effects by period. It can be seen that results are robust to a range of the threshold for considering a win as a close wins. Note that the results remain significant across the different values of the parameters, even when  employ our lower bound for the threshold(0.01\%) where we have less close wins. As expected, the standard error increases towards this bound while but decreases towards  less stringent definitions of close wins (because of the increase in power in the instrument). Finally, note across that all confidence intervals at 95\% remain within 0.0180 and 0.0275.
 
  \begin{figure}[H]
          \centering

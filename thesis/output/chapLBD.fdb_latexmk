@@ -1,9 +1,10 @@
 # Fdb version 3
-["pdflatex"] 1620163132 "chapLBD.tex" "output/chapLBD.pdf" "chapLBD" 1620163133
+["pdflatex"] 1620828263 "chapLBD.tex" "output/chapLBD.pdf" "chapLBD" 1620828265
+  "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmbx10.tfm" 1136765053 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmti10.tfm" 1136765053 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
   "C:/Users/maxgo/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1613167785 10010370 47465fa8401c76ebdeea6336661b8afa ""
-  "chapLBD.tex" 1620163131 15747 38985d5b0eaacc2bc842ee9f9f97e66a ""
-  "output/chapLBD.aux" 1620163043 2424 72962a6f209466b42a6c0fae67100644 ""
+  "chapLBD.tex" 1620828263 21943 d67584f5ad4c28e015da285212f68bfb ""
+  "output/chapLBD.aux" 1620828023 2983 f3a977e24804764630a364255d176e94 ""
   (generated)
-  "output/chapLBD.log"
   "output/chapLBD.pdf"
+  "output/chapLBD.log"

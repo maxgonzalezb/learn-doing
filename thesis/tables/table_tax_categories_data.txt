@@ -1,0 +1,27 @@
+\begin{table}
+
+\caption{Sample Firm descriptive statistics with statutory sales thresholds per category}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{r>{\raggedleft\arraybackslash}p{3.5cm}>{\raggedleft\arraybackslash}p{3.5cm}>{\raggedleft\arraybackslash}p{3.5cm}>{\raggedleft\arraybackslash}p{3.5cm}>{}p{3.5cm}}
+\toprule
+Category & Number of Firms & Sample Average Annual Sales (CLP UF) & Statutory Sales Minimum (CLP UF) & Statutotry Sales Maximum (CLP UF)\\
+\midrule
+1 & 98 & 402 & NA & NA\\
+2 & 107 & 453 & 0 & 200\\
+3 & 139 & 4317 & 200 & 600\\
+4 & 496 & 661 & 600 & 2400\\
+5 & 541 & 856 & 2400 & 5000\\
+\addlinespace
+6 & 636 & 1598 & 5000 & 10000\\
+7 & 852 & 2163 & 10000 & 25000\\
+8 & 519 & 4567 & 25000 & 50000\\
+9 & 301 & 9941 & 50000 & 100000\\
+10 & 197 & 12449 & 100000 & 200000\\
+\addlinespace
+11 & 153 & 22209 & 200000 & 600000\\
+12 & 36 & 57219 & 600000 & 1000000\\
+13 & 72 & 70506 & 1000000 & NA\\
+\bottomrule
+\end{tabular}}
+\end{table}
