@@ -103,6 +103,15 @@ Our designs employs close wins in past periods to instrument total wins (experie
 
 \section{Main Results}
 
+First we explore graphically the relationship between experience and outcomes. Figure \ref{fig:plotresults_both} , Panel A, shows the relationship between experience and outcomes for firms. While we can see an increase in the average share of contracts won, the sample contains heteregeneity, as per the wide error bars(which show interquartile range). Panel B contains only two types of firms: firms that either bid but not won contracts in period $(t-1)$ or firms which won one or more close contracts in period $t$.
+
+\begin{figure}
+  \includegraphics[scale=0.65]{plotwins_both.png}
+  \caption{Relationship between contracts won on $t-1$ and mean winning probability across contractors in $t$.}
+  \label{fig:plotresults_both}
+  \vskip 0.5mm
+  { \footnotesize \underline{Note:} The plots show the mean across firms of the number of contracts won out of the number of contracts bid for in period $t$ (in the $y$-axis), against experience accrued in period $(t-1)$ in the $x$-axis. $t$ and $t-1$ correspond to two periods of two years each. Since the data contains ten years, the observations correspond to outcomes computed for eight outcome periods.  Only $x$ for which the number of observations is greater than ten are shown. Error bars correspond to the interquartile range. Panel A: all sample observations are considered. Panel B:  shows results for a subsample where the only contractors considered are those who either i) won closely one or more close contracts  on period 1 or ii) did bid but not win a contract in period 1\par}
+\end{figure}
 
 Table \ref{table1} shows the results for specifications with the reduced form regression and IV estimates for our first Experience computation measure (i.e. rolling two year periods) while Table \ref{tableExp2} shows the results for our way of computing experience (i.e. total annualized experience).
 
@@ -110,9 +119,11 @@ In both tables, OLS results are in the first to third panels. The first panel sh
 
 The IV results (fourth to sixth panels in each table) show that  the linear and quadratic estimates of the coefficients on experince generally stay within $\pm$ 0.03 of their OLS counterparts. There is however an increase in the binary measure of experience coefficient, for both computations of experience.
 
+A concerning result is the low $R^2$, which shows that altough the effect of experience on the mean outcome is significant, there is much variability among firms which is not accounted by experience. This points towards a market more competitive than was originally hypothesized.
+
 \begin{table}[!htbp] \centering
   \caption{Regression results for OLS and IV specifications where experience is computed in 2-year rolling periods}
-  \label{table1}
+  \label{tab:table_exp_1}
   \resizebox{\textwidth}{!}{
   \begin{tabular}{@{\extracolsep{5pt}}lcccccc}
   \\[-1.8ex]\hline
@@ -205,6 +216,25 @@ There does not seems to be conclusive evidence regarding different results when 
 
 
 \section{Experience and Type of Project}
+Given our previous results a natural concern is if whether all projects exhibits the same returns to experience or if experience is more important in certain types of works. In this section we replicate the previous analysis by disaggregating by type of project. In order to do this, we classify certain projects according to their description, then run similar regressions as in the last section, and present the results.
+
+First we describe briefly how we construct categories for the prrojects and which ones are avalaible for the analysis. Our original dataset includes a name variable which describes the type of project with some extent. We extracted this name variable and looked for i) common single words (unigrams) and ii) common pairs of words (bigrams). We select the most common unigrams and bigrams and map similar words and bigrams to project categories. The full categorization mapping can be found in the Appendix.
+
+We end up with contract classified under categories. Importantly, if a contract includes unigrams or bigrams in its name belonging to more than one category, it is included in the analysis of both categories. The number of contracts, average amount, average number of bidders for each category is shown in Table \ref{}. We can see that the biggest categories of projects are school-related, vecinal works, parks and pavements (including sidewalks). The Appendix contains more details on the types of projects included in each category.
+
+%\input{C:/repos/learn-doing/thesis/tables/table_types_project_stats.txt}
+
+Next we run similar regressions as in the previous section for each project type, considering as our dataset only the contracts in that project category . We employ the same specification of with a linear functional form on experience and period fixed effects, and our first measure of experience. The results are presente in Figure \ref{fig:typeestimates}he Appendix includes more detailed tables with full regression results for each sproject type. A few results stand out. First, we get the biggest coefficients on experience on graveyard projects, footbridges and housing. The first two should be almost exclusively procured by government units. Housing was also one of our hypothsized types of projects which should have high coefficients. At the bottom of the distribution, interestingly, we find daycares, sports courts, hospitals, and schools. The results could be explained because these projects are mostly composed of normal construction works which also have private close substitutes.
+
+The results on hospitals should be surprising, as they are usually very big projects with a lot of specific knwoledge required.
+
+%\input{C:/repos/learn-doing/thesis/tables/table_types_project_ols.txt}
+
+\begin{figure}
+  \includegraphics[scale=0.75]{plotTypes.png}
+  \caption{Experience coefficient by type of project.}
+  \label{fig:typeestimates}
+\end{figure}
 
 \section{Experience and Firm Size}
 %In the literature about industrial organization and productivity, it has been studied the relation between firm size, innovation, and productivity. These investigations have concluded that smaller firms are more productive than bigger firms, however they are also more risky.
@@ -223,13 +253,18 @@ We estimate the effect of linear experience with our first measure for each cate
 
 We only obtain significant effects at intermediate sales categories' levels. However, everytime a coefficient is significant it is also positive. The results are not supreising given i) the reduced sample we are employing ii) the expected reduced importance of experience for very big firms.
 
-\begin{figure}
-  \includegraphics[scale=0.85]{plotsize.png}
-  \caption{Experience coefficient by tax sales category}
-  \label{fig:sizeestimates}
-\end{figure}
-
 Controlling for firm size is challenging mainly because of statistical reasons. First, firm size distribution in the sample is not uniform as there are less very small and very big firms. Second, the within-size distribution of experience within extreme categories has very few observations with more than five contracts of experience. Third, this sample is already smaller due to filtering single-person companies. Both factors make it hard to obtain per-category estimates with enough statistical power experience.
+
+\newpage
+\input{C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt}
+
+
+%\begin{figure}
+%  \includegraphics[scale=0.85]{plotsize.png}
+%  \caption{Experience coefficient by tax sales category}
+%  \label{fig:sizeestimates}
+%\end{figure}
+
 
 %\resizebox{\textwidth}{!}{%
 %\input{C:/repos/learn-doing/thesis/tables/table_sizes_explinear1.txt}
@@ -293,7 +328,12 @@ In the previous section, we considered close wins as wins where the winning cont
 
  \begin{figure}[H]
          \centering
-         \includegraphics[scale=1]{robustness_threshold.png}
+         \includegraphics[scale=0.85]{robustness_threshold.png}
          \caption{Robustness analysis for threshold of close wins}
          \label{fig:close_wins_robust}
+
+  \vskip 0.5mm
+  {\justifying\footnotesize\underline{Note:} The plot shows the coefficient on experience as in the specification of Panel (5) of table \ref{tab:table_exp_1}, that is, the dependent variable is the share of contracts won in period $t$ and the dependent variable is linear experience, i.e. number of contracts won in period $(t-1)$, instrumented with close wins in period $(t-1)$. The $x$-axis shows how the coefficient varies with the threshold for what is considered a close win.\par}
+
+
      \end{figure}

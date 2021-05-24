@@ -1,4 +1,5 @@
 library(readxl)
+library(VFP)
 createDirectoryofCompanies<-function(){
 directory=data.frame()
 for (h in seq_len(10)) {
@@ -18,12 +19,12 @@ save(directory.simplifed,file='C:\\repos\\learn-doing\\data\\directorySimplifedD
 }
 
 # function source: tm.r-forge.r-project.org/faq.html#Bigrams
-BigramTokenizer <- function(x) { 
-  unlist(
-    lapply(ngrams(words(x), 2), paste, collapse = " "), 
-    use.names = FALSE
-  ) 
-}
+  BigramTokenizer <- function(x) { 
+    unlist(
+      lapply(ngrams(words(x), 2), paste, collapse = " "), 
+      use.names = FALSE
+    ) 
+  }
 
 
 
@@ -59,14 +60,14 @@ df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(monto
 
 general.statistics=df%>%
     filter(winner=='Seleccionada')%>%dplyr::select(Codigo,montoOferta,NumeroOferentes,year)%>%
-    group_by(Codigo)%>%pivot_longer(cols=montoOferta:year)%>%group_by(name)%>%summarise(N=length(Codigo),per_complete=length(name[!is.na(value)])/N,mean=mean(value),std=sd(value),
+    group_by(Codigo)%>%pivot_longer(cols=montoOferta:year)%>%group_by(name)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(name[!is.na(value)])/N,mean=round(mean(value),4),std=sd(value),
                                                                                           max=max(value),min=min(value))%>%mutate(name=gsub(x=name,pattern = 'montoOferta',replacement = 'Bid_Winning'))
   general.statistics.allbids=df%>%
     dplyr::select(Codigo,montoOferta)%>%
-    group_by(Codigo)%>%pivot_longer(cols=montoOferta)%>%group_by(name)%>%summarise(N=length(Codigo),per_complete=length(name[!is.na(value)])/N,mean=mean(value),std=sd(value),
+    group_by(Codigo)%>%pivot_longer(cols=montoOferta)%>%group_by(name)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(name[!is.na(value)])/N,mean=mean(value),std=sd(value),
                                                                                         max=max(value),min=min(value))%>%mutate(name=gsub(x=name,pattern = 'montoOferta',replacement = 'Bid (all)'))
   dif.statistics=df%>%left_join(df.difs)%>%
-    filter(winner=='Seleccionada')%>%dplyr::select(Codigo,dif)%>%summarise(N=length(dif),per_complete=length(dif[!is.na(dif)])/N,mean=mean(dif,na.rm = T),std=sd(dif,na.rm = T),
+    filter(winner=='Seleccionada')%>%dplyr::select(Codigo,dif)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(dif[!is.na(dif)])/N,mean=mean(dif,na.rm = T),std=sd(dif,na.rm = T),
                                                                            max=max(dif,na.rm = T),min=min(dif,na.rm = T))%>%mutate(name='dif')%>%as.data.frame()
 general.statistics=rbind(general.statistics,dif.statistics,general.statistics.allbids)
   
@@ -75,7 +76,7 @@ general.statistics.output=general.statistics%>%arrange(name)%>%mutate(name=gsub(
                                                                      name=gsub(pattern = "montoOferta",replacement='Total Contract Amount',x=name),
                                                                      name=gsub(pattern = "Bid_Winning",replacement='Winning Bid',x=name),
                                                                      name=gsub(pattern = "NumeroOferentes",replacement='Number of Bidders per Contract',x=name),
-                                                                     name=gsub(pattern = "year",replacement='Year',x=name))%>%mutate_if(is.numeric, funs(as.character(signif(., 3))))
+                                                                     name=gsub(pattern = "year",replacement='Year',x=name))%>%mutate_if(is.numeric, funs(ifelse(.>1000&.<10000,yes=as.character(signif(., 4)),no=as.character(signif(., 3)))))
 
 df.wins=df%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas)
   
@@ -91,6 +92,7 @@ firm.statistics.output=firm.statistics%>%mutate(name=gsub(replacement = "Offers 
   
 
 final.statistics=rbind(general.statistics.output,firm.statistics.output)
+colnames(final.statistics)[3]<-'Complete Cases'
 return(final.statistics)  
 
   
@@ -188,6 +190,16 @@ while (cutoff2<=maxcutoff) {
 return(multiperiod.mergedwins)
 
 }
+# contractors.statistics=df%>%group_by(RutProveedor,NombreProveedor)%>%summarise(firstYear=min(year),
+#                                                                                lastYear=max(year),
+#                                                                                life=lastYear-firstYear,
+#                                                                                firstYearAw=min(year[CantidadAdjudicada>=1]),
+#                                                                                uniqueOrganism=length(unique(NombreOrganismo)),
+#                                                                                uniqueUnits=length(unique(NombreUnidad)),
+#                                                                                tot=length(Codigo),
+#                                                                                totAdj=length(Codigo[CantidadAdjudicada>=1]),
+#                                                                                montoTot=sum(montoOferta[CantidadAdjudicada>=1]))%>%arrange(-montoTot)%>%ungroup()%>%
+#   mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0))
 
 
   

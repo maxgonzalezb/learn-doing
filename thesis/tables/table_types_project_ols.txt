@@ -1,0 +1,37 @@
+\begin{table}
+
+\caption{Effect of experience by type of project}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.0cm}>{}p{4.0cm}}
+\toprule
+Category & estimate & std.error & statistic & p.value & model\\
+\midrule
+OBRAS VECINALES & 0.064 & 0.00534 & 12 & 7.17e-33 & OLS\\
+LICEOS Y ESCUELAS & 0.0451 & 0.00481 & 9.37 & 8.62e-21 & OLS\\
+CANCHA DEPORTIVA & 0.0341 & 0.00429 & 7.95 & 2.13e-15 & OLS\\
+PARQUES Y PLAZAS & 0.0572 & 0.00512 & 11.2 & 8.11e-29 & OLS\\
+PAVIMENTOS & 0.0227 & 0.00399 & 5.69 & 1.36e-08 & OLS\\
+\addlinespace
+ESTADIO & 0.0577 & 0.0121 & 4.77 & 1.89e-06 & OLS\\
+SALUD VECINAL & 0.0262 & 0.0153 & 1.71 & 0.0881 & OLS\\
+AGUA POTABLE RURAL & 0.091 & 0.0173 & 5.27 & 1.55e-07 & OLS\\
+OBRAS URBANAS & 0.0479 & 0.0119 & 4.04 & 5.49e-05 & OLS\\
+VIVIENDA & 0.121 & 0.0167 & 7.26 & 6.92e-13 & OLS\\
+\addlinespace
+HOSPITAL & -0.00425 & 0.0141 & -0.301 & 0.764 & OLS\\
+TECHO & 0.038 & 0.0301 & 1.26 & 0.207 & OLS\\
+ALCANTARILLADO & 0.0666 & 0.0365 & 1.83 & 0.0679 & OLS\\
+CEMENTERIO & 0.269 & 0.0589 & 4.57 & 5.39e-06 & OLS\\
+PUENTE & 0.0533 & 0.0274 & 1.94 & 0.0524 & OLS\\
+\addlinespace
+REFUGIO & 0.0571 & 0.0478 & 1.19 & 0.233 & OLS\\
+MURALLAS & 0.102 & 0.101 & 1.01 & 0.312 & OLS\\
+AGUAS LLUVIAS & 0.0544 & 0.0653 & 0.834 & 0.405 & OLS\\
+PISCINA & -0.000461 & 0.109 & -0.00421 & 0.997 & OLS\\
+PINTURA & -0.0165 & 0.0384 & -0.43 & 0.667 & OLS\\
+\addlinespace
+MEDIALUNA & 0.175 & 0.115 & 1.52 & 0.129 & OLS\\
+\bottomrule
+\end{tabular}}
+\end{table}

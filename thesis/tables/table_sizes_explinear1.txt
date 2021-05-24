@@ -1,22 +1,23 @@
 \begin{table}
+
 \begin{tabular}{rlrrlr}
 \toprule
 Sales group & Model & Observations & Experience Estimate & Significant at 0.05 & p-value\\
 \midrule
-2 & Linear Experience & 223 & 0.017 & No & 0.697\\
-3 & Linear Experience & 308 & -0.013 & No & 0.335\\
-4 & Linear Experience & 1041 & 0.005 & No & 0.688\\
-5 & Linear Experience & 1016 & 0.019 & Yes & 0.036\\
-6 & Linear Experience & 1185 & 0.015 & Yes & 0.001\\
+2 & OLS & 223 & 0.017 & No & 0.697\\
+3 & OLS & 308 & -0.013 & No & 0.335\\
+4 & OLS & 1041 & 0.005 & No & 0.688\\
+5 & OLS & 1016 & 0.019 & Yes & 0.036\\
+6 & OLS & 1185 & 0.015 & Yes & 0.001\\
 \addlinespace
-7 & Linear Experience & 1640 & 0.020 & Yes & 0.000\\
-8 & Linear Experience & 883 & 0.016 & Yes & 0.000\\
-9 & Linear Experience & 556 & 0.018 & Yes & 0.000\\
-10 & Linear Experience & 358 & 0.014 & Yes & 0.001\\
-11 & Linear Experience & 290 & 0.003 & No & 0.590\\
+7 & OLS & 1640 & 0.020 & Yes & 0.000\\
+8 & OLS & 883 & 0.016 & Yes & 0.000\\
+9 & OLS & 556 & 0.018 & Yes & 0.000\\
+10 & OLS & 358 & 0.014 & Yes & 0.001\\
+11 & OLS & 290 & 0.003 & No & 0.590\\
 \addlinespace
-12 & Linear Experience & 66 & 0.004 & No & 0.813\\
-13 & Linear Experience & 151 & -0.002 & No & 0.826\\
+12 & OLS & 66 & 0.004 & No & 0.813\\
+13 & OLS & 151 & -0.002 & No & 0.826\\
 \bottomrule
 \end{tabular}
 \end{table}
