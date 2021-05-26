@@ -116,8 +116,8 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   period2=paste0(cutoff1,"/",cutoff2)
   
   #Add A Pareto Variable
-  df.period1.wins=df.period1.wins%>%ungroup()%>%mutate(idperiod=period1)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(rank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(rank<=0.20,yes='BIGF',no='NONBIGF'))
-  df.period2.wins=df.period2.wins%>%ungroup()%>%mutate(idperiod=period2)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(rank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(rank<=0.20,yes='BIGF',no='NONBIGF'))
+  df.period1.wins=df.period1.wins%>%ungroup()%>%mutate(idperiod=period1)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(sizerank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(sizerank<=0.20,yes='BIGF',no='NONBIGF'))
+  df.period2.wins=df.period2.wins%>%ungroup()%>%mutate(idperiod=period2)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(sizerank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(sizerank<=0.20,yes='BIGF',no='NONBIGF'))
   
   
    ##Calculate narrow victories
@@ -128,7 +128,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
 
   df.period1.wins.close=df.period1.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
-  df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
+  df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspost_close=n)
   
   merged.wins=df.period2.wins%>%left_join(df.period1.wins,suffix = c('post','pre'),by = 'RutProveedor')%>%mutate_if(is.numeric, replace_na, 0)%>%filter(ofertaspost >0)%>%
     mutate(winsprebin=as.numeric(winspre>0))%>%left_join(df.period1.wins.close,by = 'RutProveedor')%>%mutate(winspre_close= replace_na(winspre_close,0))
@@ -140,7 +140,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   
 }
 
-createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005){
+createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005,ranks=FALSE){
 i=0
 maxcutoff=ymd(max(df$FechaInicio))
 cutoff2=ymd(min(df$FechaInicio))
@@ -148,8 +148,13 @@ multiperiod.mergedwins=data.frame()
 while (cutoff2<=maxcutoff) {
   #Do stuff
   newstart=start+i
-   two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose)
-   ##Refresh
+  if(ranks==FALSE){ 
+  two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose)
+  }
+  if(ranks==TRUE){
+  two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose)
+   }
+  ##Refresh
    cutoff0=ymd(min(df$FechaInicio)) + years(i)
    cutoff1=cutoff0 + years(split1)
    cutoff2=cutoff1 + years(split2)
@@ -201,6 +206,54 @@ return(multiperiod.mergedwins)
 #                                                                                montoTot=sum(montoOferta[CantidadAdjudicada>=1]))%>%arrange(-montoTot)%>%ungroup()%>%
 #   mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0))
 
-
+createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClose=0.005){
+  cutoff0=ymd(min(df$FechaInicio)) + years(start)
+  cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
+  cutoff2=cutoff1 + years(split2)
+  df.period1=df%>%filter(FechaInicio<cutoff1&FechaInicio>=cutoff0)
+  df.period2=df%>%filter(FechaInicio>=cutoff1&FechaInicio<=cutoff2)
+  
+  #Create winning statistics of each period
+  ##Create Winning Statistics for first period
+  df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],closeRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=1.08)))
+  df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  
+  #Add an ID column
+  period1=paste0(cutoff0,"/",cutoff1)
+  period2=paste0(cutoff1,"/",cutoff2)
+  
+  #Add A Pareto Variable
+  df.period1.wins=df.period1.wins%>%ungroup()%>%mutate(idperiod=period1)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(sizerank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(sizerank<=0.20,yes='BIGF',no='NONBIGF'))
+  df.period2.wins=df.period2.wins%>%ungroup()%>%mutate(idperiod=period2)%>%mutate(perc=montoTotal/sum(montoTotal))%>%arrange(-perc)%>%mutate(sizerank=(seq_len(length(perc))/length(perc)),acum=cumsum(perc),paretoInd=ifelse(sizerank<=0.20,yes='BIGF',no='NONBIGF'))
+  
+  
+  ##Calculate narrow victories
+  df.period1.difs=df.period1%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes))%>%left_join(df.difs)
+  df.period2.difs=df.period2%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes))%>%left_join(df.difs)
+  #df.period1.difs=df.period1%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(RutProveedor=RutProveedor[winner=='Seleccionada'],NumeroOferentes=max(NumeroOferentes))
+  df.period1.difs.close=(df.period1.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
+  df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
+  
+  df.period1.wins.close=df.period1.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
+  df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspost_close=n)
+  
+  ##Calculate narrow ranking victories
+  df.period1.difs.closerank=(df.period1.difs)%>%filter(closeRanking==1)%>%group_by(RutProveedor)%>%count()%>%rename(winspre_closerank=n)%>%select(RutProveedor,winspre_closerank)
+  df.period2.difs.closerank=(df.period2.difs)%>%filter(closeRanking==1)%>%group_by(RutProveedor)%>%count()%>%rename(winspost_closerank=n)%>%select(RutProveedor,winspost_closerank)
+  
+  merged.wins=df.period2.wins%>%left_join(df.period1.wins,suffix = c('post','pre'),by = 'RutProveedor')%>%mutate_if(is.numeric, replace_na, 0)%>%filter(ofertaspost >0)%>%
+    mutate(winsprebin=as.numeric(winspre>0))%>%
+    left_join(df.period1.wins.close,by = 'RutProveedor')%>%
+    left_join(df.period1.difs.closerank,by = 'RutProveedor')%>%
+    mutate(winspre_close= replace_na(winspre_close,0))%>%
+    mutate(winspre_closerank= replace_na(winspre_closerank,0))
+  
+  
+  
+  return(merged.wins)
+  
+  
+}
   
 

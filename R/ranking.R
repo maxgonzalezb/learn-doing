@@ -65,18 +65,31 @@ df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=l
 df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
 df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
 table(df.ranked$rank==-1)
-
+df.ranked$rank
 #Now we can explore a bit around and start trying to identify close wins
 ggplot(df.ranked,aes(x=rank))+geom_histogram()
 
-
+merged.wins=createMultiPeriodDataset(df.ranked,start = start, split1 =split1,split2=split2,ranks = TRUE)
 df.ranked%>%filter(rank==-1)%>%select(Codigo,RutProveedor,FechaInicio,rank)%>%arrange(RutProveedor)
+
+#Try new model
+lm.9<-ivreg(probWinpost~winspre+idperiodpost|winspre_closerank+winspre_close+idperiodpost,data=merged.wins)
+robust.lm9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.9)
+
+lm.5<-lm(probWinpost~winspre+idperiodpost,data = merged.wins)
+robust.lm5<- vcovHC(lm.5, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.5)
+
+##
+
 #Need to crrect for those that were left in the middle
 df.ranked$rank[2000:2050]
 
 ggplot(df.ranked,aes(x=time,y=(..count..),fill=present))+geom_bar()
 ##Select thresholds for close wins: all players are within certain band
-df.ranked$present=df.ranked$rank==-1
+
+sf.ranked$present=df.ranked$rank==-1
 df.ranked%>%group_by(present)%>%count()
 
 ##Modified create two period dataset for the close wins
@@ -102,8 +115,4 @@ print(i/nrow(df.rating.elo))
 
 
 
-ratings.iter$ratings
-colnames(df.ratings.1)
-ncol(df.rating.elo)
-dimnames(df.rating.elo)
-tail(ratings)
+
