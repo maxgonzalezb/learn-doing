@@ -9,10 +9,10 @@ library(stringr)
 contracts=data.frame()
 bidders=data.frame()
 fails=data.frame()
-idcheck=listaids[7925]
+idcheck=listaids[9000:9525]
 updatelist=function(idcheck){
   
-  path = paste0(
+path = paste0(
     'http://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?codigo=',
     idcheck,
     '&ticket=93BA2B5A-B87E-487B-8E37-47CB6D7F5F82'
@@ -21,10 +21,10 @@ updatelist=function(idcheck){
     GET(
       url = path,
       config = list(
-        accepttimeout_ms = 2,
-        connecttimeout = 2,
-        dns_cache_timeout = 2,
-        timeout = 2
+        accepttimeout_ms = 5,
+        connecttimeout = 5,
+        dns_cache_timeout = 5,
+        timeout = 5
       )
     )
   c <- content(r)
@@ -36,7 +36,9 @@ updatelist=function(idcheck){
     'https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?qs=',
     identificador.licitacion
   )
-  pagina.base <- read_html(dirtabla)
+  
+  pagina.base <- read_html(dirtabla,encoding = 'cp-1252',n=64*1024,)
+  
   table = pagina.base %>% html_nodes("#grvCriterios") %>% html_table()
   
   table.criteria.iter = table[[1]] %>% as.data.frame() %>% mutate(Ítem =
@@ -59,7 +61,7 @@ updatelist=function(idcheck){
 onlydcodes=df%>%group_by(CodigoExterno)%>%summarise(CodigoExterno=CodigoExterno[1])
 listaids=(onlydcodes$CodigoExterno)
 table.criteria=data.frame()
-for (h in seq(8034,16000)) {
+for (h in seq(10001,16000)) {
   print(h)
   if(h%%500==0){
     print(table(table.criteria$Ítem))
@@ -81,14 +83,14 @@ table.criteria%>%tail()
 
 
 #2. Get full contract information
-for (h in seq(1,length(listaids))) {
+for (h in seq(10088,length(listaids))) {
 print(h)
  
 path=paste0('http://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?codigo=',listaids[h],'&ticket=93BA2B5A-B87E-487B-8E37-47CB6D7F5F82')
 r <- GET(url = path)
 c <- content(r)  
 if(length(c$Cantidad)==0){
-  fails=rbind(data.frame(id=h),fails)
+  fails=rbind(data.frame(h=h),fails)
   #Sys.sleep(5)
   next()
 }
@@ -110,7 +112,7 @@ urlActa=c$Listado[[1]]$Adjudicacion$UrlActa
 #Intentar encontrar los criterios
 identificador.licitacion=word(urlActa, 2, sep="qs=")
 dirtabla=paste0('https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?qs=',identificador.licitacion)
-pagina.base <- read_html(dirtabla)
+pagina.base <- read_html(dirtabla,n=128*1024,encoding = 'cp-1252')
 table=pagina.base%>%html_nodes("#grvCriterios")%>%html_table()
 if(length(table)>=1){
 table.criteria.iter=table[[1]]%>%as.data.frame()%>%mutate(Ítem=gsub(x=Ítem,pattern = '\n',replacement=''))%>%
