@@ -9,10 +9,10 @@ library(stringr)
 contracts=data.frame()
 bidders=data.frame()
 fails=data.frame()
-idcheck=listaids[9000:9525]
-updatelist=function(idcheck){
-  
-path = paste0(
+idcheck=listaids[11743]
+
+update_api<-function(idcheck){
+  path = paste0(
     'http://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?codigo=',
     idcheck,
     '&ticket=93BA2B5A-B87E-487B-8E37-47CB6D7F5F82'
@@ -28,9 +28,16 @@ path = paste0(
       )
     )
   c <- content(r)
+  #browser()
   urlActa = c$Listado[[1]]$Adjudicacion$UrlActa
+  table.urls.iter=data.frame(id=idcheck,urlActa=urlActa)
+  closeAllConnections()
+  return(table.urls.iter)
+}
+
+updatelist=function(urlActa){
   
-  #Go to contract page to find awarding criteria
+#Go to contract page to find awarding criteria
   identificador.licitacion = word(urlActa, 2, sep = "qs=")
   dirtabla = paste0(
     'https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?qs=',
@@ -60,8 +67,35 @@ path = paste0(
 
 onlydcodes=df%>%group_by(CodigoExterno)%>%summarise(CodigoExterno=CodigoExterno[1])
 listaids=(onlydcodes$CodigoExterno)
+
+#Get the URLS
+table.urls=data.frame()
+delay=1.5
+for (h in seq(19001,21000)) {
+  if(h%%500==0){
+    save(table.urls,file=paste0('C:\\repos\\learn-doing\\data\\table_urls_incomplete_',h,'.Rdata'))}
+    possibleError <- tryCatch(
+      update_api(listaids[h]),
+    error=function(e) e
+  )
+  
+  if(inherits(possibleError, "error")){
+    fails=rbind(data.frame(h=h),fails)
+    print(paste0(h,': error'))
+    Sys.sleep(delay)
+    next
+  }
+  if(!inherits(possibleError, "error")){
+      table.urls=rbind(possibleError,table.urls)
+      print(paste0(h,': good'))
+      Sys.sleep(delay)
+      }
+}
+
+
+#Get the criteria
 table.criteria=data.frame()
-for (h in seq(10001,16000)) {
+for (h in seq(10100,16000)) {
   print(h)
   if(h%%500==0){
     print(table(table.criteria$Ítem))
@@ -80,6 +114,22 @@ for (h in seq(10001,16000)) {
   
   }
 table.criteria%>%tail()
+
+#Get the criteria, parallelized
+cl <- makeCluster(detectCores()-1)
+registerDoParallel(cl)
+result <- foreach(i = seq_along(urls),
+                  .packages = "rvest",
+                  .combine = "rbind",
+                  .errorhandling='pass') %dopar% {
+                    # get the header for each page
+                    tabla.criteria.iter <- updatelist(i)
+                  }
+
+
+
+
+
 
 
 #2. Get full contract information

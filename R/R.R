@@ -55,10 +55,10 @@ pre.summarybids=generateDfBidsSummary(bids = df)
 #Indicators about missing data
 
 #Filtering
-df=df%>%filter(cantidadOferta==1&CantidadAdjudicada<=1)%>%filter(montoOferta>=thresholdSize/2)
+df=df%>%filter(cantidadOferta==1&CantidadAdjudicada<=1)%>%filter(montoOferta>=10e6)
 df=df%>%filter(MontoEstimado>thresholdSize)
 
-#Create unique ID
+  #Create unique ID
 df=df%>%mutate(id=paste0(Codigo,RutProveedor))
 df.repetidos=df%>%group_by(id)%>%select(Codigo,Nombre,NombreOrganismo,montoOferta,NombreProveedor,FechaInicio)%>%mutate(n=length(NombreProveedor))%>%filter(n>1)
 df=df%>%filter(!Codigo%in%(df.repetidos$Codigo))

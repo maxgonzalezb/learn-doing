@@ -1,5 +1,66 @@
 library(readxl)
 library(VFP)
+
+update_api<-function(idcheck){
+  path = paste0(
+    'http://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?codigo=',
+    idcheck,
+    '&ticket=93BA2B5A-B87E-487B-8E37-47CB6D7F5F82'
+  )
+  r <-
+    GET(
+      url = path,
+      config = list(
+        accepttimeout_ms = 5,
+        connecttimeout = 5,
+        dns_cache_timeout = 5,
+        timeout = 5
+      )
+    )
+  c <- content(r)
+  urlActa = c$Listado[[1]]$Adjudicacion$UrlActa
+  table.urls.iter=data.frame(id=idcheck,urlActa=urlActa)
+  return(table.urls.iter)
+}
+
+updatelist=function(urlActa){
+  
+  #Go to contract page to find awarding criteria
+  identificador.licitacion = word(urlActa, 2, sep = "qs=")
+  dirtabla = paste0(
+    'https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?qs=',
+    identificador.licitacion
+  )
+  
+  pagina.base <- read_html(dirtabla,encoding = 'cp-1252',n=64*1024,)
+  
+  table = pagina.base %>% html_nodes("#grvCriterios") %>% html_table()
+  
+  table.criteria.iter = table[[1]] %>% as.data.frame() %>% mutate(Ítem =
+                                                                     gsub(
+                                                                       x = Ítem,
+                                                                       pattern = '\n',
+                                                                       replacement = ''
+                                                                     )) %>%
+    mutate(Ítem = gsub(
+      x = Ítem,
+      pattern = '\r',
+      replacement = ''
+    )) %>% mutate(Ítem = gsub('[[:digit:]]+', '',  Ítem)) %>% mutate(Ítem =
+                                                                        trimws(Ítem)) %>% mutate(id = listaids[h])
+  return(table.criteria.iter)
+  
+  
+}  
+
+
+
+
+
+
+
+
+
 createDirectoryofCompanies<-function(){
 directory=data.frame()
 for (h in seq_len(10)) {
