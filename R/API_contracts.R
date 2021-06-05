@@ -1,81 +1,33 @@
-library(readxl)
-library(httr) 
-library(jsonlite)
-library(rvest)
-library(tibble())
-library(stringr)
+source('C:\\repos\\learn-doing\\R\\API_contracts_functions.R')
+library(stringi)
 
-#1. Get awarding criteria
+#Create preliminary datasets
+listaUrlsActas=createDefinitiveDatasetURLS()
+onlydcodes=df%>%dplyr::group_by(CodigoExterno)%>%dplyr::summarise(CodigoExterno=CodigoExterno[1])
+onlydcodes.2=onlydcodes%>%filter(!(CodigoExterno%in%listaUrlsActas$id))
+listaids=(onlydcodes.2$CodigoExterno)
+print(length(listaids))
+
+listaCriteria=createDefinitiveDatasetCriteria()
+
+listaUrlsActas.faltantes=listaUrlsActas%>%filter(!(id%in%listaCriteria$id))
+print(nrow(listaUrlsActas.faltantes))
+
+#.1 Get Missing URLS
 contracts=data.frame()
 bidders=data.frame()
 fails=data.frame()
-idcheck=listaids[11743]
 
-update_api<-function(idcheck){
-  path = paste0(
-    'http://api.mercadopublico.cl/servicios/v1/publico/licitaciones.json?codigo=',
-    idcheck,
-    '&ticket=93BA2B5A-B87E-487B-8E37-47CB6D7F5F82'
-  )
-  r <-
-    GET(
-      url = path,
-      config = list(
-        accepttimeout_ms = 5,
-        connecttimeout = 5,
-        dns_cache_timeout = 5,
-        timeout = 5
-      )
-    )
-  c <- content(r)
-  #browser()
-  urlActa = c$Listado[[1]]$Adjudicacion$UrlActa
-  table.urls.iter=data.frame(id=idcheck,urlActa=urlActa)
-  closeAllConnections()
-  return(table.urls.iter)
-}
-
-updatelist=function(urlActa){
-  
-#Go to contract page to find awarding criteria
-  identificador.licitacion = word(urlActa, 2, sep = "qs=")
-  dirtabla = paste0(
-    'https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?qs=',
-    identificador.licitacion
-  )
-  
-  pagina.base <- read_html(dirtabla,encoding = 'cp-1252',n=64*1024,)
-  
-  table = pagina.base %>% html_nodes("#grvCriterios") %>% html_table()
-  
-  table.criteria.iter = table[[1]] %>% as.data.frame() %>% mutate(Ítem =
-                                                                     gsub(
-                                                                       x = Ítem,
-                                                                       pattern = '\n',
-                                                                       replacement = ''
-                                                                     )) %>%
-    mutate(Ítem = gsub(
-      x = Ítem,
-      pattern = '\r',
-      replacement = ''
-    )) %>% mutate(Ítem = gsub('[[:digit:]]+', '',  Ítem)) %>% mutate(Ítem =
-                                                                        trimws(Ítem)) %>% mutate(id = listaids[h])
-  return(table.criteria.iter)
-  
-
-}  
-
-onlydcodes=df%>%group_by(CodigoExterno)%>%summarise(CodigoExterno=CodigoExterno[1])
-listaids=(onlydcodes$CodigoExterno)
-
-#Get the URLS
+##Get the URLS
 table.urls=data.frame()
-delay=1.5
-for (h in seq(19001,21000)) {
+fails=data.frame()
+delay=2.0
+for (h in seq(15007,15030)) {
   if(h%%500==0){
-    save(table.urls,file=paste0('C:\\repos\\learn-doing\\data\\table_urls_incomplete_',h,'.Rdata'))}
-    possibleError <- tryCatch(
-      update_api(listaids[h]),
+    save(table.urls,file=paste0('C:\\repos\\learn-doing\\data\\table_urls_incomplete_',h,gsub(x=as.character(Sys.time()),pattern = ':',''),'.Rdata'))
+  }
+  possibleError <- tryCatch(
+    update_api(listaids[h]),
     error=function(e) e
   )
   
@@ -86,48 +38,73 @@ for (h in seq(19001,21000)) {
     next
   }
   if(!inherits(possibleError, "error")){
-      table.urls=rbind(possibleError,table.urls)
-      print(paste0(h,': good'))
-      Sys.sleep(delay)
-      }
+    table.urls=rbind(possibleError,table.urls)
+    print(paste0(h,': good'))
+    Sys.sleep(delay)
+  }
 }
 
-
-#Get the criteria
+##2.1Individual completing of msssing
 table.criteria=data.frame()
-for (h in seq(10100,16000)) {
+fails=data.frame()
+delay=1
+for (h in seq(1161,1161)) {
   print(h)
-  if(h%%500==0){
+  if(h%%1161==0){
     print(table(table.criteria$Ítem))
-    save(table.criteria,file=paste0('C:\\repos\\learn-doing\\data\\table_criteria_incomplete_',h,'.Rdata'))}
-    possibleError <- tryCatch(
-    updatelist(listaids[h]),
+    save(table.criteria,file=paste0('C:\\repos\\learn-doing\\data\\table_criteria_incomplete_',h,gsub(x=as.character(Sys.time()),pattern = ':',''),'.Rdata'))
+    #table.criteria=data.frame()
+  }
+  possibleError <- tryCatch(
+    updatelist(urlActa = listaUrlsActas.faltantes$urlActa[h],idcheck = listaUrlsActas.faltantes$id[h]),
     error=function(e) e
   )
   
   if(inherits(possibleError, "error")){
-   fails=rbind(data.frame(h=h),fails)
-     next
+    fails=rbind(data.frame(h=h),fails)
+    print(paste0(h,': error'," ",possibleError))
+    next
   }
   if(!inherits(possibleError, "error")){
-  table.criteria=rbind(possibleError,table.criteria)}
-  
-  }
-table.criteria%>%tail()
+    table.criteria=rbind(possibleError,table.criteria)}
+  print(paste0(h,': good'))
+  Sys.sleep(delay)
+  closeAllConnections()
+}
 
-#Get the criteria, parallelized
-cl <- makeCluster(detectCores()-1)
-registerDoParallel(cl)
-result <- foreach(i = seq_along(urls),
-                  .packages = "rvest",
-                  .combine = "rbind",
-                  .errorhandling='pass') %dopar% {
-                    # get the header for each page
-                    tabla.criteria.iter <- updatelist(i)
-                  }
+##2.2Parallerl completing
+
+table.criteria=getCriteriaFromURLS_parallel(listaUrlsActas.faltantes,start=220,end=300,pass=50,saveresults=T,innerdelay = 1,externaldelay = 5)
 
 
 
+#3. Clean Get awarding criteria
+listaUrlsActas=createDefinitiveDatasetURLS()
+listaCriteria=createDefinitiveDatasetCriteria()
+listaCriteria.clean=listaCriteria%>%mutate(item_clean=tolower(Ítem))%>%
+                                                      mutate(item_clean=stri_trans_general(str = item_clean, 
+                                                                                id = "Latin-ASCII"))%>%
+                                                    mutate(item_clean=trimws(item_clean))%>%
+                                                    mutate(item_clean=gsub("[[:punct:]]", "", item_clean))%>%
+                                                    mutate(item_clean=gsub("\\t", "", item_clean))%>%
+                                                    mutate(hasexp=grepl( 'exp', item_clean, fixed = TRUE))%>%
+                                                    mutate(weight=gsub(x=Ponderación,replacement = "",pattern = "%",fixed = T)%>%as.numeric())
+
+
+listaContractExp=listaCriteria.clean%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0),percExp=sum(weight[hasexp==1]))
+table(listaContractExp$hasExp)
+
+
+checkEXP=listaContractExp%>%mutate(Ítem=tolower(Ítem))%>%mutate(hasexp=grepl( 'exp', Ítem, fixed = TRUE))
+checkEXP.summarisez=checkEXP%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0))
+table(checkEXP.summarisez$hasExp)
+
+
+##Write all final datasets in experience folder
+write.csv2(listaContractExp,file='C:\\repos\\learn-doing\\data\\experience\\ExperienceFactorContract.csv')
+save(listaUrlsActas,file = 'C:\\repos\\learn-doing\\data\\experience\\RawURLS.Rdata')
+save(listaCriteria,file = 'C:\\repos\\learn-doing\\data\\experience\\RawCriteria.Rdata')
+save(listaCriteria.clean,file = 'C:\\repos\\learn-doing\\data\\experience\\CleanCriteria.Rdata')
 
 
 
@@ -202,3 +179,10 @@ Sys.sleep(5)
 }
 
 
+pass=50
+start=220
+end=300
+saveresults=T
+innerdelay=1
+externaldelay=10
+j=220
