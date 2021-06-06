@@ -159,18 +159,22 @@ return(final.statistics)
   
 }
 
-createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.005){
+createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.005,filterReqExp=F){
   cutoff0=ymd(min(df$FechaInicio)) + years(start)
   cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
   cutoff2=cutoff1 + years(split2)
   df.period1=df%>%filter(FechaInicio<cutoff1&FechaInicio>=cutoff0)
   df.period2=df%>%filter(FechaInicio>=cutoff1&FechaInicio<=cutoff2)
   
+  if(filterReqExp==T){
+  df.period2=df.period2%>%filter(hasExp==0)
+  }
   #Create winning statistics of each period
   ##Create Winning Statistics for first period
   df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  
   
   #Add an ID column
   period1=paste0(cutoff0,"/",cutoff1)
@@ -183,10 +187,10 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   
    ##Calculate narrow victories
   df.period1.difs=df.period1%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes))%>%left_join(df.difs)
-  df.period2.difs=df.period2%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes))%>%left_join(df.difs)
+  df.period2.difs=df.period2%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes,percPrice)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes),percPrice=max(percPrice))%>%left_join(df.difs)
   #df.period1.difs=df.period1%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(RutProveedor=RutProveedor[winner=='Seleccionada'],NumeroOferentes=max(NumeroOferentes))
   df.period1.difs.close=(df.period1.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
-  df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
+  df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=70*as.numeric(filterReqExp))
 
   df.period1.wins.close=df.period1.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
   df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspost_close=n)
@@ -201,7 +205,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   
 }
 
-createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005,ranks=FALSE){
+createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005,ranks=FALSE,filterReqExp=F){
 i=0
 maxcutoff=ymd(max(df$FechaInicio))
 cutoff2=ymd(min(df$FechaInicio))
@@ -210,10 +214,10 @@ while (cutoff2<=maxcutoff) {
   #Do stuff
   newstart=start+i
   if(ranks==FALSE){ 
-  two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose)
+  two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
   }
   if(ranks==TRUE){
-  two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose)
+  two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,,filterReqExp=filterReqExp)
    }
   ##Refresh
    cutoff0=ymd(min(df$FechaInicio)) + years(i)

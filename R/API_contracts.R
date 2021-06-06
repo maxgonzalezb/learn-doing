@@ -1,5 +1,4 @@
 source('C:\\repos\\learn-doing\\R\\API_contracts_functions.R')
-library(stringi)
 
 #Create preliminary datasets
 listaUrlsActas=createDefinitiveDatasetURLS()
@@ -76,8 +75,6 @@ for (h in seq(1161,1161)) {
 
 table.criteria=getCriteriaFromURLS_parallel(listaUrlsActas.faltantes,start=220,end=300,pass=50,saveresults=T,innerdelay = 1,externaldelay = 5)
 
-
-
 #3. Clean Get awarding criteria
 listaUrlsActas=createDefinitiveDatasetURLS()
 listaCriteria=createDefinitiveDatasetCriteria()
@@ -88,16 +85,19 @@ listaCriteria.clean=listaCriteria%>%mutate(item_clean=tolower(Ítem))%>%
                                                     mutate(item_clean=gsub("[[:punct:]]", "", item_clean))%>%
                                                     mutate(item_clean=gsub("\\t", "", item_clean))%>%
                                                     mutate(hasexp=grepl( 'exp', item_clean, fixed = TRUE))%>%
-                                                    mutate(weight=gsub(x=Ponderación,replacement = "",pattern = "%",fixed = T)%>%as.numeric())
+                                                    mutate(weight=gsub(x=Ponderación,replacement = "",pattern = "%",fixed = T)%>%as.numeric())%>%
+                                                    mutate(hasPrecio=(grepl( 'precio', item_clean, fixed = TRUE)|grepl('oferta economica', item_clean, fixed = TRUE)|grepl('valor de la oferta', item_clean, fixed = TRUE)))
 
+?grepl
+listaContractExp=listaCriteria.clean%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0),percExp=sum(weight[hasexp==1]),percPrice=sum(weight[hasPrecio==1]))
+ggplot(listaContractExp,aes(x=as.numeric(percPrice)))+geom_histogram(binwidth = 10)+xlim(0,100)
+hist(listaContractExp$percPrice)
 
-listaContractExp=listaCriteria.clean%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0),percExp=sum(weight[hasexp==1]))
+types.factors=listaCriteria.clean%>%group_by(item_clean)%>%count()%>%arrange(-n)
+listaContractExp$percPrice+1
 table(listaContractExp$hasExp)
 
 
-checkEXP=listaContractExp%>%mutate(Ítem=tolower(Ítem))%>%mutate(hasexp=grepl( 'exp', Ítem, fixed = TRUE))
-checkEXP.summarisez=checkEXP%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0))
-table(checkEXP.summarisez$hasExp)
 
 
 ##Write all final datasets in experience folder

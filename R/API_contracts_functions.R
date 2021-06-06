@@ -1,4 +1,4 @@
-
+library(stringi)
 library(readxl)
 library(httr) 
 library(jsonlite)

@@ -22,6 +22,8 @@ thresholdSize=20e6
 df = read_feather('C:\\repos\\learn-doing\\data\\lic_construccion_feather.feather') %>%
                   rename(estadoOferta=`Estado Oferta`,montoOferta = `Valor Total Ofertado`, winner = `Oferta seleccionada`,cantidadOferta=`Cantidad Ofertada`,tipoAdquisicion=`Tipo de Adquisición`)
 
+
+listaContractExp=read.csv2(file='C:\\repos\\learn-doing\\data\\experience\\ExperienceFactorContract.csv')
 #glimpse(df)
 #skim(df)
 
@@ -81,19 +83,23 @@ colnames(comparison.2)<-c('Variable','Mean (Not close win)','Mean (Close win)','
 create_kable(comparison.2,caption = "Comparison between close and non-close wins")
 
 
+##Merge with experiece dataset
+df=df%>%left_join(listaContractExp,by=c('CodigoExterno'='id'))
+rm(df)
+
 #Create Datasets
 #First Analysis of Experience
 start=0
 split1=2
 split2=2
 #merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
-merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
+merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 ,filterReqExp = T)
 merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
 mutate(logWinpre=log(winspre+1))
 
 #Graphic analysis
 
-
+sample(df$CodigoExterno,3)
 
 #Begin Regression Analysis with outcome variable as probability
 ##OLS Specs
@@ -198,7 +204,7 @@ dev.off()
 
 
 
-1##Second analysis, experience as annual experience. 
+##Second analysis, experience as annual experience. 
 ##Second analysis of the Experience
 merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
 table(merged.wins$idperiodpost)
