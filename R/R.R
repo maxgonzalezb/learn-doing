@@ -1,5 +1,6 @@
 library(feather)
 library(magrittr)
+library(arrow)
 library(dplyr)
 library(lubridate)
 library(ggplot2)
@@ -13,13 +14,12 @@ library(stargazer)
 library(purrr)
 library(broom)
 
-
 source('C:\\repos\\learn-doing\\R\\functions.R')
 
 thresholdClose=0.005
 thresholdSize=20e6
 
-df = read_feather('C:\\repos\\learn-doing\\data\\lic_construccion_feather.feather') %>%
+df = arrow::read_feather('C:\\repos\\learn-doing\\data\\lic_construccion_feather.feather') %>%
                   rename(estadoOferta=`Estado Oferta`,montoOferta = `Valor Total Ofertado`, winner = `Oferta seleccionada`,cantidadOferta=`Cantidad Ofertada`,tipoAdquisicion=`Tipo de Adquisición`)
 
 
@@ -85,7 +85,7 @@ create_kable(comparison.2,caption = "Comparison between close and non-close wins
 
 ##Merge with experiece dataset
 df=df%>%left_join(listaContractExp,by=c('CodigoExterno'='id'))
-rm(df)
+#rm(df)
 
 #Create Datasets
 #First Analysis of Experience
@@ -98,13 +98,10 @@ merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,patt
 mutate(logWinpre=log(winspre+1))
 
 #Graphic analysis
-
-sample(df$CodigoExterno,3)
-
 #Begin Regression Analysis with outcome variable as probability
 ##OLS Specs
 ##1
-  lm.1<-lm(probWinpost~(winspre>0),data = merged.wins)
+lm.1<-lm(probWinpost~(winspre>0),data = merged.wins)
 robust.lm1<- vcovHC(lm.1, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.1)
 

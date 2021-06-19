@@ -1,198 +1,486 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.2.12)  3 MAY 2021 10:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  19 JUN 2021 16:50
 entering extended mode
 **./main.tex
 (main.tex
-LaTeX2e <2020-02-02> patch level 5
-L3 programming layer <2020-06-18> (mitthesis.cls
+LaTeX2e <2021-06-01>
+L3 programming layer <2021-06-01> (mitthesis.cls
 Document Class: mitthesis 1999/10/20
-\vithesis=\count167
-("C:\Program Files\MiKTeX\tex/latex/base\report.cls"
-Document Class: report 2019/12/20 v1.4l Standard LaTeX document class
-("C:\Program Files\MiKTeX\tex/latex/base\size12.clo"
-File: size12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+\vithesis=\count182
+(C:\Program Files\MiKTeX\tex/latex/base\report.cls
+Document Class: report 2021/02/12 v1.4n Standard LaTeX document class
+(C:\Program Files\MiKTeX\tex/latex/base\size12.clo
+File: size12.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count168
-\c@chapter=\count169
-\c@section=\count170
-\c@subsection=\count171
-\c@subsubsection=\count172
-\c@paragraph=\count173
-\c@subparagraph=\count174
-\c@figure=\count175
-\c@table=\count176
+\c@part=\count183
+\c@chapter=\count184
+\c@section=\count185
+\c@subsection=\count186
+\c@subsubsection=\count187
+\c@paragraph=\count188
+\c@subparagraph=\count189
+\c@figure=\count190
+\c@table=\count191
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
-\bibindent=\dimen134
+\bibindent=\dimen138
 )
-("C:\Program Files\MiKTeX\tex/latex/setspace\setspace.sty"
+(C:\Program Files\MiKTeX\tex/latex/setspace\setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
 Thesis document copyright MIT unless otherwise (manually) specified
-\@titlesupervisor=\box45
-\@abstractsupervisor=\box46
-\c@savepage=\count177
+\@titlesupervisor=\box50
+\@abstractsupervisor=\box51
+\c@savepage=\count192
 ) (lgrind.sty
 Package: lgrind 1997/01/30 v3.4 LGrind environment and supporting stuff
-\lc@unt=\count178
-\ln@xt=\count179
-\LGnuminterval=\count180
+\lc@unt=\count193
+\ln@xt=\count194
+\LGnuminterval=\count195
 \LGindent=\skip49
 \LGsloppy=\skip50
-\procbox=\box47
-\ls@far=\box48
-\tb@x=\box49
-\TBw@d=\dimen135
-\@ts=\dimen136
-) ("C:\Program Files\MiKTeX\tex/latex/cmap\cmap.sty"
+\procbox=\box52
+\ls@far=\box53
+\tb@x=\box54
+\TBw@d=\dimen139
+\@ts=\dimen140
+) (C:\Program Files\MiKTeX\tex/latex/cmap\cmap.sty
 Package: cmap 2021/02/06 v1.0j CMap support: searchable PDF
 )
-("C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty"
-Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
+(C:\Program Files\MiKTeX\tex/latex/tools\verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks16
+\verbatim@line=\toks17
+\verbatim@in@stream=\read2
+)
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2021/04/20 v2.17j AMS math features
+\@mathmargin=\skip51
+
+For additional information on amsmath, use the `?' option.
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks18
+\ex@=\dimen141
+))
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen142
+)
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count196
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count197
+\leftroot@=\count198
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count199
+\DOTSCASE@=\count266
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box55
+\strutbox@=\box56
+\big@size=\dimen143
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count267
+\c@MaxMatrixCols=\count268
+\dotsspace@=\muskip16
+\c@parentequation=\count269
+\dspbrk@lvl=\count270
+\tag@help=\toks19
+\row@=\count271
+\column@=\count272
+\maxfields@=\count273
+\andhelp@=\toks20
+\eqnshift@=\dimen144
+\alignsep@=\dimen145
+\tagshift@=\dimen146
+\tagwidth@=\dimen147
+\totwidth@=\dimen148
+\lineht@=\dimen149
+\@envbody=\toks21
+\multlinegap=\skip52
+\multlinetaggap=\skip53
+\mathdisplay@stack=\toks22
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+)
+(C:\Program Files\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen150
+\lightrulewidth=\dimen151
+\cmidrulewidth=\dimen152
+\belowrulesep=\dimen153
+\belowbottomsep=\dimen154
+\aboverulesep=\dimen155
+\abovetopsep=\dimen156
+\cmidrulesep=\dimen157
+\cmidrulekern=\dimen158
+\defaultaddspace=\dimen159
+\@cmidla=\count274
+\@cmidlb=\count275
+\@aboverulesep=\dimen160
+\@belowrulesep=\dimen161
+\@thisruleclass=\count276
+\@lastruleclass=\count277
+\@thisrulewidth=\dimen162
+)
+(C:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks23
+)
+(C:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\Program Files\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(C:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(C:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen163
+\Gin@req@width=\dimen164
+)
+(C:\Program Files\MiKTeX\tex/latex/tools\array.sty
+Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
+\col@sep=\dimen165
+\ar@mcellbox=\box57
+\extrarowheight=\dimen166
+\NC@list=\toks24
+\extratabsurround=\skip54
+\backup@length=\skip55
+\ar@cellbox=\box58
+)
+(C:\Program Files\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count278
+\float@exts=\toks25
+\float@box=\box59
+\@float@everytoks=\toks26
+\@floatcapt=\box60
+)
+(C:\Program Files\MiKTeX\tex/latex/ragged2e\ragged2e.sty
+Package: ragged2e 2021/02/05 v3.0 ragged2e Package
+\CenteringLeftskip=\skip56
+\RaggedLeftLeftskip=\skip57
+\RaggedRightLeftskip=\skip58
+\CenteringRightskip=\skip59
+\RaggedLeftRightskip=\skip60
+\RaggedRightRightskip=\skip61
+\CenteringParfillskip=\skip62
+\RaggedLeftParfillskip=\skip63
+\RaggedRightParfillskip=\skip64
+\JustifyingParfillskip=\skip65
+\CenteringParindent=\skip66
+\RaggedLeftParindent=\skip67
+\RaggedRightParindent=\skip68
+\JustifyingParindent=\skip69
+)
+(C:\Program Files\MiKTeX\tex/latex/adjustbox\adjustbox.sty
+Package: adjustbox 2020/08/19 v1.3 Adjusting TeX boxes (trim, clip, ...)
+
+(C:\Program Files\MiKTeX\tex/latex/xkeyval\xkeyval.sty
+Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+
+(C:\Program Files\MiKTeX\tex/generic/xkeyval\xkeyval.tex
+(C:\Program Files\MiKTeX\tex/generic/xkeyval\xkvutils.tex
+\XKV@toks=\toks27
+\XKV@tempa@toks=\toks28
+)
+\XKV@depth=\count279
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(C:\Program Files\MiKTeX\tex/latex/adjustbox\adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
+-ends (calc, etex, pgfmath)
+)
+(C:\Program Files\MiKTeX\tex/latex/adjustbox\trimclip.sty
+Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
+
+(C:\Program Files\MiKTeX\tex/latex/collectbox\collectbox.sty
+Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
+\collectedbox=\box61
+)
+\tc@llx=\dimen167
+\tc@lly=\dimen168
+\tc@urx=\dimen169
+\tc@ury=\dimen170
+Package trimclip Info: Using driver 'tc-pdftex.def'.
+
+(C:\Program Files\MiKTeX\tex/latex/adjustbox\tc-pdftex.def
+File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
+))
+\adjbox@Width=\dimen171
+\adjbox@Height=\dimen172
+\adjbox@Depth=\dimen173
+\adjbox@Totalheight=\dimen174
+\adjbox@pwidth=\dimen175
+\adjbox@pheight=\dimen176
+\adjbox@pdepth=\dimen177
+\adjbox@ptotalheight=\dimen178
+
+(C:\Program Files\MiKTeX\tex/latex/ifoddpage\ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count280
+)
+(C:\Program Files\MiKTeX\tex/latex/varwidth\varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box62
+\sift@deathcycles=\count281
+\@vwid@loff=\dimen179
+\@vwid@roff=\dimen180
+))
+(C:\Program Files\MiKTeX\tex/latex/caption\caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+
+(C:\Program Files\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen181
+\captionmargin@=\dimen182
+\captionwidth=\dimen183
+\caption@tempdima=\dimen184
+\caption@indent=\dimen185
+\caption@parindent=\dimen186
+\caption@hangindent=\dimen187
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count282
+\c@continuedfloat=\count283
+Package caption Info: float package is loaded.
+)
+(C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 <<t1.cmap>>)
-("C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdfmode.def"
-File: l3backend-pdfmode.def 2020-06-29 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count181
-\l__pdf_internal_box=\box50
-) (main.aux (cover.aux) (contents.aux) (chap1.aux) (chap2.aux) (appa.aux) (appb
-.aux)
-(biblio.aux))
+(C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count284
+\l__pdf_internal_box=\box63
+) (main.aux
+(chapLBD.aux
+
+LaTeX Warning: Label `' multiply defined.
+
+))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-\openout2 = `cover.aux'.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+ (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count285
+\scratchdimen=\dimen188
+\scratchbox=\box64
+\nofMPsegments=\count286
+\nofMParguments=\count287
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count288
+\MPscratchDim=\dimen189
+\MPnumerator=\count289
+\makeMPintoPDFobject=\count290
+\everyMPtoPDFconversion=\toks30
+) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 
- (cover.tex [1
-
-
-
-{C:/Users/maxgo/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2
-
-] (abstract.tex) [3
-
-] [4
-
-]) [5]
-\openout2 = `contents.aux'.
-
- (contents.tex [6
-
-
-
-] (main.toc<<ot1.cmap>>
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 2.
+(C:\Program Files\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
-\tf@toc=\write3
-\openout3 = `main.toc'.
+(C:\Program Files\MiKTeX\tex/latex/grfext\grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
 
- [7] [8
+(C:\Program Files\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+))
+(C:\Program Files\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 
-] (main.lof)
-\tf@lof=\write4
-\openout4 = `main.lof'.
+(C:\Program Files\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(C:\Program Files\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+))
+(C:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
 
- [9] [10
+(C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
 
-] (main.lot)
-\tf@lot=\write5
-\openout5 = `main.lot'.
+(C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+\openout2 = `chapLBD.aux'.
 
-) [11]
-\openout2 = `chap1.aux'.
-
- (chap1.tex [12
-
-
-
-]
+ (chapLBD.tex
 Chapter 1.
-[13]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 26.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 26.
- [14] [15] [16] [17]) [18]
-\openout2 = `chap2.aux'.
-
-
-No file chap2.tex.
-\openout2 = `appa.aux'.
-
-(appa.tex
-Appendix A.
-[19
+[1
 
 
 
+{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}]<<ot1.cmap>><<oml.cmap>><<oms.
+cmap>><<omx.cmap>> [2]
+Underfull \vbox (badness 5460) has occurred while \output is active []
+
+ [3]
+Underfull \vbox (badness 1675) has occurred while \output is active []
+
+ [4]
+<C:/repos/learn-doing/thesis/figures//diagram_experiences.png, id=29, 807.015pt
+ x 380.622pt>
+File: C:/repos/learn-doing/thesis/figures//diagram_experiences.png Graphic file
+ (type png)
+<use C:/repos/learn-doing/thesis/figures//diagram_experiences.png>
+Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//diagram_experienc
+es.png  used on input line 78.
+(pdftex.def)             Requested size: 427.71591pt x 201.72868pt.
+
+[5 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>] [6]
+Overfull \hbox (1.21962pt too wide) in paragraph at lines 118--119
+[]\T1/cmr/m/n/12 Unfortunately, the pre-vi-ous strat-egy is un-fea-si-ble a wit
+h the data we have avalaible.
+ []
+
+[7]
+<C:/repos/learn-doing/thesis/figures//plotwins_both.png, id=43, 650.43pt x 325.
+215pt>
+File: C:/repos/learn-doing/thesis/figures//plotwins_both.png Graphic file (type
+ png)
+<use C:/repos/learn-doing/thesis/figures//plotwins_both.png>
+Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotwins_both.png
+  used on input line 162.
+(pdftex.def)             Requested size: 422.77449pt x 211.38724pt.
+
+Underfull \vbox (badness 7613) has occurred while \output is active []
+
+ [8 <C:/repos/learn-doing/thesis/figures//plotwins_both.png>]
+
+LaTeX Warning: Reference `fig:fit_sample' on page 9 undefined on input line 258
+.
+
+[9]
+<C:/repos/learn-doing/R/Output//fit_sample.png, id=55, 505.89pt x 252.945pt>
+File: C:/repos/learn-doing/R/Output//fit_sample.png Graphic file (type png)
+<use C:/repos/learn-doing/R/Output//fit_sample.png>
+Package pdftex.def Info: C:/repos/learn-doing/R/Output//fit_sample.png  used on
+ input line 262.
+(pdftex.def)             Requested size: 404.71254pt x 202.35626pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [10 <C:/repos/learn-doing/R/Output//fit_sample.png>]
+Underfull \vbox (badness 4229) has occurred while \output is active []
+
+ [11]
+<C:/repos/learn-doing/thesis/figures//plotTypes.png, id=64, 578.16pt x 397.485p
+t>
+File: C:/repos/learn-doing/thesis/figures//plotTypes.png Graphic file (type png
+)
+<use C:/repos/learn-doing/thesis/figures//plotTypes.png>
+Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotTypes.png  us
+ed on input line 286.
+(pdftex.def)             Requested size: 433.61893pt x 298.113pt.
+
+[12 <C:/repos/learn-doing/thesis/figures//plotTypes.png>]
+
+LaTeX Warning: Reference `tab:salescategories' on page 13 undefined on input li
+ne 299.
+
+(C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt)
+
+LaTeX Warning: Reference `fig:sizeestimates' on page 13 undefined on input line
+ 304.
+
+[13] [14] (C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt)
+Underfull \vbox (badness 7963) has occurred while \output is active []
+
+ [15]
+[16]
+<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=82, 361.35pt
+ x 231.264pt>
+File: C:/repos/learn-doing/thesis/figures//robustness_threshold.png Graphic fil
+e (type png)
+<use C:/repos/learn-doing/thesis/figures//robustness_threshold.png>
+Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//robustness_thresh
+old.png  used on input line 383.
+(pdftex.def)             Requested size: 307.14896pt x 196.57532pt.
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17]
+[18 <C:/repos/learn-doing/thesis/figures//robustness_threshold.png>] (main.aux
+(chapLBD.aux))
+
+LaTeX Warning: There were undefined references.
 
 
-])
-\openout2 = `appb.aux'.
+LaTeX Warning: There were multiply-defined labels.
 
- (appb.tex [20
-
-
-
-
-]
-Appendix B.
-[21] [22])
-\openout2 = `biblio.aux'.
-
- (biblio.tex (main.bbl)) [23
-
-
-
-
-
-] (main.aux (cover.aux) (contents.aux)
-(chap1.aux) (chap2.aux) (appa.aux) (appb.aux) (biblio.aux)) )
-(\end occurred when \ifx on line 42 was incomplete) 
+ )
+(\end occurred when \ifx on line 52 was incomplete) 
 Here is how much of TeX's memory you used:
- 993 strings out of 480790
- 12919 string characters out of 2907055
- 245774 words of memory out of 3000000
- 16960 multiletter control sequences out of 15000+200000
- 545337 words of font info for 47 fonts, out of 3000000 for 9000
+ 5578 strings out of 478826
+ 89719 string characters out of 2857130
+ 409956 words of memory out of 3000000
+ 23360 multiletter control sequences out of 15000+600000
+ 415684 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 31i,8n,25p,853b,241s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\maxgo\AppData\Loc
-al\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\maxgo\AppDa
-ta\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\maxgo
-\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users
-\maxgo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:
-\Users\maxgo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.p
-k> <C:\Users\maxgo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx
-2488.pk> <C:\Users\maxgo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecbx1440.pk> <C:\Users\maxgo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ecrm1200.pk> <C:\Users\maxgo\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\tcrm1440.pk> <C:\Users\maxgo\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecrm1728.pk> <C:\Users\maxgo\AppData\Local\MiKTeX\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\maxgo\AppData\Local\MiKTeX\fon
-ts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk><C:/Program Files/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr1
-2.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (23 pages, 167247 bytes).
+ 69i,11n,117p,2582b,374s stack positions out of 5000i,500n,10000p,200000b,80000s
+{C:/Program Files/MiKTeX/fon
+ts/enc/dvips/cm-super/cm-super-t1.enc}<C:/Program Files/MiKTeX/fonts/type1/publ
+ic/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb
+><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program 
+Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/
+fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmsy8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1200.pf
+b><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.pfb><C:/Program
+ Files/MiKTeX/fonts/type1/public/cm-super/sfbx1728.pfb><C:/Program Files/MiKTeX
+/fonts/type1/public/cm-super/sfbx2488.pfb><C:/Program Files/MiKTeX/fonts/type1/
+public/cm-super/sfrm1000.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-sup
+er/sfrm1095.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.p
+fb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (18 pages, 1074417 bytes).
 PDF statistics:
- 430 PDF objects out of 1000 (max. 8388607)
+ 142 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 9 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 

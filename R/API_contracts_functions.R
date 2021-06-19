@@ -129,9 +129,10 @@ createDefinitiveDatasetURLS<-function(){
   filenames <- list.files("C:\\repos\\learn-doing\\data\\urls\\", pattern="*.Rdata", full.names=TRUE)
   mylist<- lapply(filenames, function(x) {
     load(file = x)
-    get(ls()[ls()!= "filename"])
+    get(ls()[ls()!= "x"])
   })
-  all <- do.call("rbind", mylist)
+  #all <- do.call("rbind", mylist)
+  all <- bind_rows(mylist)
   all.simplified=all%>%group_by(id,urlActa)%>%count()
   return(all.simplified)  
 }
@@ -140,7 +141,7 @@ createDefinitiveDatasetCriteria<-function(){
   filenames <- list.files("C:\\repos\\learn-doing\\data\\criteria\\", pattern="*.Rdata", full.names=TRUE)
   mylist<- lapply(filenames, function(x) {
     load(file = x)
-    get(ls()[ls()!= "filename"])
+    get(ls()[ls()!= "x"])
   })
   for (v in seq_len(length(mylist))) {
     print(paste0(ncol(mylist[[v]]),"  ",filenames[v]))

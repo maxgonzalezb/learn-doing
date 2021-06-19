@@ -1,5 +1,6 @@
-rm(directory.simplifed)
 library(PlayerRatings)
+
+source('C:\\repos\\learn-doing\\R\\functions.R')
 
 df.ratings.1=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
             select(-winner)%>%group_by(Codigo)%>%filter(sum(isWinner)>=1&length(Codigo)>=2)%>%mutate(idplayer=paste0('P',seq_len(length(Codigo))))%>%
@@ -145,7 +146,6 @@ vector=seq_len(nrow(df))
 maxcol=ncol(ratings$history[,,1])
 vectorubicacion=df$Codigo%in%tabletimes$Codigo
 
-  
 }
 
 

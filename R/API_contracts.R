@@ -2,9 +2,9 @@ source('C:\\repos\\learn-doing\\R\\API_contracts_functions.R')
 
 #Create preliminary datasets
 listaUrlsActas=createDefinitiveDatasetURLS()
-onlydcodes=df%>%dplyr::group_by(CodigoExterno)%>%dplyr::summarise(CodigoExterno=CodigoExterno[1])
-onlydcodes.2=onlydcodes%>%filter(!(CodigoExterno%in%listaUrlsActas$id))
-listaids=(onlydcodes.2$CodigoExterno)
+codes.find=df%>%dplyr::group_by(CodigoExterno)%>%dplyr::summarise(CodigoExterno=CodigoExterno[1])
+codes.find.missing=codes.find%>%filter(!(CodigoExterno%in%listaUrlsActas$id))
+listaids=(codes.find.missing$CodigoExterno)
 print(length(listaids))
 
 listaCriteria=createDefinitiveDatasetCriteria()
@@ -20,11 +20,12 @@ fails=data.frame()
 ##Get the URLS
 table.urls=data.frame()
 fails=data.frame()
-delay=2.0
-for (h in seq(15007,15030)) {
+delay=1.5
+for (h in seq(2744,1)) {
   if(h%%500==0){
     save(table.urls,file=paste0('C:\\repos\\learn-doing\\data\\table_urls_incomplete_',h,gsub(x=as.character(Sys.time()),pattern = ':',''),'.Rdata'))
-  }
+    table.urls=data.frame()
+    }
   possibleError <- tryCatch(
     update_api(listaids[h]),
     error=function(e) e
@@ -43,19 +44,19 @@ for (h in seq(15007,15030)) {
   }
 }
 
-##2.1Individual completing of msssing
+##2.1 Individual completing of misssing
 table.criteria=data.frame()
 fails=data.frame()
-delay=1
-for (h in seq(1161,1161)) {
+delay=0.5
+for (h in seq(1000,3266)) {
   print(h)
-  if(h%%1161==0){
+  if(h%%500==0){
     print(table(table.criteria$Ítem))
     save(table.criteria,file=paste0('C:\\repos\\learn-doing\\data\\table_criteria_incomplete_',h,gsub(x=as.character(Sys.time()),pattern = ':',''),'.Rdata'))
     #table.criteria=data.frame()
   }
   possibleError <- tryCatch(
-    updatelist(urlActa = listaUrlsActas.faltantes$urlActa[h],idcheck = listaUrlsActas.faltantes$id[h]),
+    updatelist(urlActa = listaUrlsActas.faltantes$urlActa[h],idcheck = listaUrlsActas.faltantes$id[h],timeoutt = 30),
     error=function(e) e
   )
   
@@ -72,7 +73,6 @@ for (h in seq(1161,1161)) {
 }
 
 ##2.2Parallerl completing
-
 table.criteria=getCriteriaFromURLS_parallel(listaUrlsActas.faltantes,start=220,end=300,pass=50,saveresults=T,innerdelay = 1,externaldelay = 5)
 
 #3. Clean Get awarding criteria
@@ -88,19 +88,13 @@ listaCriteria.clean=listaCriteria%>%mutate(item_clean=tolower(Ítem))%>%
                                                     mutate(weight=gsub(x=Ponderación,replacement = "",pattern = "%",fixed = T)%>%as.numeric())%>%
                                                     mutate(hasPrecio=(grepl( 'precio', item_clean, fixed = TRUE)|grepl('oferta economica', item_clean, fixed = TRUE)|grepl('valor de la oferta', item_clean, fixed = TRUE)))
 
-?grepl
+
 listaContractExp=listaCriteria.clean%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0),percExp=sum(weight[hasexp==1]),percPrice=sum(weight[hasPrecio==1]))
 ggplot(listaContractExp,aes(x=as.numeric(percPrice)))+geom_histogram(binwidth = 10)+xlim(0,100)
-hist(listaContractExp$percPrice)
 
 types.factors=listaCriteria.clean%>%group_by(item_clean)%>%count()%>%arrange(-n)
-listaContractExp$percPrice+1
-table(listaContractExp$hasExp)
 
-
-
-
-##Write all final datasets in experience folder
+# 4. Write all final datasets in experience folder
 write.csv2(listaContractExp,file='C:\\repos\\learn-doing\\data\\experience\\ExperienceFactorContract.csv')
 save(listaUrlsActas,file = 'C:\\repos\\learn-doing\\data\\experience\\RawURLS.Rdata')
 save(listaCriteria,file = 'C:\\repos\\learn-doing\\data\\experience\\RawCriteria.Rdata')
