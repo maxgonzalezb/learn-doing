@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  19 JUN 2021 16:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  19 JUN 2021 22:01
 entering extended mode
 **./main.tex
 (main.tex
@@ -391,44 +391,38 @@ Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotwins_both.png
 Underfull \vbox (badness 7613) has occurred while \output is active []
 
  [8 <C:/repos/learn-doing/thesis/figures//plotwins_both.png>]
-
-LaTeX Warning: Reference `fig:fit_sample' on page 9 undefined on input line 258
-.
-
-[9]
+(C:/repos/learn-doing/thesis/tables/table_ols_exp1.txt)
+(C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt) [9]
 <C:/repos/learn-doing/R/Output//fit_sample.png, id=55, 505.89pt x 252.945pt>
 File: C:/repos/learn-doing/R/Output//fit_sample.png Graphic file (type png)
 <use C:/repos/learn-doing/R/Output//fit_sample.png>
 Package pdftex.def Info: C:/repos/learn-doing/R/Output//fit_sample.png  used on
- input line 262.
+ input line 188.
 (pdftex.def)             Requested size: 404.71254pt x 202.35626pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [10 <C:/repos/learn-doing/R/Output//fit_sample.png>]
-Underfull \vbox (badness 4229) has occurred while \output is active []
-
- [11]
-<C:/repos/learn-doing/thesis/figures//plotTypes.png, id=64, 578.16pt x 397.485p
+<C:/repos/learn-doing/thesis/figures//plotTypes.png, id=61, 578.16pt x 397.485p
 t>
 File: C:/repos/learn-doing/thesis/figures//plotTypes.png Graphic file (type png
 )
 <use C:/repos/learn-doing/thesis/figures//plotTypes.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotTypes.png  us
-ed on input line 286.
+ed on input line 212.
 (pdftex.def)             Requested size: 433.61893pt x 298.113pt.
-
-[12 <C:/repos/learn-doing/thesis/figures//plotTypes.png>]
+ [11] [12 <C:/repos/learn-doing/thesis/figures//plotTypes.png>]
 
 LaTeX Warning: Reference `tab:salescategories' on page 13 undefined on input li
-ne 299.
+ne 227.
 
 (C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt)
 
 LaTeX Warning: Reference `fig:sizeestimates' on page 13 undefined on input line
- 304.
+ 232.
 
-[13] [14] (C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt)
+
+Underfull \vbox (badness 1521) has occurred while \output is active []
+
+ [13]
+[14] (C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt)
 Underfull \vbox (badness 7963) has occurred while \output is active []
 
  [15]
@@ -439,7 +433,7 @@ File: C:/repos/learn-doing/thesis/figures//robustness_threshold.png Graphic fil
 e (type png)
 <use C:/repos/learn-doing/thesis/figures//robustness_threshold.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//robustness_thresh
-old.png  used on input line 383.
+old.png  used on input line 311.
 (pdftex.def)             Requested size: 307.14896pt x 196.57532pt.
 )
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -456,10 +450,10 @@ LaTeX Warning: There were multiply-defined labels.
  )
 (\end occurred when \ifx on line 52 was incomplete) 
 Here is how much of TeX's memory you used:
- 5578 strings out of 478826
- 89719 string characters out of 2857130
+ 5587 strings out of 478826
+ 90185 string characters out of 2857130
  409956 words of memory out of 3000000
- 23360 multiletter control sequences out of 15000+600000
+ 23363 multiletter control sequences out of 15000+600000
  415684 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,11n,117p,2582b,374s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -478,7 +472,7 @@ b><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.pfb><C:/Program
 public/cm-super/sfrm1000.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-sup
 er/sfrm1095.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.p
 fb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (18 pages, 1074417 bytes).
+Output written on main.pdf (18 pages, 1074377 bytes).
 PDF statistics:
  142 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

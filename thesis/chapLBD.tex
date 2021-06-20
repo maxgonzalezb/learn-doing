@@ -11,7 +11,7 @@ The purpose of this chapter is to investigate how past experience affect current
  Section 1 outlines the empirical strategy, .
 
 \section{Data}
-Recall that our dataset consist in a set of bids submitted by firms in first-price, sealed bid auctions developed by the government in Chile between 2010 and 2020 for construction projects. The source and main characteristics of the dataset employed in the investigation were detailed in the previous section. Now we detail the specifics of the subset employed for the current sresearch question.
+Recall that our dataset consist in a set of bids submitted by firms in first-price, sealed bid auctions developed by the government in Chile between 2010 and 2020 for construction projects. The source and main characteristics of the dataset employed in the investigation were detailed in the previous section. Now we detail the specifics of the subset employed for the current research question.
 
  We further filter the dataset in the following way. we only consider contracts with and estimated price above 20.000.000 CLP to exclude extremely simple contracts, and proposals below 10.000.000 CLP as well. We also excluded contracts without an official estimate. We exclude non-single-item proposals. Finally, we exclude contracts with several proposals from a given contractor as we have no clear way of distinguishing which was the last submitted one.
 
@@ -166,7 +166,7 @@ First we explore graphically the relationship between our first measure of exper
   { \footnotesize \underline{Note:} The plots show the mean across firms of the number of contracts won out of the number of contracts bid for in period $t$ (in the $y$-axis), against experience accrued in period $(t-1)$ in the $x$-axis. $t$ and $t-1$ correspond to two periods of two years each. Since the data contains ten years, the observations correspond to outcomes computed for eight outcome periods.  Only $x$ for which the number of observations is greater than ten are shown. Error bars correspond to the interquartile range. Panel A: all sample observations are considered. Panel B:  shows results for a subsample where the only contractors considered are those who either i) won closely one or more close contracts  on period 1 or ii) did bid but not win a contract in period 1\par}
 \end{figure}
 
-Table \ref{tab:table_exp_1} shows the results for OLS and IV regressions for our first experience measure (i.e. rolling two year periods) while Table \ref{tableExp2} shows the results for our second measure of experience (i.e. annualized experience).
+Table \ref{tab:table_exp_1} shows the results for OLS and IV regressions for our first experience measure (i.e. rolling two year periods) while Table \ref{tab:tableExp2} shows the results for our second measure of experience (i.e. annualized experience).
 
 In both tables, OLS results are in the first to third panels. The first panel shows that the OLS coefficient on the effect of having any level experience against not having experience (binary) is around 0.10, for both ways of computing experience (and ). Our specification with linear returns on experience shows that experience renders a 0.02 and 0.05 increase in winning share per extra contract developed (for experience measures 1 and 2 respectively). All the estimates for the experience-related coefficients are significant at $p=0.01$ with robust standard errors.
 
@@ -174,85 +174,9 @@ The IV results (fourth to sixth panels in each table) show that  the linear and 
 
 A concerning result is the low $R^2$, which shows that altough the effect of experience on the mean outcome is significant, there is much variability among firms' outcomes which is not explained by experience.
 
-\begin{table}[!htbp] \centering
-  \caption{Regression results for OLS and IV specifications where experience is computed in 2-year rolling periods}
-  \label{tab:table_exp_1}
-  \resizebox{\textwidth}{!}{
-  \begin{tabular}{@{\extracolsep{5pt}}lcccccc}
-  \\[-1.8ex]\hline
-  \hline \\[-1.8ex]
-   & \multicolumn{6}{c}{\textit{Dependent variable:}} \\
-  \cline{2-7}
-  \\[-1.8ex] & \multicolumn{6}{c}{Share of Contracts won in t} \\
-  \\[-1.8ex] & \multicolumn{3}{c}{\textit{OLS}} & \multicolumn{3}{c}{\textit{instrumental}} \\
-   & \multicolumn{3}{c}{\textit{}} & \multicolumn{3}{c}{\textit{variable}} \\
-  \\[-1.8ex] & (1) & (2) & (3) & (4) & (5) & (6)\\
-  \hline \\[-1.8ex]
-   Experience in (t-1) (Binary) & 0.119$^{***}$ &  &  & 0.178$^{***}$ &  &  \\
-    & (0.004) &  &  & (0.010) &  &  \\
-    & & & & & & \\
-   Experience in (t-1) (Linear) &  & 0.022$^{***}$ & 0.038$^{***}$ &  & 0.022$^{***}$ & 0.039$^{***}$ \\
-    &  & (0.002) & (0.001) &  & (0.001) & (0.003) \\
-    & & & & & & \\
-   (Experience in (t-1)) (Squared) &  &  & $-$0.001$^{***}$ &  &  & $-$0.001$^{***}$ \\
-    &  &  & (0.0001) &  &  & (0.0003) \\
-    & & & & & & \\
-   Constant & 0.260$^{***}$ & 0.276$^{***}$ & 0.270$^{***}$ & 0.245$^{***}$ & 0.276$^{***}$ & 0.269$^{***}$ \\
-    & (0.005) & (0.005) & (0.005) & (0.005) & (0.005) & (0.005) \\
-    & & & & & & \\
-  \hline \\[-1.8ex]
-  Fixed effects By period & Yes & Yes & Yes & Yes & Yes & Yes \\
-  Observations & 37,959 & 37,959 & 37,959 & 37,959 & 37,959 & 37,959 \\
-  R$^{2}$ & 0.035 & 0.028 & 0.034 & 0.028 & 0.028 & 0.034 \\
-  Residual Std. Error & 0.316 (df = 37950) & 0.317 (df = 37950) & 0.316 (df = 37949) & 0.317 (df = 37950) & 0.317 (df = 37950) & 0.316 (df = 37949) \\
-  \hline
-  \hline \\[-1.8ex]
-  \textit{Note:}  & \multicolumn{6}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-  \end{tabular}
+\input{C:/repos/learn-doing/thesis/tables/table_ols_exp1.txt}
 
-}
-
-\end{table}
-
-\begin{table}[!htbp] \centering
-  \caption{Regression results for OLS and IV specifications where experience is computed as past annualized contracts won.}
-  \label{tableExp2}
-  \resizebox{\textwidth}{!}{
-  \begin{tabular}{@{\extracolsep{5pt}}lcccccc}
-  \\[-1.8ex]\hline
-  \hline \\[-1.8ex]
-   & \multicolumn{6}{c}{\textit{Dependent variable:}} \\
-  \cline{2-7}
-  \\[-1.8ex] & \multicolumn{6}{c}{Share of Contracts won in t} \\
-  \\[-1.8ex] & \multicolumn{3}{c}{\textit{OLS}} & \multicolumn{3}{c}{\textit{instrumental}} \\
-   & \multicolumn{3}{c}{\textit{}} & \multicolumn{3}{c}{\textit{variable}} \\
-  \\[-1.8ex] & (1) & (2) & (3) & (4) & (5) & (6)\\
-  \hline \\[-1.8ex]
-   Experience in (t-1) (Binary) & 0.109$^{***}$ &  &  & 0.168$^{***}$ &  &  \\
-    & (0.004) &  &  & (0.010) &  &  \\
-    & & & & & & \\
-   Experience in (t-1) (Linear) &  & 0.059$^{***}$ & 0.107$^{***}$ &  & 0.057$^{***}$ & 0.108$^{***}$ \\
-    &  & (0.016) & (0.004) &  & (0.004) & (0.012) \\
-    & & & & & & \\
-   (Experience in (t-1)) (Squared) &  &  & $-$0.013$^{***}$ &  &  & $-$0.013$^{***}$ \\
-    &  &  & (0.001) &  &  & (0.003) \\
-    & & & & & & \\
-   Constant & 0.288$^{***}$ & 0.289$^{***}$ & 0.285$^{***}$ & 0.277$^{***}$ & 0.290$^{***}$ & 0.285$^{***}$ \\
-    & (0.005) & (0.006) & (0.005) & (0.006) & (0.005) & (0.005) \\
-    & & & & & & \\
-  \hline \\[-1.8ex]
-  Fixed effects By period & Yes & Yes & Yes & Yes & Yes & Yes \\
-  Observations & 36,844 & 36,844 & 36,844 & 36,844 & 36,844 & 36,844 \\
-  R$^{2}$ & 0.032 & 0.027 & 0.031 & 0.025 & 0.027 & 0.031 \\
-  Residual Std. Error & 0.321 (df = 36835) & 0.322 (df = 36835) & 0.321 (df = 36834) & 0.322 (df = 36835) & 0.322 (df = 36835) & 0.321 (df = 36834) \\
-  \hline
-  \hline \\[-1.8ex]
-  \textit{Note:}  & \multicolumn{6}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-  \end{tabular}
-
-}
-
-\end{table}
+\input{C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt}
 
 There does not seems to be conclusive evidence regarding different results when employing quadratic rather than linear functional forms for experience. For example, Figure \ref{fig:pred_average} shows the mean confidence intervals, employing as period fixed effects the last period in the sample. It can be seen that the fitted total predicted value does not seen to vary greatly from the linear to the quadratic specification.
 

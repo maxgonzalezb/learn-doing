@@ -175,12 +175,14 @@ stargazer(lm.7,lm.8,lm.9,lm.10,lm.11,lm.12, type = "latex",
 
 #Chosen Output
 #Table
-stargazer(lm.4,lm.5,lm.6,lm.10,lm.11,lm.12, type = "latex",
+regression.output.1=capture.output({stargazer(lm.4,lm.5,lm.6,lm.10,lm.11,lm.12, type = "latex",label = 'tab:table_exp_1', header = F,
           se = list(NULL, c(robust.lm4,robust.lm5,robust.lm6,robust.lm10,robust.lm11,robust.lm12)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
           title="Regression for OLS and IV specifications",
           dep.var.labels=c("Share of Contracts won in t"),
           covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
-          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))
+          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
+createStargazerTxt(regression.output.1,'table_ols_exp1.txt')
+
 
 #Plot
 x=seq(0,10,length.out = 1000)
@@ -268,12 +270,13 @@ robust.lm24<- vcovHC(lm.24, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.24)
 
 #Chosen Output II
-stargazer(lm.16,lm.17,lm.18,lm.22,lm.23,lm.24, type = "latex",
+regression.output.2=capture.output({stargazer(lm.16,lm.17,lm.18,lm.22,lm.23,lm.24, type = "latex",label = 'tab:tableExp2',header = F,
           se = list(NULL, c(robust.lm16,robust.lm17,robust.lm18,robust.lm22,robust.lm23,robust.lm24)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
           title="Regression for OLS and IV specifications",
           dep.var.labels=c("Share of Contracts won in t"),
           covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
-          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))
+          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
+createStargazerTxt(regression.output.2,'table_ols_exp2.txt')
 
 
 ## Robustness checks
@@ -403,6 +406,7 @@ summary(iv.spec2.bin)
 #Create Simple Table of Outcomes
 stargazer(lm.spec1.bin,lm.spec1.cont,lm.spec1.cont,robust.spec2.cont,iv.spec1.cont,iv.spec2.cont, type = "latex",
           se = list(NULL, c(robust.spec1.bin,robust.spec1.cont,robust.spec2.cont,robustiv.spec1.cont,robustiv.spec2.cont)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
+
 
 
 

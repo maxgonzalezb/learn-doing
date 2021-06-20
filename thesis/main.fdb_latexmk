@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1624139448 "main.tex" "main.pdf" "main" 1624139453
+["pdflatex"] 1624158098 "main.tex" "main.pdf" "main" 1624158104
   "C:/Program Files/MiKTeX/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1001775420 2971 def0b6c1f0b107b3b936def894055589 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1200.tfm" 993061958 3200 b8d69bc738e5ef3e08cefeef3109ff56 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1440.tfm" 993061960 3196 0b37fa3083e15c57cfa8c4ff52f2807a ""
@@ -93,20 +93,22 @@
   "C:/ProgramData/MiKTeX/pdftex/config/pdftex.map" 1623970329 5217809 7be800332f8babd8b9d9c49d5564a114 ""
   "C:/Users/Maximiliano/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1623971266 10444370 ba6582a549b487bc830f85c0dba00352 ""
   "C:/repos/learn-doing/R/Output//fit_sample.png" 1623961114 227630 9b800bffcb9a45703fb34d6d1c165d9d ""
-  "chapLBD.aux" 1624139452 4789 04449f287990c14c5e1decd191fffff8 "pdflatex"
-  "chapLBD.tex" 1624139292 38518 8510968f689c6cb4e30de0a6483f67f4 ""
+  "chapLBD.aux" 1624158104 4661 239c117d3a67b8c9a5f33e21279fc4c9 "pdflatex"
+  "chapLBD.tex" 1624157697 34868 ffa4340e8fc3ecd107f8c95b844764eb ""
   "figures//diagram_experiences.png" 1624118010 45853 761a7ee25dc960863c4e0f7849b15bc5 ""
   "figures//plotTypes.png" 1623894081 259708 27c4325ad62f4fd40f6609093c66b939 ""
   "figures//plotwins_both.png" 1623894081 339499 d5e09c69f811cd5668343c4083562f0b ""
   "figures//robustness_threshold.png" 1623894081 133948 359e74939ee3fbcb552983b4067f8fcf ""
   "lgrind.sty" 1623893168 7662 ea74beead1aa2b711ec2669ba60562c3 ""
-  "main.aux" 1624139452 91 775c4d33b52621a30b97c0d8bf3b1c25 "pdflatex"
+  "main.aux" 1624158104 91 775c4d33b52621a30b97c0d8bf3b1c25 "pdflatex"
   "main.tex" 1624068988 2435 4ad8d40f68a51394a94123d0b38cae89 ""
   "mitthesis.cls" 1623893168 20274 88c5ea0f79a8c9e7d047b6473948901f ""
   "tables/table_firm_sizes_intercepts.txt" 1623894081 2437 f13eaa10cd078f0b21d9ab22637bc8dd ""
+  "tables/table_ols_exp1.txt" 1624153914 1759 cce1390ab4da036cc8c97da9f888c66f ""
+  "tables/table_ols_exp2.txt" 1624158086 1755 e8be1a5a21d0483ccba6bcc680969f78 ""
   "tables/table_tax_categories_data.txt" 1623894081 995 eb5838fef267414a495cdd7f777a5186 ""
   (generated)
-  "main.pdf"
   "chapLBD.aux"
   "main.aux"
   "main.log"
+  "main.pdf"

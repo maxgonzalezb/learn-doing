@@ -70,7 +70,11 @@ updatelist=function(urlActa){
 
 
 
-
+createStargazerTxt<-function(table,filename){
+table <- gsub("\\begin{tabular}","\\resizebox{0.95\\textwidth}{!}{\\begin{tabular}", table,fixed=T)
+table <- gsub("\\end{tabular}","\\end{tabular}}", table,fixed=T)
+table%>%cat(., file = paste0("C:\\repos\\learn-doing\\thesis\\tables\\",filename))
+}
 
 
 
