@@ -1,9 +1,12 @@
 ## Effect of firm size
+load(file='C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')                           
 load('C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')
+directory.simplified=readRDS('C:\\repos\\learn-doing\\data\\firms\\directory_simplified.rds')%>%rename('rutcontratista'='rutempresa','tramo'='tramoventas','ano'='anocomercial')
 categories=read_xlsx(path = 'C:\\repos\\learn-doing\\data\\SII\\company_categories.xlsx',na = 'NA')%>%round()
-#CReate description of firms in file
+head(directory.simplified$rutclean)
+#Create description of firms in file
 df.merge=df%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
-  mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(FechaInicio))%>%left_join(directory.simplifed,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))%>%filter(!is.na(tramo))
+  mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(FechaInicio))%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))%>%filter(!is.na(tramo))
 df.summary.categories=df.merge%>%group_by(RutProveedor_clean)%>%summarise(totsales=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'])/length(unique(anocomercial)),numOfertas=length(Codigo)/length(unique(anocomercial)),tramo=max(tramo))%>%
   group_by(tramo)%>%summarise(numfirms=length(RutProveedor_clean),totsales.average=(mean(totsales,na.rm = T))/29000,numOffertas.mean=mean(numOfertas))
 colnames(df.summary.categories)<-c('Category','Sample Number of Firms','Sample Average Annual Sales (CLP UF)','Average Number of Annual Offers')
@@ -15,13 +18,12 @@ start=0
 split1=2
 split2=2
 #merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
-merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 )
-load(file='C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')                           
+merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,filterReqExp = T )
 
 #Create merge with size dataset
 merged.wins.juridicas=merged.wins%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
   mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(idperiodpost))
-merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplifed,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
+merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
 #merged.wins.juridicas=merged.wins.juridicas%>%filter(!is.na(tramo)&tramo>1)%>%mutate(tramo.group=tramo)
 
 #Compare juridical-non juridical firms
@@ -62,36 +64,59 @@ View(final.results)
 ###Second way: include an interaction effect
 merged.wins.juridicas=merged.wins%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
   mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(idperiodpost))
-merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplifed,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
-merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=as.character(sprintf("%02d", as.numeric(tramo))))
-merged.wins.juridicas=merged.wins.juridicas%>%mutate(group=paste0("Group ",ifelse(tramo=='NA',yes='00',no=tramo)))
-merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=paste0("Group",tramo))%>%mutate(tramo=gsub(x=tramo,pattern = 'NA',replacement = '00'))
+merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
+#Add cuts 
+merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( tramo, breaks = c(1,2,4,6,7,9,14),right=F))
+merged.wins.juridicas$bins_tramo%>%head()
+  
+merged.wins.juridicas=merged.wins.juridicas%>%mutate(group=paste0("Group ",ifelse(is.na(tramo),yes='00',no=as.character(bins_tramo))))
+#merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=paste0("Group",tramo))%>%mutate(tramo=gsub(x=tramo,pattern = 'NA',replacement = '00'))
+#merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=as.character(sprintf("%02d", as.numeric(tramo))))
 
-table(merged.wins.juridicas$tramo)
-baseline='Group05'
-merged.wins.juridicas=merged.wins.juridicas%>%mutate(group=relevel(as.factor(tramo), ref = 'Group05'))
-merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=relevel(as.factor(tramo), ref = 'Group05'))
+table(merged.wins.juridicas$bins_tramo)
+table(merged.wins.juridicas$group)
+baseline='Group [7,9)'
+merged.wins.juridicas=merged.wins.juridicas%>%mutate(group=relevel(as.factor(group), ref = baseline))
+merged.wins.juridicas2=merged.wins.juridicas%>%filter(group!='Group [1,2)')
+#merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=relevel(as.factor(tramo), ref = 'Group05'))
+#merged.wins.juridicas=merged.wins.juridicas%>%mutate(bins_tramo=relevel(as.factor(bins_tramo), ref = "[6,7)"))
 
-lm.25<-lm(probWinpost~winspre+idperiodpost+winspre*tramo,data = merged.wins.juridicas)
+lm.25<-lm(probWinpost~(winspre>0)+idperiodpost+(winspre>0)*group,data = merged.wins.juridicas)
 robust.lm25<- vcovHC(lm.25, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.25)
 
-lm.26<-ivreg(probWinpost~idperiodpost+winspre*tramo|idperiodpost+winspre_close*tramo,data = merged.wins.juridicas)
-#robust.lm26<- vcovHC(lm.26, type = "HC1")%>%diag()%>%sqrt()
+lm.26<-lm(probWinpost~winspre+idperiodpost+winspre*group,data = merged.wins.juridicas)
+robust.lm26<- vcovHC(lm.26, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.26)
 
+lm.27<-ivreg(probWinpost~idperiodpost+(winspre>0)*group|idperiodpost+(winspre_close>0)*group,data = merged.wins.juridicas2)
+robust.lm27<- vcovHC(lm.27, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.27)
+
+lm.28<-ivreg(probWinpost~idperiodpost+winspre*group|idperiodpost+winspre_close*group,data = merged.wins.juridicas2)
+robust.lm28<- vcovHC(lm.28, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.28)
+
+table(merged.wins.juridicas$probWinpost,merged.wins.juridicas$bins_tramo)
+weird=merged.wins.juridicas%>%filter(bins_tramo=='[1,2)')
+summary(weird)
+
+#Create Stargazer output
 exp=c('Experience (linear)')
+exp.bin=c('Experience (binary)')
 groups=levels(merged.wins.juridicas$group)[levels(merged.wins.juridicas$group)!=baseline]
 groups.exp=paste0("Experience",levels(merged.wins.juridicas$group))[levels(merged.wins.juridicas$group)!=baseline]
-labels=c(exp,groups,groups.exp)
+groups.exp.bin=paste0("Experience(Binary)",levels(merged.wins.juridicas$group))[levels(merged.wins.juridicas$group)!=baseline]
+labels=c(exp.bin, exp, groups, groups.exp.bin,groups.exp)
 
-stargazer(lm.25,lm.26, type = "latex",
-          se = list(NULL, c(robust.lm25,robust.lm26)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+
+table.size=capture.output({stargazer(lm.25,lm.26,lm.27,lm.28, type = "latex",label='tab:fitsize',
+          se = list(NULL, c(robust.lm25,robust.lm26,robust.lm27,robust.lm28)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
           title="Interaction between firm size and experience",
           dep.var.labels=c("Share of Contracts won in t"),
-          covariate.labels=labels,single.row = TRUE,header=FALSE,
-          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_firm_sizes_intercepts.txt")
+          covariate.labels=labels,
+          single.row = TRUE,header=FALSE,
+          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes')))})
+createStargazerTxt(table.size,'table_firm_sizes_intercepts.txt')
 
-unique
-
-?stargazer
+#%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_firm_sizes_intercepts.txt")
