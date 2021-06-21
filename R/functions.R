@@ -235,7 +235,7 @@ while (cutoff2<=maxcutoff) {
   two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
   }
   if(ranks==TRUE){
-  two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,,filterReqExp=filterReqExp)
+  two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
    }
   ##Refresh
    cutoff0=ymd(min(df$FechaInicio)) + years(i)
@@ -289,12 +289,17 @@ return(multiperiod.mergedwins)
 #                                                                                montoTot=sum(montoOferta[CantidadAdjudicada>=1]))%>%arrange(-montoTot)%>%ungroup()%>%
 #   mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0))
 
-createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClose=0.005){
+createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClose=0.005,filterReqExp=F){
   cutoff0=ymd(min(df$FechaInicio)) + years(start)
   cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
   cutoff2=cutoff1 + years(split2)
   df.period1=df%>%filter(FechaInicio<cutoff1&FechaInicio>=cutoff0)
   df.period2=df%>%filter(FechaInicio>=cutoff1&FechaInicio<=cutoff2)
+  
+  if(filterReqExp==T){
+    df.period2=df.period2%>%filter(hasExp==0)
+  }
+  
   
   #Create winning statistics of each period
   ##Create Winning Statistics for first period
