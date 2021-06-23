@@ -14,6 +14,118 @@ library(skimr)
 library(stargazer)
 library(purrr)
 library(broom)
+library(scales)
+
+
+CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500){
+  
+  #Important. Set up how much players win/lose with each auction
+  base = c(winPoints, rep(-losePoints, max_players - 1))
+  tabletimes = df.rating %>% select(FechaInicio, Codigo, time)
+  vector = seq_len(nrow(df))
+  vectorubicacion = df$Codigo %in% tabletimes$Codigo
+  
+  #Create first rankings
+  df.ranked = df %>% mutate(rank = -1)
+  ratings = elom(
+    x = df.rating.elo[1:n, ],
+    nn = max_players,
+    exact = F,
+    base = base,
+    placing = F,
+    history = T
+  )
+  
+  ## CReate by parts due to memory limitations
+  df.ranked.1 = updateDfRanked(
+    df.ranked = df.ranked,
+    ratings = ratings,
+    df.rating = df.rating,
+    startPoint = 0
+  )
+  status = ratings$ratings
+  rm(ratings)
+  ratings.2 = elom(
+    x = df.rating.elo[(n + 1):(2 * n), ],
+    nn = max_players,
+    exact = F,
+    base = base,
+    placing = F,
+    history = T,
+    status = status
+  )
+  df.ranked.2 = updateDfRanked(
+    df.ranked = df.ranked.1,
+    ratings = ratings.2,
+    df.rating = df.rating,
+    startPoint = n
+  )
+  status = ratings.2$ratings
+  rm(ratings.2)
+  ratings.3 = elom(
+    x = df.rating.elo[(2 * n+1):nrow(df.rating.elo), ],
+    nn = max_players,
+    exact = F,
+    base = base,
+    placing = F,
+    history = T,
+    status = status
+  )
+  df.ranked.3 = updateDfRanked(
+    df.ranked = df.ranked.2,
+    ratings = ratings.3,
+    df.rating = df.rating,
+    startPoint = 2 * n
+  )
+  rm(ratings.3)
+  
+  #Fill all single contests which are NA right now
+  df.ranked=df.ranked.3%>%left_join(tabletimes[,c(2,3)])
+  table(df.ranked$rank==-1)
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=startPoints,no=rank))
+  
+  
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  return(df.ranked)
+}
+
+updateDfRanked<-function(df.ranked, ratings,df.rating,startPoint=0,n=10000){
+  largo=ratings$history[1,,1]%>%length()
+  tabletimes=df.rating%>%select(FechaInicio,Codigo,time)%>%filter(time>=startPoint&time<=(startPoint+largo-1))
+  vector=seq_len(nrow(df))
+  maxcol=ncol(ratings$history[,,1])
+  vectorubicacion=df$Codigo%in%tabletimes$Codigo
+  
+  ##Siguiente paso: hacer una function estilo map
+ # for (i in seq(startPoint+1,startPoint+n)) {
+  for (i in seq(1,nrow(df.ranked))) {
+    if(i%%5000==0){print(label_percent()((i)/nrow(df.ranked)))}
+    codigo=df$Codigo[i]
+    if(!vectorubicacion[i]){next()}
+    rut=df$RutProveedor[i]
+    time1=((tabletimes[which(tabletimes$Codigo==codigo),'time'])%>%unlist())
+    if(!is.na(time1)){
+      df.ranked$rank[i]=ratings$history[rut,time1-startPoint+1,1]
+      #print('replaced')
+    }
+  }
+  return(df.ranked)
+  
+}  
+
 
 update_api<-function(idcheck){
   path = paste0(
