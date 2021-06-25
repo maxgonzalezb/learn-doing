@@ -47,16 +47,16 @@ for (h in seq(2744,1)) {
 ##2.1 Individual completing of misssing
 table.criteria=data.frame()
 fails=data.frame()
-delay=0.5
-for (h in seq(1000,3266)) {
+delay=1.1
+for (h in seq(2311,3266)) {
   print(h)
   if(h%%500==0){
-    print(table(table.criteria$Ítem))
+    #print(table(table.criteria$Ítem))
     save(table.criteria,file=paste0('C:\\repos\\learn-doing\\data\\table_criteria_incomplete_',h,gsub(x=as.character(Sys.time()),pattern = ':',''),'.Rdata'))
-    #table.criteria=data.frame()
+    table.criteria=data.frame()
   }
   possibleError <- tryCatch(
-    updatelist(urlActa = listaUrlsActas.faltantes$urlActa[h],idcheck = listaUrlsActas.faltantes$id[h],timeoutt = 30),
+    updatelist(urlActa = listaUrlsActas.faltantes$urlActa[h],idcheck = listaUrlsActas.faltantes$id[h],timeoutt = 60),
     error=function(e) e
   )
   

@@ -335,7 +335,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   
 }
 
-createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005,ranks=FALSE,filterReqExp=F){
+createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005,ranks=FALSE,filterReqExp=F,thresholdCloseRank=1.08){
 i=0
 maxcutoff=ymd(max(df$FechaInicio))
 cutoff2=ymd(min(df$FechaInicio))
@@ -347,7 +347,7 @@ while (cutoff2<=maxcutoff) {
   two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
   }
   if(ranks==TRUE){
-  two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
+  two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp,thresholdCloseRank = thresholdCloseRank)
    }
   ##Refresh
    cutoff0=ymd(min(df$FechaInicio)) + years(i)
@@ -401,7 +401,7 @@ return(multiperiod.mergedwins)
 #                                                                                montoTot=sum(montoOferta[CantidadAdjudicada>=1]))%>%arrange(-montoTot)%>%ungroup()%>%
 #   mutate(acum=cumsum(montoTot)/sum(montoTot))%>%mutate(Pareto=ifelse(acum<=0.9,1,0))
 
-createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClose=0.005,filterReqExp=F){
+createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClose=0.005,filterReqExp=F,thresholdCloseRank=1.08){
   cutoff0=ymd(min(df$FechaInicio)) + years(start)
   cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
   cutoff2=cutoff1 + years(split2)
@@ -415,7 +415,7 @@ createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClos
   
   #Create winning statistics of each period
   ##Create Winning Statistics for first period
-  df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],closeRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=1.08)))
+  df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],closeRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)))
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
   

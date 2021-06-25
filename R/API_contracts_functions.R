@@ -147,7 +147,7 @@ createDefinitiveDatasetCriteria<-function(){
     print(paste0(ncol(mylist[[v]]),"  ",filenames[v]))
   }
   
-  all <- do.call("rbind", mylist)
+  all <- bind_rows(mylist)
   all.simplified=all%>%group_by(Ítem,Observaciones,Ponderación,id)%>%count()
   return(all.simplified)  
 }

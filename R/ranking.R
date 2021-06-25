@@ -56,7 +56,7 @@ ratings = elom(
   history = T
 )
 
-## CReate by parts due to memory limitations
+## Create by parts due to memory limitations
 df.ranked.1 = updateDfRanked(
   df.ranked = df.ranked,
   ratings = ratings,
@@ -126,7 +126,7 @@ df.ranked=df.ranked%>%left_join(listaContractExp,by=c('CodigoExterno'='id'))
 merged.wins=createMultiPeriodDataset(df.ranked,start = start, split1 =split1,split2=split2,ranks = TRUE,filterReqExp = T)
 
 #Try new models
-lm.9<-ivreg(probWinpost~winspre+idperiodpost|winspre_closerank+winspre_close+idperiodpost,data=merged.wins)
+lm.9<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_closerank>0)+winspre_close+idperiodpost,data=merged.wins)
 robust.lm9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.9)
 
@@ -148,14 +148,82 @@ summary(lm.5)
 
 # Robustness checks
 # The main problem are the points awarded. We check with various win/lose pairs
-tic()
-average.players=df%>%group_by(Codigo)%>%count()%>%ungroup()%>%summarise(mean=mean(n,na.rm=T))
-winPoints=24
-losePoints=round(winPoints/average.players)%>%as.numeric()
-losePoints=10
-df.ranked.exp1=CreateFullRankedDataset(max_players,df,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500)
-toc()
-hist(df.ranked.exp1$rank)
+winPoints.vector=c(10,15,25,50)
+average.players=df%>%group_by(Codigo)%>%count()%>%ungroup()%>%summarise(mean=mean(n,na.rm=T))%>%round()%>%as.numeric()
+losePoints.vector=round(winPoints/average.players)
+
+parameters.checks=data.frame(winPoints.vector,losePoints.vector)
+start=0
+split1=2
+split2=2
+check_thresholds=seq(1.001,1.03,0.002)
+result.robustness.ranks=data.frame()
+for (i in seq_len(nrow(parameters.checks))) {
+  # Select win and lose points
+  winPoints =  parameters.checks$winPoints[i]
+  losePoints = parameters.checks$losePoints[i]
+  
+  # Create full rankings
+  df.ranked.robust = CreateFullRankedDataset(
+    max_players,
+    df,
+    df.rating.elo,
+    n = 10000,
+    winPoints,
+    losePoints,
+    startPoints = 1500
+  )
+  df.ranked.robust = df.ranked.robust %>% left_join(listaContractExp, by =
+                                                      c('CodigoExterno' = 'id'))
+  
+  # Create results by threshold
+  result.robustness.ranks.iter = check_thresholds %>% map_dfr(
+    function(x)
+      createMultiPeriodDataset(
+        df.ranked,
+        start = start,
+        split1 = split1,
+        split2 =
+          split2,
+        ranks = TRUE,
+        filterReqExp = T,
+        thresholdCloseRank = x
+      ) %>%
+      ivreg(
+        probWinpost ~ (winspre > 0) + idperiodpost |
+          (winspre_closerank > 0) + winspre_close + idperiodpost,
+        data = .
+      ) %>%
+      coeftest(vcov = vcovHC(., type = "HC1")) %>%
+      tidy() %>% filter(term == 'winspre > 0TRUE') %>% mutate(
+        threshold = x,
+        winPoints = winPoints,
+        losePoints = losePoints
+      )
+  )
+  
+  result.robustness.ranks = rbind(result.robustness.ranks.iter, result.robustness.ranks)
+  
+}
+
+
+lm.9<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_closerank>0)+winspre_close+idperiodpost,data=merged.wins)%>%
+    coeftest(vcov = vcovHC(., type="HC1"))%>%tidy()%>%filter(term=='winspre > 0TRUE')
+robust.lm9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
+
+
+lm.10<-ivreg(probWinpost~winspre+idperiodpost|winspre_closerank+idperiodpost,data=merged.wins)
+robust.lm10<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.10)
+
+res=coeftest(lm.9, vcov = vcovHC(lm.9, type="HC1"))%>%tidy()%>%filter(term=='winspre > 0TRUE')
+
+ggplot(merged.wins,aes(x=as.factor(winspre_closerank),y=probWinpost))+geom_boxplot()
+
+
+
+
+
 
 
 #Randomize points
