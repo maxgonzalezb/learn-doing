@@ -1,6 +1,6 @@
 \begin{table}[!h]
 
-\caption{Sample Descriptive Statistics}
+\caption{\label{tab:}Sample Descriptive Statistics}
 \centering
 \begin{tabular}[t]{ccccccc}
 \toprule

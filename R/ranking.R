@@ -42,113 +42,54 @@ base = c(25, rep(-10, max_players - 1))#seq(max_players,1,by = -1)
 tabletimes = df.rating %>% select(FechaInicio, Codigo, time)
 vector = seq_len(nrow(df))
 
-#maxcol=ncol(ratings$history[,,1])
 vectorubicacion = df$Codigo %in% tabletimes$Codigo
+winPoints=24
+losePoints=8
 
-#Create first rankings
-df.ranked = df %>% mutate(rank = -1)
-ratings = elom(
-  x = df.rating.elo[1:n, ],
-  nn = max_players,
-  exact = F,
-  base = base,
-  placing = F,
-  history = T
+df.ranked = CreateFullRankedDataset(
+  max_players,
+  df,
+  df.rating.elo,
+  n = 10000,
+  winPoints,
+  losePoints,
+  startPoints = 1500
 )
 
-## Create by parts due to memory limitations
-df.ranked.1 = updateDfRanked(
-  df.ranked = df.ranked,
-  ratings = ratings,
-  df.rating = df.rating,
-  startPoint = 0
-)
-status = ratings$ratings
-rm(ratings)
-ratings.2 = elom(
-  x = df.rating.elo[(n + 1):(2 * n), ],
-  nn = max_players,
-  exact = F,
-  base = base,
-  placing = F,
-  history = T,
-  status = status
-)
-df.ranked.2 = updateDfRanked(
-  df.ranked = df.ranked.1,
-  ratings = ratings.2,
-  df.rating = df.rating,
-  startPoint = n
-)
-status = ratings.2$ratings
-rm(ratings.2)
-ratings.3 = elom(
-  x = df.rating.elo[(2 * n+1):nrow(df.rating.elo), ],
-  nn = max_players,
-  exact = F,
-  base = base,
-  placing = F,
-  history = T,
-  status = status
-)
-df.ranked.3 = updateDfRanked(
-  df.ranked = df.ranked.2,
-  ratings = ratings.3,
-  df.rating = df.rating,
-  startPoint = 2 * n
-)
-rm(ratings.3)
+# Exploration. Describe Close wins.
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\rankings_times.png",width = 6.5, height = 3.2,
+    units = "in",res=1000)
+ggplot(df.ranked%>%filter(year%in%c(2010,2012,2014,2016,2018,2020)),aes(x=rank))+geom_histogram(fill='steelblue',color='black')+xlim(1000,2000)+
+                  facet_wrap(~year,ncol = 3,nrow = 2)+theme_bw()+xlab('Rank')+ylab('Count')+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+dev.off()
 
-#Fill all single contests which are NA right now
-df.ranked=df.ranked.3%>%left_join(tabletimes[,c(2,3)])
-table(df.ranked$rank==-1)
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=1500,no=rank))
-table(df.ranked$rank==-1)
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-save(df.ranked,file = 'C:\\repos\\learn-doing\\data\\rankeddf.rds')
-
-#Now we can explore a bit around and start trying to identify close wins
-ggplot(df.ranked,aes(x=rank))+geom_histogram()
 df.ranked=df.ranked%>%left_join(listaContractExp,by=c('CodigoExterno'='id'))
+
+## Create the table with descriptive data
+thresholdCloseRank=1.03
+table.close.contracts=df.ranked%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%summarise(closeRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)))
+df=df%>%left_join(table.close.contracts)
+comparison.1=df%>%filter(closeRanking==0)%>%generateDfBidsSummary()%>%dplyr::select('mean','std')%>%rename('mean_notClose'='mean','std_notClose'='std')
+comparison.2=df%>%filter(closeRanking==1)%>%generateDfBidsSummary()%>%dplyr::select(name,'mean','std')%>%rename('mean_close'='mean','std_close'='std')%>%cbind(comparison.1)%>%select(name,mean_notClose,mean_close,std_notClose,std_close)
+colnames(comparison.2)<-c('Variable','Mean (Not close win)','Mean (Close win)','Sd (Not close win)','Sd (Close win)')
+table_output=create_kable(comparison.2[1:5,],caption = "Comparison between close and non-close wins",label='closewins_alt2_desc')
+table_output%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_closewins_alt2_desc.txt")
+
+## Create the merged wins with correct parameters
 merged.wins=createMultiPeriodDataset(df.ranked,start = start, split1 =split1,split2=split2,ranks = TRUE,filterReqExp = T)
 
-#Try new models
-lm.9<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_closerank>0)+winspre_close+idperiodpost,data=merged.wins)
-robust.lm9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.9)
+## Create the models with iv
+lm.25<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_closerank>0)+winspre_close+idperiodpost,data=merged.wins)
+robust.lm13<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.13)
 
-lm.10<-ivreg(probWinpost~winspre+idperiodpost|winspre_closerank+idperiodpost,data=merged.wins)
-robust.lm10<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.10)
+lm.26<-ivreg(probWinpost~winspre+idperiodpost|winspre_closerank+idperiodpost,data=merged.wins)
+robust.lm14<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.14)
 
-lm.11<-ivreg(probWinpost~(winspre>0)+idperiodpost|winspre_closerank+idperiodpost,data=merged.wins)
-robust.lm11<- vcovHC(lm.11, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.11)
-
-lm.5<-lm(probWinpost~winspre+idperiodpost,data = merged.wins)
-robust.lm5<- vcovHC(lm.5, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.5)
-
-lm.5<-lm(probWinpost~(winspre>0)+idperiodpost,data = merged.wins)
-robust.lm5<- vcovHC(lm.5, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.5)
-
-# Robustness checks
+################################## Robustness checks
 # The main problem are the points awarded. We check with various win/lose pairs
-winPoints.vector=c(10,15,25,50)
+winPoints.vector=c(10,15,35,50)
 average.players=df%>%group_by(Codigo)%>%count()%>%ungroup()%>%summarise(mean=mean(n,na.rm=T))%>%round()%>%as.numeric()
 losePoints.vector=round(winPoints/average.players)
 
@@ -207,44 +148,6 @@ for (i in seq_len(nrow(parameters.checks))) {
 }
 
 
-lm.9<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_closerank>0)+winspre_close+idperiodpost,data=merged.wins)%>%
-    coeftest(vcov = vcovHC(., type="HC1"))%>%tidy()%>%filter(term=='winspre > 0TRUE')
-robust.lm9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
-
-
-lm.10<-ivreg(probWinpost~winspre+idperiodpost|winspre_closerank+idperiodpost,data=merged.wins)
-robust.lm10<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.10)
-
-res=coeftest(lm.9, vcov = vcovHC(lm.9, type="HC1"))%>%tidy()%>%filter(term=='winspre > 0TRUE')
-
-ggplot(merged.wins,aes(x=as.factor(winspre_closerank),y=probWinpost))+geom_boxplot()
-
-
-
-
-
-
-
-#Randomize points
-
-#Randomize initialization of players by status
-
-
-#Randomize 
-
-##Check how it is constructed the placings
-
-
-
-#Describe the ranking metrics
-#Table rankings. Statistics. Measures of correlation with experience, size?. Histogram. 
-
-
-
-
-
-
 
 
 
@@ -292,3 +195,104 @@ vectorubicacion=df$Codigo%in%tabletimes$Codigo
 
 
 
+
+summarise.firms=df.ranked%>%arrange(FechaInicio)%>%group_by(RutProveedor)%>%summarise(totwins=length(Codigo[winner=='Seleccionada']),
+                                               totbids=length(Codigo),
+                                               probwin=totwins/totbids,
+                                               avgsize=mean(montoOferta,na.rm=T),
+                                               years=length(unique(year)),rank.final=rank[length(rank)],
+                                               avgopponents=mean(NumeroOferentes,na.rm=T))%>%arrange(-totwins)%>%
+                                                mutate(rank.bin=ntile(rank.final,n = 5))
+
+
+#pca.result=PCA(summarise.firms%>%select(-RutProveedor,-rank.final), scale.unit = TRUE, ncp = 5, graph = TRUE)
+pca_out=prcomp(x = summarise.firms%>%select(-RutProveedor,-rank.final),scale. = T,center = T)
+df.coords.x=pca_out$x%>%as.data.frame()%>%mutate(rank.bin=summarise.firms$rank.bin)
+
+ggplot(df.coords.x,aes(x=PC1,y=PC2))+geom_point(alpha=0.1,aes(color=as.factor(rank.bin)))+xlim(-10,3)+ylim(-2.6,5)
+  ggplot(summarise.firms,aes(x=avgopponents,y=avgsize))+geom_jitter(alpha=0.8,aes(color=as.factor(rank.bin)))+scale_y_log10()+ylim(0,1e10)
++xlim(-10,3)+ylim(-2.6,5)
+  #OLD PCA IDEA
+  df.coords.pc=df.coords.pc%>%mutate(varnames=rownames(df.coords.pc))
+  pca_out=get_pca(pca.result)
+  df.coords.pc=pca_out$coord%>%as.data.frame()
+  fviz_pca_ind(pca.result)
+  library(factoextra)
+  
+  ## Create by parts due to memory limitations
+  {
+    
+    #Create first rankings
+    df.ranked = df %>% mutate(rank = -1)
+    ratings = elom(
+      x = df.rating.elo[1:n, ],
+      nn = max_players,
+      exact = F,
+      base = base,
+      placing = F,
+      history = T
+    )
+    
+    df.ranked.1 = updateDfRanked(
+      df.ranked = df.ranked,
+      ratings = ratings,
+      df.rating = df.rating,
+      startPoint = 0
+    )
+    status = ratings$ratings
+    rm(ratings)
+    ratings.2 = elom(
+      x = df.rating.elo[(n + 1):(2 * n), ],
+      nn = max_players,
+      exact = F,
+      base = base,
+      placing = F,
+      history = T,
+      status = status
+    )
+    df.ranked.2 = updateDfRanked(
+      df.ranked = df.ranked.1,
+      ratings = ratings.2,
+      df.rating = df.rating,
+      startPoint = n
+    )
+    status = ratings.2$ratings
+    rm(ratings.2)
+    ratings.3 = elom(
+      x = df.rating.elo[(2 * n+1):nrow(df.rating.elo), ],
+      nn = max_players,
+      exact = F,
+      base = base,
+      placing = F,
+      history = T,
+      status = status
+    )
+    df.ranked.3 = updateDfRanked(
+      df.ranked = df.ranked.2,
+      ratings = ratings.3,
+      df.rating = df.rating,
+      startPoint = 2 * n
+    )
+    rm(ratings.3)
+    
+    #Fill all single contests which are NA right now
+    df.ranked=df.ranked.3%>%left_join(tabletimes[,c(2,3)])
+    table(df.ranked$rank==-1)
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=1500,no=rank))
+    table(df.ranked$rank==-1)
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    save(df.ranked,file = 'C:\\repos\\learn-doing\\data\\rankeddf.rds')
+}

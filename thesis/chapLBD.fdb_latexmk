@@ -1,0 +1,16 @@
+# Fdb version 3
+["pdflatex"] 1624594890 "chapLBD.tex" "chapLBD.pdf" "chapLBD" 1624594894
+  "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
+  "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
+  "C:/ProgramData/MiKTeX/pdftex/config/pdftex.map" 1623970329 5217809 7be800332f8babd8b9d9c49d5564a114 ""
+  "C:/Users/Maximiliano/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1623971266 10444370 ba6582a549b487bc830f85c0dba00352 ""
+  "chapLBD.aux" 1624594770 5113 c0a0f0563fb347a3f25c7b9dc36074bc ""
+  "chapLBD.tex" 1624594756 37678 7a5babc0902482ef9f19f13a922c270d ""
+  "tables/table_closewins_alt2_desc.txt" 1624594885 587 2e8390209f8ddc9e3183ba457fefd7fa ""
+  "tables/table_firm_sizes_intercepts.txt" 1624219067 2877 be8d045aa3afb1ff93e9ef9a8ff5b001 ""
+  "tables/table_ols_exp1.txt" 1624190553 1759 cce1390ab4da036cc8c97da9f888c66f ""
+  "tables/table_ols_exp2.txt" 1624190553 1755 e8be1a5a21d0483ccba6bcc680969f78 ""
+  "tables/table_tax_categories_data.txt" 1624190553 995 eb5838fef267414a495cdd7f777a5186 ""
+  (generated)
+  "chapLBD.pdf"
+  "chapLBD.log"

@@ -1,0 +1,28 @@
+PWD C:\repos\learn-doing\thesis
+INPUT C:\Users\Maximiliano\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT chapLBD.tex
+OUTPUT chapLBD.log
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
+OUTPUT chapLBD.pdf
+INPUT C:\ProgramData\MiKTeX\pdftex\config\pdftex.map
+INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt

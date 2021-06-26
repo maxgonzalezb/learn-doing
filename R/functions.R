@@ -225,12 +225,12 @@ save(directory.simplifed,file='C:\\repos\\learn-doing\\data\\directorySimplifedD
 
 
 #functions
-create_kable<-function(df,caption,numcols){
+create_kable<-function(df,caption,numcols,label=''){
   kable(
     df, "latex",
     booktabs = T,
     linesep = "",
-    align = rep('c', numcols),
+    align = rep('c', numcols),label = label,
     caption = caption
   ) %>% kable_styling(latex_options = c("hold_position"))
 }

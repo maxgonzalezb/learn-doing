@@ -115,9 +115,10 @@ EXP_{it}= EXPCLOSE_{it}+T_t+\varepsilon_{it}
 
 Clearly, both measures of experience ($EXP$ and $EXPCLOSE$) are correlated since every extra unit of experience increases the probability of having at least one close win. Moreover, close wins should not be correlated with cost measures, as they are attributed to random factors, such as risk-aversion differences between firms, random approximation differences between engineering teams in each firm, etc. and thus we should also have a valid instrument.
 
-Unfortunately, the previous strategy is unfeasible a with the data we have avalaible. Our data only allows us to see the criteria employed in each contract and the weight of each factor, but not the individual scores for each firm.
+Unfortunately, the previous strategy is unfeasible a with the data we have avalaible. Our data only allows us to see the criteria employed in each contract and the weight of each factor, but not the individual scores for each firm. We attempt two alternative methods detailed in the subsections below
 
-We attempt two alternative methods. The first method follows the same theoretical setting as before, but changes how close wins are singled out. Close wins are now operationally identified as the wins meeting copulatively  three conditions: i) the price weight in the awarding decision criteria is 70\% or higher ii) the contract was awarded to the lowest bid and iii) the difference between the lowest bid and the second lowest bid is less than .05\%. We expect that this way of identifying close wins does indeed capture a subset of the random wins, namely, random wins in projects where price is the major awarding criteria.
+\subsection{Close wins by close bids}
+ The first method follows the same theoretical setting as before, but changes how close wins are singled out. Close wins are now operationally identified as the wins meeting copulatively  three conditions: i) the price weight in the awarding decision criteria is 70\% or higher ii) the contract was awarded to the lowest bid and iii) the difference between the lowest bid and the second lowest bid is less than .05\%. We expect that this way of identifying close wins does indeed capture a subset of the random wins, namely, random wins in projects where price is the major awarding criteria.
 
 This definition of close wins leads to approximately 8\% of winning bids being classified as a close one. In the robustness checks, we also consider a different values for these parameters, where we consider close wins where three or more competitors are all within a 1\% difference in their bids.
 
@@ -144,8 +145,28 @@ Offers won by Firm & 0.972 & 1.37 & 2.1 & 3.23\\
 }
 \end{table}
 
+\subsection{Close wins as close rank}
+There are two main objections to the previous identification strategy:
+\begin{itemize}
+  \item The price is not the only awarding factor. Thus, it is possible that even in a contract where price is a major component, the cost advantages of a firm manifest in terms of other awarding factor, like quality. That is, the firm offers similarly priced goods but at a much superior quality.
+  \item The closeness between the first and the second bid does not take into account the full pool of participants.
+\end{itemize}
+
+The current alternative for close wins employs a ranking mechanism to label close wins when all the firms involved in the auction were close in ranking. The argument here is that, given a well constructed ranking, winning a contract against closely placed opponents is attributable to close factors.
+
+Obviously, the main issue is how to construct a good ranking measure. We proceed by  modeling each auction as a multi-player game (in the non-economic sense of the term) event in which firms gain points by winning the project and lose points by not winning it. We award and substract points based on a modified ELO algorithm suited for multi-player games.
+
+Each firm has its ranking initialized at a pre-specified level (1,500 in the initial version). Then, it is awarded 24 points for winning againsta a similar oponnent and substracted 8 by losing. The implementation of the algorithm recommends that points awarded and substracted sum to zero, so we fix awarded points and choose substracted points such that on average (given the number of players in an auction) this condition holds. Against non-similar opponents, the algorithm makes a correction based on the ranking of the players and the outcome of the game. The details of the algorithm are given in the Appendix.
+
+Having assigned to each firm a ranking for each point in time(i.e for each auction), we label a win as a "close win" to the one where the highest rank among the bidders for the auction was not more than 3\% higher than the lowest rank among them. This yields around of close wins in the final sample of analysis classified as a close win. In the robustness checks we analyze both i) different values for the won/lost points after an auction and ii) the threshold in ranking for a close win.
+
+Just as before, in Table \ref{tab:closewins_alt2_desc} we present summary statistics for close wins identified via close wins.
+
+\input{C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt}
 
 
+
+In the analysis, we drop the first two years of data to allow for a period of rank adjustment. This is necessary since the algorithm does not work well when the average rank is not clearly defined.
 
 %Bidding behavior
 %An alternative way to measure changes in bidding behavior caused by efficiency gains through experience is to examine directly changes in bidding behavior among more experienced firms with respect to less experienced ones. As was discussed before, experience induces changes in the underlying production function, or changes along the production function, that make the firm more efficient at producing certain types of goods. In a competitive market, firms should pass through at least a fraction of this improvement in costs to the bids they submit in the auctions. Thus, we should be able to identify this change directly through the bids that more experienced firms submit for projects.
