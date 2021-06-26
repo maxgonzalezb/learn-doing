@@ -121,6 +121,10 @@ table_output = create_kable(comparison.2[1:5, ], caption = "Comparison between c
                               'closewins_alt2_desc')
 table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_closewins_alt2_desc.txt")
 
+#################
+# First Measure of experience: rank measure
+#################
+
 ## Create the merged wins with correct parameters
 merged.wins = createMultiPeriodDataset(
   df.ranked,
@@ -147,6 +151,41 @@ lm.26 <-
         data = merged.wins)
 robust.lm26 <- vcovHC(lm.26, type = "HC1") %>% diag() %>% sqrt()
 summary(lm.26)
+
+#################
+# Second Measure of experience: rank measure
+#################
+
+merged.wins = createAnnualizedWins(
+  df.ranked,
+  start = start,
+  split1 = split1,
+  split2 = split2,
+  ranks = TRUE,
+  filterReqExp = T
+)
+
+## Create the models with iv
+lm.27 <-
+  ivreg(
+    probWinpost ~ (annualwinspre > 0) + idperiodpost |
+      (annualwinspre_closerank > 0)  + idperiodpost,
+    data = merged.wins
+  )
+robust.lm27<- vcovHC(lm.27, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.27)
+
+lm.28 <-
+  ivreg(probWinpost ~ annualwinspre + idperiodpost |
+          annualwinspre_closerank + idperiodpost,
+        data = merged.wins)
+robust.lm28 <- vcovHC(lm.28, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.28)
+
+
+
+
+
 
 ################################## Robustness checks
 # The main problem are the points awarded. We check with various win/lose pairs

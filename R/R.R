@@ -165,8 +165,6 @@ summary(lm.12)
 #stargazer(lm.7,lm.8,lm.9,lm.10,lm.11,lm.12, type = "latex",
   #        se = list(NULL, c(robust.lm7,robust.lm8,robust.lm9,robust.lm10,robust.lm11,robust.lm12)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
 
-
-
 #Plot
 x=seq(0,10,length.out = 1000)
 newdata=data.frame(winspre=x,a=x^2,idperiodpost='2019-01-04/2021-01-04')%>%rename('I(winspre^2)'='a')
@@ -183,9 +181,9 @@ png(filename="C:\\repos\\learn-doing\\R\\Output\\fit_sample.png",width = 7, heig
 plot_fit
 dev.off()
 
-##Second analysis, experience as annualized cumulative experience. 
+# Second analysis, experience as annualized cumulative experience. 
 ## Second analysis of the Experience
-merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
+merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2,filterReqExp = T)
 
 ##13
 lm.13<-lm(probWinpost~(annualwinspre>0),data = merged.wins)
@@ -218,7 +216,7 @@ summary(lm.18)
 
 #IVs
 ##19
-lm.19<-ivreg(probWinpost~(annualwinspre>0)|(annualwinspre_close),data=merged.wins)
+lm.19<-ivreg(probWinpost~(annualwinspre>0)|(annualwinspre_close>0),data=merged.wins)
 robust.lm19<- vcovHC(lm.19, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.18)
 
@@ -233,7 +231,7 @@ robust.lm21<- vcovHC(lm.21, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.21)
 
 ##22
-lm.22<-ivreg(probWinpost~(annualwinspre>0)+idperiodpost|(annualwinspre_close)+idperiodpost,data=merged.wins)
+lm.22<-ivreg(probWinpost~(annualwinspre>0)+idperiodpost|(annualwinspre_close>0)+idperiodpost,data=merged.wins)
 robust.lm22<- vcovHC(lm.22, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.22)
 
@@ -247,14 +245,6 @@ lm.24<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)+idperiodpost|annualwin
 robust.lm24<- vcovHC(lm.24, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.24)
 
-#Chosen Output II
-regression.output.2=capture.output({stargazer(lm.16,lm.17,lm.18,lm.22,lm.23,lm.24, type = "latex",label = 'tab:tableExp2',header = F,
-          se = list(NULL, c(robust.lm16,robust.lm17,robust.lm18,robust.lm22,robust.lm23,robust.lm24)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
-          title="Regression for OLS and IV specifications",
-          dep.var.labels=c("Share of Contracts won in t"),
-          covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
-          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
-createStargazerTxt(regression.output.2,'table_ols_exp2.txt')
 
 
 ## Robustness checks
@@ -586,4 +576,14 @@ regression.output.1=capture.output({stargazer(lm.4,   lm.5,lm.6,lm.10,lm.11,lm.1
                                               covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
                                               add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.1,'table_ols_exp1.txt')
+
+
+#Chosen Output II
+regression.output.2=capture.output({stargazer(lm.16,lm.17,lm.18,lm.22,lm.23,lm.24, type = "latex",label = 'tab:tableExp2',header = F,
+                                              se = list(NULL, c(robust.lm16,robust.lm17,robust.lm18,robust.lm22,robust.lm23,robust.lm24)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+                                              title="Regression for OLS and IV specifications",
+                                              dep.var.labels=c("Share of Contracts won in t"),
+                                              covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
+                                              add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
+createStargazerTxt(regression.output.2,'table_ols_exp2.txt')
 

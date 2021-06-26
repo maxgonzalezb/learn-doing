@@ -365,7 +365,7 @@ while (cutoff2<=maxcutoff) {
 }
 
 
-createAnnualizedWins<-function(df,start,split1,split2){
+createAnnualizedWins<-function(df,start,split1,split2,filterReqExp = T,ranks=F,thresholdClose=0.005,thresholdCloseRank = 1.03){
 i=0
 maxcutoff=ymd(max(df$FechaInicio))
 cutoff2=ymd(min(df$FechaInicio))
@@ -373,9 +373,21 @@ multiperiod.mergedwins=data.frame()
 while (cutoff2<=maxcutoff) {
   #Do stuff
   newstart=start+i
-  two.period.mergedwins=createTwoPeriodDataset(df,start = start, split1 =(i+1),split2=split2 )
+  if(ranks==TRUE){
+    two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = start, split1 =(i+1),split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp,thresholdCloseRank = thresholdCloseRank)
+    two.period.mergedwins=two.period.mergedwins%>%mutate(annualwinspre=winspre/(i+1),
+                                                         annualwinspre_close=winspre_close/(i+1),
+                                                           annualwinspre_closerank= winspre_closerank/(i+1)
+                                                         )
+    
+    }
+  if(ranks==FALSE){
+    two.period.mergedwins=createTwoPeriodDataset(df,start = start, split1 =(i+1),split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
+  two.period.mergedwins=two.period.mergedwins%>%mutate(annualwinspre=winspre/(i+1),
+                                                       annualwinspre_close=winspre_close/(i+1))
+  }
+  
   #Create annualized experience
-  two.period.mergedwins=two.period.mergedwins%>%mutate(annualwinspre=winspre/(i+1),annualwinspre_close=winspre_close/(i+1))
   ##Refresh
   cutoff0=ymd(min(df$FechaInicio)) + years(i)
   cutoff1=cutoff0 + years(split1)
