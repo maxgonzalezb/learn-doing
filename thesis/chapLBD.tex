@@ -146,28 +146,33 @@ Offers won by Firm & 0.972 & 1.37 & 2.1 & 3.23\\
 \end{table}
 
 \subsection{Close wins as close rank}
-There are two main objections to the previous identification strategy:
+There coul two main objections to the previous identification strategy:
 \begin{itemize}
   \item The price is not the only awarding factor. Thus, it is possible that even in a contract where price is a major component, the cost advantages of a firm manifest in terms of other awarding factor, like quality. That is, the firm offers similarly priced goods but at a much superior quality.
   \item The closeness between the first and the second bid does not take into account the full pool of participants.
 \end{itemize}
 
-The current alternative for close wins employs a ranking mechanism to label close wins when all the firms involved in the auction were close in ranking. The argument here is that, given a well constructed ranking, winning a contract against closely placed opponents is attributable to close factors.
+We propose a new alternative to identify close wins which does not rely in prices or any other aspect of the bid itself. Instead, we label for any winning given firm a close win if all the firms involved in the auction were close in ranking. The argument here is that, given a well constructed ranking, winning a contract against closely placed opponents is attributable to random factors.
 
-Obviously, the main issue is how to construct a good ranking measure. We proceed by  modeling each auction as a multi-player game (in the non-economic sense of the term) event in which firms gain points by winning the project and lose points by not winning it. We award and substract points based on a modified ELO algorithm suited for multi-player games.
+Obviously, the main issue is how to construct a good ranking measure. We proceed by  modeling each auction as a multi-player game event (in the non-economic sense of the term) in which firms gain points by winning the project and lose points by not winning it. We award and substract points based on a modified ELO algorithm suited for multi-player games.
 
 Each firm has its ranking initialized at a pre-specified level (1,500 in the initial version). Then, it is awarded 24 points for winning againsta a similar oponnent and substracted 8 by losing. The implementation of the algorithm recommends that points awarded and substracted sum to zero, so we fix awarded points and choose substracted points such that on average (given the number of players in an auction) this condition holds. Against non-similar opponents, the algorithm makes a correction based on the ranking of the players and the outcome of the game. The details of the algorithm are given in the Appendix.
 
-Having assigned to each firm a ranking for each point in time(i.e for each auction), we label a win as a "close win" to the one where the highest rank among the bidders for the auction was not more than 3\% higher than the lowest rank among them. This yields around of close wins in the final sample of analysis classified as a close win. In the robustness checks we analyze both i) different values for the won/lost points after an auction and ii) the threshold in ranking for a close win.
-
-Just as before, in Table \ref{tab:closewins_alt2_desc} we present summary statistics for close wins identified via close wins.
+Proceeding from the oldest to the most recent auction, we update the initial rankings for each firm and obtain for each firm its ranking at any point in time. Next, we label a win as a "close win" when the highest rank among the bidders for the auction was not more than 3\% higher than the lowest rank among the same set of bidders. This yields around 7,322 closely won contracts (16\% of the contracts in the analysis sample) which corresponds to 21,763 observations (16\% of the observations in the analysis sample). In Table \ref{tab:closewins_alt2_desc} we present summary statistics for close wins identified via close wins.
 
 \input{C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt}
 
+In the analysis, for our first measure of experience we drop the first slice of data outcomes (as defined above) to allow for a period of rank adjustment. This is necessary since the algorithm does not work well when the average rank in the population is not clearly defined. The way ranks evolve as we progress in the time of the data can be seen in Figure \label{fig:rankings_times}. Note that ranks appear concentrated at the end of the first year of data, while much more dispersed at the end.
 
+\begin{figure}
+  \includegraphics[scale=0.95]{rankings_times}
+  \caption{Evolution of ranks by selected years}
+  \label{fig:rankings_times}
+  \vskip 0.5mm
+  { \footnotesize \underline{Note:} \par}
+\end{figure}
 
-In the analysis, we drop the first two years of data to allow for a period of rank adjustment. This is necessary since the algorithm does not work well when the average rank is not clearly defined.
-
+In the robustness checks we analyze both i) different values for the won/lost points after an auction and ii) the threshold in ranking for a close win.
 %Bidding behavior
 %An alternative way to measure changes in bidding behavior caused by efficiency gains through experience is to examine directly changes in bidding behavior among more experienced firms with respect to less experienced ones. As was discussed before, experience induces changes in the underlying production function, or changes along the production function, that make the firm more efficient at producing certain types of goods. In a competitive market, firms should pass through at least a fraction of this improvement in costs to the bids they submit in the auctions. Thus, we should be able to identify this change directly through the bids that more experienced firms submit for projects.
 %The approach is different than the one from the previous section because we can directly link the past experience of a firm to each bid it submits in every auction that it participates in. Thus, our unit of observation is a bid submitted by a firm for a contract of a public construction contract. Our second specification has then the following form:where is the standardized bid submitted by the firm and is a measure of past experience. In further specifications we include a broader set of controls. First, we add fixed effects by auction. Second, we add firm fixed effects. Finally, we control by the geographic region where the auction is being held.

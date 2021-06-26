@@ -130,17 +130,9 @@ lm.6<-lm(probWinpost~winspre+I(winspre^2)+idperiodpost,data = merged.wins)
 robust.lm6<- vcovHC(lm.6, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.6)
 
-#Create Simple Table of Outcomes
-stargazer(lm.1,lm.2,lm.3,lm.4,lm.5,lm.6, type = "latex",
-          se = list(NULL, c(robust.lm1,robust.lm2,robust.lm3,robust.lm4,robust.lm5,robust.lm6)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
-          title="Regression for OLS and IV specifications",
-          dep.var.labels=c("Share of Contracts won in t"),
-          covariate.labels=c("Experience in (t-1)",'Experience in (t-1)','(Experience in (t-1))^2'),
-          add.lines = list(c("Fixed effects", "No", "No",'No','Yes','Yes','Yes')))
-
 ##IV Specs
 ##7
-lm.7<-ivreg(probWinpost~(winspre>0)|(winspre_close),data=merged.wins)
+lm.7<-ivreg(probWinpost~(winspre>0)|(winspre_close>0),data=merged.wins)
 robust.lm7<- vcovHC(lm.7, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.7)
 
@@ -155,7 +147,7 @@ robust.lm9<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.9)
 
 ##10
-lm.10<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_close)+idperiodpost,data=merged.wins)
+lm.10<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost,data=merged.wins)
 robust.lm10<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.10)
 
@@ -170,18 +162,9 @@ lm.12<-ivreg(probWinpost~idperiodpost+winspre+I(winspre^2)|winspre_close+I(winsp
 robust.lm12<- vcovHC(lm.12, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.12)
 
-stargazer(lm.7,lm.8,lm.9,lm.10,lm.11,lm.12, type = "latex",
-          se = list(NULL, c(robust.lm7,robust.lm8,robust.lm9,robust.lm10,robust.lm11,robust.lm12)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
+#stargazer(lm.7,lm.8,lm.9,lm.10,lm.11,lm.12, type = "latex",
+  #        se = list(NULL, c(robust.lm7,robust.lm8,robust.lm9,robust.lm10,robust.lm11,robust.lm12)),omit.stat = c( "f","adj.rsq"),title="Regression for OLS and IV specifications")
 
-#Chosen Output
-#Table
-regression.output.1=capture.output({stargazer(lm.4,lm.5,lm.6,lm.10,lm.11,lm.12, type = "latex",label = 'tab:table_exp_1', header = F,
-          se = list(NULL, c(robust.lm4,robust.lm5,robust.lm6,robust.lm10,robust.lm11,robust.lm12)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
-          title="Regression for OLS and IV specifications",
-          dep.var.labels=c("Share of Contracts won in t"),
-          covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
-          add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
-createStargazerTxt(regression.output.1,'table_ols_exp1.txt')
 
 
 #Plot
@@ -200,14 +183,9 @@ png(filename="C:\\repos\\learn-doing\\R\\Output\\fit_sample.png",width = 7, heig
 plot_fit
 dev.off()
 
-
-
-
-##Second analysis, experience as annual experience. 
-##Second analysis of the Experience
+##Second analysis, experience as annualized cumulative experience. 
+## Second analysis of the Experience
 merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2)
-table(merged.wins$idperiodpost)
-hist(merged.wins$annualwins)
 
 ##13
 lm.13<-lm(probWinpost~(annualwinspre>0),data = merged.wins)
@@ -591,3 +569,21 @@ nrow(merged.wins)
 # confidence_binary=data.frame(binary_low,binary_high)%>%mutate(model='linear',type='confidence')
 # confidence_linear=data.frame(binary_low,binary_high)%>%mutate(model='linear',type='confidence')
 # confidece_qadratic=data.frame(binary_low,binary_high)%>%mutate(model='linear',type='confidence')
+
+
+#Create Simple Table of Outcomes
+stargazer(lm.1,lm.2,lm.3,lm.4,lm.5,lm.6, type = "latex",
+          se = list(NULL, c(robust.lm1,robust.lm2,robust.lm3,robust.lm4,robust.lm5,robust.lm6)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+          title="Regression for OLS and IV specifications",
+          dep.var.labels=c("Share of Contracts won in t"),
+          covariate.labels=c("Experience in (t-1)",'Experience in (t-1)','(Experience in (t-1))^2'),
+          add.lines = list(c("Fixed effects", "No", "No",'No','Yes','Yes','Yes')))
+
+regression.output.1=capture.output({stargazer(lm.4,   lm.5,lm.6,lm.10,lm.11,lm.12, type = "latex",label = 'tab:table_exp_1', header = F,
+                                              se = list(NULL, c(robust.lm4,robust.lm5,robust.lm6,robust.lm10,robust.lm11,robust.lm12)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+                                              title="Regression for OLS and IV specifications",
+                                              dep.var.labels=c("Share of Contracts won in t"),
+                                              covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','(Experience in (t-1)) (Squared)'),
+                                              add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
+createStargazerTxt(regression.output.1,'table_ols_exp1.txt')
+

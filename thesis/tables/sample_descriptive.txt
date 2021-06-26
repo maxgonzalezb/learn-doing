@@ -2,6 +2,7 @@
 
 \caption{\label{tab:}Sample Descriptive Statistics}
 \centering
+\resizebox{\linewidth}{!}{
 \begin{tabular}[t]{ccccccc}
 \toprule
 name & N & Complete Cases & mean & std & max & min\\
@@ -15,5 +16,5 @@ Offers made by Firm & 14300 & 1 & 9.56 & 22.3 & 889 & 1\\
 Win prob. by Firm & 14300 & 1 & 0.211 & 0.292 & 1 & 0\\
 Offers won by Firm & 14300 & 1 & 2.44 & 5.9 & 138 & 0\\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

@@ -55,43 +55,105 @@ df.ranked = CreateFullRankedDataset(
   losePoints,
   startPoints = 1500
 )
+thresholdCloseRank = 1.03
+table.close.contracts = df.ranked %>% filter(estadoOferta == 'Aceptada') %>%
+  group_by(Codigo) %>% summarise(closeRanking = as.numeric(length(Codigo) >=
+                                                             2 & (
+                                                               max(rank) / min(rank) <= thresholdCloseRank
+                                                             )))
+df.ranked = df.ranked %>% left_join(table.close.contracts)
+number.close=df.ranked%>%group_by(Codigo)%>%summarise(closeRanking=max(closeRanking))
+## Exploration. Describe Close wins.
+print(paste0(
+  'There are ',
+  sum(df.ranked$closeRanking, na.rm = T),
+  ' total close wins by ranking'
+))
+print(paste0(
+  'There are ',
+  sum(df.ranked$closeRanking, na.rm = T) / nrow(df),
+  ' total close wins by ranking'
+))
+print(paste0(
+  'There are ',
+  sum(number.close$closeRanking, na.rm = T),
+  ' total close wins by ranking'
+))
+print(paste0(
+  'There are ',
+  sum(number.close$closeRanking, na.rm = T) / nrow(number.close),
+  ' total close wins by ranking'
+))
 
-# Exploration. Describe Close wins.
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\rankings_times.png",width = 6.5, height = 3.2,
-    units = "in",res=1000)
-ggplot(df.ranked%>%filter(year%in%c(2010,2012,2014,2016,2018,2020)),aes(x=rank))+geom_histogram(fill='steelblue',color='black')+xlim(1000,2000)+
-                  facet_wrap(~year,ncol = 3,nrow = 2)+theme_bw()+xlab('Rank')+ylab('Count')+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+png(
+  filename = "C:\\repos\\learn-doing\\thesis\\figures\\rankings_times.png",
+  width = 6.5,
+  height = 3.2,
+  units = "in",
+  res = 1000
+)
+ggplot(df.ranked %>% filter(year %in% c(2010, 2012, 2014, 2016, 2018, 2020)), aes(x =
+                                                                                    rank)) + geom_histogram(fill = 'steelblue', color = 'black') + xlim(1000, 2000) +
+  facet_wrap( ~ year, ncol = 3, nrow = 2) + theme_bw() +
+  xlab('Rank') + ylab('Count') + theme(panel.grid.major = element_blank(),
+                                       panel.grid.minor = element_blank())
 dev.off()
 
-df.ranked=df.ranked%>%left_join(listaContractExp,by=c('CodigoExterno'='id'))
+df.ranked = df.ranked %>% left_join(listaContractExp, by = c('CodigoExterno' =
+                                                               'id'))
 
 ## Create the table with descriptive data
-thresholdCloseRank=1.03
-table.close.contracts=df.ranked%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%summarise(closeRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)))
-df=df%>%left_join(table.close.contracts)
-comparison.1=df%>%filter(closeRanking==0)%>%generateDfBidsSummary()%>%dplyr::select('mean','std')%>%rename('mean_notClose'='mean','std_notClose'='std')
-comparison.2=df%>%filter(closeRanking==1)%>%generateDfBidsSummary()%>%dplyr::select(name,'mean','std')%>%rename('mean_close'='mean','std_close'='std')%>%cbind(comparison.1)%>%select(name,mean_notClose,mean_close,std_notClose,std_close)
-colnames(comparison.2)<-c('Variable','Mean (Not close win)','Mean (Close win)','Sd (Not close win)','Sd (Close win)')
-table_output=create_kable(comparison.2[1:5,],caption = "Comparison between close and non-close wins",label='closewins_alt2_desc')
-table_output%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_closewins_alt2_desc.txt")
+comparison.1 = df.ranked %>% filter(closeRanking == 0) %>% generateDfBidsSummary() %>%
+  dplyr::select('mean', 'std') %>% rename('mean_notClose' = 'mean', 'std_notClose' =
+                                            'std')
+comparison.2 = df.ranked %>% filter(closeRanking == 1) %>% generateDfBidsSummary() %>%
+  dplyr::select(name, 'mean', 'std') %>% rename('mean_close' = 'mean', 'std_close' =
+                                                  'std') %>% cbind(comparison.1) %>% select(name, mean_notClose, mean_close, std_notClose, std_close)
+colnames(comparison.2) <-
+  c(
+    'Variable',
+    'Mean (Not close win)',
+    'Mean (Close win)',
+    'Sd (Not close win)',
+    'Sd (Close win)'
+  )
+table_output = create_kable(comparison.2[1:5, ], caption = "Comparison between close and non-close wins", label =
+                              'closewins_alt2_desc')
+table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_closewins_alt2_desc.txt")
 
 ## Create the merged wins with correct parameters
-merged.wins=createMultiPeriodDataset(df.ranked,start = start, split1 =split1,split2=split2,ranks = TRUE,filterReqExp = T)
+merged.wins = createMultiPeriodDataset(
+  df.ranked,
+  start = start,
+  split1 = split1,
+  split2 = split2,
+  ranks = TRUE,
+  filterReqExp = T
+)
 
 ## Create the models with iv
-lm.25<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_closerank>0)+winspre_close+idperiodpost,data=merged.wins)
-robust.lm13<- vcovHC(lm.9, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.13)
+lm.25 <-
+  ivreg(
+    probWinpost ~ (winspre > 0) + idperiodpost |
+      (winspre_closerank > 0) + winspre_close + idperiodpost,
+    data = merged.wins
+  )
+robust.lm25 <- vcovHC(lm.25, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.25)
 
-lm.26<-ivreg(probWinpost~winspre+idperiodpost|winspre_closerank+idperiodpost,data=merged.wins)
-robust.lm14<- vcovHC(lm.10, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.14)
+lm.26 <-
+  ivreg(probWinpost ~ winspre + idperiodpost |
+          winspre_closerank + idperiodpost,
+        data = merged.wins)
+robust.lm26 <- vcovHC(lm.26, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.26)
 
 ################################## Robustness checks
 # The main problem are the points awarded. We check with various win/lose pairs
-winPoints.vector=c(10,15,35,50)
-average.players=df%>%group_by(Codigo)%>%count()%>%ungroup()%>%summarise(mean=mean(n,na.rm=T))%>%round()%>%as.numeric()
-losePoints.vector=round(winPoints/average.players)
+winPoints.vector = c(10, 15, 35, 50)
+average.players = df %>% group_by(Codigo) %>% count() %>% ungroup() %>% summarise(mean =
+                                                                                    mean(n, na.rm = T)) %>% round() %>% as.numeric()
+losePoints.vector = round(winPoints / average.players)
 
 parameters.checks=data.frame(winPoints.vector,losePoints.vector)
 start=0

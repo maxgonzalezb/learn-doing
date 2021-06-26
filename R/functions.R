@@ -232,7 +232,7 @@ create_kable<-function(df,caption,numcols,label=''){
     linesep = "",
     align = rep('c', numcols),label = label,
     caption = caption
-  ) %>% kable_styling(latex_options = c("hold_position"))
+  ) %>% kable_styling(latex_options = c("hold_position","scale_down"))
 }
 create_kable_nocaption<-function(df,numcols){
   kable(
@@ -240,7 +240,7 @@ create_kable_nocaption<-function(df,numcols){
     booktabs = T,
     linesep = "",
     align = rep('c', numcols),
-  ) %>% kable_styling(latex_options = c("hold_position"))
+  ) %>% kable_styling(latex_options = c("hold_position","scale_down"))
 }
 
 
