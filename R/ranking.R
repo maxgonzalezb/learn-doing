@@ -135,6 +135,20 @@ merged.wins = createMultiPeriodDataset(
   filterReqExp = T
 )
 
+merged.wins.close.rank.exp1=merged.wins%>%filter((((winspre==winspre_closerank)&winspre_closerank>=1))|(winspre==0&ofertaspre>0))
+merged.wins.close.rank.means.exp1=merged.wins.close.rank.exp1%>%group_by(winspre_closerank)%>%summarise(probWinpost_mean=mean(probWinpost),n=length(RutProveedor),
+                                                                                                q0.25=quantile(probWinpost,probs = 0.25),
+                                                                                                q0.75=quantile(probWinpost,probs = 0.75),
+                                                                                                std.dev=sd(probWinpost),
+                                                                                                sd.error=std.dev/sqrt(n))%>%
+  filter(n>10)%>%mutate(exp=ifelse(winspre_closerank>0,'Experience','No experience'))
+
+
+
+
+
+
+
 ## Create the models with iv
 lm.25 <-
   ivreg(
@@ -164,6 +178,20 @@ merged.wins = createAnnualizedWins(
   ranks = TRUE,
   filterReqExp = T
 )
+
+
+merged.wins.close.rank.exp2=merged.wins%>%filter((((winspre==winspre_closerank)&winspre_closerank>=1))|(winspre==0&ofertaspre>0))
+merged.wins.close.rank.means.exp2=merged.wins.close.rank.exp2%>%group_by(annualwinspre_closerank=round(annualwinspre_closerank))%>%summarise(probWinpost_mean=mean(probWinpost),n=length(RutProveedor),
+                                                                                              q0.25=quantile(probWinpost,probs = 0.25),
+                                                                                              q0.75=quantile(probWinpost,probs = 0.75),
+                                                                                              std.dev=sd(probWinpost),
+                                                                                              sd.error=std.dev/sqrt(n))%>%
+  filter(n>10)%>%mutate(exp=ifelse(annualwinspre_closerank>0,'Experience','No experience'))
+
+
+
+
+
 
 ## Create the models with iv
 lm.27 <-

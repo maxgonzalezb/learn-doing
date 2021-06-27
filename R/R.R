@@ -97,6 +97,65 @@ merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=spl
 merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
 mutate(logWinpre=log(winspre+1))
 
+## Create summarised data for graphs later
+merged.wins.means.exp1=merged.wins%>%group_by(winspre)%>%summarise(probWinpost_mean=mean(probWinpost),n=length(RutProveedor),
+                                                              q0.25=quantile(probWinpost,probs = 0.25),
+                                                              q0.75=quantile(probWinpost,probs = 0.75),
+                                                              std.dev=sd(probWinpost),
+                                                              sd.error=std.dev/sqrt(n))%>%
+  filter(n>10)%>%mutate(exp=ifelse(winspre>0,'Experience','No experience'))
+
+merged.wins.close.price.exp1=merged.wins%>%filter((((winspre==winspre_close)&winspre_close>=1))|(winspre==0&ofertaspre>0))
+merged.wins.close.price.means.exp1=merged.wins.close.price.exp1%>%group_by(winspre_close)%>%summarise(probWinpost_mean=mean(probWinpost),n=length(RutProveedor),
+                                                                          q0.25=quantile(probWinpost,probs = 0.25),
+                                                                          q0.75=quantile(probWinpost,probs = 0.75),
+                                                                          std.dev=sd(probWinpost),
+                                                                          sd.error=std.dev/sqrt(n))%>%
+  filter(n>10)%>%mutate(exp=ifelse(winspre_close>0,'Experience','No experience'))
+
+
+
+### Create descriptive of the slices
+slices=data.frame()
+i=0
+maxcutoff=ymd(max(df$FechaInicio))
+cutoff2=ymd(min(df$FechaInicio))
+multiperiod.mergedwins=data.frame()
+
+while (cutoff2<=maxcutoff) {
+  start=0
+  split1=2
+  split2=2
+  
+  #Do stuff
+  newstart=start+i
+  cutoff0=ymd(min(df$FechaInicio)) + years(i)
+  cutoff1=cutoff0 + years(split1)
+  cutoff2=cutoff1 + years(split2)
+  i=i+1
+period1=paste0(cutoff0,"/",cutoff1)
+period2=paste0(cutoff1,"/",cutoff2)
+  print(period1)
+  
+df.period1=df%>%filter(FechaInicio<cutoff1&FechaInicio>=cutoff0)
+df.period2=df%>%filter(FechaInicio>=cutoff1&FechaInicio<=cutoff2)%>%filter(hasExp==0)  
+  
+tot.contracts=length(unique(df.period1$Codigo))+length(unique(df.period2$Codigo))
+tot.contracts.p1=length(unique(df.period1$Codigo))
+tot.contracts.p2=length(unique(df.period2$Codigo))
+obs=length(unique(df.period2$RutProveedor))
+
+row=data.frame(slice=i,exp.comp=period1,outcome.comp=period2,obs,
+               years.exp.comp=round(difftime(time1 = cutoff0,time2 = cutoff1,units = 'weeks')/52.25)%>%abs()%>%as.numeric(),
+               years.out.comp=round(difftime(time1 = cutoff1,time2 = cutoff2,units = 'weeks')/52.25)%>%abs()%>%as.numeric(),
+               tot.contracts.p1=tot.contracts.p1,tot.contracts.p2=tot.contracts.p2)  
+slices=rbind(row,slices) 
+} 
+slices=slices%>%arrange(slice)
+colnames(slices)<-c('Slice','Period 1 dates','Period 2 dates','Observations','Length Period 1','Length Period 2','Contracts in Period 1','Contracts in Period 2')
+table.slices.exp1=create_kable(slices,caption = 'Analysis dataset characteristics for experience computed in rolling periods of two years',label = 'slices_exp1')
+table.slices.exp1%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_slices_exp1.txt")
+
 #Graphic analysis
 #Begin Regression Analysis with outcome variable as probability
 ##OLS Specs
@@ -185,6 +244,67 @@ dev.off()
 ## Second analysis of the Experience
 merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2,filterReqExp = T)
 
+merged.wins.means.exp2=merged.wins%>%group_by(annualwinspre=round(annualwinspre))%>%summarise(probWinpost_mean=mean(probWinpost),n=length(RutProveedor),
+                                                                   q0.25=quantile(probWinpost,probs = 0.25),
+                                                                   q0.75=quantile(probWinpost,probs = 0.75),
+                                                                   std.dev=sd(probWinpost),
+                                                                   sd.error=std.dev/sqrt(n))%>%
+  filter(n>10)%>%mutate(exp=ifelse(annualwinspre>0,'Experience','No experience'))
+
+merged.wins.close.price.exp2=merged.wins%>%filter((((annualwinspre==winspre_close)&winspre_close>=1))|(annualwinspre==0&ofertaspre>0))
+merged.wins.close.price.means.exp2=merged.wins.close.price.exp2%>%group_by(annualwinspre_close=round(annualwinspre_close))%>%summarise(probWinpost_mean=mean(probWinpost),n=length(RutProveedor),
+                                                                                                q0.25=quantile(probWinpost,probs = 0.25),
+                                                                                                q0.75=quantile(probWinpost,probs = 0.75),
+                                                                                                std.dev=sd(probWinpost),
+                                                                                                sd.error=std.dev/sqrt(n))%>%
+  filter(n>10)%>%mutate(exp=ifelse(annualwinspre_close>0,'Experience','No experience'))
+
+
+### Describe this sample
+slices=data.frame()
+i=0
+i=0
+maxcutoff=ymd(max(df$FechaInicio))
+cutoff2=ymd(min(df$FechaInicio))
+
+while (cutoff2<=maxcutoff) {
+  start=0
+  split1=i+1
+  split2=2
+  
+  #Do stuff
+  cutoff0=ymd(min(df$FechaInicio)) + years(start)
+  cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
+  cutoff2=cutoff1 + years(split2)
+  
+  period1=paste0(cutoff0,"/",cutoff1)
+  period2=paste0(cutoff1,"/",cutoff2)
+  print(period1)
+
+  df.period1=df%>%filter(FechaInicio<cutoff1&FechaInicio>=cutoff0)
+  df.period2=df%>%filter(FechaInicio>=cutoff1&FechaInicio<=cutoff2)%>%filter(hasExp==0)  
+  
+  tot.contracts=length(unique(df.period1$Codigo))+length(unique(df.period2$Codigo))
+  tot.contracts.p1=length(unique(df.period1$Codigo))
+  tot.contracts.p2=length(unique(df.period2$Codigo))
+  obs=length(unique(df.period2$RutProveedor))
+  
+  row=data.frame(slice=i,exp.comp=period1,outcome.comp=period2,obs=obs,
+                 years.exp.comp=round(difftime(time1 = cutoff0,time2 = cutoff1,units = 'weeks')/52.25)%>%abs()%>%as.numeric(),
+                 years.out.comp=round(difftime(time1 = cutoff1,time2 = cutoff2,units = 'weeks')/52.25)%>%abs()%>%as.numeric(),
+                 tot.contracts.p1=tot.contracts.p1,tot.contracts.p2=tot.contracts.p2)  
+  slices=rbind(row,slices) 
+  i=i+1 
+  
+  
+} 
+slices=slices%>%arrange(slice)
+colnames(slices)<-c('Slice','Period 1 dates','Period 2 dates','Observations','Length Period 1','Length Period 2','Contracts in Period 1','Contracts in Period 2')
+table.slices.exp1=create_kable(slices,caption = 'Analysis dataset characteristics for experience computed as cumulative annualized ',label = 'slices_exp2')
+table.slices.exp1%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_slices_exp2.txt")
+
+
+
 ##13
 lm.13<-lm(probWinpost~(annualwinspre>0),data = merged.wins)
 robust.lm13<- vcovHC(lm.13, type = "HC1")%>%diag()%>%sqrt()
@@ -245,9 +365,93 @@ lm.24<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)+idperiodpost|annualwin
 robust.lm24<- vcovHC(lm.24, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.24)
 
-
-
+#############################
 ## Robustness checks
+############################
+
+###################
+## Period of outcomes
+###################
+
+start=0
+split1=2
+split2=2
+splits=c(1,2,3)
+res.ols=splits%>%map_dfr(function(x) createMultiPeriodDataset(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                          lm(probWinpost~(winspre>0)+idperiodpost,data = .) %>%
+                       coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                       tidy() %>% filter(term == 'winspre > 0TRUE')%>%mutate(outcome.per=x, type='OLS',exp='Rolling') )
+
+res.iv.price=splits%>%map_dfr(function(x) createMultiPeriodDataset(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                          ivreg(data= .,formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost)) %>%
+                           coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                           tidy() %>% filter(term == 'winspre > 0TRUE')%>%mutate(outcome.per=x, type='IV-Price',exp='Rolling')) 
+
+res.iv.ranks=splits%>%map_dfr(function(x) createMultiPeriodDataset(df.ranked,start = start, split1 =split1,split2=x,ranks = T,filterReqExp = T,thresholdCloseRank = 1.03)%>%
+                                ivreg(data= .,formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_closerank>0)+idperiodpost)) %>%
+                                coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                tidy() %>% filter(term == 'winspre > 0TRUE')%>%mutate(outcome.per=x, type='IV-Ranks',exp='Rolling')) 
+
+res.ols2=splits%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                           lm(probWinpost~(annualwinspre>0)+idperiodpost,data = .) %>%
+                           coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                           tidy() %>% filter(term == 'annualwinspre > 0TRUE')%>%mutate(outcome.per=x, type='OLS',exp='Annualized') )
+
+res.iv.price2=splits%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                                ivreg(data= .,formula=(probWinpost~(annualwinspre>0)+idperiodpost|(annualwinspre_close>0)+idperiodpost)) %>%
+                                coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                tidy() %>% filter(term == 'winspre > 0TRUE')%>%mutate(outcome.per=x, type='IV-Price',exp='Annualized')) 
+
+res.iv.ranks2=splits%>%map_dfr(function(x) createAnnualizedWins(df.ranked,start = start, split1 =split1,split2=x,ranks = T,filterReqExp = T,thresholdCloseRank = 1.03)%>%
+                                ivreg(data= .,formula=(probWinpost~(annualwinspre>0)+idperiodpost|(annualwinspre_closerank>0)+idperiodpost)) %>%
+                                coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                tidy() %>% filter(term == 'winspre > 0TRUE')%>%mutate(outcome.per=x, type='IV-Ranks',exp='Annualized')) 
+table_robustness_period.binary=rbind(res.ols,res.iv.price,res.iv.ranks,res.ols2,res.iv.price2,res.iv.ranks2)%>%mutate('ff'='Indicator')
+
+## Linear Experience
+res.ols=splits%>%map_dfr(function(x) createMultiPeriodDataset(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                           lm(probWinpost~winspre+idperiodpost,data = .) %>%
+                           coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                           tidy() %>% filter(term == 'winspre')%>%mutate(outcome.per=x, type='OLS',exp='Rolling') )
+
+res.iv.price=splits%>%map_dfr(function(x) createMultiPeriodDataset(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                                ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|(winspre_close)+idperiodpost)) %>%
+                                coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                tidy() %>% filter(term == 'winspre')%>%mutate(outcome.per=x, type='IV-Price',exp='Rolling')) 
+
+res.iv.ranks=splits%>%map_dfr(function(x) createMultiPeriodDataset(df.ranked,start = start, split1 =split1,split2=x,ranks = T,filterReqExp = T,thresholdCloseRank = 1.03)%>%
+                                ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|(winspre_closerank)+idperiodpost)) %>%
+                                coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                tidy() %>% filter(term == 'winspre')%>%mutate(outcome.per=x, type='IV-Ranks',exp='Rolling')) 
+
+res.ols2=splits%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                            lm(probWinpost~annualwinspre+idperiodpost,data = .) %>%
+                            coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                            tidy() %>% filter(term == 'annualwinspre')%>%mutate(outcome.per=x, type='OLS',exp='Annualized') )
+
+res.iv.price2=splits%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                                 ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|(annualwinspre_close)+idperiodpost)) %>%
+                                 coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                 tidy() %>% filter(term == 'annualwinspre')%>%mutate(outcome.per=x, type='IV-Price',exp='Annualized')) 
+
+res.iv.ranks2=splits%>%map_dfr(function(x) createAnnualizedWins(df.ranked,start = start, split1 =split1,split2=x,ranks = T,filterReqExp = T,thresholdCloseRank = 1.03)%>%
+                                 ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|(annualwinspre_closerank)+idperiodpost)) %>%
+                                 coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                 tidy() %>% filter(term == 'annualwinspre')%>%mutate(outcome.per=x, type='IV-Ranks',exp='Annualized')) 
+
+table_robustness_period.linear=rbind(res.ols,res.iv.price,res.iv.ranks,res.ols2,res.iv.price2,res.iv.ranks2)%>%mutate('ff'='Linear')
+table_robustness_period=rbind(table_robustness_period.binary,table_robustness_period.linear)
+
+save(table_robustness_period,file = 'C:\\repos\\learn-doing\\data\\table_robustness_period.rds')
+table_robustness_period_o=table_robustness_period%>%mutate(estimate=round(estimate,3),std.error=round(std.error,3))%>%
+  mutate(condensed.output=paste0(estimate,' (',std.error,') ',ifelse(p.value<0.01,yes='***',no='')))%>%select(ff,exp,type,outcome.per,condensed.output)%>%
+  arrange(exp,outcome.per)%>%pivot_wider(  id_cols=exp:type,names_from = outcome.per,values_from = condensed.output)
+
+colnames(table_robustness_period_o)<-c('Experience Computation','Specification','2 year outcomes (Main)','3 year outcomes','4 year outcomes')
+
+table_robustness_period_o=create_kable(table_robustness_period_o,caption = 'Robustness analysis for the coefficient on Binary Experience by length of outcome computation period',label = 'robust_bin_outcomes')
+table_robustness_period_o%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_bin_outcomes.txt")
+
 #Period Durations: Outcomes are one and three years
 start=0
 split1=2
@@ -286,7 +490,10 @@ robustness.outcomes=stargazer(lm.19,lm.20,lm.21,lm.22,lm.23,lm.24, type = "latex
           omit.stat = c( "f","adj.rsq"),title="Robustness checks for duration of outcomes period of interest")
 robustness.outcomes%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_robustness_periodoutcomes_ols.txt")
 
-## Robustness checks: close wins
+###################
+## Close Wins by price
+###################
+# Robustness checks: close wins
 close_wins_vector=c(thresholdClose=seq(0.001,0.03,by = 0.001))
 ##Revisar como puede haber diferencia de cero
 start=0
@@ -309,6 +516,42 @@ png(filename="C:\\repos\\learn-doing\\thesis\\figures\\robustness_threshold.png"
     units = "in",res=1000)
 p1
 dev.off()
+
+##Study the different weight thresholds
+
+thresholds=c(0.6,0.7,0.8,0.9)
+res.iv.price=splits%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                                ivreg(data= .,formula=(probWinpost~(winspre)+idperiodpost|(winspre_close)+idperiodpost)) %>%
+                                coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                tidy() %>% filter(term == 'winspre')%>%mutate(outcome.per=x, type='IV-Price',exp='Rolling')) 
+
+
+res.iv.price2=splits%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=x,filterReqExp = T)%>%
+                                ivreg(data= .,formula=(probWinpost~(annualwinspre)+idperiodpost|(annualwinspre_close)+idperiodpost)) %>%
+                                coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                tidy() %>% filter(term == 'annualwinspre')%>%mutate(outcome.per=x, type='IV-Price',exp='Annualized')) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #Output
@@ -438,13 +681,7 @@ merged.wins.close.means=merged.wins.close%>%group_by(winspre)%>%summarise(probWi
                                         filter(n>10)%>%mutate(exp=ifelse(winspre>0,'Experience','No experience'))
 
 
-plotDisc.allwins<-ggplot(merged.wins.means,aes(x=(winspre),y=probWinpost_mean))+geom_point(size=3,color='red')+xlim(-0.1,16.1)+
-  geom_errorbar(aes(x=winspre,ymin=q0.25, ymax=q0.75,width=0.2))+
-  #stat_summary(aes(group=exp),fun.y = "mean", fun.ymin = "mean", fun.ymax= "mean", size= 0.3, geom = "crossbar")+
-  #geom_smooth(se=F,formula=(function(x) mean(x)), method = 'lm')+geom_vline(xintercept = 0.3,alpha=0.3,color='black',lwd=1)+
-  theme_bw()+xlab('Number of contracts won in (t-1)')+ylab('Win probability on t')+
-  theme(axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+scale_y_continuous(breaks=seq(0,0.7,0.1),limits = c(0,0.7))
-plotDisc.allwins
+
 
 plotDisc.closewins<-ggplot(merged.wins.close.means,aes(x=(winspre),y=probWinpost_mean))+geom_point(size=3,color='red')+xlim(-0.1,2.1)+
     geom_errorbar(aes(x=winspre,ymin=q0.25, ymax=q0.75,width=0.1))+
@@ -461,10 +698,6 @@ plotDisc.2<-ggplot(merged.wins.close,aes(x=(winspre),y=probWinpost))+
     coord_cartesian(ylim=c(0, 0.35))+ scale_y_continuous(breaks = seq(0, 0.35, by = 0.05))
 plotDisc.2
 
-    
-  
-  
-  
 bplotDisc<-ggplot(merged.wins,aes(x=(winspre),y=probWinpost))+
   stat_summary(geom = "errorbar", fun.data = mean_se,alpha=0.7,size=1.05)+
   stat_summary(geom = "point", fun.y = mean,color='red',size=3)+xlim(0,15)+

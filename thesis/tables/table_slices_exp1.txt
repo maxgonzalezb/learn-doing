@@ -1,0 +1,21 @@
+\begin{table}[!h]
+
+\caption{\label{tab:slices_exp1}Analysis dataset characteristics for experience computed in rolling periods of two years}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{cccccccc}
+\toprule
+Slice & Period 1 dates & Period 2 dates & Observations & Length Period 1 & Length Period 2 & Contracts in Period 1 & Contracts in Period 2\\
+\midrule
+1 & 2010-01-04/2012-01-04 & 2012-01-04/2014-01-04 & 2384 & 2 & 2 & 4424 & 2883\\
+2 & 2011-01-04/2013-01-04 & 2013-01-04/2015-01-04 & 2318 & 2 & 2 & 7099 & 2410\\
+3 & 2012-01-04/2014-01-04 & 2014-01-04/2016-01-04 & 2435 & 2 & 2 & 8006 & 2695\\
+4 & 2013-01-04/2015-01-04 & 2015-01-04/2017-01-04 & 2602 & 2 & 2 & 7393 & 2905\\
+5 & 2014-01-04/2016-01-04 & 2016-01-04/2018-01-04 & 2494 & 2 & 2 & 8818 & 2506\\
+6 & 2015-01-04/2017-01-04 & 2017-01-04/2019-01-04 & 2231 & 2 & 2 & 9650 & 2006\\
+7 & 2016-01-04/2018-01-04 & 2018-01-04/2020-01-04 & 2128 & 2 & 2 & 8824 & 1786\\
+8 & 2017-01-04/2019-01-04 & 2019-01-04/2021-01-04 & 2136 & 2 & 2 & 8495 & 1836\\
+9 & 2018-01-04/2020-01-04 & 2020-01-04/2022-01-04 & 1309 & 2 & 2 & 9084 & 912\\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  26 JUN 2021 10:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  26 JUN 2021 19:19
 entering extended mode
 **./main.tex
 (main.tex
@@ -372,48 +372,49 @@ Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//diagram_experienc
 es.png  used on input line 78.
 (pdftex.def)             Requested size: 427.71591pt x 201.72868pt.
 
-[5 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>] [6]
-Overfull \hbox (1.21962pt too wide) in paragraph at lines 118--119
+(C:/repos/learn-doing/thesis/tables/table_slices_exp1.txt)
+(C:/repos/learn-doing/thesis/tables/table_slices_exp2.txt
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) [5 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>] [6]
+Overfull \hbox (1.21962pt too wide) in paragraph at lines 122--123
 []\T1/cmr/m/n/12 Unfortunately, the pre-vi-ous strat-egy is un-fea-si-ble a wit
 h the data we have avalaible.
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
 [7] [8] (C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt)
-<C:/repos/learn-doing/thesis/figures//rankings_times.png, id=47, 469.755pt x 23
+[9]
+<C:/repos/learn-doing/thesis/figures//rankings_times.png, id=50, 469.755pt x 23
 1.264pt>
 File: C:/repos/learn-doing/thesis/figures//rankings_times.png Graphic file (typ
 e png)
 <use C:/repos/learn-doing/thesis/figures//rankings_times.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//rankings_times.pn
-g  used on input line 168.
+g  used on input line 172.
 (pdftex.def)             Requested size: 446.26472pt x 219.69954pt.
 
-Overfull \hbox (12.64473pt too wide) in paragraph at lines 168--169
+Overfull \hbox (12.64473pt too wide) in paragraph at lines 172--173
 [][] 
  []
 
-[9]
-<C:/repos/learn-doing/thesis/figures//plotwins_both.png, id=51, 650.43pt x 325.
-215pt>
-File: C:/repos/learn-doing/thesis/figures//plotwins_both.png Graphic file (type
- png)
-<use C:/repos/learn-doing/thesis/figures//plotwins_both.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotwins_both.png
-  used on input line 188.
-(pdftex.def)             Requested size: 422.77449pt x 211.38724pt.
+[10 <C:/repos/learn-doing/thesis/figures//rankings_times.png>]
+<C:/repos/learn-doing/thesis/figures//plotwins_panel.png, id=55, 650.43pt x 542
+.025pt>
+File: C:/repos/learn-doing/thesis/figures//plotwins_panel.png Graphic file (typ
+e png)
+<use C:/repos/learn-doing/thesis/figures//plotwins_panel.png>
+Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotwins_panel.pn
+g  used on input line 193.
+(pdftex.def)             Requested size: 422.77449pt x 352.31207pt.
 
 
-LaTeX Warning: Reference `tab:tableExp2' on page 10 undefined on input line 195
+LaTeX Warning: Reference `tab:tableExp2' on page 11 undefined on input line 200
 .
 
+[11
 
-Underfull \vbox (badness 2781) has occurred while \output is active []
-
- [10 <C:/repos/learn-doing/thesis/figures//rankings_times.png>] [11 <C:/repos/l
-earn-doing/thesis/figures//plotwins_both.png>] [12]
+] [12 <C:/repos/learn-doing/thesis/figures//plotwins_panel.png>]
 (C:/repos/learn-doing/thesis/tables/table_ols_exp1.txt)
 (C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt) [13
 
@@ -422,48 +423,54 @@ earn-doing/thesis/figures//plotwins_both.png>] [12]
 File: C:/repos/learn-doing/R/Output//fit_sample.png Graphic file (type png)
 <use C:/repos/learn-doing/R/Output//fit_sample.png>
 Package pdftex.def Info: C:/repos/learn-doing/R/Output//fit_sample.png  used on
- input line 213.
+ input line 218.
 (pdftex.def)             Requested size: 404.71254pt x 202.35626pt.
  [14
 
  <C:/repos/learn-doing/R/Output//fit_sample.png>]
-<C:/repos/learn-doing/thesis/figures//plotTypes.png, id=77, 578.16pt x 397.485p
-t>
-File: C:/repos/learn-doing/thesis/figures//plotTypes.png Graphic file (type png
-)
-<use C:/repos/learn-doing/thesis/figures//plotTypes.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotTypes.png  us
-ed on input line 237.
-(pdftex.def)             Requested size: 433.61893pt x 298.113pt.
- [15]
-Underfull \vbox (badness 1783) has occurred while \output is active []
+(C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt
 
- [16 <C:/repos/learn-doing/thesis/figures//plotTypes.png>]
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Warning: Reference `tab:salescategories' on page 17 undefined on input li
-ne 252.
-
-(C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt)
-
-LaTeX Warning: Reference `fig:sizeestimates' on page 17 undefined on input line
- 257.
-
-
-Underfull \vbox (badness 1521) has occurred while \output is active []
-
- [17]
-[18] (C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt)
-[19] [20]
-<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=98, 361.35pt
+) [15]
+<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=80, 361.35pt
  x 231.264pt>
 File: C:/repos/learn-doing/thesis/figures//robustness_threshold.png Graphic fil
 e (type png)
 <use C:/repos/learn-doing/thesis/figures//robustness_threshold.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//robustness_thresh
-old.png  used on input line 336.
+old.png  used on input line 309.
 (pdftex.def)             Requested size: 307.14896pt x 196.57532pt.
-) [21 <C:/repos/learn-doing/thesis/figures//robustness_threshold.png>] (main.au
-x (chapLBD.aux))
+ [16] [17 <C:/repos/learn-doing/thesis/figures//robustness_threshold.png>] [18
+
+]
+Chapter 2.
+[19]
+
+LaTeX Warning: Reference `tab:salescategories' on page 20 undefined on input li
+ne 331.
+
+(C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt)
+
+LaTeX Warning: Reference `fig:sizeestimates' on page 20 undefined on input line
+ 336.
+
+
+Underfull \vbox (badness 1521) has occurred while \output is active []
+
+ [20]
+[21] (C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt)
+[22]
+<C:/repos/learn-doing/thesis/figures//plotTypes.png, id=104, 578.16pt x 397.485
+pt>
+File: C:/repos/learn-doing/thesis/figures//plotTypes.png Graphic file (type png
+)
+<use C:/repos/learn-doing/thesis/figures//plotTypes.png>
+Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotTypes.png  us
+ed on input line 362.
+(pdftex.def)             Requested size: 433.61893pt x 298.113pt.
+) [23] [24 <C:/repos/learn-doing/thesis/figures//plotTypes.png>] (main.aux
+(chapLBD.aux))
 
 LaTeX Warning: There were undefined references.
 
@@ -473,13 +480,13 @@ LaTeX Warning: There were multiply-defined labels.
  )
 (\end occurred when \ifx on line 52 was incomplete) 
 Here is how much of TeX's memory you used:
- 5616 strings out of 478826
- 91180 string characters out of 2857130
- 410990 words of memory out of 3000000
- 23385 multiletter control sequences out of 15000+600000
+ 5634 strings out of 478826
+ 92016 string characters out of 2857130
+ 411023 words of memory out of 3000000
+ 23394 multiletter control sequences out of 15000+600000
  416021 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,11n,117p,3022b,374s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,11n,117p,3027b,374s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Program Files/MiKTeX/fon
 ts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/
 cm-super/cm-super-ts1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
@@ -496,9 +503,9 @@ X/fonts/type1/public/cm-super/sfbx1728.pfb><C:/Program Files/MiKTeX/fonts/type1
 per/sfrm1000.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1095.
 pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Progr
 am Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (21 pages, 1192973 bytes).
+Output written on main.pdf (24 pages, 1408634 bytes).
 PDF statistics:
- 158 PDF objects out of 1000 (max. 8388607)
+ 167 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

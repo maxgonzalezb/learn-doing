@@ -539,6 +539,14 @@ INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
 INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
 INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
 INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1440.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1440.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
@@ -552,13 +560,13 @@ INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
 INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
 INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
 INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotwins_both.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotwins_both.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotwins_both.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotwins_both.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotwins_both.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotwins_both.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotwins_both.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
@@ -577,13 +585,17 @@ INPUT C:\repos\learn-doing\R\Output\\fit_sample.png
 INPUT C:\repos\learn-doing\R\Output\\fit_sample.png
 INPUT C:\repos\learn-doing\R\Output\\fit_sample.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1095.tfm
-INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
-INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
+INPUT C:\repos\learn-doing\thesis\tables\robust_bin_outcomes.txt
+INPUT C:\repos\learn-doing\thesis\tables\robust_bin_outcomes.txt
+INPUT C:\repos\learn-doing\thesis\tables\robust_bin_outcomes.txt
+INPUT C:\repos\learn-doing\thesis\tables\robust_bin_outcomes.txt
+INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
+INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
+INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
+INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
+INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
+INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
+INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
 INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
@@ -592,13 +604,13 @@ INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
-INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
-INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
-INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
-INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
-INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
-INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
-INPUT C:\repos\learn-doing\thesis\figures\\robustness_threshold.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
+INPUT C:\repos\learn-doing\thesis\figures\\plotTypes.png
 INPUT main.aux
 INPUT .\chapLBD.aux
 INPUT chapLBD.aux

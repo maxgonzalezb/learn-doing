@@ -88,6 +88,10 @@ Finally, we add period fixed effects for each period of outcomes being considere
 
 After the transformation steps, we obtain five slice-firm datasets for the first measure of experience and six slices for the second measure of experience. The following table shows the amount of observations in each slice by the type of experience measure employed. Recall that every observation is a firm-level aggregate of past experience and summary of future outcomes and have the form of the righmost table in Figure \ref{fig:diagram_experience}.
 
+\input{C:/repos/learn-doing/thesis/tables/table_slices_exp1.txt}
+
+\input{C:/repos/learn-doing/thesis/tables/table_slices_exp2.txt}
+
 
 %The OLS regression in equation may have endogeneity problems. This next section discusses the sources of the problem and the identification strategy.
 
@@ -173,6 +177,7 @@ In the analysis, for our first measure of experience we drop the first slice of 
 \end{figure}
 
 In the robustness checks we analyze both i) different values for the won/lost points after an auction and ii) the threshold in ranking for a close win.
+\clearpage
 %Bidding behavior
 %An alternative way to measure changes in bidding behavior caused by efficiency gains through experience is to examine directly changes in bidding behavior among more experienced firms with respect to less experienced ones. As was discussed before, experience induces changes in the underlying production function, or changes along the production function, that make the firm more efficient at producing certain types of goods. In a competitive market, firms should pass through at least a fraction of this improvement in costs to the bids they submit in the auctions. Thus, we should be able to identify this change directly through the bids that more experienced firms submit for projects.
 %The approach is different than the one from the previous section because we can directly link the past experience of a firm to each bid it submits in every auction that it participates in. Thus, our unit of observation is a bid submitted by a firm for a contract of a public construction contract. Our second specification has then the following form:where is the standardized bid submitted by the firm and is a measure of past experience. In further specifications we include a broader set of controls. First, we add fixed effects by auction. Second, we add firm fixed effects. Finally, we control by the geographic region where the auction is being held.
@@ -185,7 +190,7 @@ In the robustness checks we analyze both i) different values for the won/lost po
 First we explore graphically the relationship between our first measure of experience and outcomes. Figure \ref{fig:plotresults_both} , Panel A, shows the relationship between past experience and outcomes (i.e. winning share). While we can see an increase in the average share of contracts won with more past experience, there is considerable heteregeneity, as it can be seen in the wide error bars (which show interquartile range). Panel B contains only two types of firms: firms that either bid but not won contracts in period $(t-1)$ or firms which won one or more close contracts in period $t$, and thus is akin to results of a reduced form regression.
 
 \begin{figure}
-  \includegraphics[scale=0.65]{plotwins_both.png}
+  \includegraphics[scale=0.65]{plotwins_panel.png}
   \caption{Relationship between contracts won on $t-1$ and mean winning probability across contractors in $t$.}
   \label{fig:plotresults_both}
   \vskip 0.5mm
@@ -218,51 +223,6 @@ There does not seems to be conclusive evidence regarding different results when 
 
 
 
-\section{Experience and Type of Project}
-Given our previous results a natural concern is if whether all projects exhibits the same returns to experience or if experience is more important in certain types of works. In this section we replicate the previous analysis by disaggregating by type of project. In order to do this, we classify certain projects according to their description, then run similar regressions as in the last section, and present the results.
-
-First we describe briefly how we construct categories for the prrojects and which ones are avalaible for the analysis. Our original dataset includes a name variable which describes the type of project with some extent. We extracted this name variable and looked for i) common single words (unigrams) and ii) common pairs of words (bigrams). We select the most common unigrams and bigrams and map similar words and bigrams to project categories. The full categorization mapping can be found in the Appendix.
-
-We end up with contract classified under categories. Importantly, if a contract includes unigrams or bigrams in its name belonging to more than one category, it is included in the analysis of both categories. The number of contracts, average amount, average number of bidders for each category is shown in Table \ref{}. We can see that the biggest categories of projects are school-related, vecinal works, parks and pavements (including sidewalks). The Appendix contains more details on the types of projects included in each category.
-
-%\input{C:/repos/learn-doing/thesis/tables/table_types_project_stats.txt}
-
-Next we run similar regressions as in the previous section for each project type, considering as our dataset only the contracts in that project category . We employ the same specification of with a linear functional form on experience and period fixed effects, and our first measure of experience. The results are presente in Figure \ref{fig:typeestimates}he Appendix includes more detailed tables with full regression results for each sproject type. A few results stand out. First, we get the biggest coefficients on experience on graveyard projects, footbridges and housing. The first two should be almost exclusively procured by government units. Housing was also one of our hypothsized types of projects which should have high coefficients. At the bottom of the distribution, interestingly, we find daycares, sports courts, hospitals, and schools. The results could be explained because these projects are mostly composed of normal construction works which also have private close substitutes.
-
-The results on hospitals should be surprising, as they are usually very big projects with a lot of specific knwoledge required.
-
-%\input{C:/repos/learn-doing/thesis/tables/table_types_project_ols.txt}
-
-\begin{figure}
-  \includegraphics[scale=0.75]{plotTypes.png}
-  \caption{Experience coefficient by type of project.}
-  \label{fig:typeestimates}
-\end{figure}
-
-\section{Experience and Firm Size}
-%In the literature about industrial organization and productivity, it has been studied the relation between firm size, innovation, and productivity. These investigations have concluded that smaller firms are more productive than bigger firms, however they are also more risky.
-An important variable in the investigation of the effect of experience should be firm size. First, it is possible that there are different levels of cost efficiency between small and big firms. As arguably bigger firms should have more experience on average, this could skew our estimates. A second concern is that we might expect experience to matter more for smaller firms, if there is a decreasing or "maximum" level effect of experience on future outcomes.
-
-In this section we attempt to develop specific estimates of the effect of experience for different levels of firm size. Developing intra-category estimates serves as both as an identification strategy and as  robustness check of our previous findings.
-
- We follow the following approach. First we select a subsample from our original dataset which we can classify acoording to annual sales.  We obtain intra-category estimates of the effect of experience and interpret them. Finally, we discuss the results and some of the empirical challenges of controlling for size.
-
-In order to study and control for firm size we employ a publicily avalaible classification of firms according to their annual sales, maintained by the chilenan Tax Bureau Office (\textit{Servicio de Impuestos Internos}). Firms are categorized in 13 categories. Category number one  corresponds to 'tax data not enough to classify', but from categories two up to thirteen, each category is defined by an increasing level of minimum yearly sales.
-
-This data is avalaible only for firms not being fully assimilable to final taxpayers. After merging our with our initial sample, we are left with around 30\% of our original firm sample. Table \ref{tab:salescategories} shows how many firms do we have in our sample for each category, average annual sales for these firms, and statutory annual sales thresholds for each category. Note that we have much more firms at intermediate categories than extreme ones. In our estimation we group firms from contiguous groups together to increase power.
-
-% Table generated by script
-\input{C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt}
-
-We estimate the effect of linear experience with our first measure for each group of categories of firms by OLS and IV. Specifications consider our first measure of experience with a binary presence of experience and with period fixed effects. The results are presented graphically in \ref{fig:sizeestimates} (the coefficient for category two is omitted because it was much bigger than the rest and distorted the visualiztion). Full results are avalaible at the Appendix.
-
-We only obtain significant effects at intermediate sales categories' levels. However, everytime a coefficient is significant it is also positive. The results are not supreising given i) the reduced sample we are employing ii) the expected reduced importance of experience for very big firms.
-
-Controlling for firm size is challenging mainly because of statistical reasons. First, firm size distribution in the sample is not uniform as there are less very small and very big firms. Second, the within-size distribution of experience within extreme categories has very few observations with more than five contracts of experience. Third, this sample is already smaller due to filtering single-person companies. Both factors make it hard to obtain per-category estimates with enough statistical power experience.
-
-\newpage
-\input{C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt}
-
 
 %\begin{figure}
 %  \includegraphics[scale=0.85]{plotsize.png}
@@ -275,10 +235,21 @@ Controlling for firm size is challenging mainly because of statistical reasons. 
 %\input{C:/repos/learn-doing/thesis/tables/table_sizes_explinear1.txt}
 %}%
 \section{Robustness checks}
-Several of our choices in the previous section admit several arbitrary choices. In this section we consider several extensions in parameters which could influence the results obtained before. We consider robustness checks in the following areas:
-
+Several of our parameters in the previous section were arbitrary to a certain degree. In this section we consider several alternatives which could influence the results obtained before. We consider robustness checks in the following areas:
+\begin{enumerate}
+  \item Period of outcome computation
+  \item Definition of a close win (by price)
+  \item Definition of a close win (by rank)
+  \item Stricter sample selection
+\end{enumerate}
 \subsection{Periods of outcomes}
-In the previous section, we measured outcomes occuring in two year periods. We now consider outcomes occuring in one and three year periods as well. Note that in this part we only vary the length of the period where outcomes are computed and we maintain the procedure to compute experience as before. Table shows outcomes computed for periods of 1, 2(the original specifications) and 3 years. The first three columns employ the experience measured in the two-period previous to the outcome period while the 3-6 compute experience as annualized cumulative experience as discussed in the previous section.
+In the main analysis section, we computed outcomes across a period of two years for each of our slices. We now consider outcomes occuring in one and three year periods as well. Note that in this part we only vary the length of the period where outcomes are computed and we maintain the procedures to compute experience the same as before.
+
+ A shorter time frame would be a better parameter choice if firms bid frequently, so their true outcomes manifest quickly;  the learning is itself instantaneous,  so past experience immediately influences outcomes; or the learning is short lived, which would make much more important for the outcomes of a given year the history of the previous year. Conversely, a long time frame is better in the case of frequent bidding, slow learning and long lasting knowledge.
+
+In the case of construction projects, it would be expected that the better parameter would be more close to a longer than to a shorter one. Construction projects, especially complex ones, can be less frequent than in the case of undifferentiated projects. More importantly, since construction projects take longer to perform than rugular purchases, it would be expected that the learning process takes longer.
+
+Table \ref{tab:robust_bin_outcomes} shows outcomes computed for periods of 1, 2(the original specifications) and 3 years in the last three columns. The rows correspond to our different OLS, IV (by price) and IV(by rank) specifications. Notably, i) all results are significant with $p<0.01$ and ii) estimates are close to each other across different years. Standard errors decreases with the number of years considered because of the associated increase in sample size. All but one row show differences of less than 5\% in the estimate across the different parameters.
 
 \begin{table}[!htbp] \centering
 \caption{Regression for OLS and IV specifications}
@@ -313,23 +284,18 @@ Residual Std. Error & 0.316 (df = 38730) & 0.338 (df = 29405) & 0.305 (df = 4344
 }
 \end{table}
 
-
-\subsection{Periods of experience computation}
-For the first measure of experience, we consider computing experience over 1-year periods. The original specification considered computing experience in two-year rolling periods.
-
-In practice, considering longer periods to compute outcomes decreases the variance of th
+\input{C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt}
 
 
-
-
-
-
+%\subsection{Periods of experience computation}
+%For the first measure of experience, we consider computing experience over 1-year periods. The original specification considered computing experience in two-year rolling periods.
+%In practice, considering longer periods to compute outcomes decreases the variance of th
 %\item Different measures of experience: we consider time measures of experience instead of number of contracts won. We consider as the explanatory variab
 
-\subsection{Definition of a close win}
-In the previous section, we considered close wins as wins where the winning contractor submitted a bid that was not more than 0.05\% below the runner up. Now, we sensibilize our main coefficient to different values of this parameter.
+\subsection{Definition of a close win - by price}
+In the main section, we defined close wins by price as those in which the winning contractor submitted a bid that was not more than 0.05\% below the runner up and where the wiight of the price component in the final score was 70\% or more. Now, we sensibilize our main coefficient to different values of these parameter.
 
- The plot in  \ref{fig:close_wins_robust} displays the coefficient of interest in the IV specification as we vary the threshold for a close win. The specifications consider linear effect of experience and fixed effects by period. It can be seen that results are robust to a range of the threshold for considering a win as a close wins. Note that the results remain significant across the different values of the parameters, even when  employ our lower bound for the threshold(0.01\%) where we have less close wins. As expected, the standard error increases towards this bound while but decreases towards  less stringent definitions of close wins (because of the increase in power in the instrument). Finally, note across that all confidence intervals at 95\% remain within 0.0180 and 0.0275.
+ We first sensibilize the threshold of bid differences. The plot in  \ref{fig:close_wins_robust} displays the coefficient of interest in the IV specification as we vary the threshold for a close win. The specifications consider linear effect of experience and fixed effects by period. It can be seen that results are robust to a range of the threshold for considering a win as a close wins. Note that the results remain significant across the different values of the parameters, even when we employ our lower bound for the threshold(0.01\%) where we have less close wins. As expected, the standard error increases towards this bound and decreases towards less stringent definitions of close wins (because of the increase in power in the instrument). Finally, note across that all confidence intervals at 95\% remain within 0.0180 and 0.0275.
 
  \begin{figure}[H]
          \centering
@@ -339,6 +305,55 @@ In the previous section, we considered close wins as wins where the winning cont
 
   \vskip 0.5mm
   {\justifying\footnotesize\underline{Note:} The plot shows the coefficient on experience as in the specification of Panel (5) of table \ref{tab:table_exp_1}, that is, the dependent variable is the share of contracts won in period $t$ and the dependent variable is linear experience, i.e. number of contracts won in period $(t-1)$, instrumented with close wins in period $(t-1)$. The $x$-axis shows how the coefficient varies with the threshold for what is considered a close win.\par}
+ \end{figure}
+
+Now we examine more stringent requirements for the weight of the price component in the total score. 
 
 
+\chapter{Mechanisms}
+
+     \section{Experience and Firm Size}
+     %In the literature about industrial organization and productivity, it has been studied the relation between firm size, innovation, and productivity. These investigations have concluded that smaller firms are more productive than bigger firms, however they are also more risky.
+     An important variable in the investigation of the effect of experience should be firm size. First, it is possible that there are different levels of cost efficiency between small and big firms. As arguably bigger firms should have more experience on average, this could skew our estimates. A second concern is that we might expect experience to matter more for smaller firms, if there is a decreasing or "maximum" level effect of experience on future outcomes.
+
+     In this section we attempt to develop specific estimates of the effect of experience for different levels of firm size. Developing intra-category estimates serves as both as an identification strategy and as  robustness check of our previous findings.
+
+      We follow the following approach. First we select a subsample from our original dataset which we can classify acoording to annual sales.  We obtain intra-category estimates of the effect of experience and interpret them. Finally, we discuss the results and some of the empirical challenges of controlling for size.
+
+     In order to study and control for firm size we employ a publicily avalaible classification of firms according to their annual sales, maintained by the chilenan Tax Bureau Office (\textit{Servicio de Impuestos Internos}). Firms are categorized in 13 categories. Category number one  corresponds to 'tax data not enough to classify', but from categories two up to thirteen, each category is defined by an increasing level of minimum yearly sales.
+
+     This data is avalaible only for firms not being fully assimilable to final taxpayers. After merging our with our initial sample, we are left with around 30\% of our original firm sample. Table \ref{tab:salescategories} shows how many firms do we have in our sample for each category, average annual sales for these firms, and statutory annual sales thresholds for each category. Note that we have much more firms at intermediate categories than extreme ones. In our estimation we group firms from contiguous groups together to increase power.
+
+     % Table generated by script
+     \input{C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt}
+
+     We estimate the effect of linear experience with our first measure for each group of categories of firms by OLS and IV. Specifications consider our first measure of experience with a binary presence of experience and with period fixed effects. The results are presented graphically in \ref{fig:sizeestimates} (the coefficient for category two is omitted because it was much bigger than the rest and distorted the visualiztion). Full results are avalaible at the Appendix.
+
+     We only obtain significant effects at intermediate sales categories' levels. However, everytime a coefficient is significant it is also positive. The results are not supreising given i) the reduced sample we are employing ii) the expected reduced importance of experience for very big firms.
+
+     Controlling for firm size is challenging mainly because of statistical reasons. First, firm size distribution in the sample is not uniform as there are less very small and very big firms. Second, the within-size distribution of experience within extreme categories has very few observations with more than five contracts of experience. Third, this sample is already smaller due to filtering single-person companies. Both factors make it hard to obtain per-category estimates with enough statistical power experience.
+
+     \newpage
+     \input{C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt}
+
+
+     \section{Experience and Type of Project}
+     Given our previous results a natural concern is if whether all projects exhibits the same returns to experience or if experience is more important in certain types of works. In this section we replicate the previous analysis by disaggregating by type of project. In order to do this, we classify certain projects according to their description, then run similar regressions as in the last section, and present the results.
+
+     First we describe briefly how we construct categories for the prrojects and which ones are avalaible for the analysis. Our original dataset includes a name variable which describes the type of project with some extent. We extracted this name variable and looked for i) common single words (unigrams) and ii) common pairs of words (bigrams). We select the most common unigrams and bigrams and map similar words and bigrams to project categories. The full categorization mapping can be found in the Appendix.
+
+     We end up with contract classified under categories. Importantly, if a contract includes unigrams or bigrams in its name belonging to more than one category, it is included in the analysis of both categories. The number of contracts, average amount, average number of bidders for each category is shown in Table \ref{}. We can see that the biggest categories of projects are school-related, vecinal works, parks and pavements (including sidewalks). The Appendix contains more details on the types of projects included in each category.
+
+     %\input{C:/repos/learn-doing/thesis/tables/table_types_project_stats.txt}
+
+     Next we run similar regressions as in the previous section for each project type, considering as our dataset only the contracts in that project category . We employ the same specification of with a linear functional form on experience and period fixed effects, and our first measure of experience. The results are presente in Figure \ref{fig:typeestimates}he Appendix includes more detailed tables with full regression results for each sproject type. A few results stand out. First, we get the biggest coefficients on experience on graveyard projects, footbridges and housing. The first two should be almost exclusively procured by government units. Housing was also one of our hypothsized types of projects which should have high coefficients. At the bottom of the distribution, interestingly, we find daycares, sports courts, hospitals, and schools. The results could be explained because these projects are mostly composed of normal construction works which also have private close substitutes.
+
+     The results on hospitals should be surprising, as they are usually very big projects with a lot of specific knwoledge required.
+
+     %\input{C:/repos/learn-doing/thesis/tables/table_types_project_ols.txt}
+
+     \begin{figure}
+       \includegraphics[scale=0.75]{plotTypes.png}
+       \caption{Experience coefficient by type of project.}
+       \label{fig:typeestimates}
      \end{figure}
