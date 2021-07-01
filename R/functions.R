@@ -305,7 +305,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],
                                                                                                       islowestBid = ((abs(montoOferta[1] - montoOferta[winner == 'Seleccionada'][1])/montoOferta[1])<=thresholdClose))
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
-                                                                 firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(df.period1$year)-firstyearwin,altannualwins=wins/(life))
+                                                                 firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(max(df.period1$year)-firstyearwin,1),annualwinspre=wins/(life))
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
   
   
@@ -384,16 +384,16 @@ while (cutoff2<=maxcutoff) {
   newstart=start+i
   if(ranks==TRUE){
     two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = start, split1 =(i+1),split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp,thresholdCloseRank = thresholdCloseRank)
-    two.period.mergedwins=two.period.mergedwins%>%mutate(annualwinspre=winspre/(i+1),
-                                                         annualwinspre_close=winspre_close/(i+1),
-                                                           annualwinspre_closerank= winspre_closerank/(i+1)
+    two.period.mergedwins=two.period.mergedwins%>%mutate(
+                                                         annualwinspre_close=winspre_close/life,
+                                                           annualwinspre_closerank= winspre_closerank/life
                                                          )
     
     }
   if(ranks==FALSE){
     two.period.mergedwins=createTwoPeriodDataset(df,start = start, split1 =(i+1),split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp,weightPrice=weightPrice)
-  two.period.mergedwins=two.period.mergedwins%>%mutate(annualwinspre=winspre/(i+1),
-                                                       annualwinspre_close=winspre_close/(i+1))
+  two.period.mergedwins=two.period.mergedwins%>%mutate(
+                                                       annualwinspre_close=winspre_close/life)
   }
   
   #Create annualized experience
@@ -407,6 +407,7 @@ while (cutoff2<=maxcutoff) {
 } 
 
 
+multiperiod.mergedwins=multiperiod.mergedwins%>%mutate(annualwinspre_close=ifelse(is.na(annualwinspre_close),yes = 0,no=annualwinspre_close))
 
 return(multiperiod.mergedwins)
 
@@ -437,7 +438,8 @@ createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClos
   #Create winning statistics of each period
   ##Create Winning Statistics for first period
   df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],closeRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)))
-  df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
+                                                                  firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(max(df.period1$year)-firstyearwin,1),annualwinspre=wins/(life))
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
   
   #Add an ID column

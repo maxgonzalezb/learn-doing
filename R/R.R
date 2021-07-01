@@ -276,6 +276,10 @@ summary(lm.12)
 ####################################
 #Second Measure of Computation
 ####################################
+start=0
+split1=2
+split2=2
+
 # Second analysis, experience as annualized cumulative experience. 
 ## Second analysis of the Experience
 merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2,filterReqExp = T,thresholdClose = 0.005)
@@ -295,16 +299,7 @@ merged.wins.close.price.means.exp2=merged.wins.close.price.exp2%>%group_by(winsp
                                                                                                 sd.error=std.dev/sqrt(n))%>%
   filter(n>10)%>%mutate(exp=ifelse(winspre_close>0,'Experience','No experience'))
 
-a=df%>%left_join(df.difs)%>%filter(islowestBid==1)
 
-prueba=df%>%filter(rutp_clean==testeo)%>%select(FechaInicio,year,Codigo,RutProveedor,winner)%>%arrange(FechaInicio)
-prueba2=merged.wins%>%filter(RutProveedor==testeo2)%>%select(idperiodpre,winspre,altannualwins,life)
-
-prueba
-prueba2
-df$RutProveedor
-testeo1=merged.wins$RutProveedor[700]%>%gsub(pattern = '.',replacement = '',fixed=T)
-testeo2=merged.wins$RutProveedor[700]
 ### Describe this sample
 slices=data.frame()
 i=0

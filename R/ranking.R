@@ -104,8 +104,8 @@ ggplot(df.ranked %>% filter(year %in% c(2010, 2012, 2014, 2016, 2018, 2020)), ae
                                        panel.grid.minor = element_blank())
 dev.off()
 
-df.ranked = df.ranked %>% left_join(listaContractExp, by = c('CodigoExterno' =
-                                                               'id'))
+#df.ranked = df.ranked %>% left_join(listaContractExp, by = c('CodigoExterno' =
+                                                               #'id'))
 
 ## Create the table with descriptive data
 comparison.1 = df.ranked %>% filter(closeRanking == 0) %>% generateDfBidsSummary() %>%
@@ -153,7 +153,7 @@ merged.wins.close.rank.means.exp1=merged.wins.close.rank.exp1%>%group_by(winspre
 lm.25 <-
   ivreg(
     probWinpost ~ (winspre > 0) + idperiodpost |
-      (winspre_closerank > 0) + winspre_close + idperiodpost,
+      (winspre_closerank > 0)  + idperiodpost,
     data = merged.wins
   )
 robust.lm25 <- vcovHC(lm.25, type = "HC1") %>% diag() %>% sqrt()
