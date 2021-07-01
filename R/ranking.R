@@ -1,6 +1,5 @@
 library(PlayerRatings)
 library(tictoc)
-
 source('C:\\repos\\learn-doing\\R\\functions.R')
 
 df.ratings.1 = df %>% filter(Codigo != '6676853') %>% select(Codigo, RutProveedor, FechaInicio, winner) %>%
@@ -55,6 +54,12 @@ df.ranked = CreateFullRankedDataset(
   losePoints,
   startPoints = 1500
 )
+##Save the table
+df.ranked%>%group_by(Codigo,RutProveedor)%>%count()%>%select(-n)%>%saveRDS(file='C:\\repos\\learn-doing\\data\\ranking_table.rds')
+
+#Load to avoid the previous analysis
+
+
 thresholdCloseRank = 1.03
 table.close.contracts = df.ranked %>% filter(estadoOferta == 'Aceptada') %>%
   group_by(Codigo) %>% summarise(closeRanking = as.numeric(length(Codigo) >=
@@ -144,11 +149,6 @@ merged.wins.close.rank.means.exp1=merged.wins.close.rank.exp1%>%group_by(winspre
   filter(n>10)%>%mutate(exp=ifelse(winspre_closerank>0,'Experience','No experience'))
 
 
-
-
-
-
-
 ## Create the models with iv
 lm.25 <-
   ivreg(
@@ -210,28 +210,28 @@ lm.28 <-
 robust.lm28 <- vcovHC(lm.28, type = "HC1") %>% diag() %>% sqrt()
 summary(lm.28)
 
+################################## 
+#Robustness checks
+################################## 
 
 
-
-
-
-################################## Robustness checks
 # The main problem are the points awarded. We check with various win/lose pairs
-winPoints.vector = c(10, 15, 35, 50)
+winPoints.vector = c(10, 15,25 ,35, 50)
 average.players = df %>% group_by(Codigo) %>% count() %>% ungroup() %>% summarise(mean =
                                                                                     mean(n, na.rm = T)) %>% round() %>% as.numeric()
-losePoints.vector = round(winPoints / average.players)
+losePoints.vector = round(winPoints.vector / average.players)
 
 parameters.checks=data.frame(winPoints.vector,losePoints.vector)
 start=0
 split1=2
 split2=2
-check_thresholds=seq(1.001,1.03,0.002)
+check.thresholds=c(1.01,1.02,1.03,1.04)
 result.robustness.ranks=data.frame()
 for (i in seq_len(nrow(parameters.checks))) {
+  print(i)
   # Select win and lose points
-  winPoints =  parameters.checks$winPoints[i]
-  losePoints = parameters.checks$losePoints[i]
+  winPoints =  parameters.checks$winPoints.vector[i]
+  losePoints = parameters.checks$losePoints.vector[i]
   
   # Create full rankings
   df.ranked.robust = CreateFullRankedDataset(
@@ -243,14 +243,39 @@ for (i in seq_len(nrow(parameters.checks))) {
     losePoints,
     startPoints = 1500
   )
-  df.ranked.robust = df.ranked.robust %>% left_join(listaContractExp, by =
-                                                      c('CodigoExterno' = 'id'))
+  #df.ranked.robust = df.ranked.robust %>% left_join(listaContractExp, by =
+                                                      #c('CodigoExterno' = 'id'))
   
   # Create results by threshold
-  result.robustness.ranks.iter = check_thresholds %>% map_dfr(
-    function(x)
-      createMultiPeriodDataset(
-        df.ranked,
+  # result.robustness.ranks.iter.bin = check_thresholds %>% map_dfr(
+  #   function(x)
+  #     createMultiPeriodDataset(
+  #       df.ranked,
+  #       start = start,
+  #       split1 = split1,
+  #       split2 =
+  #         split2,
+  #       ranks = TRUE,
+  #       filterReqExp = T,
+  #       thresholdCloseRank = x
+  #     ) %>%
+  #     ivreg(
+  #       probWinpost ~ (winspre > 0) + idperiodpost |
+  #         (winspre_closerank > 0) + winspre_close + idperiodpost,
+  #       data = .
+  #     ) %>%
+  #     coeftest(vcov = vcovHC(., type = "HC1")) %>%
+  #     tidy() %>% filter(term == 'winspre > 0TRUE') %>% mutate(
+  #       threshold = x,
+  #       winPoints = winPoints,
+  #       losePoints = losePoints
+  #     )
+  # )%>%mutate(ff='Binary Indicator')
+  
+  result.robustness.ranks.iter= check_thresholds %>% map_dfr(
+    function(x) 
+      list(createMultiPeriodDataset(
+        df.ranked.robust,
         start = start,
         split1 = split1,
         split2 =
@@ -258,28 +283,69 @@ for (i in seq_len(nrow(parameters.checks))) {
         ranks = TRUE,
         filterReqExp = T,
         thresholdCloseRank = x
-      ) %>%
-      ivreg(
-        probWinpost ~ (winspre > 0) + idperiodpost |
-          (winspre_closerank > 0) + winspre_close + idperiodpost,
-        data = .
+      )) %>% map_dfr( function(y) rbind(
+      (ivreg(
+        probWinpost ~ (winspre) + idperiodpost |
+          (winspre_closerank)  + idperiodpost,
+        data = y
       ) %>%
       coeftest(vcov = vcovHC(., type = "HC1")) %>%
-      tidy() %>% filter(term == 'winspre > 0TRUE') %>% mutate(
+      tidy() %>% filter(term == 'winspre') %>% mutate(
         threshold = x,
         winPoints = winPoints,
         losePoints = losePoints
       )
-  )
+   %>%mutate(ff='Linear')),
+  (ivreg(
+    probWinpost ~ (winspre > 0) + idperiodpost |
+      (winspre_closerank > 0)  + idperiodpost,
+    data = y
+  ) %>%
+    coeftest(vcov = vcovHC(., type = "HC1")) %>%
+    tidy() %>% filter(term == 'winspre > 0TRUE') %>% mutate(
+      threshold = x,
+      winPoints = winPoints,
+      losePoints = losePoints
+    )
+  %>%mutate(ff='Binary Indicator')))
+  
+  %>%mutate(threshold=x)))
   
   result.robustness.ranks = rbind(result.robustness.ranks.iter, result.robustness.ranks)
   
 }
 
+saveRDS(object = result.robustness.ranks,file = 'C:\\repos\\learn-doing\\data\\robustness_ranks.rds')
 
+plot.ranks.robust.1<-ggplot(result.robustness.ranks%>%filter(ff=='Binary Indicator'), aes(x=as.factor(winPoints),y=estimate))+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.12)+
+  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
+  
+plot.ranks.robust.2<-ggplot(result.robustness.ranks%>%filter(ff=='Linear'), aes(x=as.factor(winPoints),y=estimate))+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.02)+
+  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
 
+row.1=plot_grid(plot.ranks.robust.1)
+row.2=plot_grid(plot.ranks.robust.2)
 
+title.rob1 <- ggdraw() + 
+  draw_label(
+    "Robustness analysis for threshold and points awarded - close wins by rank",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+plot.robustness.rank=cowplot::plot_grid(title.rob1,row.1,row.2,
+                                        nrow = 3,labels = '',rel_heights = c(0.1, 1,1))
 
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_robustness_rank.png",width = 9, height = 5.5,units = "in",res=1000)
+plot.robustness.rank
+dev.off()
 
 
 
@@ -424,4 +490,4 @@ ggplot(df.coords.x,aes(x=PC1,y=PC2))+geom_point(alpha=0.1,aes(color=as.factor(ra
     df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
     df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
     save(df.ranked,file = 'C:\\repos\\learn-doing\\data\\rankeddf.rds')
-}
+  }

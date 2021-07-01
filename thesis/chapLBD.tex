@@ -49,30 +49,32 @@ Offers won by Firm & 13800 & 2.33 & 5.66 & 111 & 0\\
 \section{Empirical Strategy}
 Our empirical strategy consists in a Regression Discontinuity design in which we compare the bidding outcomes of firms with different levels of previous experience in the market. We first present the baseline OLS specification and then discuss endogeneity issues that arise.
 
-Our two main OLS specification are as follows. $S_{it }$ is the share of contracts won in the period of interest, $EXP_{it} $ is the measure of experience of firm $i$ in period $t-1$ or up until $t$(depending on the specification), and $T_t$ are period fixed effect.
+Our two main OLS specification are as presented in equation \ref{eqn:olsspec}:
 \begin{equation}
 \label{eqn:olsspec}
 S_{it}=\alpha+ \beta EXP^k_{it-1}+T_t+\varepsilon_{it}
 \end{equation}
 
-
 %Our main interest is the difference between the firms with some and the firms with none experience, but we consider also increasing measures of experience.
+Here, Let $S_{it2}$ is the share of contracts won in period 2 of slice $t$, $EXP_{it1} $ is the measure of experience employed for firm $i$ in slice $t$, and $T_t$ are period fixed effect. We employ indexes 1 and 2 to make explicit that each slice has two periods: one of experience computation and one of outcome computation, and every slice is indexed by t, which is date in between the two periods.
 
-Our outcome variable $S_{it }$ is the share of contracts won out of the total amount of contracts bid for, in a specific timeframe. That is, if we consider period $t$, then the outcome variable for firm $i$ is $\dfrac{W_{it}}{B_{it}}$ where $B_{it}$ are the bids submitted by firm $i$ on the period $[t,t+\tau]$, $W_{it}$ are the contracts won in period $[t,t+\tau]$ and $\tau$ is a parameter which controls the duration of the periods in which we compute both outcomes. In our initial specification, we consider each $\tau$ to be equal to two years. Employing a proportion of contracts won instead of total contracts has two advantages. First, we implicitly control by the size of the firm. Second, we capture the learning effects which manifest by being able to bid for contracts where less experienced firms do not submit proposals.
+Our outcome variable $S_{it2}$ is the share of contracts won out of the total amount of contracts bid for in the second period of a given slice. That is, if we consider slice $t$, then the outcome variable for firm $i$ is $\dfrac{W_{it}}{B_{it}}$ where $B_{it}$ are the bids submitted by firm $i$ on the period $[t,t+\tau]$, $W_{it}$ are the contracts won in period $[t,t+\tau]$ and $\tau$ is a parameter which controls the duration of the periods in which we compute outcomes. In our initial specification, we consider each $\tau$ to be equal to two years. Employing a proportion of contracts won instead of total contracts has two advantages. First, we implicitly control by the size of the firm. Second, we capture the learning effects which manifest by being able to bid for contracts where less experienced firms do not submit proposals.
 
-We make an important filtering step before computing outcomes, as we only consider contracts for which previous experience is not among the awarding criteria of the contract. This is because including including contracts for which experience is among the awarding criteria would i) render (expectedly) trivially positive and significant results and ii) confound the true effect of learning by doing among contracts which do not include experience as awarding criteria. Note that this filtering step is only carried out for outcomes' computation and not experience computation, which we now describe.
+We make an important filtering step before computing outcomes, as we only consider contracts for which previous experience is not among the awarding criteria of the contract. This is because including including contracts for which experience is among the awarding criteria would i) render (expectedly) trivially positive and significant results and ii) confound the true effect of learning by doing among contracts which do not include experience as awarding criteria. Note that this filtering step is only carried out for outcomes' computation and not experience computation.
 
 %Our dependent variable is a measure of firms' past experience. In #principle, there are several ways in which we could measure experience. We could employ, for example, the total amount of dollars executed up until one point in time or the number of contracts won. We employ the latter to better capture the discrete differences occurring between zero and more than zero contracts performed in past periods. In our specifications, we consider experience binary indicator of past experience, a linear polynomial and also second-degree polynomial.
 
-We consider two ways of computing the previous experience $EXP^k_{it}$ for a firm which we index by $k$, $k\in \{1,2\}$. The first alternative computes experience as the total amount of contracts won in a fixed period before the outcomes' period $t$. The second alternative computes experience as contracts per year developed up until the period of outcomes $t$.
+Now we describe experience computation, i.e. our independent variable. We consider two ways of computing the previous experience $EXP^k_{it1}$ for a firm $i$, which we index by $k$, $k\in \{1,2\}$. The first alternative computes experience as the total amount of contracts won in a fixed period before the outcomes' period $[t,t+\tau]$. We fix a specific start date and end date to define a first period (Period 1), which is used to compute the total contracts won for each firm. As our baseline, we employ two-years periods for the length of period 1.
 
-The first alternative is implemented as follows. We fix a specific start date and end date to define a first period (Period 1), which is used to compute the total contracts won for each firm. Then, for each firm we link this experience to the outcomes in a subsequent period of equal length (Period 2). We end up with a dataset where each observation is a firm, the dependent variable is a measure of he firm’s outcomes in Period 2 (i.e. $S_{it}$), and the independent variable is a measure of the (past) experience of the firm in Period 1 (i.e. $EXP^1_{it}$). We repeat this process, considering as Period 1 successive two-year periods in our dataset with one year of overlap between them. Since our dataset contains 10 years, we end up with four two-year pairs ("slices").
+The second alternative computes experience by summing all contracts developed up until $t$ and dividing by the number of years in that period. Instead of restricting our measure of past experience to two years before the outcomes' period, as in the previous method, we consider all the previous years when we count contracts won. In order to obtain comparable estimates across successive years, for each period we divide the total contracts developed by the firm up until that moment by the number of years where we are considering experience. This way, we obtain an “annualized” measure of experience for each firm.
 
-The length in years of period 1 and period 2 is an arbitrary parameter in this strategy. As our baseline, we employ two-years periods for the following reasons. First, we do not expect that an active firm will spend more than one year without bidding. Our full dataset shows that for every firm on the data who bid having previous experience, a 50\% has developed a contract within the last 2 years. Second, we do not want to employ too long periods as that would confound the effect of experience for early-period entrants. However, we relax this assumption in the robustness checks and experiment with a wider array of periods’ lengths.
+For each firm and slice we link experience computed with method one or two (period 1 of the slice) to the outcomes in the next period (period 2 of the slice). We end up with a dataset where each observation is a firm-slice pair, the dependent variable is a measure of the firm’s outcomes in Period 2 (i.e. $S_{it2}$), and the independent variable is a measure of the (past) experience of the firm in Period 1 (i.e. $EXP^k_{it}$).
 
-For the second alternative to measure experience, $EXP^2_{ij}$, we construct an annualized measure of experience in the following way. Our success periods are constructed in the same way as before. However, instead of restricting our measure of past experience to two years before the outcomes' period, as in the previous method, we consider all the previous years when we count contracts won. In order to obtain comparable estimates across successive years, for each period we divide the total contracts developed by the firm up until that moment by the number of years where we are considering experience. This way, we obtain an “annualized” measure of experience for each firm.
+Finally, we create slices by creating experience-outcomes pairs at several $t$ in time, spaced by a year each. Since our dataset contains 10 years, we end up with five period 1 - period 2 pairs ("slices") for our first measure of experience and six pairs for our second measure of experience.
 
-The diagram in Figure \ref{fig:diagram_experience} shows a toy example of how we transform the data from per-firm/period to a per firm/slice dataset.The original firm dataset has, for every period, the contracts bid for and contracts won. The second dataset aggregates these results by slice. Note that this diagram assumed no contracts had experience as an awarding criteria. If this was not the case, the set of contracts from which the outcome variable would be computed in each step would be smaller or equal, since we would only consider contracts without experience as an awarding criteria when computing outcomes.
+%The length in years of period 1 and period 2 is an arbitrary parameter in this strategy. A for the following reasons. First, we do not expect that an active firm will spend more than one year without bidding. Our full dataset shows that for every firm on the data who bid having previous experience, a 50\% has developed a contract within the last 2 years. Second, we do not want to employ too long periods as that would confound the effect of experience for early-period entrants. However, we relax this assumption in the robustness checks and experiment with a wider array of periods’ lengths.
+
+The diagram in Figure \ref{fig:diagram_experience} shows a toy example of how we transform the data from per-firm/period to a per firm/slice dataset. The original firm dataset has, for every period, the contracts bid for and contracts won. The second dataset aggregates these results by slice. Note that this diagram assumed no contracts had experience as an awarding criteria. If this was not the case, the set of contracts from which the outcome variable would be computed in each step would be smaller or equal, since we would only consider contracts without experience as an awarding criteria when computing outcomes.
 
 \begin{figure}
   \includegraphics[scale=0.53]{diagram_experiences.png}
@@ -86,7 +88,7 @@ Finally, we add period fixed effects for each period of outcomes being considere
 
 %In some specifications we include firm fixed effects based on size. It is possible that smaller firms face higher competition due to less-complex contracts, and so their baseline level of success in the market will be lower.
 
-After the transformation steps, we obtain five slice-firm datasets for the first measure of experience and six slices for the second measure of experience. The following table shows the amount of observations in each slice by the type of experience measure employed. Recall that every observation is a firm-level aggregate of past experience and summary of future outcomes and have the form of the righmost table in Figure \ref{fig:diagram_experience}.
+After the transformation steps, we obtain five slice-firm datasets for the first measure of experience and six slices for the second measure of experience. Tables \ref{tab:slices_exp1} and \ref{tab:slices_exp2} shows the amount of observations in each slice by the type of experience measure employed. Recall that every observation is a firm-level aggregate of past experience and summary of future outcomes and have the form of the righmost table in Figure \ref{fig:diagram_experience}.
 
 \input{C:/repos/learn-doing/thesis/tables/table_slices_exp1.txt}
 
@@ -97,13 +99,13 @@ After the transformation steps, we obtain five slice-firm datasets for the first
 
 
 \subsection{Endogeneity and Identification}
-Causal interpretation of the regression in Equation \ref{eqn:olsspec} is problematic since unobserved cost variables, specific to each firm, are omitted in the regression (since they are unobservable) and also endogenous. If there are highly efficient firms which due to this advantages are able to bid more aggressively or submit better proposals, they should win more projects, and in turn accumulate more experience. We expect our estimate $\hat{\beta}$ (coefficient on experience) in \ref{eqn:olsspec} to be biased upwards due to correlation (expectedly positive) between omitted cost variables and the amount of past experience.
+Causal interpretation of the regression in Equation \ref{eqn:olsspec} is problematic since unobserved cost variables, specific to each firm, are omitted in the regression and also endogenous. If there are highly efficient firms who are able to bid more aggressively or submit better proposals, they should win more projects, and in turn accumulate more experience over time. We then expect our estimate $\hat{\beta}_{EXP^k}$ (coefficient on experience) in \ref{eqn:olsspec} to be biased upwards due to correlation (expectedly positive) between omitted cost variables and the amount of past experience.
 
 To identify the causal effect of experience on outcomes, one alternative is to employ external variation to instrument the experience of a firm in an Instrumental Variables (IV) approach. We discuss what would be the optimal way of producing external variation, and, since the data does not allow us to employ this strategy, we propose two second-best alternatives.
 
-Ideally, one could use close wins as the source of exogenous variation in past experience. The argument is that close wins should be less or not at all attributed to unobserved cost factors, or other efficiency advantages, but instead attributable to random differences, for example, the conservativeness of each firms' engineers' estimates. The optimal way to identify close wins would be to single out auctions for which the winning firm had a final weighted score which was marginally superior to the next (or several) of its competitors.  Recall that, for each contract, the  proposals from firms are scored in several criteria, weighted, and finally summed to produce the total score for that firm.
+Ideally, one could use close wins as the source of exogenous variation in past experience. The argument is that close wins should be less or not at all attributed to unobserved cost factors, or other efficiency advantages, but instead attributable to random differences, for example, the conservativeness of each firms' engineers' estimates. The optimal way to identify close wins would be to single out auctions for which the winning firm had a final weighted score which was marginally superior to the ones of its competitors.  Recall that, for each contract, the  proposals from firms are scored in several criteria, weighted, and finally summed to produce the total score for that firm.
 
-In this approach, our first stage takes the form of Equation \ref{eqn:firststage} . Here $EXP_{it}$ is the total set of contracts won in slice $t-1$ for firm $i$, while $EXPCLOSE_{it}$ is the subset of the contracts won which was won closely as per the definition above, and $\nu_{it}$ is an error term uncorrelated with $EXPCLOSE_{it}$.
+In this approach, our first stage would take the form of Equation \ref{eqn:firststage} . Here $EXP_{it1}^k$ is the total set of contracts won in period 1 of slice $t$ for firm $i$, while $EXPCLOSE_{it1}$ is the subset of the contracts won which was won closely as per the definition above, and $\nu_{it}$ is an error term uncorrelated with $EXPCLOSE_{it}$.
 
 \begin{equation}
 \label{eqn:firststage}
@@ -121,33 +123,12 @@ Clearly, both measures of experience ($EXP$ and $EXPCLOSE$) are correlated since
 
 Unfortunately, the previous strategy is unfeasible a with the data we have avalaible. Our data only allows us to see the criteria employed in each contract and the weight of each factor, but not the individual scores for each firm. We attempt two alternative methods detailed in the subsections below
 
-\subsection{Close wins by close bids}
- The first method follows the same theoretical setting as before, but changes how close wins are singled out. Close wins are now operationally identified as the wins meeting copulatively  three conditions: i) the price weight in the awarding decision criteria is 70\% or higher ii) the contract was awarded to the lowest bid and iii) the difference between the lowest bid and the second lowest bid is less than .05\%. We expect that this way of identifying close wins does indeed capture a subset of the random wins, namely, random wins in projects where price is the major awarding criteria.
+\subsection{Close wins by price}
+ The first method follows the same theoretical setting as before, but changes how close wins are singled out. Close wins are now operationally identified as the wins meeting copulatively  two conditions: i) the price weight in the awarding decision criteria is 50\% or higher and ii) the difference between the lowest bid and the second lowest bid is less than .05\%. We expect that this way of identifying close wins does indeed capture a subset of the random wins, namely, random wins in projects where price is the major awarding criteria.
 
-This definition of close wins leads to approximately 8\% of winning bids being classified as a close one. In the robustness checks, we also consider a different values for these parameters, where we consider close wins where three or more competitors are all within a 1\% difference in their bids.
+This definition of close wins leads to approximately 2\% of winning bids being classified as a close one. In Table \ref{tab:table_closewins_alt1_desc} we examine whether close wins defined as above are different from the population in several types of metrics. We can see that in most aspects these bids are not exceedingly different from the rest of the sample, so we expect that there are no underlying project characteristics that could affect competition for these contracts.
 
-In the next table we examine whether close wins defined as  above are different from the population in several types of metrics. We can see that in most aspects these bids are not exceedingly different from the rest of the sample, so we expect that there are no underlying project characteristics that could affect competition for these contracts.
-
-\begin{table}[!h]
-\caption{Comparison of key statistics between close wins(<0.05\% difference between 1st and runner-up) and regular wins}
-\centering
-\resizebox{\textwidth}{!}{
-\begin{tabular}[t]{ccccc}
-\toprule
-Variable & Mean (Not close win) & Mean (Close win) & Sd (Not close win) & Sd (Close win)\\
-\midrule
-Bid & 6.3e+08 & 3.32e+10 & 1.06e+10 & 8.11e+12\\
-Bid\_Winning & 3.18e+08 & 2.37e+08 & 3.56e+09 & 2.62e+09\\
-Difference between 1st bid and 2nd (\%) & 0.14 & 0.0186 & 0.115 & 0.0147\\
-Number of Bidders & 3.86 & 4.08 & 2.12 & 2.23\\
-Year & 2020 & 2020 & 2.92 & 2.89\\
-Offers made by Firm & 4.4 & 6.17 & 7.34 & 11.2\\
-Win prob. by Firm & 0.191 & 0.171 & 0.3 & 0.274\\
-Offers won by Firm & 0.972 & 1.37 & 2.1 & 3.23\\
-\bottomrule
-\end{tabular}
-}
-\end{table}
+\input{C:/repos/learn-doing/thesis/tables/table_closewins_alt1_desc.txt}
 
 \subsection{Close wins as close rank}
 There coul two main objections to the previous identification strategy:
@@ -160,13 +141,13 @@ We propose a new alternative to identify close wins which does not rely in price
 
 Obviously, the main issue is how to construct a good ranking measure. We proceed by  modeling each auction as a multi-player game event (in the non-economic sense of the term) in which firms gain points by winning the project and lose points by not winning it. We award and substract points based on a modified ELO algorithm suited for multi-player games.
 
-Each firm has its ranking initialized at a pre-specified level (1,500 in the initial version). Then, it is awarded 24 points for winning againsta a similar oponnent and substracted 8 by losing. The implementation of the algorithm recommends that points awarded and substracted sum to zero, so we fix awarded points and choose substracted points such that on average (given the number of players in an auction) this condition holds. Against non-similar opponents, the algorithm makes a correction based on the ranking of the players and the outcome of the game. The details of the algorithm are given in the Appendix.
+Each firm has its ranking initialized at a pre-specified level (1,500 in the initial version). Then, it is awarded 25 points for winning against a similar oponnent and substracted 8 by losing. The implementation of the algorithm recommends that points awarded and substracted sum to zero, so we fix awarded points and choose substracted points such that on average (given the number of players in an auction) this condition holds. Against non-similar opponents, the algorithm makes a correction based on the ranking of the players and the outcome of the game.
 
-Proceeding from the oldest to the most recent auction, we update the initial rankings for each firm and obtain for each firm its ranking at any point in time. Next, we label a win as a "close win" when the highest rank among the bidders for the auction was not more than 3\% higher than the lowest rank among the same set of bidders. This yields around 7,322 closely won contracts (16\% of the contracts in the analysis sample) which corresponds to 21,763 observations (16\% of the observations in the analysis sample). In Table \ref{tab:closewins_alt2_desc} we present summary statistics for close wins identified via close wins.
+Proceeding from the oldest to the most recent auction, we update the initial rankings for each firm and obtain for each firm its ranking at any point in time. Next, we label a win as a "close win" when the highest rank among the bidders for the auction was not more than 3\% higher than the lowest rank among the same set of bidders. This yields around 7,322 closely won contracts (16\% of the contracts in the analysis sample) which corresponds to 21,763 observations (16\% of the observations in the analysis sample). In Table \ref{tab:closewins_alt2_desc} we present summary statistics for close wins identified via rank.
 
 \input{C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt}
 
-In the analysis, for our first measure of experience we drop the first slice of data outcomes (as defined above) to allow for a period of rank adjustment. This is necessary since the algorithm does not work well when the average rank in the population is not clearly defined. The way ranks evolve as we progress in the time of the data can be seen in Figure \label{fig:rankings_times}. Note that ranks appear concentrated at the end of the first year of data, while much more dispersed at the end.
+In the analysis, for our first measure of experience we drop the first slice of data outcomes (as defined above) to allow for a period of rank adjustment. This is necessary since the algorithm does not work well when the average rank in the population is not clearly defined. The way ranks evolve as time progresses  can be seen in Figure \label{fig:rankings_times}. Note that ranks appear highly concentrated at the end of the first year of data, while they are much more dispersed at the end.
 
 \begin{figure}
   \includegraphics[scale=0.95]{rankings_times}
@@ -187,7 +168,19 @@ In the robustness checks we analyze both i) different values for the won/lost po
 
 \section{Main Results}
 
-First we explore graphically the relationship between our first measure of experience and outcomes. Figure \ref{fig:plotresults_both} , Panel A, shows the relationship between past experience and outcomes (i.e. winning share). While we can see an increase in the average share of contracts won with more past experience, there is considerable heteregeneity, as it can be seen in the wide error bars (which show interquartile range). Panel B contains only two types of firms: firms that either bid but not won contracts in period $(t-1)$ or firms which won one or more close contracts in period $t$, and thus is akin to results of a reduced form regression.
+First we explore graphically the relationship between experience and outcomes. Figure \ref{fig:plotresults_both} shows the relationship between rolling (top row) and cummulative (bottom row) measures of experience and outcomes. Each column represents a different subsample and dependent variable. First column shows all firms with all past experience in the $x-axis$. Second column (panels B - E) contains only two types of firms: firms that either bid but not won contracts in period 1 of slice $t$ or firms which won one or more close contracts in period  1, and the x-axis displays only close wins, which make the graph the analogue of the reduced form regression. The third column (panels C-F) is analogous to column two but employs the rank definition of a close win.
+
+We observe that average winning shares increases with more experience. The effect appears to be close to linear, altough for experiences higher than ten contracts performed (rolling) or five contracts performed (annualized) we have wide error bars or no sample avalaible. In the case of our "reduced form" graphs, we observe that generally winning share seems to causally improve winning shares, altough we observe somo wide error bars in the second column, probably caused by less power from the instrument, derived from reduced sample sizes.
+
+Next we show results from our regression analysis. Table \ref{tab:table_exp_1} shows the results for OLS and IV regressions for our first experience measure (i.e. rolling two year periods) while Table \ref{tab:table_exp_2} shows the results for our second measure of experience (i.e. annualized experience).
+
+The OLS estimate of the effect of having experience on winning share is 0.07 for rolling experience and 0.059 for annualized experience. IV estimates of the same coefficient are very close to OLS counterparts or even higher, for the case of annualized experience. The specification with linear returns on experience shows that experience renders a 0.01 and 0.024 increase in winning share per extra contract developed (for rolling and annualized experience respectively). IV estimates of linear effect of experience are again close to OLS counterparts. Finally, all the estimates for the experience-related coefficients are significant at $p=0.01$ with robust standard errors.
+
+A concerning result is the low $R^2$ of the regressions, which shows that altough the effect of experience on the mean outcome is significant, there is much variability among firms' outcomes which is not explained by experience.
+
+Given the baseline winning shares (the constant in our regressions), the effect of having experience is equivalent to an increase of between 20\% and 25\% of the winning share of a firm (i.e around 7 percentage points out of 28 percentage points). This points towards significant importance of previous experience in future outcomes.
+
+Altough initially we intended to show results regarding a quadratic term on experience, exploratory results showed that there was almost no difference with employing a linear term so we omitted these specifications in the main results.
 
 \begin{figure}
   \includegraphics[scale=0.65]{plotwins_panel.png}
@@ -196,14 +189,6 @@ First we explore graphically the relationship between our first measure of exper
   \vskip 0.5mm
   { \footnotesize \underline{Note:} The plots show the mean across firms of the number of contracts won out of the number of contracts bid for in period $t$ (in the $y$-axis), against experience accrued in period $(t-1)$ in the $x$-axis. $t$ and $t-1$ correspond to two periods of two years each. Since the data contains ten years, the observations correspond to outcomes computed for eight outcome periods.  Only $x$ for which the number of observations is greater than ten are shown. Error bars correspond to the interquartile range. Panel A: all sample observations are considered. Panel B:  shows results for a subsample where the only contractors considered are those who either i) won closely one or more close contracts  on period 1 or ii) did bid but not win a contract in period 1\par}
 \end{figure}
-
-Table \ref{tab:table_exp_1} shows the results for OLS and IV regressions for our first experience measure (i.e. rolling two year periods) while Table \ref{tab:tableExp2} shows the results for our second measure of experience (i.e. annualized experience).
-
-In both tables, OLS results are in the first to third panels. The first panel shows that the OLS coefficient on the effect of having any level experience against not having experience (binary) is around 0.10, for both ways of computing experience (and ). Our specification with linear returns on experience shows that experience renders a 0.02 and 0.05 increase in winning share per extra contract developed (for experience measures 1 and 2 respectively). All the estimates for the experience-related coefficients are significant at $p=0.01$ with robust standard errors.
-
-The IV results (fourth to sixth panels in each table) show that  the linear and quadratic estimates of the coefficients on experience generally stay within $\pm$ 0.03 of their OLS counterparts. There is however an increase in the binary measure of experience coefficient, for both measures of experience, since for the first measure of experience \textbf{this rises from and for the second measure this rises from} . This is different than we expected, as our initial concern was that omitted cost variables would bias estimates upwards.
-
-A concerning result is the low $R^2$, which shows that altough the effect of experience on the mean outcome is significant, there is much variability among firms' outcomes which is not explained by experience.
 \clearpage
 
 \input{C:/repos/learn-doing/thesis/tables/table_ols_exp1.txt}
@@ -211,18 +196,16 @@ A concerning result is the low $R^2$, which shows that altough the effect of exp
 \input{C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt}
 
 \clearpage
-There does not seems to be conclusive evidence regarding different results when employing quadratic rather than linear functional forms for experience. For example, Figure \ref{fig:pred_average} shows the mean confidence intervals, employing as period fixed effects the last period in the sample. It can be seen that the fitted total predicted value does not seen to vary greatly from the linear to the quadratic specification.
-
-\begin{figure}[H]
-        \centering
-        \includegraphics[scale=0.8]{fit_sample.png}
-        \caption{ \small Predicted values for the mean of the outcome variable (share of contracts won), by total experience accrued in the previous period. We employ fixed effects as in the last period of the dataset.}
-        \label{fig:pred_average}
-    \end{figure}
 
 
+%There does not seems to be conclusive evidence regarding different results when employing quadratic rather than linear functional forms for experience. For example, Figure \ref{fig:pred_average} shows the mean confidence intervals, employing as period fixed effects the last period in the sample. It can be seen that the fitted total predicted value does not seen to vary greatly from the linear to the quadratic specification.
 
-
+%\begin{figure}[H]
+%        \centering
+  %      \includegraphics[scale=0.8]{fit_sample.png}
+  %      \caption{ \small Predicted values for the mean of the outcome variable (share of contracts won), by total experience accrued in the previous period. We employ fixed effects as in the last period of the dataset.}
+  %      \label{fig:pred_average}
+  %  \end{figure}
 
 %\begin{figure}
 %  \includegraphics[scale=0.85]{plotsize.png}
@@ -230,72 +213,32 @@ There does not seems to be conclusive evidence regarding different results when 
 %  \label{fig:sizeestimates}
 %\end{figure}
 
-
 %\resizebox{\textwidth}{!}{%
 %\input{C:/repos/learn-doing/thesis/tables/table_sizes_explinear1.txt}
 %}%
+
+
 \section{Robustness checks}
-Several of our parameters in the previous section were arbitrary to a certain degree. In this section we consider several alternatives which could influence the results obtained before. We consider robustness checks in the following areas:
+Several of our parameters in the previous section admit more than one reasonable choice. In this section we consider several alternatives for them which could influence the results obtained in the main section. We consider robustness checks in the following variables or parameters:
 \begin{enumerate}
-  \item Period of outcome computation
+  \item Periods of outcome computation
   \item Definition of a close win (by price)
   \item Definition of a close win (by rank)
-  \item Stricter sample selection
 \end{enumerate}
 \subsection{Periods of outcomes}
-In the main analysis section, we computed outcomes across a period of two years for each of our slices. We now consider outcomes occuring in one and three year periods as well. Note that in this part we only vary the length of the period where outcomes are computed and we maintain the procedures to compute experience the same as before.
+In the main analysis section, we computed outcomes across a period of two years for each of our slices. We now sensibilize this choice by computing outcomes in one and three year periods as well. Note that in this part we only vary the length of the period where outcomes are computed, and we maintain the procedures to compute experience the same as before.
 
- A shorter time frame would be a better parameter choice if firms bid frequently, so their true outcomes manifest quickly;  the learning is itself instantaneous,  so past experience immediately influences outcomes; or the learning is short lived, which would make much more important for the outcomes of a given year the history of the previous year. Conversely, a long time frame is better in the case of frequent bidding, slow learning and long lasting knowledge.
+ A shorter time frame would be a better parameter choice if firms bid frequently, so their true outcomes manifest quickly;  learning is itself instantaneous,  so past experience immediately influences outcomes; or if the learning is short lived, which would make much more important for the outcomes of a given year the history of the previous year than the one from two years before. Conversely, a long time frame is better in the case of infrequent bidding, slow learning, and long lasting knowledge.
 
-In the case of construction projects, it would be expected that the better parameter would be more close to a longer than to a shorter one. Construction projects, especially complex ones, can be less frequent than in the case of undifferentiated projects. More importantly, since construction projects take longer to perform than rugular purchases, it would be expected that the learning process takes longer.
+In the case of construction projects, it would be expected that the better parameter would be more close to a longer timeframe than to a shorter one. Construction projects, especially complex ones, can be less frequently auctioned than in the case of simpler, undifferentiated products. More importantly, since construction projects take longer to perform than regular purchases, it would be expected that the learning process takes longer.
 
-Table \ref{tab:robust_bin_outcomes} shows outcomes computed for periods of 1, 2(the original specifications) and 3 years in the last three columns. The rows correspond to our different OLS, IV (by price) and IV(by rank) specifications. Notably, i) all results are significant with $p<0.01$ and ii) estimates are close to each other across different years. Standard errors decreases with the number of years considered because of the associated increase in sample size. All but one row show differences of less than 5\% in the estimate across the different parameters.
-
-\begin{table}[!htbp] \centering
-\caption{Regression for OLS and IV specifications}
-\label{}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{\extracolsep{5pt}}lcccccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
-& \multicolumn{6}{c}{Contracts Won/Contracts Bid in Outcome Period} \\
-\cline{2-7}
-\\[-1.8ex] & \multicolumn{6}{c}{Outcome period of length (years):} \\
-& 1 & 2 (Original) & 3 & 1 & 2 (Original) & 3 \\
-\hline \\[-1.8ex]
-Experience & 0.022$^{***}$ & 0.020$^{***}$ & 0.023$^{***}$ &  &  &  \\
-& (0.001) & (0.001) & (0.001) &  &  &  \\
-& & & & & & \\
-Annualized Cumulative Experience &  &  &  & 0.060$^{***}$ & 0.058$^{***}$ & 0.061$^{***}$ \\
-&  &  &  & (0.002) & (0.002) & (0.002) \\
-& & & & & & \\
-Constant & 0.270$^{***}$ & 0.309$^{***}$ & 0.256$^{***}$ & 0.281$^{***}$ & 0.257$^{***}$ & 0.260$^{***}$ \\
-& (0.005) & (0.005) & (0.004) & (0.005) & (0.007) & (0.004) \\
-& & & & & & \\
-\hline \\[-1.8ex]
-Observations & 38,739 & 29,415 & 43,453 & 37,623 & 28,234 & 42,358 \\
-R$^{2}$ & 0.028 & 0.031 & 0.025 & 0.026 & 0.028 & 0.023 \\
-Residual Std. Error & 0.316 (df = 38730) & 0.338 (df = 29405) & 0.305 (df = 43445) & 0.320 (df = 37614) & 0.342 (df = 28224) & 0.309 (df = 42350) \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{6}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
-
-}
-\end{table}
-
+Table \ref{tab:robust_bin_outcomes} shows experience coefficients where outcomes are computed in periods of 1, 2 (the original specification) and 3 years. The rows correspond to our different OLS, IV (by price) and IV (by rank) specifications. Notably, i) all results are significant with $p<0.01$ and ii) estimates are close to each other across different years. Standard errors decrease with the number of years considered because of the associated increase in sample size. In almost every case, estimates remain within one standard error of the original estimates, and in all cases they are within two standard errors.
 \input{C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt}
 
+\subsection{Definition of a close win - Price IVs}
+In the main section, we defined close wins by price as those in which the winning contractor submitted a bid that was not more than 0.05\% below the runner up and where the weight of the price component in the final score was 70\% or more. Now, we sensibilize our main coefficient to different values of these parameters.
 
-%\subsection{Periods of experience computation}
-%For the first measure of experience, we consider computing experience over 1-year periods. The original specification considered computing experience in two-year rolling periods.
-%In practice, considering longer periods to compute outcomes decreases the variance of th
-%\item Different measures of experience: we consider time measures of experience instead of number of contracts won. We consider as the explanatory variab
-
-\subsection{Definition of a close win - by price}
-In the main section, we defined close wins by price as those in which the winning contractor submitted a bid that was not more than 0.05\% below the runner up and where the wiight of the price component in the final score was 70\% or more. Now, we sensibilize our main coefficient to different values of these parameter.
-
- We first sensibilize the threshold of bid differences. The plot in  \ref{fig:close_wins_robust} displays the coefficient of interest in the IV specification as we vary the threshold for a close win. The specifications consider linear effect of experience and fixed effects by period. It can be seen that results are robust to a range of the threshold for considering a win as a close wins. Note that the results remain significant across the different values of the parameters, even when we employ our lower bound for the threshold(0.01\%) where we have less close wins. As expected, the standard error increases towards this bound and decreases towards less stringent definitions of close wins (because of the increase in power in the instrument). Finally, note across that all confidence intervals at 95\% remain within 0.0180 and 0.0275.
+We first sensibilize the threshold of bid differences for the linear estimate of experience in the rolling experience measure. The plot in Figure \ref{fig:close_wins_robust} displays the coefficient of interest as we vary the threshold for a close win.  For narrow thresholds below .4\%, we obtain non statistically significant coefficients. One explanation is that the results are not robust. However, the reduction in sample size for the instrument is significant below .5\%, since this percentage is already at around the 15th percentile of bid differences in the sample.
 
  \begin{figure}[H]
          \centering
@@ -307,8 +250,23 @@ In the main section, we defined close wins by price as those in which the winnin
   {\justifying\footnotesize\underline{Note:} The plot shows the coefficient on experience as in the specification of Panel (5) of table \ref{tab:table_exp_1}, that is, the dependent variable is the share of contracts won in period $t$ and the dependent variable is linear experience, i.e. number of contracts won in period $(t-1)$, instrumented with close wins in period $(t-1)$. The $x$-axis shows how the coefficient varies with the threshold for what is considered a close win.\par}
  \end{figure}
 
-Now we examine more stringent requirements for the weight of the price component in the total score. 
+Now we examine the parameter for the weight of the price component in the total score. We replicate our main IV-price results but consider a threshold of 60\%,70\%, and 80\% of the minimum weight of the price component. Table \ref{tab:robust_weightprice_outcomes} shows the results. At 60\%, most results remain significant, but beyond 80\% almost all results are not. Since 60\% is the 80th percentile of the score weight across contracts, we have again a sample size problem for the instrument when there are higher requirements for thethreshold of the price weight.
 
+\input{C:/repos/learn-doing/thesis/tables/robust_weightprice_outcomes.txt}
+
+\subsection{Definition of a close win - Rank IVs}
+
+We sensibilize our IV-Rank strategy by choosing different thresholds for the difference between the highest and lowest bidder (bandwidth) and different values for the points awarded for a win. Recall that an auction is labeled as close in the main specification if the difference in rank between the highest and lowest ranked in the auction is less than 3\%. Also, recall that we award 25 points per win.
+
+We analyze bandwidths of 1\%, 2\%, 3\% and 4\%. Regarding points for a win, we analyze as alternatives 10, 15, 25, 35 and 50 points. Again, to preserve stability points substracted for a loss are approximately a third of the points awarded for a win.
+
+Given the wider amount of possible combinations we show the results in graphic form in Figure \ref{fig:plot_robustness_rank} and only consider the first type of experience computation (rolling). The results show that IV estimates are robust to all the alternatives considered. Considering a lower thresholds for the difference in ranks does increase the standard errors, altough estimates do not seem to vary much, staying close to 0.05 for the binary indicator and to 0.006 for the linear coefficient.
+
+\begin{figure}[H]
+  \includegraphics[scale=0.65]{plot_robustness_rank.png}
+  \caption{Robustness analysis for parameters in the IV-Rank strategy}
+  \label{fig:plot_robustness_rank}
+\end{figure}
 
 \chapter{Mechanisms}
 
@@ -335,6 +293,7 @@ Now we examine more stringent requirements for the weight of the price component
 
      \newpage
      \input{C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt}
+
 
 
      \section{Experience and Type of Project}

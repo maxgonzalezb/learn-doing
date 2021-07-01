@@ -43,8 +43,8 @@ plotDisc.allwins.exp2<-ggplot(merged.wins.means.exp2,aes(x=(annualwinspre),y=pro
   ggtitle('All Wins')
 plotDisc.allwins.exp2
 
-plotDisc.closewins.price.exp2<-ggplot(merged.wins.close.price.means.exp2,aes(x=(annualwinspre_close),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
-  geom_errorbar(aes(x=annualwinspre_close,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
+plotDisc.closewins.price.exp2<-ggplot(merged.wins.close.price.means.exp2,aes(x=(winspre_close),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
+  geom_errorbar(aes(x=winspre_close,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
   theme_bw()+xlab('Annualized close (by price) contracts won up to t')+ylab('Win probability on [t,t+2]')+
   theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
@@ -119,3 +119,33 @@ regression.output.2=capture.output({stargazer(lm.16,lm.22, lm.27 , lm.17, lm.23,
 
 createStargazerTxt(regression.output.2,'table_ols_exp2.txt')
 
+
+#Plot
+x=seq(0,10,length.out = 1000)
+newdata=data.frame(winspre=x,a=x^2,idperiodpost='2019-01-04/2021-01-04')%>%rename('I(winspre^2)'='a')
+p1=predict.lm(object = lm.4,type = 'response',interval = 'confidence' ,newdata = newdata)%>%as.data.frame()%>%mutate(x=x,type='binary')%>%pivot_longer(cols = c(fit,lwr,upr))
+p2=predict.lm(object = lm.5,type = 'response',interval = 'confidence' ,newdata = newdata)%>%as.data.frame()%>%mutate(x=x,type='linear')%>%pivot_longer(cols = c(fit,lwr,upr))
+p3=predict.lm(object = lm.6,type = 'response',interval = 'confidence' ,newdata = newdata)%>%as.data.frame()%>%mutate(x=x,type='quadratic')%>%pivot_longer(cols = c(fit,lwr,upr))
+exp1_lastperiod=rbind(p1,p2,p3)%>%mutate(estimate=ifelse(name=='fit','estimate','confidence int.'))%>%mutate(alpha=ifelse(name=='fit',1,0.5))
+plot_fit=ggplot(exp1_lastperiod,aes(x=x,y=value,color=type,linetype=estimate,group=interaction(type, estimate,name)))+
+  geom_line(lwd=0.7)+theme_bw()+scale_x_continuous(breaks = seq(0,11,1),limits = c(0,10))+xlab('Experience')+ylab('Share of contracts won')+
+  labs(linetype='',color='')+
+  scale_linetype_manual(values=c("dotted", "solid"))
+png(filename="C:\\repos\\learn-doing\\R\\Output\\fit_sample.png",width = 7, height = 3.5,
+    units = "in",res=1000)
+plot_fit
+dev.off()
+
+
+#####Robustnesss
+p1<-ggplot(robustness_close_wins,aes(x=thresholdClose,y=estimate))+geom_line(color='darkblue',lwd=1)+geom_vline(xintercept = 0.005,color='red')+#geom_point(color='darkblue')+
+  geom_line(aes(y=lower95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+geom_line(aes(y=upper95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+ylim(-0.01,0.02)+theme_bw()+
+  xlab('Threshold for a close win (Percentage)')+ylab('Experience Estimate')+annotate(geom="text", x=0.0125, y=0.012, label="Main specification threshold",
+                                                                                      color="red")+
+  annotate(geom="text", x=0.025, y=0.023, label="Estimate of experience",
+           color="blue")
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\robustness_threshold.png",width = 5, height = 3.2,
+    units = "in",res=1000)
+p1
+dev.off()

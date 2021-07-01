@@ -1,0 +1,17 @@
+\begin{table}[!h]
+
+\caption{\label{tab:closewins_alt1_desc}Comparison between close and non-close wins, by price}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{ccccc}
+\toprule
+Variable & Mean (Not close win) & Mean (Close win) & Sd (Not close win) & Sd (Close win)\\
+\midrule
+Bid (all) & 1.59e+10 & 2.28e+08 & 5.55e+12 & 8.06e+08\\
+Winning Bid & 2.65e+08 & 1.83e+08 & 2.5e+09 & 7.16e+08\\
+Difference between 1st bid and 2nd (\%) & 0.0676 & 0.00229 & 0.0876 & 0.00155\\
+Number of Bidders per Contract & 3.23 & 3.85 & 2.27 & 2.22\\
+Year & 2016 & 2015 & 3.01 & 2.97\\
+\bottomrule
+\end{tabular}}
+\end{table}

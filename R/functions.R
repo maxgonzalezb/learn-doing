@@ -15,6 +15,7 @@ library(stargazer)
 library(purrr)
 library(broom)
 library(scales)
+library(cowplot)
 
 
 CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500){
@@ -289,7 +290,7 @@ return(final.statistics)
   
 }
 
-createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.005,filterReqExp=F){
+createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.005,filterReqExp=F,weightPrice=50){
   cutoff0=ymd(min(df$FechaInicio)) + years(start)
   cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
   cutoff2=cutoff1 + years(split2)
@@ -301,8 +302,10 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   }
   #Create winning statistics of each period
   ##Create Winning Statistics for first period
-  df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
-  df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],
+                                                                                                      islowestBid = ((abs(montoOferta[1] - montoOferta[winner == 'Seleccionada'][1])/montoOferta[1])<=thresholdClose))
+  df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
+                                                                 firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(df.period1$year)-firstyearwin,altannualwins=wins/(life))
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
   
   
@@ -316,11 +319,11 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   
   
    ##Calculate narrow victories
-  df.period1.difs=df.period1%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes))%>%left_join(df.difs)
+  df.period1.difs=df.period1%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes,percPrice)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes),percPrice=max(percPrice))%>%left_join(df.difs)
   df.period2.difs=df.period2%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes,percPrice)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes),percPrice=max(percPrice))%>%left_join(df.difs)
   #df.period1.difs=df.period1%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(RutProveedor=RutProveedor[winner=='Seleccionada'],NumeroOferentes=max(NumeroOferentes))
-  df.period1.difs.close=(df.period1.difs)%>%filter(dif<=thresholdClose&!is.na(dif))
-  df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=70*as.numeric(filterReqExp))
+  df.period1.difs.close=(df.period1.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=weightPrice*as.numeric(filterReqExp)&islowestBid)
+  df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=weightPrice*as.numeric(filterReqExp))
 
   df.period1.wins.close=df.period1.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
   df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspost_close=n)
@@ -335,7 +338,13 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   
 }
 
-createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005,ranks=FALSE,filterReqExp=F,thresholdCloseRank=1.08){
+createMultiPeriodDataset<-function(df,start,split1,split2,thresholdClose=0.005,ranks=FALSE,filterReqExp=F,thresholdCloseRank=1.08,weightPrice=50){
+#Drop two years if strategy is ranks
+if(ranks==TRUE){
+fechamin.stability=ymd(min(df$FechaInicio))+years(2)
+df=df%>%filter(FechaInicio>=fechamin.stability)
+}
+  
 i=0
 maxcutoff=ymd(max(df$FechaInicio))
 cutoff2=ymd(min(df$FechaInicio))
@@ -344,7 +353,7 @@ while (cutoff2<=maxcutoff) {
   #Do stuff
   newstart=start+i
   if(ranks==FALSE){ 
-  two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
+  two.period.mergedwins=createTwoPeriodDataset(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp,weightPrice=weightPrice)
   }
   if(ranks==TRUE){
   two.period.mergedwins=createTwoPeriodDataset_ranks(df,start = newstart, split1 =split1,split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp,thresholdCloseRank = thresholdCloseRank)
@@ -365,7 +374,7 @@ while (cutoff2<=maxcutoff) {
 }
 
 
-createAnnualizedWins<-function(df,start,split1,split2,filterReqExp = T,ranks=F,thresholdClose=0.005,thresholdCloseRank = 1.03){
+createAnnualizedWins<-function(df,start,split1,split2,filterReqExp = T,ranks=F,thresholdClose=0.005,thresholdCloseRank = 1.03,weightPrice=50){
 i=0
 maxcutoff=ymd(max(df$FechaInicio))
 cutoff2=ymd(min(df$FechaInicio))
@@ -382,7 +391,7 @@ while (cutoff2<=maxcutoff) {
     
     }
   if(ranks==FALSE){
-    two.period.mergedwins=createTwoPeriodDataset(df,start = start, split1 =(i+1),split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp)
+    two.period.mergedwins=createTwoPeriodDataset(df,start = start, split1 =(i+1),split2=split2,thresholdClose= thresholdClose,filterReqExp=filterReqExp,weightPrice=weightPrice)
   two.period.mergedwins=two.period.mergedwins%>%mutate(annualwinspre=winspre/(i+1),
                                                        annualwinspre_close=winspre_close/(i+1))
   }
