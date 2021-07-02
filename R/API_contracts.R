@@ -86,11 +86,13 @@ listaCriteria.clean=listaCriteria%>%mutate(item_clean=tolower(Ítem))%>%
                                                     mutate(item_clean=gsub("\\t", "", item_clean))%>%
                                                     mutate(hasexp=grepl( 'exp', item_clean, fixed = TRUE))%>%
                                                     mutate(weight=gsub(x=Ponderación,replacement = "",pattern = "%",fixed = T)%>%as.numeric())%>%
-                                                    mutate(hasPrecio=(grepl( 'precio', item_clean, fixed = TRUE)|grepl('oferta economica', item_clean, fixed = TRUE)|grepl('valor de la oferta', item_clean, fixed = TRUE)))
+                                                    mutate(hasPrecio=(grepl( 'precio', item_clean, fixed = TRUE)|grepl('oferta economica', item_clean, fixed = TRUE)|grepl('valor de la oferta', item_clean, fixed = TRUE)))%>%
+                                                    mutate(hasQuality=(grepl( 'calidad', item_clean, fixed = TRUE)|grepl('tecnica', item_clean, fixed = TRUE)))
 
 
-listaContractExp=listaCriteria.clean%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0),percExp=sum(weight[hasexp==1]),percPrice=sum(weight[hasPrecio==1]))
+listaContractExp=listaCriteria.clean%>%group_by(id)%>%dplyr::summarise(hasExp=(sum(hasexp)>0),percExp=sum(weight[hasexp==1]),percPrice=sum(weight[hasPrecio==1]),percQuality=sum(weight[hasQuality==1]))
 ggplot(listaContractExp,aes(x=as.numeric(percPrice)))+geom_histogram(binwidth = 10)+xlim(0,100)
+ggplot(listaContractExp,aes(x=as.numeric(percQuality)))+geom_histogram(binwidth = 10)+xlim(0,100)
 
 types.factors=listaCriteria.clean%>%group_by(item_clean)%>%count()%>%arrange(-n)
 

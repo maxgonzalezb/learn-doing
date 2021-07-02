@@ -7,6 +7,7 @@ head(directory.simplified$rutclean)
 #Create description of firms in file
 df.merge=df%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
   mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(FechaInicio))%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))%>%filter(!is.na(tramo))
+
 df.summary.categories=df.merge%>%group_by(RutProveedor_clean)%>%summarise(totsales=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'])/length(unique(anocomercial)),numOfertas=length(Codigo)/length(unique(anocomercial)),tramo=max(tramo))%>%
   group_by(tramo)%>%summarise(numfirms=length(RutProveedor_clean),totsales.average=(mean(totsales,na.rm = T))/29000,numOffertas.mean=mean(numOfertas))
 colnames(df.summary.categories)<-c('Category','Sample Number of Firms','Sample Average Annual Sales (CLP UF)','Average Number of Annual Offers')
@@ -19,12 +20,14 @@ split1=2
 split2=2
 #merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
 merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,filterReqExp = T )
+merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2,filterReqExp = T )
 
 #Create merge with size dataset
 merged.wins.juridicas=merged.wins%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
   mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(idperiodpost))
 merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
-#merged.wins.juridicas=merged.wins.juridicas%>%filter(!is.na(tramo)&tramo>1)%>%mutate(tramo.group=tramo)
+merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=ifelse(is.na(tramo),'-1',tramo))%>%mutate(tramo.group=tramo)%>%
+          mutate(rankercentile=ntile(ntrabajadores,3))
 
 #Compare juridical-non juridical firms
 uk=merged.wins.juridicas%>%group_by(tramo,winspre)%>%count()
@@ -35,11 +38,11 @@ ggplot(merged.wins.juridicas,aes(x=(winspre+1)))+geom_histogram()+xlim(0,10)+sca
   scale_x_continuous(breaks = c(0,5,8),limits = c(0,10))+theme_bw()
 
 #Investigate separately by sizes
-tramos=unique(merged.wins.juridicas$tramo.group)
-results.ols.binary=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~((winspre>0))+idperiodpost))%>%tidy()%>%
+tramos=unique(merged.wins.juridicas$tramo)
+results.ols.binary=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~(winspre>0)+idperiodpost))%>%tidy()%>%
                                       filter(term=='winspre > 0TRUE')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='Linear Experience')%>%arrange(tramo)
 results.iv.binary=tramos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
-                                     filter(term=='winspre > 0TRUE')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='Linear Experience')%>%arrange(tramo)
+                                     filter(term=='winspre > 0TRUE')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='Binary Experience')%>%arrange(tramo)
 
 
 results.ols.linear=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~(winspre)+idperiodpost))%>%
@@ -48,6 +51,27 @@ results.ols.linear=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>
 
 results.iv.linear=tramos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost))%>%tidy()%>%
                                      filter(term=='winspre')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='IV')%>%arrange(tramo)%>%mutate(significance=ifelse(p.value<0.05,yes='Yes','No'))
+
+merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( tramo, breaks = c(-1,1,2,4,6,7,9,14),right=F))
+merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( as.numeric(tramo), breaks = c(-1,1,2,4,6,9,14),right=F))
+merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( as.numeric(tramo), breaks = c(-1,1,2,9,14),right=F))
+
+grupos=unique(merged.wins.juridicas$bins_tramo)
+results.ols.binary=grupos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(bins_tramo==x),formula=(probWinpost~(winspre>0)+idperiodpost))%>%tidy()%>%
+                                      filter(term=='winspre > 0TRUE')%>%mutate(bins_tramo=x,n=nrow(merged.wins.juridicas%>%filter(bins_tramo==x))))%>%mutate(model='Linear Experience')%>%arrange(bins_tramo)
+    results.iv.binary=grupos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(bins_tramo==x),formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
+                                     filter(term=='winspre > 0TRUE')%>%mutate(bins_tramo=x,n=nrow(merged.wins.juridicas%>%filter(bins_tramo==x))))%>%mutate(model='Binary Experience')%>%arrange(bins_tramo)
+
+grupos=seq_len(3)
+  results.ols.binary=grupos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(rankercentile==x),formula=(probWinpost~(winspre>0)+idperiodpost))%>%tidy()%>%
+                                          filter(term=='winspre > 0TRUE')%>%mutate(rankercentile=x,n=nrow(merged.wins.juridicas%>%filter(rankercentile==x))))%>%mutate(model='Linear Experience')%>%arrange(rankercentile)
+results.iv.binary=grupos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(rankercentile==x),formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
+                                         filter(term=='winspre > 0TRUE')%>%mutate(rankercentile=x,n=nrow(merged.wins.juridicas%>%filter(rankercentile==x))))%>%mutate(model='Binary Experience')%>%arrange(rankercentile)
+results.ols.binary
+results.iv.binary
+merged.wins.juridicas%>%nrow()
+summary(merged.wins$sizerankpre)
+
 
 final.results=results.ols.linear%>%rbind(results.iv.linear)%>%select(estimate,p.value,tramo,n,model,significance)
 plotsize=ggplot(final.results,aes(x=tramo,y=estimate,fill=significance))+geom_bar(stat = 'identity',position = 'dodge')+facet_wrap(~factor(model,levels=c('OLS','IV')))+
@@ -66,7 +90,6 @@ merged.wins.juridicas=merged.wins%>%mutate(RutProveedor_clean=substr(RutProveedo
   mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(idperiodpost))
 merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
 #Add cuts 
-merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( tramo, breaks = c(1,2,4,6,7,9,14),right=F))
 merged.wins.juridicas$bins_tramo%>%head()
   
 merged.wins.juridicas=merged.wins.juridicas%>%mutate(group=paste0("Group ",ifelse(is.na(tramo),yes='00',no=as.character(bins_tramo))))
