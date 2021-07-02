@@ -1,3 +1,12 @@
+df.indiv=df
+
+df.lifes=df%>%mutate(WinContr=winner=='Seleccionada')%>%group_by(RutProveedor)%>%arrange(FechaInicio)%>%mutate(firstyear=min(year),exp=max(cumsum(WinContr)-1,0),exp_close=max(cumsum(isClose)-1,0))%>%
+  mutate(indExp=as.numeric(exp>0),indExpClose=as.numeric(exp_close>0))%>%mutate(annualexp=exp/(year-firstyear+1),annualexp_close=exp_close/(year-firstyear+1),life=(year-firstyear+1))%>%
+  select(RutProveedor, Codigo,firstyear,life,year)
+
+df.lifes=df.lifes%>%filter(firstyear!=2010)%>%group_by(RutProveedor,year)%>%slice_head(n=1)
+df.lifes%>%arrange(RutProveedor)
+
 ## Effect of firm size
 load(file='C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')                           
 load('C:\\repos\\learn-doing\\data\\directorySimplifedDB.Rdata')
@@ -25,10 +34,14 @@ merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2,
 #Create merge with size dataset
 merged.wins.juridicas=merged.wins%>%mutate(RutProveedor_clean=substr(RutProveedor,1,(nchar(as.character(RutProveedor))-2)))%>%mutate(RutProveedor_clean=gsub(RutProveedor_clean,pattern = '\\.',replacement=''))%>%
   mutate(RutProveedor_clean=as.integer(RutProveedor_clean))%>%mutate(anocomercial=year(idperiodpost))
-merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))
-merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=ifelse(is.na(tramo),'-1',tramo))%>%mutate(tramo.group=tramo)%>%
-          mutate(rankercentile=ntile(ntrabajadores,3))
 
+merged.wins.juridicas=merged.wins.juridicas%>%left_join(directory.simplified,by = c('RutProveedor_clean'='rutcontratista','anocomercial'='ano'))%>%
+  select(-life)%>%left_join(df.lifes,by = c('RutProveedor'='RutProveedor','anocomercial'='year'))
+
+merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=ifelse(is.na(tramo),'-1',tramo))%>%mutate(tramo.group=tramo)%>%
+          mutate(rankercentile=ntile(ntrabajadores,4))%>%mutate( bins_tramo = cut( as.numeric(tramo), breaks = c(-1,1,2,9,14),right=F))
+%>%filter(life<=4&!is.na(firstyearwin)&firstyearwin>=2011)
+nrow(merged.wins.juridicas)
 #Compare juridical-non juridical firms
 uk=merged.wins.juridicas%>%group_by(tramo,winspre)%>%count()
 ggplot(merged.wins.juridicas,aes(x=winspre))+geom_density()+facet_grid(~tramo)+scale_y_log10()
@@ -43,7 +56,8 @@ results.ols.binary=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>
                                       filter(term=='winspre > 0TRUE')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='Linear Experience')%>%arrange(tramo)
 results.iv.binary=tramos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
                                      filter(term=='winspre > 0TRUE')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='Binary Experience')%>%arrange(tramo)
-
+results.ols.binary
+results.iv.binary
 
 results.ols.linear=tramos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(tramo.group==x),formula=(probWinpost~(winspre)+idperiodpost))%>%
                                       coeftest(.,vcov = vcovHC(., type = "HC1"))%>%tidy()%>%filter(term=='winspre')%>%mutate(tramo=x,n=nrow(merged.wins.juridicas%>%filter(tramo.group==x))))%>%mutate(model='OLS')%>%
@@ -54,7 +68,7 @@ results.iv.linear=tramos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas
 
 merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( tramo, breaks = c(-1,1,2,4,6,7,9,14),right=F))
 merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( as.numeric(tramo), breaks = c(-1,1,2,4,6,9,14),right=F))
-merged.wins.juridicas=merged.wins.juridicas%>%mutate( bins_tramo = cut( as.numeric(tramo), breaks = c(-1,1,2,9,14),right=F))
+merged.wins.juridicas=merged.wins.juridicas
 
 grupos=unique(merged.wins.juridicas$bins_tramo)
 results.ols.binary=grupos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(bins_tramo==x),formula=(probWinpost~(winspre>0)+idperiodpost))%>%tidy()%>%
@@ -62,8 +76,8 @@ results.ols.binary=grupos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>
     results.iv.binary=grupos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(bins_tramo==x),formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
                                      filter(term=='winspre > 0TRUE')%>%mutate(bins_tramo=x,n=nrow(merged.wins.juridicas%>%filter(bins_tramo==x))))%>%mutate(model='Binary Experience')%>%arrange(bins_tramo)
 
-grupos=seq_len(3)
-  results.ols.binary=grupos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(rankercentile==x),formula=(probWinpost~(winspre>0)+idperiodpost))%>%tidy()%>%
+grupos=seq_len(4)
+results.ols.binary=grupos%>%map_dfr(function(x) lm(data= merged.wins.juridicas%>%filter(rankercentile==x),formula=(probWinpost~(winspre>0)+idperiodpost))%>%tidy()%>%
                                           filter(term=='winspre > 0TRUE')%>%mutate(rankercentile=x,n=nrow(merged.wins.juridicas%>%filter(rankercentile==x))))%>%mutate(model='Linear Experience')%>%arrange(rankercentile)
 results.iv.binary=grupos%>%map_dfr(function(x) ivreg(data= merged.wins.juridicas%>%filter(rankercentile==x),formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
                                          filter(term=='winspre > 0TRUE')%>%mutate(rankercentile=x,n=nrow(merged.wins.juridicas%>%filter(rankercentile==x))))%>%mutate(model='Binary Experience')%>%arrange(rankercentile)
@@ -96,6 +110,7 @@ merged.wins.juridicas=merged.wins.juridicas%>%mutate(group=paste0("Group ",ifels
 #merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=paste0("Group",tramo))%>%mutate(tramo=gsub(x=tramo,pattern = 'NA',replacement = '00'))
 #merged.wins.juridicas=merged.wins.juridicas%>%mutate(tramo=as.character(sprintf("%02d", as.numeric(tramo))))
 
+merged.wins.juridicas$group=merged.wins.juridicas$bins_tramo
 table(merged.wins.juridicas$bins_tramo)
 table(merged.wins.juridicas$group)
 baseline='Group [7,9)'
@@ -112,7 +127,7 @@ lm.26<-lm(probWinpost~winspre+idperiodpost+winspre*group,data = merged.wins.juri
 robust.lm26<- vcovHC(lm.26, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.26)
 
-lm.27<-ivreg(probWinpost~idperiodpost+(winspre>0)*group|idperiodpost+(winspre_close>0)*group,data = merged.wins.juridicas2)
+lm.27<-ivreg(probWinpost~idperiodpost+(winspre>0)*group|idperiodpost+(winspre_close>0)*group,data = merged.wins.juridicas)
 robust.lm27<- vcovHC(lm.27, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.27)
 

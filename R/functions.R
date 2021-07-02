@@ -17,6 +17,26 @@ library(broom)
 library(scales)
 library(cowplot)
 
+createDifsDf<-function(df,thresholdCLose,thresholdCloseRank,weightPrice){
+  df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
+    arrange(montoOferta) %>%
+    summarise(
+      dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],
+      difWinSecondLow = (montoOferta[winner != 'Seleccionada'][1] - montoOferta[winner == 'Seleccionada'][1]) / montoOferta[winner == 'Seleccionada'][1],
+      lowest = montoOferta[1],
+      second.lowest = montoOferta[2],
+      difWinLowest = (
+        (montoOferta[winner == 'Seleccionada'][1]-montoOferta[1]) / montoOferta[1]
+      ) ,
+      percPrice = max(percPrice),
+      validOffers=length(Codigo),
+    )%>%
+    mutate(isCloseBids=difWinSecondLow<=thresholdClose&difWinLowest<=thresholdClose,
+           isClose=isCloseBids&validOffers>=2&percPrice>=weightPrice)%>%select(Codigo,isClose)
+  return(df.difs)
+}
+
+
 
 CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500){
   
@@ -437,7 +457,11 @@ createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClos
   if(filterReqExp==T){
     df.period2=df.period2%>%filter(hasExp==0)
   }
-  
+ 
+  if(filterReqExp==F){
+    df.period2=df.period2%>%filter(hasExp==1)
+  }
+   
   
   #Create winning statistics of each period
   ##Create Winning Statistics for first period

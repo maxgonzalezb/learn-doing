@@ -166,8 +166,6 @@ table.slices.exp1%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table
 
 
 ##Analyze the close contracts
-
-df.difs
 table.close.contracts = df %>%left_join(df.difs) %>%filter(estadoOferta == 'Aceptada') %>%
   group_by(Codigo) %>% summarise(closePrice = as.numeric(length(Codigo) >=
                                                              2 & (
@@ -540,8 +538,39 @@ colnames(table_robustness_weightprice_o)[1:2]<-c('Experience Computation','Funct
 table_robustness_weightprice_o=create_kable(table_robustness_weightprice_o,caption = 'Robustness analysis for the price weight parameter in the IV Regression by price',label = 'robust_weightprice_outcomes')
 table_robustness_weightprice_o%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_weightprice_outcomes.txt")
 
+#################### 
+# Compare to only Experience Contracts
+####################
 
+start=0
+split1=2
+split2=2
+#merged.wins=createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )%>%left_join(df.names,by = 'RutProveedor')
+merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 ,filterReqExp = F,thresholdClose = 0.005)
+merged.wins=merged.wins%>%mutate(RutProveedor=as.factor(gsub(x=RutProveedor,pattern='\\.',replacement = '')),idperiodpost=as.factor(idperiodpost))%>%
+  mutate(logWinpre=log(winspre+1))
 
+##4
+lm.40<-lm(probWinpost~(winspre>0)+idperiodpost,data = merged.wins)
+robust.lm40<- vcovHC(lm.40, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.40)
+
+##5
+lm.41<-lm(probWinpost~winspre+idperiodpost,data = merged.wins)
+robust.lm41<- vcovHC(lm.41, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.41)
+
+##IV Specs
+##10
+lm.42<-ivreg(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost,data=merged.wins)
+robust.lm42<- vcovHC(lm.42, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.42)
+
+##11
+lm.43<-ivreg(probWinpost~(winspre)+idperiodpost|(winspre_close+idperiodpost),data=merged.wins)
+robust.lm43<- vcovHC(lm.43, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.43)
+coeftest(lm.43,vcov = vcovHC(lm.43, type = "HC1"))%>%tidy()
 
 
 

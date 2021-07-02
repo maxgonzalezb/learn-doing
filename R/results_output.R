@@ -1,4 +1,5 @@
 library(cowplot)
+library(stringr)
 #####################
 # Graphic Outputs
 #####################
@@ -148,4 +149,24 @@ p1<-ggplot(robustness_close_wins,aes(x=thresholdClose,y=estimate))+geom_line(col
 png(filename="C:\\repos\\learn-doing\\thesis\\figures\\robustness_threshold.png",width = 5, height = 3.2,
     units = "in",res=1000)
 p1
+dev.off()
+
+######## Comparison types
+a=coeftest(lm.10,vcov = vcovHC(lm.10, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV',Contracts='Does Not Consider Experience in Award Score')
+c=coeftest(lm.42,vcov = vcovHC(lm.42, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV',Contracts='Considers Experience in Award Score')
+b=coeftest(lm.11,vcov = vcovHC(lm.11, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV',Contracts='Does Not Consider Experience in Award Score')
+d=coeftest(lm.43,vcov = vcovHC(lm.43, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV',Contracts='Considers Experience in Award Score')
+comparison.types=rbind(a,b,c,d)%>%filter(term%in%c('winspre > 0TRUE','winspre'))
+comparison.types
+
+plot.compexp.1<-ggplot(comparison.types, aes(x=(Contracts),y=estimate))+
+  geom_point(color='red')+facet_wrap(~Model,nrow = 1)+ylim(0,0.16)+
+  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')+scale_y_continuous(breaks = seq(0,.16,by=0.01))+
+  xlab('')+theme(axis.text.x = element_text(size=9,color = 'black'),strip.text.x =   element_text(size=12),panel.grid.minor = element_blank())+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 15))
+plot.compexp.1
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\comparison_considers_experience.png",width = 6.5, height = 3.2,
+    units = "in",res=1000)
+plot.compexp.1
 dev.off()

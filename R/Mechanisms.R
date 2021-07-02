@@ -1,7 +1,8 @@
-df.indiv=df%>%mutate(WinContr=winner=='Seleccionada')
+## Analyze possible mechanisms to explain the gained advantages
 
-df.indiv.exp=df.indiv%>%left_join(df.difs)%>%group_by(RutProveedor)%>%arrange(FechaInicio)%>%mutate(firstyear=min(year),exp=max(cumsum(WinContr)-1,0),exp_close=max(cumsum(isClose2)-1,0))%>%
-                      mutate(indExp=as.numeric(exp>0),indExpClose=as.numeric(exp_close>0))%>%mutate(exp=exp/(year-firstyear+1),exp_close=exp_close/(year-firstyear+1))
+df.indiv=df%>%mutate(WinContr=as.numeric(winner=='Seleccionada'))
+df.indiv.exp=df.indiv%>%left_join(df.difs)%>%group_by(RutProveedor)%>%arrange(FechaInicio)%>%mutate(firstyear=min(year),exp=max(cumsum(WinContr)-1,0),exp_close=max(cumsum(as.numeric(isClose))-1,0))%>%
+                      mutate(indExp=as.numeric(exp>0),indExpClose=as.numeric(exp_close>0))%>%mutate(annualexp=exp/(year-firstyear+1),annualexp_close=exp_close/(year-firstyear+1),life=(year-firstyear+1))
 
 #Exploratory analysis
 
@@ -25,30 +26,56 @@ df.indiv.exp.comp%>%group_by(percentileQuality)%>%summarise(of=mean(NumeroOferen
 ###Create indicators for firms with and without experience at the begginings of their careers.
 ##Segment by different types of contract variables
 #Show results with standard error.
+sample.df.offers=df.indiv.exp%>%filter(hasExp==FALSE&MCA_MPO<=5)#%>%filter(firstyear!=2011&life<=3)#%>%slice_sample(n=5000)%>%
+sample.df=df.indiv.exp%>%filter(hasExp==FALSE&year>=2011)#%>%filter(firstyear!=2011&life<=3)#%>%slice_sample(n=5000)%>%
+nrow(sample.df)
+####
+#Price and Quality
+####
 
-sample.df=df.indiv.exp%>%filter(hasExp==FALSE)#%>%slice_sample(n=5000)%>%
-lm.29=lm(WinContr~as.factor(RegionUnidad)+(indExp>0)*percPrice+(indExp>0):percQuality+as.factor(year)+percQuality, data=sample.df)
+lm.29=lm(WinContr~(indExp>0)*percPrice+(indExp>0):percQuality+as.factor(year)+percQuality, data=sample.df)
 summary(lm.29)
-lm.30=lm(WinContr~as.factor(RegionUnidad)+(exp)*percPrice+exp:percQuality+as.factor(year)+percQuality, data=sample.df)
+
+lm.30=lm(WinContr~(exp)*percPrice+exp:percQuality+as.factor(year)+percQuality, data=sample.df)
 summary(lm.30)
 
-lm.31=ivreg(WinContr~(exp>0)*percPrice+(exp>0):percQuality+as.factor(year)+percQuality|
-              as.factor(RegionUnidad)+(exp_close>0)*percPrice+(exp_close>0):percQuality+as.factor(year)+percQuality, data=sample.df)
+
+lm.31=ivreg(WinContr~(exp>0)*percPrice+(exp>0):percQuality+as.factor(year)+percQuality+NumeroOferentes|
+             (exp_close>0)*percPrice+(exp_close>0):percQuality+as.factor(year)+percQuality+NumeroOferentes, data=sample.df)
 summary(lm.31)
-lm.32=ivreg(WinContr~(exp)*percPrice+exp:percQuality+as.factor(year)+percQuality|
-           as.factor(RegionUnidad)+exp_close*percPrice+exp_close:percQuality+as.factor(year)+percQuality, data=sample.df)
+
+lm.32=ivreg(as.numeric(WinContr)~(exp)*percPrice+(exp):percQuality+as.factor(year)+percQuality+NumeroOferentes|
+           exp_close*percPrice+exp_close:percQuality+as.factor(year)+percQuality+NumeroOferentes, data=sample.df)
 summary(lm.32)
 
-lm.33=ivreg(montoOferta~(exp)+as.factor(year)+as.factor(Codigo)+as.factor(RegionUnidad)|
-              (exp_close)+as.factor(year)+as.factor(Codigo)+as.factor(RegionUnidad), data=sample.df)
+
+
+
+
+
+
+lm.32.2=ivreg(as.numeric(WinContr)~(annualexp)*percPrice+(annualexp):percQuality+as.factor(year)+percQuality+NumeroOferentes|
+                annualexp_close*percPrice+annualexp_close:percQuality+as.factor(year)+percQuality+NumeroOferentes, data=sample.df)
+summary(lm.32.2)
+
+a=ivreg(WinContr~(exp>0)+as.factor(year)|(exp_close>0)+as.factor(year),data=sample.df)
+summary(a)
+
+####
+#Price of the Bids
+####
+
+sample.df.2=sample.df%>%group_by(RutProveedor)%>%mutate(n=length(Codigo))%>%filter(n>=3)
+
+lm.33=lm(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad, data=sample.df.offers)
 summary(lm.33)
 
-sample.df$montoOferta
+lm.34=ivreg(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad|
+              (exp_close>0)+as.factor(year)+RegionUnidad, data=sample.df.offers)
+summary(lm.34)
+
+lm.35=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad|
+              (exp_close)+as.factor(year)+RegionUnidad, data=sample.df.offers)
+summary(lm.35)
 
 
-summary(lm.32)
-
-sample.df$exp_close%>%table()
-
-
-sample.df$percQuality+1
