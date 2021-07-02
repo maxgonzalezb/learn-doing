@@ -1,10 +1,12 @@
-  df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
+  
+createDifsDf<-function(df,thresholdCLose,thresholdCloseRank,weightPrice){
+df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
   arrange(montoOferta) %>%
   summarise(
     dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],
     difWinSecondLow = (montoOferta[winner != 'Seleccionada'][1] - montoOferta[winner == 'Seleccionada'][1]) / montoOferta[winner == 'Seleccionada'][1],
-    ganador = montoOferta[1],
-    segundo = montoOferta[2],
+    lowest = montoOferta[1],
+    second.lowest = montoOferta[2],
     difWinLowest = (
       (montoOferta[winner == 'Seleccionada'][1]-montoOferta[1]) / montoOferta[1]
     ) ,
@@ -12,7 +14,10 @@
     validOffers=length(Codigo),
   )%>%
   mutate(isCloseBids=difWinSecondLow<=thresholdClose&difWinLowest<=thresholdClose,
-         isClose2=isCloseBids&validOffers>=2&percPrice>=weightPrice)%>%select(Codigo,isClose2)
+         isClose=isCloseBids&validOffers>=2&percPrice>=weightPrice)%>%select(Codigo,isClose)
+return(df.difs)
+}
+
 
 
 

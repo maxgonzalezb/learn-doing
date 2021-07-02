@@ -302,8 +302,12 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   }
   #Create winning statistics of each period
   ##Create Winning Statistics for first period
-  df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],
-                                                                                                      islowestBid = ((abs(montoOferta[1] - montoOferta[winner == 'Seleccionada'][1])/montoOferta[1])<=thresholdClose))
+  #df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],
+  #                                                                                                    islowestBid = ((abs(montoOferta[1] - montoOferta[winner == 'Seleccionada'][1])/montoOferta[1])<=thresholdClose))
+  
+  
+  df.difs=createDifsDf(df,thresholdCLose = thresholdCLose,thresholdCloseRank = NA,weightPrice = weightPrice)
+  
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
                                                                  firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(max(df.period1$year)-firstyearwin,1),annualwinspre=wins/(life))
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
@@ -322,8 +326,10 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   df.period1.difs=df.period1%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes,percPrice)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes),percPrice=max(percPrice))%>%left_join(df.difs)
   df.period2.difs=df.period2%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%select(Codigo,RutProveedor,NumeroOferentes,percPrice)%>%summarise(RutProveedor=RutProveedor[1],NumeroOferentes=max(NumeroOferentes),percPrice=max(percPrice))%>%left_join(df.difs)
   #df.period1.difs=df.period1%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(RutProveedor=RutProveedor[winner=='Seleccionada'],NumeroOferentes=max(NumeroOferentes))
-  df.period1.difs.close=(df.period1.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=weightPrice*as.numeric(filterReqExp)&islowestBid)
-  df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=weightPrice*as.numeric(filterReqExp))
+  #df.period1.difs.close=(df.period1.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=weightPrice*as.numeric(filterReqExp)&islowestBid)
+  #df.period2.difs.close=(df.period2.difs)%>%filter(dif<=thresholdClose&!is.na(dif)&percPrice>=weightPrice*as.numeric(filterReqExp))
+  df.period1.difs.close=(df.period1.difs)%>%filter(isClose)
+  df.period2.difs.close=(df.period2.difs)%>%filter(isClose)
 
   df.period1.wins.close=df.period1.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspre_close=n)
   df.period2.wins.close=df.period2.difs.close%>%group_by(RutProveedor)%>%count()%>%rename(winspost_close=n)
@@ -331,9 +337,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   merged.wins=df.period2.wins%>%left_join(df.period1.wins,suffix = c('post','pre'),by = 'RutProveedor')%>%mutate_if(is.numeric, replace_na, 0)%>%filter(ofertaspost >0)%>%
     mutate(winsprebin=as.numeric(winspre>0))%>%left_join(df.period1.wins.close,by = 'RutProveedor')%>%mutate(winspre_close= replace_na(winspre_close,0))
   
-  
-  
-  return(merged.wins)
+   return(merged.wins)
   
   
 }

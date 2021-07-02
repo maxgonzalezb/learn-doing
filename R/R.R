@@ -70,14 +70,7 @@ post.summarybids=generateDfBidsSummary(bids = df)
 post.summarybids%>%create_kable(caption = 'Sample Descriptive Statistics')%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\sample_descriptive.txt")
 
 #Create Firm datasets
-df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
-  arrange(montoOferta) %>% summarise(
-    dif = (montoOferta[2] - montoOferta[1]) / montoOferta[2],
-    menorOferta =
-      montoOferta[1],
-    segundaMenorOferta = montoOferta[2],
-   islowestBid = as.numeric(RutProveedor[1] == RutProveedor[winner == 'Seleccionada'][1]))
-nrow(df.difs)
+df.difs = createDifsDf(df,thresholdCLose = 0.005, weightPrice = 50,thresholdCloseRank = NA)
 df.wins = df %>% group_by(RutProveedor) %>% summarise(
   ofertas = length(winner),
   wins = length(winner[winner == 'Seleccionada']),
@@ -186,10 +179,10 @@ table.close.contracts = df %>%left_join(df.difs) %>%filter(estadoOferta == 'Acep
                                                              )))
 table(table.close.contracts$closePrice)
 
-comparison.1 = df%>%left_join(table.close.contracts) %>% filter(closePrice == 0) %>% generateDfBidsSummary() %>%
+comparison.1 = df%>%left_join(df.difs) %>% filter(isClose == F) %>% generateDfBidsSummary() %>%
   dplyr::select('mean', 'std') %>% rename('mean_notClose' = 'mean', 'std_notClose' =
                                             'std')
-comparison.2 =  df%>%left_join(table.close.contracts) %>% filter(closePrice == 1) %>% generateDfBidsSummary() %>%
+comparison.2 =  df%>%left_join(df.difs) %>% filter(isClose == T) %>% generateDfBidsSummary() %>%
   dplyr::select(name, 'mean', 'std') %>% rename('mean_close' = 'mean', 'std_close' =
                                                   'std') %>% cbind(comparison.1) %>% select(name, mean_notClose, mean_close, std_notClose, std_close)
 colnames(comparison.2) <-
