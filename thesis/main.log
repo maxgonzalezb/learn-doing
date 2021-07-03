@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  2 JUL 2021 15:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  2 JUL 2021 22:08
 entering extended mode
 **./main.tex
 (main.tex
@@ -269,11 +269,7 @@ File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count284
 \l__pdf_internal_box=\box63
 ) (main.aux
-(chapLBD.aux
-
-LaTeX Warning: Label `fig:rankings_times' multiply defined.
-
-))
+(chapMechanisms.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
@@ -290,7 +286,8 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
 LaTeX Font Info:    ... okay on input line 54.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
 LaTeX Font Info:    ... okay on input line 54.
- (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+
+(C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count285
 \scratchdimen=\dimen188
@@ -347,192 +344,52 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-\openout2 = `chapLBD.aux'.
+\openout2 = `chapMechanisms.aux'.
 
- (chapLBD.tex
+
+(chapMechanisms.tex
 Chapter 1.
 [1
 
 
 
-{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}]<<ot1.cmap>><<oml.cmap>><<oms.
-cmap>><<omx.cmap>> [2]
-Underfull \vbox (badness 5460) has occurred while \output is active []
+{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}]
 
- [3]
-<C:/repos/learn-doing/thesis/figures//diagram_experiences.png, id=26, 807.015pt
- x 380.622pt>
-File: C:/repos/learn-doing/thesis/figures//diagram_experiences.png Graphic file
- (type png)
-<use C:/repos/learn-doing/thesis/figures//diagram_experiences.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//diagram_experienc
-es.png  used on input line 80.
-(pdftex.def)             Requested size: 427.71591pt x 201.72868pt.
+LaTeX Warning: Reference `' on page 2 undefined on input line 27.
 
-[4] (C:/repos/learn-doing/thesis/tables/table_slices_exp1.txt)
-(C:/repos/learn-doing/thesis/tables/table_slices_exp2.txt
+[2]<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+LaTeX Warning: Reference `' on page 3 undefined on input line 38.
 
-) [5 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>]
-Underfull \vbox (badness 3312) has occurred while \output is active []
-
- [6]
-Overfull \hbox (1.21962pt too wide) in paragraph at lines 124--125
-[]\T1/cmr/m/n/12 Unfortunately, the pre-vi-ous strat-egy is un-fea-si-ble a wit
-h the data we have avalaible.
- []
-
-
-LaTeX Warning: Reference `tab:table_closewins_alt1_desc' on page 7 undefined on
- input line 129.
-
-(C:/repos/learn-doing/thesis/tables/table_closewins_alt1_desc.txt [7]) [8]
-(C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt)
-<C:/repos/learn-doing/thesis/figures//rankings_times.png, id=49, 469.755pt x 23
-1.264pt>
-File: C:/repos/learn-doing/thesis/figures//rankings_times.png Graphic file (typ
-e png)
-<use C:/repos/learn-doing/thesis/figures//rankings_times.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//rankings_times.pn
-g  used on input line 153.
-(pdftex.def)             Requested size: 446.26472pt x 219.69954pt.
-
-Overfull \hbox (12.64473pt too wide) in paragraph at lines 153--154
-[][] 
- []
-
-[9] [10 <C:/repos/learn-doing/thesis/figures//rankings_times.png>]
-Underfull \vbox (badness 4229) has occurred while \output is active []
-
- [11
-
-]
-<C:/repos/learn-doing/thesis/figures//plotwins_panel.png, id=60, 650.43pt x 542
-.025pt>
-File: C:/repos/learn-doing/thesis/figures//plotwins_panel.png Graphic file (typ
-e png)
-<use C:/repos/learn-doing/thesis/figures//plotwins_panel.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotwins_panel.pn
-g  used on input line 186.
-(pdftex.def)             Requested size: 422.77449pt x 352.31207pt.
-
-[12] [13 <C:/repos/learn-doing/thesis/figures//plotwins_panel.png>]
-(C:/repos/learn-doing/thesis/tables/table_ols_exp1.txt)
-(C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt) [14
-
-]
-<C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png, id=7
-5, 469.755pt x 231.264pt>
-File: C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png 
-Graphic file (type png)
-<use C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//comparison_consid
-ers_experience.png  used on input line 207.
-(pdftex.def)             Requested size: 469.75386pt x 231.26343pt.
-
-Overfull \hbox (36.13387pt too wide) in paragraph at lines 207--208
-[][] 
- []
-
-[15
-
- <C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png>] (C
-:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt) [16]
-<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=83, 361.35pt
- x 231.264pt>
-File: C:/repos/learn-doing/thesis/figures//robustness_threshold.png Graphic fil
-e (type png)
-<use C:/repos/learn-doing/thesis/figures//robustness_threshold.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//robustness_thresh
-old.png  used on input line 256.
-(pdftex.def)             Requested size: 307.14896pt x 196.57532pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17]
-
-LaTeX Warning: Reference `tab:robust_weightprice_outcomes' on page 18 undefined
- on input line 264.
-
-(C:/repos/learn-doing/thesis/tables/robust_weightprice_outcomes.txt) [18 <C:/re
-pos/learn-doing/thesis/figures//robustness_threshold.png>]
-<C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png, id=91, 650.43pt
- x 397.485pt>
-File: C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png Graphic fil
-e (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_robustness_r
-ank.png  used on input line 277.
-(pdftex.def)             Requested size: 422.77449pt x 258.36218pt.
- [19 <C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png>] [20
-
-]
-Chapter 2.
-[21]
-
-LaTeX Warning: Reference `tab:salescategories' on page 22 undefined on input li
-ne 294.
-
-(C:/repos/learn-doing/thesis/tables/table_tax_categories_data.txt)
-
-LaTeX Warning: Reference `fig:sizeestimates' on page 22 undefined on input line
- 299.
-
-
-Underfull \vbox (badness 1521) has occurred while \output is active []
-
- [22]
-[23] (C:/repos/learn-doing/thesis/tables/table_firm_sizes_intercepts.txt)
-[24]
-
-LaTeX Warning: Reference `' on page 25 undefined on input line 315.
-
-<C:/repos/learn-doing/thesis/figures//plotTypes.png, id=112, 578.16pt x 397.485
-pt>
-File: C:/repos/learn-doing/thesis/figures//plotTypes.png Graphic file (type png
-)
-<use C:/repos/learn-doing/thesis/figures//plotTypes.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotTypes.png  us
-ed on input line 326.
-(pdftex.def)             Requested size: 433.61893pt x 298.113pt.
-) [25] [26 <C:/repos/learn-doing/thesis/figures//plotTypes.png>] (main.aux
-(chapLBD.aux))
+(C:/repos/learn-doing/thesis/tables/table_bids_1.txt)) [3] [4] (main.aux
+(chapMechanisms.aux))
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
 
  )
 (\end occurred when \ifx on line 52 was incomplete) 
 Here is how much of TeX's memory you used:
- 5651 strings out of 478826
- 93321 string characters out of 2857130
- 411031 words of memory out of 3000000
- 23407 multiletter control sequences out of 15000+600000
- 415252 words of font info for 52 fonts, out of 8000000 for 9000
+ 5495 strings out of 478826
+ 86786 string characters out of 2857130
+ 394809 words of memory out of 3000000
+ 23304 multiletter control sequences out of 15000+600000
+ 413698 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,11n,117p,3027b,337s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,11n,117p,1626b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Program Files/MiKTeX/fon
-ts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/
-cm-super/cm-super-ts1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pf
-b><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program
- Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/
-public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.p
-fb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Progra
-m Files/MiKTeX/fonts/type1/public/cm-super/sfbx1200.pfb><C:/Program Files/MiKTe
-X/fonts/type1/public/cm-super/sfbx1440.pfb><C:/Program Files/MiKTeX/fonts/type1
-/public/cm-super/sfbx1728.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-su
-per/sfbx2488.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1000.
-pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Progr
-am Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (26 pages, 1620425 bytes).
+ts/enc/dvips/cm-super/cm-super-t1.enc}<C:/Program Files/MiKTeX/fonts/type1/publ
+ic/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program F
+iles/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX/f
+onts/type1/public/cm-super/sfbx1200.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
+blic/cm-super/sfbx1440.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super
+/sfbx1728.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx2488.pfb
+><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Program 
+Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (4 pages, 140819 bytes).
 PDF statistics:
- 176 PDF objects out of 1000 (max. 8388607)
+ 66 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

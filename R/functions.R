@@ -16,6 +16,30 @@ library(purrr)
 library(broom)
 library(scales)
 library(cowplot)
+library(PlayerRatings)
+library(tictoc)
+createHelpElo=function(df){
+  df=df%>%arrange(FechaInicio)  
+  #Create the two auxiliary dataset.
+  ##Create the dataset of 
+  df.ratings.1=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
+    select(-winner)%>%group_by(Codigo)%>%filter(sum(isWinner)>=1&length(Codigo)>=2)%>%mutate(idplayer=paste0('P',seq_len(length(Codigo))))%>%
+    pivot_wider(names_from = idplayer,id_cols = c(Codigo,FechaInicio),values_from=RutProveedor)   
+  
+  ##Create the dataset of
+  df.ratings.2=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
+    select(-winner)%>%group_by(Codigo)%>%filter(sum(isWinner)>=1&length(Codigo)>=2)%>%mutate(idplayer=paste0('P',seq_len(length(Codigo))))%>%
+    pivot_wider(names_from = idplayer,id_cols = c(Codigo,FechaInicio),values_from=isWinner)   
+  
+  #The resulting dataset is smalller because it does not contain single wins(with no opponents)
+  df.rating=df.ratings.1%>%left_join(df.ratings.2,by=c('Codigo'='Codigo','FechaInicio'='FechaInicio'))%>%ungroup%>%
+    arrange(FechaInicio)%>%mutate(time=seq_len(length(FechaInicio)))
+  df.rating.elo=df.rating%>%select(-Codigo,-FechaInicio)%>%select(time, everything())
+  return(df.rating.elo)
+}
+
+
+
 
 createDifsDf<-function(df,thresholdCLose,thresholdCloseRank,weightPrice){
   df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
@@ -330,7 +354,10 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
                                                                  firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(max(df.period1$year)-firstyearwin,1),annualwinspre=wins/(life))
-  df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),
+                                                                  wins=length(winner[winner=='Seleccionada']),
+                                                                  probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
+                                                                  avPriceWeight=mean(percPrice,na.rm=T),avQualityWeight=mean(percQuality,na.rm=T))
   
   
   #Add an ID column

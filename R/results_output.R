@@ -170,3 +170,14 @@ png(filename="C:\\repos\\learn-doing\\thesis\\figures\\comparison_considers_expe
     units = "in",res=1000)
 plot.compexp.1
 dev.off()
+
+#Export the results of bids regressions
+regression.output.bids=capture.output({stargazer(lm.34,lm.35, lm.36 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
+                                              se = list(NULL, c(robust.lm34,robust.lm35,robust.lm35,robust.lm37)),omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
+                                              title="Regression of bid amounts to experience",
+                                              dep.var.labels=c("Standarized Bid"),
+                                              column.labels = c("OLS", "OLS",'IV',"IV"),
+                                              #covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)'),
+                                              add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
+createStargazerTxt(regression.output.bids,'table_bids_1.txt')
+

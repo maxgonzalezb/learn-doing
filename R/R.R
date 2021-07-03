@@ -28,7 +28,7 @@ listaContractExp=read.csv2(file='C:\\repos\\learn-doing\\data\\experience\\Exper
 #skim(df)
 
 #Accepted Offers? Be careful computing statistics, should not eliminate straight away. TODO:desert lics. 
-colnames(df)
+
 #Cleaning
 #df <- read.csv("C:/repos/public-procurement/bids.csv", encoding="CP1252")
 df=df%>%mutate(FechaInicio=as.Date(FechaInicio))%>%mutate(year=year(FechaInicio),MCA_MPO=montoOferta/MontoEstimado)
@@ -68,9 +68,9 @@ df=df%>%filter(!Codigo%in%(df.repetidos$Codigo))
 save(df,file = 'C:\\repos\\learn-doing\\data\\contractData.Rdata')
 post.summarybids=generateDfBidsSummary(bids = df)
 post.summarybids%>%create_kable(caption = 'Sample Descriptive Statistics')%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\sample_descriptive.txt")
+rows1=nrow(df)
 
 #Create Firm datasets
-df.difs = createDifsDf(df,thresholdCLose = 0.005, weightPrice = 50,thresholdCloseRank = NA)
 df.wins = df %>% group_by(RutProveedor) %>% summarise(
   ofertas = length(winner),
   wins = length(winner[winner == 'Seleccionada']),
@@ -90,6 +90,36 @@ create_kable(comparison.2,caption = "Comparison between close and non-close wins
 
 ##Merge with experiece dataset
 df=df%>%left_join(listaContractExp,by=c('CodigoExterno'='id'))
+df.difs = createDifsDf(df,thresholdCLose = 0.005, weightPrice = 50,thresholdCloseRank = NA)
+df=df%>%left_join(df.difs)
+rows2=(nrow(df))
+
+##Create Ranked DF
+df.rating.elo=createHelpElo(df)
+max_players=(df.rating.elo%>%ncol()-1)/2
+n = 10000
+#Important. Set up how much players win/lose with each auction
+base = c(25, rep(-10, max_players - 1))#seq(max_players,1,by = -1)
+tabletimes = df.rating %>% select(FechaInicio, Codigo, time)
+vector = seq_len(nrow(df))
+
+vectorubicacion = df$Codigo %in% tabletimes$Codigo
+winPoints=24
+losePoints=8
+
+df = CreateFullRankedDataset(
+  max_players,
+  df,
+  df.rating.elo,
+  n = 10000,
+  winPoints,
+  losePoints,
+  startPoints = 1500
+)
+rows3=nrow(df)
+print(paste0('All correct in merging: ' , (rows1==rows2&rows2==rows3)))
+
+
 #rm(df)
 
 ####################################

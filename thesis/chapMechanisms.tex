@@ -1,0 +1,48 @@
+\chapter{Mechanisms}
+Having established positive and significant treatment effects of  experience on outcomes in the market for public construction projects, we seek to investigate how does experience operate in practice to produce improved outcomes in the treated firms. Our objective is to provide evidence of some of the changes that might have taken place within the firm to produce a higher rate of success.
+
+We start presenting the following working hypothesis regarding the effects of experience. Each details one way in which a firm might have experienced improvements that led to increased success in the market. Our analysis will be aimed at testing them with the data we have avalaible.
+
+\begin{enumerate}
+  \item{H1}: experience produces improvements in cost measures in the firm, keeping constant the type of project. This improvement in cost operates either via economies of scale, since after winning the project the firm is bigger than before; or via adjustments in the production function itself, for example, by changing the relative inputs to produce.
+  \item{H2}: experience allows the firm to produce at a higher quality than before, constant the cost of the works. This improvement operates because the firm, having performed certain tasks once, is able to better predict potential problems. Note that in the bidding phase this could be reflected in a better proposals.
+  \item{H3}: experience increases the pool of projects that a firm can perform. Experience can allow the firm to produce either bigger or more complex projects, due to increased human and organizational capital.
+\end{enumerate}
+
+We first investigate whether firms are more efficient by examining how do bids change on average with experience as treatment. Then, we study wether increased the technical possibilities of the firm.
+
+\section{Bids and experience}
+This section investigates whether experience causes improvements in cost measures for treated firms. We do this by examining how do firm's bids evolve after the firm has been treated, i.e. after it has more experience.
+
+The relationship between bids and several firms characteristics has been investigated several times in the construction and economics literature.
+
+The next section details briefly the data, empirical strategy and results, since most of the the empirical strategy and data is analogous to the analysis performed in the previous chapter.
+
+\subsection{Data}
+
+Our main data is the same as in the previous chapter, i.e a set of bids submitted by firms in auctions for public construction projects. However, instead of aggregating firm's experience and outcomes in time slices, our observations will be the bids themselves. We still employ aggregation to compute experience at each point in time for every firm.
+
+Furthermore, we filter the first year in the data for our regression sample, since all firms have zero experience at this point and keeping it would introduce noise in the estimates do to treatments set to zero artificially. We do however employ all the avalaible years in the data to compute experience, as in the previous section.
+
+Table \ref{} shows descriptive statistics of the bids employed in the analysis sample.
+
+\subsection{Empirical Strategy}
+In this section, our main strategy is perform a regression of the form:
+
+
+
+ Here, the outcome variable is a binary indicator which is 1 if the firm $i$ won the project $j$ at time $t$ and zero if not. Our treatment variable is experience, either in binary form $EXP>0$ or linear form $EXP$. We compute experience by summing all won up to $t$. Note that each row of our main dataset is an observation in the regression.
+ %We employ an annualized form of experience to prevent overweighting the initial firms in the data.
+Similarly as before, we have unobserved cost variables, specific to each firm, which might skew estimates upwards. The same argument employed in the previous chapter, regarding endogeneity of cost measures, can be applied in the case of equation.
+
+We use the same strategy as before to produce consisten estimates, employing closely won bids to produce random variation in total experience. Table shows a comparison of contracts identified as close wins againts the rest of the sample. Note that there are very small modifications with respect to table \ref{}, given the extra filtering steps employed in this section. The parameters employed in each IV strategy are also the same as the previous section.
+
+We perform four regressions. The first two are OLS regressions and the second two are IV regressions, employing closely won contracts to instrument total experience. For each type, we develop one regression where the treatment is the binarye of previous experience and the second is total past experience.
+
+\subsection{Results}
+
+Table \ref{tab:table_bids_1} presents our main results.
+
+\input{C:/repos/learn-doing/thesis/tables/table_bids_1.txt}
+
+asdadad

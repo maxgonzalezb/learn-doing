@@ -32,6 +32,9 @@ df.rating = df.ratings.1 %>% left_join(df.ratings.2,
                                        by = c('Codigo' = 'Codigo', 'FechaInicio' = 'FechaInicio')) %>% ungroup %>%
   arrange(FechaInicio) %>% mutate(time = seq_len(length(FechaInicio)))
 df.rating.elo = df.rating %>% select(-Codigo, -FechaInicio) %>% select(time, everything())
+
+(df.rating.elo%>%ncol()-1)/2
+df.ratings.1%>%ncol()
 rm(df.ratings.1, df.ratings.2)
 
 ##Set up parameters
@@ -349,9 +352,8 @@ dev.off()
 
 
 
-createRankings=function(df,n=10000){
+createHelpElo=function(df){
 df=df%>%arrange(FechaInicio)  
-
 #Create the two auxiliary dataset.
 ##Create the dataset of 
 df.ratings.1=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
@@ -367,24 +369,7 @@ df.ratings.2=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinn
 df.rating=df.ratings.1%>%left_join(df.ratings.2,by=c('Codigo'='Codigo','FechaInicio'='FechaInicio'))%>%ungroup%>%
     arrange(FechaInicio)%>%mutate(time=seq_len(length(FechaInicio)))
 df.rating.elo=df.rating%>%select(-Codigo,-FechaInicio)%>%select(time, everything())
- 
-#Run the ELO algorithm
-n=2000
-#base=seq(23,1,by = -1)
-base=c(1,-1)
-rm(df.ratings.1,df.ratings.2)
-ratings=elom(x = df.rating.elo[1:n,],nn=23,exact = F,base = base,placing = T,history = T)
-
-#Get for every period in history(time) the rank of the player
-ratings.df=ratings$history[,,1]%>%as.data.frame()%>%mutate(rut=rownames(.))%>%select(rut,everything())%>%pivot_longer(names_to = 'Period',cols = 2:ncol(.))
-
-##Attach each ranking to players for each Codigo
-df.ranked=df%>%mutate(rank=-1)
-tabletimes=df.rating%>%select(FechaInicio,Codigo,time)
-vector=seq_len(nrow(df))
-maxcol=ncol(ratings$history[,,1])
-vectorubicacion=df$Codigo%in%tabletimes$Codigo
-
+return(df.rating.elo)
 }
 
 
