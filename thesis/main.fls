@@ -537,6 +537,24 @@ INPUT C:\repos\learn-doing\thesis\tables\table_bids_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_1.txt
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecti1200.tfm
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_results.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_results.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_results.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_results.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_results.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_results.png
+INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_results.png
+INPUT C:\repos\learn-doing\thesis\tables\table_acceptance_1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_acceptance_1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_acceptance_1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_acceptance_1.txt
 INPUT main.aux
 INPUT .\chapMechanisms.aux
 INPUT chapMechanisms.aux
@@ -544,6 +562,8 @@ INPUT chapMechanisms.aux
 INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\cm-super\cm-super-t1.enc
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb

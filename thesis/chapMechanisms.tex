@@ -24,12 +24,12 @@ Our main data is the same as in the previous chapter, i.e a set of bids submitte
 
 Furthermore, we filter the first year in the data for our regression sample, since all firms have zero experience at this point and keeping it would introduce noise in the estimates do to treatments set to zero artificially. We do however employ all the avalaible years in the data to compute experience, as in the previous section.
 
-Table \ref{} shows descriptive statistics of the bids employed in the analysis sample.
+Table \ref{} shows descriptive statistics of the bids employed in the analysis sample and of acecptance rates by the amount of experience.
+
+
 
 \subsection{Empirical Strategy}
 In this section, our main strategy is perform a regression of the form:
-
-
 
  Here, the outcome variable is a binary indicator which is 1 if the firm $i$ won the project $j$ at time $t$ and zero if not. Our treatment variable is experience, either in binary form $EXP>0$ or linear form $EXP$. We compute experience by summing all won up to $t$. Note that each row of our main dataset is an observation in the regression.
  %We employ an annualized form of experience to prevent overweighting the initial firms in the data.
@@ -45,4 +45,45 @@ Table \ref{tab:table_bids_1} presents our main results.
 
 \input{C:/repos/learn-doing/thesis/tables/table_bids_1.txt}
 
-asdadad
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Quality and Experience}
+In order to test hypothesis number two, in this section we study if experience treatments causes firms to submit higher quality proposals. We do this by employing a step in the auctioning process aimed at controlling some basic quality conditions of a proposals, namely, formal requirements and qualifications.
+
+Note that quality is explicitly evaluated in many contracts by including an item in the awarding criteria labeled as "technical specifications" or just "quality of the proposal". Our estimation is that around \% include some measure of technical evaluation in the awarding criteria.  Ideally, we would test the hypothesis that experience improves the quality of a firm's proposals by employing the score that each firm obtained in the technical or quality item of the evaluation criteria of the project. However, since our data has not this item avalaible by firm, we employ an alternative strategy,which focuses on measuring quality across a different but related dimension: the formal acceptance rate of the proposals.
+
+Recall that, for each auction, firm proposals are analyzed in two steps. The first step only examines if the proposal fulfills all the formal requirements in the process. Formal requirements include the inclusion of legal documents, submitting each of the technical documents asked for in the bidding documents, etc. In essence, the first stage verifies that all proposals can be evaluated at an equal footing and that minimum bidding legal requirements are fulfilled. Clearly, whether a proposal was accepted is a measure of its quality, albeit an imperfect one. Altough it leaves out a significant part of the variation that would be expected in proposal's qualities, it is nonetheless an interesting measure of quality because formal acceptance is a necessary condition to win a project.
+
+Our research design, detailed below, will test whether experienced firms have a higher formal acceptance rate than unexperienced firms at the formal revision step of the procuurement process. To our knowledge, ity has not been studied in the previous literature factors infleuencing formal acceptance of bid proposals.
+
+\subsection{Data}
+We employ our bid dataset similarly as the previous section. Each observation is a bid submitted by a firm to an auction held by the government. Since we are analyzing the formal revision part of the auction, and not scoring itself, we think that on principle we could skip the filtering of contracts that do include experience as an awarding factor. However, due to possible self-selection, we will examine both possibilities. We again filter the first year of the data in our analysis sample to prevent confounding effects.
+
+We show some descriptive statistics of acceptance rates in table and Figure \ref{fig:plot_acceptance_rates}. We can already see that the fraction of firms getting all proposals rejected decreases with more than one proposal, which could be either due to revealed preferences or to the effect of learning about formal requirements after the first completed bidding process.
+
+\begin{figure}
+  \includegraphics[scale=0.50]{plot_acceptance_rates.png}
+  \caption{Acceptance rate for proposals sent by firms to auctions for public construction project.}
+  \label{fig:plot_acceptance_rates}
+\end{figure}
+
+We end up with a dataset where each observation is a bid submitted by a firm to an auction of a public construction project, which includes as variables of interest wether the proposal was formally accepted, the experience of the firm at the time of the auction (both regular, annualized and close wins), and several  auxiliary variables that characterize the contract itself.
+
+\subsection{Empirical Strategy}
+We test wether experience leads to a higher rate of formal proposal acceptance employing the following regression:
+
+Here, is and indicator variable that equals 1 if the firms' $i$ proposal for contract $j$ at time $t$ was accepted and zero if it was not. $EXP$ is our treatment variable, both in binary and linear functional forms. $X_{j}$ is a set of contract-specific controls, which include year, region, and the government body in charge of the auction. We include the controls for the possibility that government units in different  geographical regions have different levels of stringency when evaluating proposals for similar projects.
+
+We are less worried about endogeneity with unobserved cost factors since formal revision does not relate to economic aspects of the proposal. However, it is possible that there are different levels of baseline levels of proposal-makeing abilities among firms, so we repeat our usual instrumentation of experience with close wins.
+
+We perform four regressions. The first two are OLS regressions and the second two are IV regressions, employing closely won contracts to instrument total experience. For each type, we develop one regression where the treatment is the binary of previous experience and the second is annualized past experience.
+
+\subsection{Results}
+\begin{figure}
+  \includegraphics[scale=0.65]{plot_acceptance_results.png}
+  \caption{Acceptance rate for proposals sent by firms to auctions for public construction project.}
+  \label{fig:plot_acceptance_results}
+\end{figure}
+
+\input{C:/repos/learn-doing/thesis/tables/table_acceptance_1.txt}

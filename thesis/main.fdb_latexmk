@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1625281688 "main.tex" "main.pdf" "main" 1625281704
+["pdflatex"] 1625368988 "main.tex" "main.pdf" "main" 1625368992
   "C:/Program Files/MiKTeX/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1001775420 2971 def0b6c1f0b107b3b936def894055589 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1200.tfm" 993061958 3200 b8d69bc738e5ef3e08cefeef3109ff56 ""
   "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/ecbx1440.tfm" 993061960 3196 0b37fa3083e15c57cfa8c4ff52f2807a ""
@@ -23,6 +23,7 @@
   "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmsy6.tfm" 1136768653 1116 933a60c408fc0a863a92debe84b2d294 ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmsy8.tfm" 1136768653 1120 8b7d695260f3cff42e636090a8002094 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1247596667 36741 0ee9e374ec3e30da87cdfb0ea3575226 ""
+  "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1247596666 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1247596667 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1247596667 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
@@ -85,15 +86,18 @@
   "C:/Program Files/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1623005690 4902 efb3d66683a2da2a232f71e3a571a899 ""
   "C:/ProgramData/MiKTeX/pdftex/config/pdftex.map" 1623970329 5217809 7be800332f8babd8b9d9c49d5564a114 ""
   "C:/Users/Maximiliano/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1623971266 10444370 ba6582a549b487bc830f85c0dba00352 ""
-  "chapMechanisms.aux" 1625281690 1446 e58eeb1545c8419e857f1a663f3d91d7 "pdflatex"
-  "chapMechanisms.tex" 1625281681 4963 994e6de456e254fb701c619bef89e810 ""
+  "chapMechanisms.aux" 1625368992 2570 e96a40cff75a0734f0290bca46a753d7 "pdflatex"
+  "chapMechanisms.tex" 1625368985 10483 6f18dada00c473afcc31c9e0e9461087 ""
+  "figures//plot_acceptance_rates.png" 1625363819 297933 ffada98da5c13481646297d58e7c39e1 ""
+  "figures//plot_acceptance_results.png" 1625363999 310304 4904be39147d4075fe399034ff210840 ""
   "lgrind.sty" 1623893168 7662 ea74beead1aa2b711ec2669ba60562c3 ""
-  "main.aux" 1625281690 97 fd42d042167805d1af17bcd5b45f37f2 "pdflatex"
+  "main.aux" 1625368992 97 173de382541afe04bc85357315ce4cde "pdflatex"
   "main.tex" 1625279855 2486 b971360286d38495eeefbc7726291372 ""
   "mitthesis.cls" 1623893168 20274 88c5ea0f79a8c9e7d047b6473948901f ""
+  "tables/table_acceptance_1.txt" 1625367090 1525 0abd68fd85168cbad599d40dc671ad15 ""
   "tables/table_bids_1.txt" 1625281630 1489 cff3efb03d137326baad55742fc7c8a3 ""
   (generated)
-  "chapMechanisms.aux"
-  "main.aux"
   "main.log"
+  "main.aux"
   "main.pdf"
+  "chapMechanisms.aux"

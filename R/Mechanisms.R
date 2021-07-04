@@ -1,4 +1,7 @@
+
+#################################
 ## First Investigation: Bids
+#################################
 df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   group_by(RutProveedor) %>% arrange(FechaInicio) %>% mutate(
     firstyear = min(year),
@@ -34,6 +37,118 @@ robust.lm36<- vcovHC(lm.36, type = "HC1")%>%diag()%>%sqrt()
 robust.lm37<- vcovHC(lm.37, type = "HC1")%>%diag()%>%sqrt()
 
 
+#####
+##Second Investigation: Quality
+#####
+
+df.quality=df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
+  group_by(RutProveedor) %>% arrange(FechaInicio) %>% mutate(
+    firstyear = min(year),
+    exp = max(cumsum(WinContr) - 1, 0),
+    isCloseWin = WinContr * isClose)%>%
+  mutate(
+    exp_close =
+      max(cumsum(isCloseWin) - 1, 0)
+  ) %>%
+  mutate(exp_close = ifelse(is.na(exp_close), yes = 0, no = exp_close)) %>%
+  mutate(indExp = as.numeric(exp > 0),
+         indExpClose = as.numeric(exp_close > 0)) %>%
+  mutate(
+    annualexp = exp / (year - firstyear + 1),
+    annualexp_close = exp_close / (year - firstyear + 1),
+    life = (year - firstyear + 1)
+  )%>%
+  mutate(indFirstYear=(year==firstyear))
+
+df.quality = df.quality %>% mutate(indAccepted = as.numeric(estadoOferta ==
+                                                              'Aceptada')) %>% arrange(FechaInicio) %>% group_by(RutProveedor) %>%
+  mutate(tot.acc = cumsum(indAccepted), tot.sub=cumsum(as.numeric(indAccepted>=0)))%>%mutate(ac.rate=tot.acc/tot.sub)%>% filter(year >= 2011) 
+
+accepted.rates=df.quality%>%group_by(RutProveedor)%>%summarise(accepted=sum(indAccepted), submitted=length(indAccepted),AcceptanceRate=accepted/submitted)
+accepted.rates.3=df.quality%>%group_by(RutProveedor)%>%summarise(accepted=sum(indAccepted), submitted=length(indAccepted),AcceptanceRate=accepted/submitted)%>%filter(submitted>=3)
+
+plot.accepted.rates=ggplot(accepted.rates,aes(x=AcceptanceRate))+geom_histogram(binwidth = 0.1,fill='steelblue',color='black')+theme_bw()+xlab('Acceptance Rate')+ylab('Firm Count')+ggtitle('Histogram of proposal acceptance rate, all firms')
+plot.accepted.rates.3=ggplot(accepted.rates.3,aes(x=AcceptanceRate))+geom_histogram(binwidth = 0.1,fill='steelblue',color='black')+theme_bw()+xlab('Acceptance Rate')+ylab('Firm Count')+ggtitle('Histogram of proposal acceptance rate, firms with 3+ proposals')
+plot.accepted.rates.10=ggplot(accepted.rates.3%>%filter(submitted>=10),aes(x=AcceptanceRate))+geom_histogram(binwidth = 0.1,fill='steelblue',color='black')+theme_bw()+xlab('Acceptance Rate')+ylab('Firm Count')
+
+plot.acc.rates.all=plot_grid(plot.accepted.rates,plot.accepted.rates.3)
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_rates.png",width = 12, height = 4.0,units = "in",res=1000)
+plot.acc.rates.all
+dev.off()
+
+## Results
+
+df.quality.plot = df.quality %>% mutate(annualexp = round(annualexp)) %>% group_by(annualexp) %>%
+  summarise(
+    ac.rate.mean = mean(indAccepted, na.rm = T),
+    n = length(indAccepted),
+    std.error = sd(indAccepted, na.rm = T)
+  ) %>% mutate(std.error = std.error / sqrt(n))
+
+plot.quality.exp=ggplot(df.quality.plot,aes(x=annualexp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,10)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
+  ylim(0.6,1)+theme_bw()+xlab('Annualized Experience')+ylab('Mean Proposal Acceptance  Indicator')+
+  theme(axis.text.x = element_text(size=9,color = 'black'))+ggtitle('All bids and firms')
+plot.quality.exp
+
+df.quality.plot.restricted=df.quality%>%filter(exp%in%c(0,1)&tot.sub==1&firstyear>=2011)%>% group_by(exp) %>%
+  summarise(
+    ac.rate.mean = mean(indAccepted, na.rm = T),
+    n = length(indAccepted),
+    std.error = sd(indAccepted, na.rm = T)
+  ) %>% mutate(std.error = std.error / sqrt(n))
+
+plot.quality.exp.restricted=ggplot(df.quality.plot.restricted,aes(x=exp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(-0.05,1.05)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.05))+
+  ylim(0.6,1)+theme_bw()+xlab('Annualized Experience')+ylab('Mean Proposal Acceptance  Indicator')+
+  theme(axis.text.x = element_text(size=9,color = 'black'))+ggtitle('Firms with one previous proposal')
+plot.quality.exp.restricted
+
+row.1=ggdraw() + 
+  draw_label(
+    "Mean of Proposal Acceptance Indicator by Past Experience",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+row.2=plot_grid(plot.quality.exp,plot.quality.exp.restricted,nrow = 1)
+plot.quality.results=plot_grid(row.1,row.2,rel_heights = c(0.1, 1),nrow = 2)
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_results.png",width = 9, height = 4.5,units = "in",res=1000)
+plot.quality.results
+dev.off()
+
+## Linear Model Results
+### OLS
+df.quality.restricted=df.quality%>%filter(exp%in%c(0,1)&tot.sub==1&firstyear>=2011)
+lm.50=lm(df.quality.restricted,formula = indAccepted~as.factor(year)+RegionUnidad+NombreOrganismo+(exp>0))
+robust.lm50<- vcovHC(lm.50, type = "HC1")%>%diag()%>%sqrt()
+lm.50%>%tidy()%>%tail()
+
+lm.51=lm(df.quality,formula = indAccepted~as.factor(year)+RegionUnidad+NombreOrganismo+(annualexp))
+robust.lm51<- vcovHC(lm.51, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.51)%>%tidy()%>%tail()
+
+### IV
+lm.52=ivreg(data=df.quality.restricted,formula = indAccepted~as.factor(year)+RegionUnidad+(exp>0)|
+              as.factor(year)+RegionUnidad+(exp_close>0))
+robust.lm52<- vcovHC(lm.52, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.52)
+
+lm.53=ivreg(data=df.quality,formula = indAccepted~as.factor(year)+RegionUnidad+(annualexp)|
+              as.factor(year)+RegionUnidad+(annualexp_close))
+robust.lm53<- vcovHC(lm.53, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.53)
+
+
+
+
+
+
+
 
 summary(lm.35)
 models=list(ols.bin,ols.linear,iv.bin,iv.lin)
@@ -41,7 +156,7 @@ results=models%>%map_dfr(function(x) coeftest(x,vcov = vcovHC(x, type = "HC1"))%
 
 
 
-
+unload('plyr')
 
 
 
@@ -83,9 +198,9 @@ df.indiv=df%>%mutate(WinContr=as.numeric(winner=='Seleccionada'))
 df.indiv.exp=df.indiv%>%group_by(RutProveedor)%>%arrange(FechaInicio)%>%mutate(firstyear=min(year),exp=max(cumsum(WinContr)-1,0),isCloseWin=WinContr*isClose,
                                                                                exp_close=max(cumsum(isCloseWin)-1,0))%>%
   mutate(exp_close=ifelse(is.na(exp_close),yes=0, no=exp_close))%>%
-                      mutate(indExp=as.numeric(exp>0),indExpClose=as.numeric(exp_close>0))%>%
+  mutate(indExp=as.numeric(exp>0),indExpClose=as.numeric(exp_close>0))%>%
   mutate(annualexp=exp/(year-firstyear+1),annualexp_close=exp_close/(year-firstyear+1),life=(year-firstyear+1))
-  
+
 summary(sample.df$annualexp_close)
 #Exploratory analysis
 
@@ -96,9 +211,9 @@ typeLicitacion=data.frame(tipoAdquisicion=c(small,big),typeSize=c('Small','Big')
 regionesExtremas=c("Región de Arica y Parinacota",'Región de Magallanes y de la Antártica','Región Aysén del General Carlos Ibáñez del Campo')
 
 df.indiv.exp.comp=df.indiv.exp%>%mutate(isExtreme=RegionUnidad%in%regionesExtremas)%>%filter(hasExp==0)%>%
-                            left_join(typeLicitacion)%>%mutate(percentilePrice=ntile(percPrice,5))%>%
-                              mutate(percentileQuality=ntile(percQuality,5),q=(percQuality))
-  
+  left_join(typeLicitacion)%>%mutate(percentilePrice=ntile(percPrice,5))%>%
+  mutate(percentileQuality=ntile(percQuality,5),q=(percQuality))
+
 
 table.typeSize=df.indiv.exp.comp%>%group_by(typeSize,indExp)%>%summarise(n=length(Codigo),wins=length(Codigo[winner=='Seleccionada']),percWins=wins/n)
 table.extreme=df.indiv.exp.comp%>%group_by(isExtreme,indExp)%>%summarise(n=length(Codigo),wins=length(Codigo[winner=='Seleccionada']),percWins=wins/n)#%>%
@@ -113,13 +228,13 @@ sample.df.offers=df.indiv.exp%>%filter(hasExp==FALSE&MCA_MPO<=5)#%>%filter(first
 sample.df=df.indiv.exp%>%filter(hasExp==FALSE&year>=2011)#%>%filter(firstyear!=2011&life<=3)#%>%slice_sample(n=5000)%>%
 
 ivreg(WinContr~(exp>0)+(exp>0):percPrice+(exp>0):percQuality+percQuality+percPrice+as.factor(year)|
-              (exp_close>0)+(exp_close>0):percPrice+(exp_close>0):percQuality+percQuality+percPrice+as.factor(year), data=sample.df)%>%summary()
+        (exp_close>0)+(exp_close>0):percPrice+(exp_close>0):percQuality+percQuality+percPrice+as.factor(year), data=sample.df)%>%summary()
 
 ivreg(WinContr~annualexp+annualexp:percPrice+annualexp:percQuality+percQuality+percPrice+as.factor(year)|
-              exp_close+exp_close:percPrice+exp_close:percQuality+percQuality+percPrice+as.factor(year), data=sample.df)%>%summary()
+        exp_close+exp_close:percPrice+exp_close:percQuality+percQuality+percPrice+as.factor(year), data=sample.df)%>%summary()
 
 ivreg(WinContr~annualexp+annualexp:percQuality+percQuality+as.factor(year)|
-              exp_close+exp_close:percQuality+percQuality+as.factor(year), data=sample.df)%>%summary()
+        exp_close+exp_close:percQuality+percQuality+as.factor(year), data=sample.df)%>%summary()
 
 lm(formula=annualexp~(exp_close),data=sample.df)%>%summary()
 
@@ -135,11 +250,11 @@ summary(lm.30)
 table(sample.df$exp_close)
 
 lm.31=ivreg(WinContr~(exp>0)*percPrice+(exp>0):percQuality+as.factor(year)+percQuality+NumeroOferentes|
-             (exp_close>0)*percPrice+(exp_close>0):percQuality+as.factor(year)+percQuality+NumeroOferentes, data=sample.df)
+              (exp_close>0)*percPrice+(exp_close>0):percQuality+as.factor(year)+percQuality+NumeroOferentes, data=sample.df)
 summary(lm.31)
 
 lm.32=ivreg(as.numeric(WinContr)~(exp)*percPrice+(exp):percQuality+as.factor(year)+percQuality+NumeroOferentes+RegionUnidad|
-           exp_close*percPrice+exp_close:percQuality+as.factor(year)+percQuality+NumeroOferentes+RegionUnidad, data=sample.df)
+              exp_close*percPrice+exp_close:percQuality+as.factor(year)+percQuality+NumeroOferentes+RegionUnidad, data=sample.df)
 summary(lm.32)
 
 

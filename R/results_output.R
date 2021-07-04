@@ -181,3 +181,16 @@ regression.output.bids=capture.output({stargazer(lm.34,lm.35, lm.36 , lm.37, typ
                                               add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.bids,'table_bids_1.txt')
 
+#Export the results of Quality Regressions
+regression.output.acceptance=capture.output({stargazer(lm.50,lm.51, lm.52 , lm.53, type = "latex",label = 'tab:table_acceptance_1', header = F,
+                                                 se = list(NULL, c(robust.lm50,robust.lm51,robust.lm52,robust.lm53)),omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
+                                                 title="Regression of proposal acceptance on experience",
+                                                 dep.var.labels=c("Standarized Bid"),
+                                                 column.labels = c("OLS", "OLS",'IV',"IV"),
+                                                 #covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)'),
+                                                 add.lines = list(c("Fixed effects By Period, Region", "Yes", "Yes",'Yes','Yes'),
+                                                 c("Fixed effects By Government Body", "Yes", "Yes",'No','No')))})
+createStargazerTxt(regression.output.acceptance,'table_acceptance_1.txt')
+
+
+
