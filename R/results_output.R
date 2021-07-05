@@ -1,5 +1,3 @@
-library(cowplot)
-library(stringr)
 #####################
 # Graphic Outputs
 #####################
@@ -171,7 +169,62 @@ png(filename="C:\\repos\\learn-doing\\thesis\\figures\\comparison_considers_expe
 plot.compexp.1
 dev.off()
 
-#Export the results of bids regressions
+# Export the results of bids regressions
+
+## Show a table describing the dataset used
+generateDfBidsSummary(bids = df.bids)
+
+
+## Show a plot of the histogram of bids
+plot.bids.standarized=ggplot(df.bids,aes(x=MCA_MPO))+
+  geom_histogram(binwidth = 0.05,fill='steelblue',color='black')+theme_bw()+xlab('Standarized Bids')+ylab('Bid Count')+ggtitle('Histogram of standarized bids (bid / government estimate)')+xlim(0,2)
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_bids_standarized.png",width = 6, height = 3.5,units = "in",res=1000)
+plot.bids.standarized
+dev.off()
+
+plot.bids.standarized
+
+## Show graphical results
+plotDisc.allwins.bids<-ggplot(df.bids.means,aes(x=(exp),y=MCA_MPO.mean))+geom_point(size=2,color='red')+xlim(-0.1,16.1)+
+  geom_errorbar(aes(ymin=MCA_MPO.mean+2*std.error, ymax=MCA_MPO.mean-2*std.error,width=0.2))+
+  #stat_summary(aes(group=exp),fun.y = "mean", fun.ymin = "mean", fun.ymax= "mean", size= 0.3, geom = "crossbar")+
+  #geom_smooth(se=F,formula=(function(x) mean(x)), method = 'lm')+geom_vline(xintercept = 0.3,alpha=0.3,color='black',lwd=1)+
+  theme_bw()+xlab('Previous Wins')+ylab('Mean Standarized Bid')+
+  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0.5,1,0.1),limits = c(0.75,1))+
+  ggtitle('All Firms and Bids')+geom_hline(yintercept = df.bids.means$MCA_MPO.mean[df.bids.means$exp==0],alpha=0.8,color='black')
+plotDisc.allwins.bids
+
+plotDisc.closerank.bids<-ggplot(df.bids.means.closeranks%>%filter(n>=10),aes(x=(exp_closerank),y=MCA_MPO.mean))+geom_point(size=2,color='red')+xlim(-0.1,1.3)+
+  geom_errorbar(aes(ymin=MCA_MPO.mean+2*std.error, ymax=MCA_MPO.mean-2*std.error,width=0.1))+
+   theme_bw()+xlab('Previous Close Wins By rank')+ylab('Mean Standarized Bid')+
+  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0.5,1,0.1),limits = c(0.75,1))+
+  ggtitle('Firms with experience = close experience')#+geom_hline(yintercept = df.bids.means$MCA_MPO.mean[df.bids.means.closeranks$exp==0],alpha=0.8,color='black')
+plotDisc.closerank.bids
+
+row.1=plot_grid(plotDisc.allwins.bids,plotDisc.closerank.bids,ncol = 2,labels = 'AUTO')
+
+title.exp1 <- ggdraw() + 
+  draw_label(
+    "Relationship between experience and standarized bid amounts",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+plot.bids.exp=cowplot::plot_grid(title.exp1,row.1,
+                                        nrow = 2,labels = '',rel_heights = c(0.1, 1))
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plotbids_panel.png",width = 9, height = 4.25,units = "in",res=1000)
+plot.bids.exp
+dev.off()
+
+
+## Regression results
 regression.output.bids=capture.output({stargazer(lm.34,lm.35, lm.36 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
                                               se = list(NULL, c(robust.lm34,robust.lm35,robust.lm35,robust.lm37)),omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
                                               title="Regression of bid amounts to experience",
@@ -182,6 +235,7 @@ regression.output.bids=capture.output({stargazer(lm.34,lm.35, lm.36 , lm.37, typ
 createStargazerTxt(regression.output.bids,'table_bids_1.txt')
 
 #Export the results of Quality Regressions
+
 regression.output.acceptance=capture.output({stargazer(lm.50,lm.51, lm.52 , lm.53, type = "latex",label = 'tab:table_acceptance_1', header = F,
                                                  se = list(NULL, c(robust.lm50,robust.lm51,robust.lm52,robust.lm53)),omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
                                                  title="Regression of proposal acceptance on experience",

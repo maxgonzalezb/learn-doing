@@ -60,6 +60,13 @@ createDifsDf<-function(df,thresholdCLose,thresholdCloseRank,weightPrice){
   return(df.difs)
 }
 
+createDifsDf_rank<-function(df,thresholdCloseRank){
+  df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
+    summarise(isCloseRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)))
+  return(df.difs)
+}
+
+
 
 
 CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500){
@@ -355,8 +362,10 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
                                                                  firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(max(df.period1$year)-firstyearwin,1),annualwinspre=wins/(life))
   df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),
+                                                                  accepted=length(Codigo[estadoOferta=='Aceptada']),
                                                                   wins=length(winner[winner=='Seleccionada']),
                                                                   probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
+                                                                  probAc=accepted/ofertas, 
                                                                   avPriceWeight=mean(percPrice,na.rm=T),avQualityWeight=mean(percQuality,na.rm=T))
   
   
@@ -495,7 +504,15 @@ createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClos
   df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2],closeRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)))
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
                                                                   firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(max(df.period1$year)-firstyearwin,1),annualwinspre=wins/(life))
-  df.period2.wins=df.period2%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T))
+  df.period2.wins = df.period2 %>% group_by(RutProveedor) %>% summarise(
+    ofertas = length(winner),
+    accepted=length(Codigo[estadoOferta=='Aceptada']),
+    wins = length(winner[winner == 'Seleccionada']),
+    probWin = wins / ofertas,
+    probAc= accepted/ofertas,
+    montoTotal = sum(`Monto Estimado Adjudicado`[winner == 'Seleccionada'], na.rm =
+                       T)
+  )
   
   #Add an ID column
   period1=paste0(cutoff0,"/",cutoff1)
