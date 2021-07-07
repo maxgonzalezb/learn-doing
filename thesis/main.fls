@@ -503,6 +503,7 @@ INPUT .\chapMechanisms.tex
 INPUT chapMechanisms.tex
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm2488.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx2488.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecti1200.tfm
 INPUT C:\ProgramData\MiKTeX\pdftex\config\pdftex.map
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1728.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1728.tfm
@@ -542,7 +543,6 @@ INPUT C:\Program Files\MiKTeX\tex\latex\mmap\omx.cmap
 INPUT C:\Program Files\MiKTeX\tex\latex\mmap\omx.cmap
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT C:\repos\learn-doing\thesis\tables\table_closewins_bids.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_closewins_bids.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_closewins_bids.txt
@@ -558,7 +558,6 @@ INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecti1200.tfm
 INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
 INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
 INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
@@ -594,8 +593,6 @@ INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
-INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1200.pfb
-INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1200.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1440.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1440.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1728.pfb

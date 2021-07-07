@@ -25,11 +25,22 @@ df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   )%>%
   mutate(indFirstYear=(year==firstyear))
 
-df.bids=df.bids%>%filter(MCA_MPO<=5&MCA_MPO>0.1&hasExp==0&firstyear>=2011&!is.na(MCA_MPO))
+df.bids = df.bids %>% filter(MCA_MPO <= 5 &
+                               MCA_MPO > 0.1 & hasExp == 0 & year >= 2011 & !is.na(MCA_MPO))
 
-eliminated=df%>%filter(MCA_MPO>5|MCA_MPO<=0.1&hasExp==0)%>%nrow()
+df.bids.summary = (generateDfBidsSummary(df.bids %>% as.data.frame()))%>%select(-3)
+df.bids.summary %>% kable(
+  format = 'latex',
+  booktabs = T,
+  table.envir = 'table',
+  caption = 'Sample descriptive statistics for bid analysis',
+  label = 'table_bid_sample'
+) %>% column_spec(column = 2:6, width = '3.5cm') %>%
+  kable_styling(latex_options = "scale_down", full_width = F) %>% 
+  cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_bid_sample.txt")
 
 #Summarised datasets
+
 df.bids.means=df.bids%>%dplyr::group_by(exp)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
 n=length(exp))%>%mutate(std.error=std/sqrt(n))
 
@@ -40,15 +51,51 @@ df.bids.means=df.bids%>%dplyr::group_by(exp)%>%summarise(std=sd(MCA_MPO,na.rm = 
  #                                                        n=length(exp))%>%mutate(std.error=std/sqrt(n))
 
 df.bids.means.closeranks=df.bids%>%filter(exp==exp_closerank)%>%dplyr::group_by(exp_closerank)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
-                                                                     n=length(exp))%>%mutate(std.error=std/sqrt(n))
+                                                                     n=length(exp))%>%mutate(std.error=std/sqrt(n))%>%filter(n>=10)
+
+##Summarised close wins
+
+## Create the table with descriptive data
+comparison.1 = df %>% filter(isCloseRanking >= 0) %>%as.data.frame()%>% generateDfBidsSummary() %>%
+  dplyr::select('mean', 'std') %>% rename('mean_notClose' = 'mean', 'std_notClose' =
+                                            'std')
+comparison.2 = df %>% filter(isCloseRanking == 1) %>% as.data.frame()%>%generateDfBidsSummary() %>%
+  dplyr::select(name, 'mean', 'std') %>% rename('mean_close_price' = 'mean', 'std_close_price' =
+                                                  'std') 
+
+comparison.3 = df %>% filter(isClose == 1) %>% as.data.frame()%>%generateDfBidsSummary() %>%
+  dplyr::select('mean', 'std') %>% rename('mean_close_rank' = 'mean', 'std_close_rank' =
+                                                  'std') 
+
+comparison=(comparison.2%>% cbind(comparison.1) %>%cbind(comparison.3))[1:5,c(1,2,4,6)]
+comparison=c('N',nrow(df%>%filter(isClose == 1)),nrow(df),nrow(df%>%filter(isCloseRanking == 1)))%>%rbind(comparison)
+
+
+colnames(comparison) <-
+  c(
+    'Variable',
+    'Mean (close win - rank)',
+    'Mean (all)',
+    'Mean (close win - price)'
+  )
+table_output = create_kable(comparison, caption = "Comparison between close and non-close wins", label =
+                              'closewins_bids')
+table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_closewins_bids.txt")
+
+
+## Validity and rank
+lm(data=df.bids,exp~exp_close)%>%summary()
+lm(data=df.bids,exp~exp_closerank)%>%summary()
+df.bids$exp_closerank
 
 #Analysis
-lm.34=lm(MCA_MPO~as.factor(year)+RegionUnidad+(exp>0)+(indFirstYear), data=df.bids)
+lm.34=lm(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+(indFirstYear), data=df.bids)
 lm.35=lm(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
-lm.36=ivreg(MCA_MPO~as.factor(year)+RegionUnidad+(exp>0)+indFirstYear|
-              (exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
-lm.37=ivreg(MCA_MPO~as.factor(year)+RegionUnidad+(exp)+indFirstYear|
-              (exp_close)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
+lm.36=ivreg(MCA_MPO~(annualexp>0)+as.factor(year)+RegionUnidad+indFirstYear|
+              (exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
+
+lm.37=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear|
+              (exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
 
 robust.lm34<- vcovHC(lm.34, type = "HC1")%>%diag()%>%sqrt()
 robust.lm35<- vcovHC(lm.35, type = "HC1")%>%diag()%>%sqrt()
@@ -56,6 +103,8 @@ robust.lm36<- vcovHC(lm.36, type = "HC1")%>%diag()%>%sqrt()
 robust.lm37<- vcovHC(lm.37, type = "HC1")%>%diag()%>%sqrt()
 
 summary(lm.36)
+summary(lm.37)
+
 #####
 ##Second Investigation: Quality
 #####
@@ -67,7 +116,9 @@ df.quality=df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
     isCloseWin = WinContr * isClose)%>%
   mutate(
     exp_close =
-      max(cumsum(isCloseWin) - 1, 0)
+      max(cumsum(isCloseWin) - 1, 0),
+    exp_closerank =
+      max(cumsum(isCloseRanking) - 1, 0)
   ) %>%
   mutate(exp_close = ifelse(is.na(exp_close), yes = 0, no = exp_close)) %>%
   mutate(indExp = as.numeric(exp > 0),
@@ -80,8 +131,8 @@ df.quality=df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   mutate(indFirstYear=(year==firstyear))
 
 df.quality = df.quality %>% mutate(indAccepted = as.numeric(estadoOferta ==
-                                                              'Aceptada')) %>% arrange(FechaInicio) %>% group_by(RutProveedor) %>%
-  mutate(tot.acc = cumsum(indAccepted), tot.sub=cumsum(as.numeric(indAccepted>=0)))%>%mutate(ac.rate=tot.acc/tot.sub)%>% filter(year >= 2011) 
+                                                              'Aceptada')) %>% group_by(RutProveedor)%>% arrange(FechaInicio)  %>%
+  mutate(tot.acc = cumsum(indAccepted)-1, tot.sub=cumsum(as.numeric(indAccepted>=0))-1)%>%mutate(ac.rate=tot.acc/tot.sub)%>% filter(year >= 2011) 
 
 accepted.rates=df.quality%>%group_by(RutProveedor)%>%summarise(accepted=sum(indAccepted), submitted=length(indAccepted),AcceptanceRate=accepted/submitted)
 accepted.rates.3=df.quality%>%group_by(RutProveedor)%>%summarise(accepted=sum(indAccepted), submitted=length(indAccepted),AcceptanceRate=accepted/submitted)%>%filter(submitted>=3)
@@ -97,17 +148,17 @@ dev.off()
 
 ## Results
 
-df.quality.plot = df.quality %>% mutate(annualexp = round(annualexp)) %>% group_by(annualexp) %>%
+df.quality.plot = df.quality %>% mutate(annualexp = round(annualexp)) %>% group_by(exp) %>%
   summarise(
     ac.rate.mean = mean(indAccepted, na.rm = T),
     n = length(indAccepted),
     std.error = sd(indAccepted, na.rm = T)
   ) %>% mutate(std.error = std.error / sqrt(n))
 
-plot.quality.exp=ggplot(df.quality.plot,aes(x=annualexp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,10)+
+plot.quality.exp=ggplot(df.quality.plot,aes(x=exp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,10)+
   geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
-  ylim(0.6,1)+theme_bw()+xlab('Annualized Experience')+ylab('Mean Proposal Acceptance  Indicator')+
-  theme(axis.text.x = element_text(size=9,color = 'black'))+ggtitle('All bids and firms')
+  ylim(0.7,1)+theme_bw()+xlab('Experience')+ylab('Mean Proposal Acceptance  Indicator')+scale_x_continuous(breaks=seq(0,10),limits = c(0,10))+
+  theme(panel.grid.major.x = element_blank(),axis.text.x = element_text(size=9,color = 'black'),panel.grid.minor = element_blank())+ggtitle('All bids and firms')
 plot.quality.exp
 
 df.quality.plot.restricted=df.quality%>%filter(exp%in%c(0,1)&tot.sub==1&firstyear>=2011)%>% group_by(exp) %>%
@@ -118,14 +169,53 @@ df.quality.plot.restricted=df.quality%>%filter(exp%in%c(0,1)&tot.sub==1&firstyea
   ) %>% mutate(std.error = std.error / sqrt(n))
 
 plot.quality.exp.restricted=ggplot(df.quality.plot.restricted,aes(x=exp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(-0.05,1.05)+
-  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.05))+
-  ylim(0.6,1)+theme_bw()+xlab('Annualized Experience')+ylab('Mean Proposal Acceptance  Indicator')+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.05))+scale_x_continuous(breaks=seq(0,2),limits = c(-0.2,1.5))+
+  ylim(0.7,1)+theme_bw()+xlab('Experience')+ylab('Mean Proposal Acceptance  Indicator')+
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),panel.grid.minor.y  = element_blank())+
   theme(axis.text.x = element_text(size=9,color = 'black'))+ggtitle('Firms with one previous proposal')
 plot.quality.exp.restricted
 
+df.quality.plot.close.rank = df.quality %>% filter(exp==exp_closerank)%>%group_by(exp_closerank) %>%
+  summarise(
+    ac.rate.mean = mean(indAccepted, na.rm = T),
+    n = length(indAccepted),
+    std.error = sd(indAccepted, na.rm = T)
+  ) %>% mutate(std.error = std.error / sqrt(n))
+
+df.quality.plot.close.price = df.quality %>% filter(exp==exp_close)%>%group_by(exp_close) %>%
+  summarise(
+    ac.rate.mean = mean(indAccepted, na.rm = T),
+    n = length(indAccepted),
+    std.error = sd(indAccepted, na.rm = T)
+  ) %>% mutate(std.error = std.error / sqrt(n))
+df.quality.plot.close.price
+
+plot.quality.exp.close.prince=ggplot(df.quality.plot.close.price,aes(x=exp_close,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,10)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
+  ylim(0.3,1.5)+theme_bw()+xlab('Close Experience (by price)')+ylab('Mean Proposal Acceptance  Indicator')+scale_x_continuous(breaks=seq(0,2),limits = c(-0.2,1.5))+
+  theme(panel.grid.major.x = element_blank(),axis.text.x = element_text(size=9,color = 'black'),panel.grid.minor = element_blank())+ggtitle('Experience equal to close (by price) experience')
+plot.quality.exp.close.prince
+
+plot.quality.exp.close.rank=ggplot(df.quality.plot.close.rank,aes(x=exp_closerank,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,6)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
+  ylim(0.7,1)+theme_bw()+xlab('Close Experience (by rank)')+ylab('Mean Proposal Acceptance  Indicator')+scale_x_continuous(breaks=seq(0,6),limits = c(-0.2,6))+
+  theme(panel.grid.major.x = element_blank(),axis.text.x = element_text(size=9,color = 'black'),panel.grid.minor = element_blank())+ggtitle('Experience equal to close (by rank) experience')
+plot.quality.exp.close.rank
+
 row.1=ggdraw() + 
   draw_label(
-    "Mean of Proposal Acceptance Indicator by Past Experience",
+    "     Mean of Proposal Acceptance Indicator by Past Experience",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+row.4=plot_grid(plot.quality.exp.close.prince,plot.quality.exp.close.rank,nrow = 1)
+row.3=ggdraw() + 
+  draw_label(
+    "         Mean of Proposal Acceptance Indicator by Past (Close) Experience",
     fontface = 'bold',
     x = 0,
     hjust = 0
@@ -134,9 +224,10 @@ row.1=ggdraw() +
     plot.margin = margin(0, 0, 0, 7)
   )
 row.2=plot_grid(plot.quality.exp,plot.quality.exp.restricted,nrow = 1)
-plot.quality.results=plot_grid(row.1,row.2,rel_heights = c(0.1, 1),nrow = 2)
 
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_results.png",width = 9, height = 4.5,units = "in",res=1000)
+plot.quality.results=plot_grid(row.1,row.2,row.3,row.4,rel_heights = c(0.1, 1,0.1,1),nrow = 4)
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_results.png",width = 8.5, height = 7.5,units = "in",res=1000)
 plot.quality.results
 dev.off()
 
@@ -144,18 +235,24 @@ dev.off()
 start=0
 split1=2
 split2=2
-#merged.wins = createTwoPeriodDataset(df,start = start, split1 =split1,split2=split2 )#%>%left_join(df.names,by = 'RutProveedor')
-merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005)%>%filter(!is.na(idperiodpre))
+merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005)
+#merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005)%>%filter(!is.na(idperiodpre))
+
+#quintile study
+merged.wins%>%group_by(q=ntile(probAc,5),indexp=(winspre>0))%>%summarise(n=length(winspre))%>%
+  ungroup()%>%group_by(q)%>%mutate(perc=n/sum(n))%>%filter(indexp==TRUE)
+
+sd(merged.wins$probAc)
 
 lm.54<-lm(probAc~(winspre>0)+idperiodpost,data = merged.wins)
-robust.lm4<- vcovHC(lm.4, type = "HC1")%>%diag()%>%sqrt()
+robust.lm54<- vcovHC(lm.54, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.54)
 
 lm.55<-lm(probAc~(winspre)+idperiodpost,data = merged.wins)
 robust.lm55<- vcovHC(lm.55, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.55)
 
-lm.56<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost,data=merged.wins)
+  lm.56<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost,data=merged.wins)
 robust.lm56<- vcovHC(lm.56, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.56)
 
@@ -163,9 +260,20 @@ lm.57<-ivreg(probAc~(winspre)+idperiodpost|(winspre_close)+idperiodpost,data = m
 robust.lm57<- vcovHC(lm.57, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.57)
 
-lm.58<-lm(probAc~(winspre>0)+idperiodpost,data = merged.wins)
-robust.lm4<- vcovHC(lm.4, type = "HC1")%>%diag()%>%sqrt()
+
+merged.wins=createMultiPeriodDataset(df,start = start,ranks = T, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005)
+lm.58<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_closerank>0)+idperiodpost,data = merged.wins)
+robust.lm58<- vcovHC(lm.58, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.58)
+
+lm.59<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank)+idperiodpost,data = merged.wins)
+robust.lm59<- vcovHC(lm.59, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.59)
+
+
+
+
+
 
 ##Annualized
 lm.59<-lm(probAc~(annualwinspre)+idperiodpost,data = merged.wins)

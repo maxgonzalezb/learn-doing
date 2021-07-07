@@ -225,19 +225,19 @@ dev.off()
 
 
 ## Regression results
-regression.output.bids=capture.output({stargazer(lm.34,lm.35, lm.36 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
-                                              se = list(NULL, c(robust.lm34,robust.lm35,robust.lm35,robust.lm37)),omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
+regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
+                                              se = list(NULL, c(robust.lm34,robust.lm36,robust.lm35,robust.lm37)),omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
                                               title="Regression of bid amounts to experience",
                                               dep.var.labels=c("Standarized Bid"),
                                               column.labels = c("OLS", "OLS",'IV',"IV"),
                                               #covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)'),
                                               add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
-createStargazerTxt(regression.output.bids,'table_bids_1.txt')
+createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt')
 
-#Export the results of Quality Regressions
+  #Export the results of Quality Regressions
 
-regression.output.acceptance=capture.output({stargazer(lm.50,lm.51, lm.52 , lm.53, type = "latex",label = 'tab:table_acceptance_1', header = F,
-                                                 se = list(NULL, c(robust.lm50,robust.lm51,robust.lm52,robust.lm53)),omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
+regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.58, lm.55,lm.57,lm.59 , type = "latex",label = 'tab:table_acceptance_1', header = F,
+                                                 se = list(NULL, c(robust.lm54,robust.lm56,robust.lm58,robust.lm55,robust.lm57,robust.lm59)),omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
                                                  title="Regression of proposal acceptance on experience",
                                                  dep.var.labels=c("Standarized Bid"),
                                                  column.labels = c("OLS", "OLS",'IV',"IV"),

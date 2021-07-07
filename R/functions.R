@@ -312,7 +312,8 @@ general.statistics=df%>%
   dif.statistics=df%>%left_join(df.difs)%>%
     filter(winner=='Seleccionada')%>%dplyr::select(Codigo,dif)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(dif[!is.na(dif)])/N,mean=mean(dif,na.rm = T),std=sd(dif,na.rm = T),
                                                                            max=max(dif,na.rm = T),min=min(dif,na.rm = T))%>%mutate(name='dif')%>%as.data.frame()
-general.statistics=rbind(general.statistics,dif.statistics,general.statistics.allbids)
+
+  general.statistics=rbind(general.statistics,dif.statistics,general.statistics.allbids)
   
   
 general.statistics.output=general.statistics%>%arrange(name)%>%mutate(name=gsub(replacement = "Difference between 1st bid and 2nd (%)",pattern='dif',x=name),
@@ -331,7 +332,6 @@ firm.statistics=df.wins%>%pivot_longer(cols=ofertas:probWin)%>%group_by(name)%>%
 firm.statistics.output=firm.statistics%>%mutate(name=gsub(replacement = "Offers made by Firm",pattern='ofertas',x=name),
                                                              name=gsub(replacement = "Offers won by Firm",pattern='wins',x=name),
                                                              name=gsub(replacement = "Win prob. by Firm",pattern='probWin',x=name))%>%mutate_if(is.numeric, funs(as.character(signif(., 3))))
-  
   
 
 final.statistics=rbind(general.statistics.output,firm.statistics.output)

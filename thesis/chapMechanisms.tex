@@ -1,63 +1,62 @@
 \chapter{Mechanisms}
-Having established positive and significant treatment effects of  experience on outcomes in the market for public construction projects, we seek to investigate how does experience operate in practice to produce improved outcomes in the treated firms. Our objective is to provide evidence of some of the changes that might have taken place within firms which could help to achieve a higher rate of success in the market.
+Having established positive and significant treatment effects of  experience on outcomes in the market for public construction projects, we seek to investigate how does experience operate in practice to produce improved outcomes in the treated firms. Our objective is to provide evidence of some of the changes that might have taken place within firms and helped them achieving a higher rate of success in the market.
 
 We start presenting the following working hypothesis regarding the benefits of experience among firms. Each details one way in which a firm might have experienced improvements that led to increased success in the market. This chapter objective is to test fully or partially these hypothesis with the data we have avalaible.
 
-First we present our hypothesis. Then, for each one, we present the data, empirical strategy and results obtained.
-
+First we present our hypothesis:
 \begin{enumerate}
   \item{H1}: experience produces improvements in cost measures in the firm, keeping constant the type of project. This improvement in cost operates either via economies of scale, since after winning the project the firm is bigger than before; or via adjustments in the production function itself, for example, by changing the relative inputs to produce.
-  \item{H2}: experience allows the firm to produce at a higher quality than before, constant the cost of the works. This improvement operates because the firm, having performed certain tasks once, is able to better predict potential problems. Note that in the bidding phase this could be reflected in a better proposals.
-  \item{H3}: experience increases the pool of projects that a firm can perform. Experience can allow the firm to produce either bigger or more complex projects, due to increased human and organizational capital.
+  \item{H2}: experience allows the firm to produce at a higher quality than before, constant the cost of the works. This improvement operates because the firm, having performed certain tasks once, is able to better predict potential problems, and adapt accordingly. For our purposes, we hypothesize that the technical quality of the firm's \textit{proposal} improves, and we assume that this is in direct correlation with executed quality.
+  %\item{H3}: experience increases the pool of projects that a firm can perform. Experience can allow the firm to produce either bigger or more complex projects, due to increased human and organizational capital.
 \end{enumerate}
 
-Our first can be easily studied because or main dataset of interest includes bid amounts. we can investigate the second hypothesis pa
+Section\ref{section:bidsexp} investigates the first hypothesis while section \ref{section:qualityexp} investigates the second. In each section we briefly characterize the data, empirical strategy before showing the results, since most of the former elements are very similar to their previous chapter counterparts.
 
-The following sections study these hypothesis.
 
 \section{Bids and experience}
-This section investigates whether experience causes improvements in cost measures for treated firms. We do this by examining how do firm's bids evolve after the firm has been treated, i.e. after it has acquired experience. We assume that bid amounts are a non-decreasing function of bids' costs, which seems a plausible assumption.
+\label{section:bidsexp}
+This section investigates whether experience causes improvements in cost levels for treated firms. We approach this hypothesis by examining how do firm's bids evolve after the firm has been treated, i.e. after it has acquired experience. We assume that bid amounts are a non-decreasing function of bids' costs, which seems a plausible assumption.
 
 The relationship between bids and several firms characteristics has been investigated several times in the construction and economics literature. Relevant to the current investigation, we first mention.
 
 The next section details briefly the data, empirical strategy and results, since most of the the empirical strategy and data is analogous to the analysis performed in the previous chapter.
 
 \subsection{Data}
-Our base dataset is the same as in the previous chapter, i.e. a set of bids submitted by firms in auctions for public construction projects. However, instead of aggregating firm's experience and outcomes in time slices, our observations are the bids themselves, so we keep the original unit of observation for outcomes. We still employ aggregation to compute experience at each point in time for every firm. As before, we filter for outcome analysis those contracts where experience is employed in the awarding factors of the contract.
+Our main dataset is the same as in the previous chapter, i.e. a set of bids submitted by firms in auctions for public construction projects. However, instead of aggregating firm's experience and outcomes in time slices, our observations are the bids themselves, so we keep the original unit of observation (i.e the bid) for our outcomes. We still employ aggregation to compute previous experience at each point in time for every firm. As before, we filter those contracts where experience is employed in the awarding factors of the contract (only for outcome computation).
 
-Furthermore, we filter the first year in the data for our regression sample, since all firms have zero experience at this point and keeping it would introduce noise in the estimates due to spurious treatments set to zero . We do however employ all the avalaible years in the data to compute experience, as in the previous section.
+Furthermore, we filter the first year in the data for our regression sample, since all firms have zero experience at this point and keeping it would introduce noise in the estimates due to spurious treatments set to zero. We do employ all the avalaible years in the data to compute experience, as in the previous section.
 
-Our data includes two key variables: bid amounts and a government estimate of how much the project "should" cost, called the official estimate, which is prepared by the government unit in charge of the auction. It is of interest for the government to produce a reasonable estimate, since if the winning bid is below a certain fraction of this estimate, the government unit must undergo additional administrative steps to justify the awarding decision.
+Our data includes two key variables: bid amounts and a government estimate of how much the project "should" cost, called the official estimate. The latter is prepared by the government unit in charge of the auction and usually disclosed after the auction has taken place. It is of interest for the government to produce a reasonable estimate, since if the winning bid is below a certain fraction of the official estimate, the government unit must undergo additional administrative steps to justify the awarding decision.
 
-We produce comparable bid amounts across different contracts by dividing each bid amount by the corresponding government estimate which we call standarized bid. This procedure helps to prevents some heteroskedastic effects. It also reflects that most effects in our regression are expected to act "per-dollar" unit of a contract. We filter from the dataset standarized bids less than 0.1 and over 5.0, since they could correspond to outlier cases and not to a regular auctioning procedure or project, or could show a very bad initial estimate from the government. This only eliminates 217 contracts. Figure \ref{fig:plot_bids_standarized} show a histogram of standarized bid amounts (we only show the interval  for convenience).
+We produce comparable bid amounts across different contracts by dividing each bid by the corresponding government estimate, obtaining a new variable which we call standarized bid. This procedure helps to prevents some heteroskedastic effects, and also reflects that most effects in our regression are expected to act "per-dollar" unit of a contract (like for example fixed effects by year). We filter from the dataset standarized bids less than 0.1 and over 5.0, since they could correspond to outlier cases and not to a regular auctioning procedure or project, or could by a symptom of a very bad initial estimate from the government. Note that this step this only eliminates 217 contracts. Figure \ref{fig:plot_bids_standarized} shows a histogram of standarized bid amounts (we restrict the visualization range for convenience).
 
 \begin{figure}
   \centering
-  \includegraphics[scale=0.65]{plot_bids_standarized.png}
+  \includegraphics[scale=0.70]{plot_bids_standarized.png}
   \caption{Histogram of standarized bids}
   \label{fig:plot_bids_standarized}
 \end{figure}
 
-Table \ref{tab:table_bid_sample} shows descriptive statistics of the observations employed in the analysis sample for this section. Note that there are modifications with respect to Table \ref{tab:table_bid_sample}, given by the extra filtering steps employed in this section. \input{C:/repos/learn-doing/thesis/tables/table_bid_sample.txt}.
+Table \ref{tab:table_bid_sample} shows descriptive statistics of the observations employed in the analysis sample for this section. Note that there are modifications with respect to Table \ref{tab:table_bid_sample}, given by the extra filtering steps employed for this analysis. \input{C:/repos/learn-doing/thesis/tables/table_bid_sample.txt}.
 
 \subsection{Empirical Strategy}
 
-In this section, our main strategy is perform a regression of the form:
+Our empirical strategy is perform a regression of the form:
 \begin{equation}
-\label{eqn:olsspec}
-BID_{ijt}=\alpha+ \beta EXP_{i,(t-1)}+X_j+FIRST_{ij}+\varepsilon_{it}
+\label{eqn:olsbids}
+BID_{ijt}=\alpha+ \beta EXP_{ijt}+X_j+FIRST_{ijt}+\varepsilon_{ijt}
 \end{equation}
 
- Here, the outcome variable $BID_{ijt}$ is the standarized bid submitted by firm  $i$ at time $t$  to contract $j$. Our treatment variable is experience, either in binary form $EXP>0$ or linear form $EXP$. We compute experience by summing all contracts won up to $t$. Each row of our main dataset (after the filtering steps detssailed above) is an observation in the regression. We add controls $X_j$ corresponding to the region of the contract and its year. Finally, we add an indicator variable $FIRST_{ij}$ which is 1 if firm $i$ is on its first year in the market when bidding for contract $j$.
+ Here, the outcome variable $BID_{ijt}$ is the standarized bid submitted by firm  $i$ at time $t$  to contract $j$. Our treatment variable is experience, either in binary form $EXP>0$ or linear form $EXP$. We compute experience by summing all contracts won up to $t$. Each bid in our main dataset (after the filtering steps detailed above) is an observation in the regression. We add controls $X_j$ corresponding to the region of the contract and the year. Finally, we add an indicator variable $FIRST_{ij}$ which is 1 if firm $i$ is on its first year in the market when bidding for contract $j$, because from the theorical analysis and empirical literature we expect a positive effect due to "agresiveness" of first entrants.
 
-Similarly as before, we expect to have unobserved cost variables, specific to each firm, which might bias estimates upwards due to positive correlation with experience. We repeat the same strategy as before to produce consistent estimates, using closely won bids to produce random variation in total experience. The setting is an IV regression where we instrument $EXP_{it}$ with $EXPCLOSE_{it}$, the number of close wins by a firm up to time $t$. Wins are labeled as close wins if they fulfill the conditions established in the  chapter. Table \ref{tab: closewins_bids} shows a comparison of bids identified as close wins (both by price and rank) againts the rest of the sample.
+Similarly as before, we expect to have unobserved cost variables, specific to each firm, which might bias estimates upwards due to positive correlation with experience. We repeat the same strategy as before to produce consistent estimates, using closely won bids to produce random variation in total experience. The setting is an IV regression where we instrument $EXP_{it}$ with $EXPCLOSE_{it}$, the number of close wins by a firm up to time $t$. Wins are labeled as close wins if they fulfill the conditions established in the  previous chapter. Table \ref{tab:closewins_bids} shows a comparison of bids identified as close wins (both by price and rank) against the rest of the sample.
 
-Our estimation strategy relies in validity and relevance assumptions. The first one requires uncorrelatedness between close wins and cost measures. The second requires that our instrument does produce variation in the independent variable. Developing a regression of bids won on bids closely won (by price) we find  an F-statistic of only 0.33 (recall that here, contrary to the previous section, we are not aggregating any data). A regression of wins on close wins (by rank) shows instead an F-statistic of 7,746. Based on these results, we abandon our first instrument (clos wins by price) and we only keep the second alternative (close wins by rank).
+Our estimation strategy relies in validity and relevance assumptions. The first one requires uncorrelatedness between close wins and cost measures. The second requires that our instrument does produce variation in the independent variable. We test this assumption by developing a regression of bids won on bids closely won (by price), and we find  an F-statistic of only 0.33, while the same regression on wins but on close wins by rank shows instead an F-statistic of 7,746. Based on these results, we abandon our first instrument (close wins by price) and we only keep the second alternative (close wins by rank). Note that contrary to the previous chapter we use outcomes at the individual bid level, which could explain this result.
 
 \input{C:/repos/learn-doing/thesis/tables/table_closewins_bids.txt}
 
 \subsection{Results}
-We show graphical results in Figure \ref{fig:plotbids_panel}. Left plot shows standarized bids againsta all bids and firms in the sample. It can be seen that the average bid for firms without experience (0.8877) is higher than the average of firms with any amount oexperience. The right plot shows only firms with either one close win or zero wins. Notably, firms with one close win (and no regular bids) submit bids that are on average almost 9 percentage points lower that those firms without experience. Note that this equals almost half of the standard deviation of standarized bids (0.21).
+We show graphical results in Figure \ref{fig:plotbids_panel}. Panel A shows standarized bids againsta experience, employing all bids and firms in the sample. It can be seen that the average bid for firms without experience (0.89) is higher than the average of firms with any amount of positive experience. Panel B shows only firms with either one close win (by rank) or zero wins. Notably, firms with one close win (and no regular bids) submit bids that are on average almost 9 percentage points lower that those firms without experience. This equals almost half of the standard deviation of standarized bids (0.21).
 
 \begin{figure}[H]
   \includegraphics[scale=0.65]{plotbids_panel.png}
@@ -65,52 +64,73 @@ We show graphical results in Figure \ref{fig:plotbids_panel}. Left plot shows st
   \label{fig:plotbids_panel}
 \end{figure}
 
-We perform four regressions between experience and standarized bids. The first two are the OLS  adn IV results employing a binerymeasure of experience; and the third and fourth are the OLS and IV employing linear experience. Table \ref{tab:table_bids_1} presents our main results. The OLS estimates of the effect of having experience on bid amounts is around three percentage points. Altough this is less than 10\% of the standard deviation of standarized bids, given that the average difference between the lowest and second lowest bid is around eight percentage points, the effect (if it were close to the causal one) would be significant.
+We perform four regressions between experience and standarized bids. The first two are the OLS and IV results employing binary experience as treatment; while the third and fourth are the OLS and IV regressions employing total experience as treatment. Table \ref{tab:table_bids_1} presents our main results. The OLS estimates of the effect of having experience on bid amounts is around three percentage points. Altough this is around s15\% of the standard deviation of standarized bids, given that the average difference between the lowest and second lowest bid is around eight percentage points, the effect seems to be relevant.
 
-Altough we obtain significant IV estimates at p=0.01 with our rank strategy, we have considerable standard errors that prevents us from obtaining precise estimates of the level of the treatment effects. We advance a possible explanation of this result based on our empirical srategy. Since now we examined experience cumulatively, after 10 years we might have extremely highly experienced firms which produce too much standard deviation in the independent variable, while the link between  both experience and bids and close and regular wins diminishes. Among highly experienced firms, it is probable that the effect of experience is not relevant anymore and close wins do not have as a close relation with outcomes.
+Altough we obtain significant IV estimates at p=0.01 with our rank strategy, we also obtain higher standard errors that prevents us from obtaining very precise estimates of the level of the treatment effects. We advance a possible explanation of this result based on our empirical strategy. Since now we examined experience cumulatively, after 10 years we might have extremely highly experienced firms which means higher variance in the independent variable, while the link between i) experience and bids and ii) close and regular wins diminishes. Among highly experienced firms, it is probable that the effect of experience is not relevant anymore and close wins do not have as a close relation with outcomes.
 
 \input{C:/repos/learn-doing/thesis/tables/table_bids_results_1.txt}
 
-Notwithstanding the size of the standard error, our main hypothesis of interest, which was that experience produces cost advantages among treated firms, seems to be substantiated by the results. Altough we cannot speak with certainty about the levels of the effect, we can conclude that experience does allow firms to submit lower bids as a source of competitive advantage.
+Notwithstanding higher standard errors, our main hypothesis of interest, which was that experience produces cost advantages among treated firms, seems to be substantiated by the results. Altough we cannot speak with certainty about the levels of the effect, we can conclude that experience does allow firms to submit lower bids as a source of competitive advantage, with treatment effects that are at least two percentage points on average for firms without experience compared with firms with positive experience.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Quality and Experience}
+\label{section:qualityexp}
 In order to test hypothesis number two, in this section we study if experience treatments causes firms to submit higher quality proposals. We do this by employing a step in the auctioning process aimed at controlling some basic quality conditions of a proposals, namely, formal requirements and qualifications.
 
-Note that quality is explicitly evaluated in many contracts by including an item in the awarding criteria labeled as "technical specifications" or just "quality of the proposal". Our estimation is that around \% include some measure of technical evaluation in the awarding criteria.  Ideally, we would test the hypothesis that experience improves the quality of a firm's proposals by employing the score that each firm obtained in the technical or quality item of the evaluation criteria of the project. However, since our data has not this item avalaible by firm, we employ an alternative strategy,which focuses on measuring quality across a different but related dimension: the formal acceptance rate of the proposals.
+Recall that, for each auction, firm proposals are analyzed in two steps. The first step only examines if the proposal fulfills formal requirements. Formal requirements include the inclusion of required legal documents, submitting each of the technical documents asked for in the bidding documents, etc. In essence, the first stage verifies that all proposals can be evaluated in equal terms and that the minimum legal requirements are fulfilled. Clearly, whether a proposal was accepted is a measure of its quality, albeit an imperfect one. Altough it leaves out a significant part of the variation that would be expected in proposal's qualities, it is nonetheless an interesting measure of quality because formal acceptance is a necessary condition to win a project.
 
-Recall that, for each auction, firm proposals are analyzed in two steps. The first step only examines if the proposal fulfills all the formal requirements in the process. Formal requirements include the inclusion of legal documents, submitting each of the technical documents asked for in the bidding documents, etc. In essence, the first stage verifies that all proposals can be evaluated at an equal footing and that minimum bidding legal requirements are fulfilled. Clearly, whether a proposal was accepted is a measure of its quality, albeit an imperfect one. Altough it leaves out a significant part of the variation that would be expected in proposal's qualities, it is nonetheless an interesting measure of quality because formal acceptance is a necessary condition to win a project.
+Note that quality is explicitly evaluated in many contracts by including an item in the awarding criteria labeled as "technical specifications" or just "quality of the proposal". Our estimation is that around 30\% of contracts include some measure of technical evaluation in the awarding criteria.  Ideally, we would test the hypothesis that experience improves the quality of a firm's proposals by employing the score that each firm obtained in the technical or quality item of the evaluation criteria of the project. However, since our data has not this item avalaible by firm, we employ this alternative strategy.
 
-Our research design, detailed below, will test whether experienced firms have a higher formal acceptance rate than unexperienced firms at the formal revision step of the procuurement process. To our knowledge, ity has not been studied in the previous literature factors infleuencing formal acceptance of bid proposals.
+Our research design, detailed below, testa whether experienced firms have a higher formal acceptance rate than unexperienced firms at the first stage of the awarding process.
 
 \subsection{Data}
-We employ our bid dataset similarly as the previous section. Each observation is a bid submitted by a firm to an auction held by the government. Since we are analyzing the formal revision part of the auction, and not scoring itself, we think that on principle we could skip the filtering of contracts that do include experience as an awarding factor. However, due to possible self-selection, we will examine both possibilities. We again filter the first year of the data in our analysis sample to prevent confounding effects.
+We employ our bid dataset similarly as in the previous chapter. we create time slices exactly as detailed in section so we do not repeat the full process.  Each observation consists in the outcomes of a firm in period 2 of slice $t$ and experience acquired during period 1 of the same slice $t$.
 
-We show some descriptive statistics of acceptance rates in table and Figure \ref{fig:plot_acceptance_rates}. We can already see that the fraction of firms getting all proposals rejected decreases with more than one proposal, which could be either due to revealed preferences or to the effect of learning about formal requirements after the first completed bidding process.
+Regarding sampling creation, since we are analyzing the formal revision stage of the auction, and not the scoring itself, we think that we could skip  filtering out contracts that do include experience as an awarding factor. However, due to possible self-selection effects for firms with experience, we will examine both possibilities. We again filter the first year of the data in our analysis sample to prevent confounding effects.
+
+We show some descriptive statistics of acceptance rates sFigure \ref{fig:plot_acceptance_rates}. We can already see that the fraction of firms getting all proposals rejected decreases with more than one proposal, which could be caused by the effect of learning about the formal revision stage after the first few bidding process.
 
 \begin{figure}
   \includegraphics[scale=0.50]{plot_acceptance_rates.png}
-  \caption{Acceptance rate for proposals sent by firms to auctions for public construction project.}
+  \caption{Histograms of proposal acceptance rate by firms in the dataset}
   \label{fig:plot_acceptance_rates}
 \end{figure}
-
-We end up with a dataset where each observation is a bid submitted by a firm to an auction of a public construction project, which includes as variables of interest wether the proposal was formally accepted, the experience of the firm at the time of the auction (both regular, annualized and close wins), and several  auxiliary variables that characterize the contract itself.
 
 \subsection{Empirical Strategy}
 We test wether experience leads to a higher rate of formal proposal acceptance employing the following regression:
 
-Here, is and indicator variable that equals 1 if the firms' $i$ proposal for contract $j$ at time $t$ was accepted and zero if it was not. $EXP$ is our treatment variable, both in binary and linear functional forms. $X_{j}$ is a set of contract-specific controls, which include year, region, and the government body in charge of the auction. We include the controls for the possibility that government units in different  geographical regions have different levels of stringency when evaluating proposals for similar projects.
+\begin{equation}
+\label{eqn:olsspec}
+ACCRATE_{it}=\alpha+ \beta EXP_{it-1}+T_t+\varepsilon_{it}
+\end{equation}
 
-We are less worried about endogeneity with unobserved cost factors since formal revision does not relate to economic aspects of the proposal. However, it is possible that there are different levels of baseline levels of proposal-makeing abilities among firms, so we repeat our usual instrumentation of experience with close wins.
+Here, Let $ACCRATE_{it2}$ is the share of contracts won in period 2 of slice $t$, $EXP_{it1} $ is the measure of experience employed for firm $i$ in slice $t$, and $T_t$ are period fixed effect. We employ indexes 1 and 2 to make explicit that each slice has two periods: one of experience computation and one of outcome computation, and every slice is indexed by t, which is date in between the two periods.
 
-We perform four regressions. The first two are OLS regressions and the second two are IV regressions, employing closely won contracts to instrument total experience. For each type, we develop one regression where the treatment is the binary of previous experience and the second is annualized past experience.
+%Here, is and indicator variable that equals 1 if the firms' $i$ proposal for contract $j$ at time $t$ was accepted and zero if it was not. $EXP$ is our treatment variable, both in binary and linear functional forms. $X_{j}$ is a set of contract-specific controls, which include year, region, and the government body in charge of the auction. We include the controls for the possibility that government units in different  geographical regions have different levels of stringency when evaluating proposals for similar projects.
+
+Adittionally to unobserved cost advantages that could be endogenous to experience, we expect different levels of baseline levels of proposal-making abilities among firms, so we repeat our instrumentation of experience with close wins the same as the previous chapter and section. Since we apply the same sample procedure as in the previous chapter, the same discussion about validity and rank applies.
+
+We perform six regressions between proposal acceptance rates and experience. The first three are the OLS and IV results employing a our binary treatment; and the third to sixth employ a linear experience treatment. We employed our first alternative to compute experience, i.e. we employ two year periods to compute experience and subsequent two year periods to compute outcomes.
 
 \subsection{Results}
+Figure \ref{fig:plot_acceptance_results} displays graphic results. Panel A) displays a clear discontinuity between the mean of the acceptance indicator variable for proposals sent by firms without experience and firms with any kind of experience. The mean acceptance rate for firms with no experience is .73, but is equal or above .80 for proposals belonging to firms with positive experience.
+
+ To be more stringent with the sample, panel B displays the same analysis but where we leave out all firms except for those ones which have only one previous proposal (won or lost), so they are new entrants to the market which may have won or lost their first contract and we analyze their next submitted proposal.  Notably, mean acceptance rates increase from .75 (N=4,374) for firms without experience to .87 (N=990) for firms which won their first contract.
+
+Furthemore, we find that, for observations in the first quintile of acceptance rate, 40\% of them correspond to firms with positive experience. On the other side, only 20\% of the observations in the first quintile of acceptance come from firms with positive experience (at the point of observation, since a firm can be in both quintiles at different points in time).
+
+Our regression results are shown in Table \ref{tab:table_acceptance_1}. We find positive and significant treatment effects of experience on outcomes: having experience results in almost 10 percentage points higher mean acceptance rates in  future proposals (next two years). Given a standard deviation of .32 in mean acceptance rates across the analysis sample, this means that having experience increases acceptance rates in around a third of a standard deviation of the outcome variable.
+
+Regarding the treatment effect per unit of experience, we find that each new contract performed increases mean acceptance rates by around 1.2 percentage points. Across both types of treatments, we find that IV estimates are close to OLS counterparts, altough with slightly higher standard errors.
+
 \begin{figure}
+\centering
   \includegraphics[scale=0.65]{plot_acceptance_results.png}
   \caption{Acceptance rate for proposals sent by firms to auctions for public construction project.}
   \label{fig:plot_acceptance_results}
 \end{figure}
 
 \input{C:/repos/learn-doing/thesis/tables/table_acceptance_1.txt}
+
+\clearpage
