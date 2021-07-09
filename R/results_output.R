@@ -234,6 +234,63 @@ regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, t
                                               add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt')
 
+
+######################## Quality
+## Quality plot results
+
+plot.quality.exp=ggplot(df.quality.plot,aes(x=exp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,10)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
+  ylim(0.7,1)+theme_bw()+xlab('Experience')+ylab('Mean Proposal Acceptance  Indicator')+scale_x_continuous(breaks=seq(0,10),limits = c(0,10))+
+  theme(panel.grid.major.x = element_blank(),axis.text.x = element_text(size=9,color = 'black'),panel.grid.minor = element_blank())+ggtitle('All bids and firms')
+plot.quality.exp
+
+plot.quality.exp.restricted=ggplot(df.quality.plot.restricted,aes(x=exp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(-0.05,1.05)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.05))+scale_x_continuous(breaks=seq(0,2),limits = c(-0.2,1.5))+
+  ylim(0.7,1)+theme_bw()+xlab('Experience')+ylab('Mean Proposal Acceptance  Indicator')+
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),panel.grid.minor.y  = element_blank())+
+  theme(axis.text.x = element_text(size=9,color = 'black'))+ggtitle('Firms with one previous proposal')
+plot.quality.exp.restricted
+
+plot.quality.exp.close.prince=ggplot(df.quality.plot.close.price,aes(x=exp_close,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,10)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
+  ylim(0.3,1.5)+theme_bw()+xlab('Close Experience (by price)')+ylab('Mean Proposal Acceptance  Indicator')+scale_x_continuous(breaks=seq(0,2),limits = c(-0.2,1.5))+
+  theme(panel.grid.major.x = element_blank(),axis.text.x = element_text(size=9,color = 'black'),panel.grid.minor = element_blank())+ggtitle('Experience equal to close (by price) experience')
+plot.quality.exp.close.prince
+
+plot.quality.exp.close.rank=ggplot(df.quality.plot.close.rank,aes(x=exp_closerank,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,6)+
+  geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
+  ylim(0.7,1)+theme_bw()+xlab('Close Experience (by rank)')+ylab('Mean Proposal Acceptance  Indicator')+scale_x_continuous(breaks=seq(0,6),limits = c(-0.2,6))+
+  theme(panel.grid.major.x = element_blank(),axis.text.x = element_text(size=9,color = 'black'),panel.grid.minor = element_blank())+ggtitle('Experience equal to close (by rank) experience')
+plot.quality.exp.close.rank
+
+row.1=ggdraw() + 
+  draw_label(
+    "     Mean of Proposal Acceptance Indicator by Past Experience",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+row.4=plot_grid(plot.quality.exp.close.prince,plot.quality.exp.close.rank,nrow = 1,labels = c('C','D'))
+row.3=ggdraw() + 
+  draw_label(
+    "         Mean of Proposal Acceptance Indicator by Past (Close) Experience",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+row.2=plot_grid(plot.quality.exp,plot.quality.exp.restricted,nrow = 1,labels='AUTO')
+plot.quality.results=plot_grid(row.1,row.2,row.3,row.4,rel_heights = c(0.1, 1,0.1,1),nrow = 4)
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_results.png",width = 9, height = 7.5,units = "in",res=1000)
+plot.quality.results
+dev.off()
+
 ## Quality Regressions
   regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.62, lm.55,lm.57,lm.63 , type = "latex",label = 'tab:table_acceptance_1', header = F,
                                                  se = list(NULL, c(robust.lm54,robust.lm56,robust.lm62,robust.lm55,robust.lm57,robust.lm63)),

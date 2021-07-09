@@ -1,6 +1,5 @@
 library(PlayerRatings)
 library(tictoc)
-
 source('C:\\repos\\learn-doing\\R\\functions.R')
 
 df.ratings.1 = df %>% filter(Codigo != '6676853') %>% select(Codigo, RutProveedor, FechaInicio, winner) %>%
