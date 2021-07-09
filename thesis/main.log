@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  9 JUL 2021 10:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  9 JUL 2021 17:15
 entering extended mode
 **./main.tex
 (main.tex
@@ -269,7 +269,7 @@ File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count284
 \l__pdf_internal_box=\box63
 ) (main.aux
-(chapMechanisms.aux))
+(chapInstitutional.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
@@ -344,103 +344,53 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-\openout2 = `chapMechanisms.aux'.
+\openout2 = `chapInstitutional.aux'.
 
 
-(chapMechanisms.tex
+(chapInstitutional.tex
 Chapter 1.
 [1
 
 
 
-{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}] [2]
-<C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png, id=14, 433.62p
-t x 252.945pt>
-File: C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png Graphic fi
-le (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_bids_standar
-ized.png  used on input line 35.
-(pdftex.def)             Requested size: 303.53192pt x 177.06029pt.
+{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}]
+Overfull \hbox (1.089pt too wide) in paragraph at lines 19--20
+[]\T1/cmr/m/n/12 All com-pa-nies must reg-is-ter as pub-lic con-trac-tors in or
+-der to bid for pub-lic projects,
+ []
 
-(C:/repos/learn-doing/thesis/tables/table_bid_sample.txt<<ot1.cmap>><<oml.cmap>
-><<oms.cmap>><<omx.cmap>>) [3] [4 <C:/repos/learn-doing/thesis/figures//plot_bi
-ds_standarized.png>]
-(C:/repos/learn-doing/thesis/tables/table_closewins_bids.txt)
-<C:/repos/learn-doing/thesis/figures//plotbids_panel.png, id=29, 650.43pt x 307
-.1475pt>
-File: C:/repos/learn-doing/thesis/figures//plotbids_panel.png Graphic file (typ
-e png)
-<use C:/repos/learn-doing/thesis/figures//plotbids_panel.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotbids_panel.pn
-g  used on input line 62.
-(pdftex.def)             Requested size: 422.77449pt x 199.6435pt.
 
-Underfull \vbox (badness 3601) has occurred while \output is active []
+Underfull \vbox (badness 1675) has occurred while \output is active []
 
- [5]
-(C:/repos/learn-doing/thesis/tables/table_bids_results_1.txt) [6 <C:/repos/lear
-n-doing/thesis/figures//plotbids_panel.png>] [7]
+ [2]
+Overfull \hbox (8.00272pt too wide) in paragraph at lines 22--23
+\T1/cmr/m/n/12 In Chile, gen-er-ally all gov-ern-ment bod-ies must de-velop pro
+-cure-ment pro-ce-dures through
+ []
 
-LaTeX Warning: Reference `section:datamain' on page 8 undefined on input line 8
-8.
+[3] [4] [5])
+Underfull \vbox (badness 5652) has occurred while \output is active []
 
-[8]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png, id=48, 867.24p
-t x 289.08pt>
-File: C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png Graphic fi
-le (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-ates.png  used on input line 97.
-(pdftex.def)             Requested size: 433.61894pt x 144.53964pt.
-
-Underfull \vbox (badness 2245) has occurred while \output is active []
-
- [9 <C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>] [10]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png, id=59, 650.4
-3pt x 542.025pt>
-File: C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png Graphic 
-file (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-esults.png  used on input line 136.
-(pdftex.def)             Requested size: 422.77449pt x 352.31207pt.
-
-(C:/repos/learn-doing/thesis/tables/table_acceptance_1.txt) [11] [12 <C:/repos/
-learn-doing/thesis/figures//plot_acceptance_results.png>]) (main.aux
-(chapMechanisms.aux))
-
-LaTeX Warning: There were undefined references.
-
- )
+ [6]
+[7] (main.aux (chapInstitutional.aux)) )
 (\end occurred when \ifx on line 52 was incomplete) 
 Here is how much of TeX's memory you used:
- 5558 strings out of 478826
- 89756 string characters out of 2857130
- 400924 words of memory out of 3000000
- 23352 multiletter control sequences out of 15000+600000
- 413698 words of font info for 48 fonts, out of 8000000 for 9000
+ 5434 strings out of 478826
+ 85843 string characters out of 2857130
+ 388799 words of memory out of 3000000
+ 23274 multiletter control sequences out of 15000+600000
+ 409463 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,12n,117p,1892b,343s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,5n,117p,1340b,119s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Program Files/MiKTeX/fon
-ts/enc/dvips/cm-super/cm-super-t1.enc}<C:/Program Files/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb
-><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program 
-Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb
-><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1200.pfb><C:/Program 
-Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.pfb><C:/Program Files/MiKTeX/
-fonts/type1/public/cm-super/sfbx1728.pfb><C:/Program Files/MiKTeX/fonts/type1/p
-ublic/cm-super/sfbx2488.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-supe
-r/sfrm1200.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pf
-b>
-Output written on main.pdf (12 pages, 1120166 bytes).
+ts/enc/dvips/cm-super/cm-super-ts1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips
+/cm-super/cm-super-t1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/
+sfbx1440.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1728.pfb>
+<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx2488.pfb><C:/Program F
+iles/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on main.pdf (7 pages, 84158 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
+ 48 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 5 words of extra memory for PDF output out of 10000 (max. 10000000)
 
