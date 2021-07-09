@@ -224,7 +224,7 @@ plot.bids.exp
 dev.off()
 
 
-## Regression results
+## Bid Regressions
 regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
                                               se = list(NULL, c(robust.lm34,robust.lm36,robust.lm35,robust.lm37)),omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
                                               title="Regression of bid amounts to experience",
@@ -234,16 +234,16 @@ regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, t
                                               add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt')
 
-  #Export the results of Quality Regressions
-
-regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.58, lm.55,lm.57,lm.59 , type = "latex",label = 'tab:table_acceptance_1', header = F,
-                                                 se = list(NULL, c(robust.lm54,robust.lm56,robust.lm58,robust.lm55,robust.lm57,robust.lm59)),omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
+## Quality Regressions
+  regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.62, lm.55,lm.57,lm.63 , type = "latex",label = 'tab:table_acceptance_1', header = F,
+                                                 se = list(NULL, c(robust.lm54,robust.lm56,robust.lm62,robust.lm55,robust.lm57,robust.lm63)),
+                                                 omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
                                                  title="Regression of proposal acceptance on experience",
-                                                 dep.var.labels=c("Standarized Bid"),
-                                                 column.labels = c("OLS", "OLS",'IV',"IV"),
-                                                 #covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)'),
-                                                 add.lines = list(c("Fixed effects By Period, Region", "Yes", "Yes",'Yes','Yes'),
-                                                 c("Fixed effects By Government Body", "Yes", "Yes",'No','No')))})
+                                                 dep.var.labels=c("Proposal Acceptance Rate"),
+                                                 column.labels = c("OLS","IV (by price)",'IV (by rank)',"OLS","IV (by price)",'IV (by rank)'),
+                                                 #covariate.labels=c("Experience in (t-1) > 0",'Experience in (t-1) (Total)'),
+                                                 #c("Fixed effects By Government Body", "Yes", "Yes",'No','No')))})
+                                                 add.lines = list(c("Fixed effects By Period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.acceptance,'table_acceptance_1.txt')
 
 

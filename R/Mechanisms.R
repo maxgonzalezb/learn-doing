@@ -212,7 +212,7 @@ row.1=ggdraw() +
   theme(
     plot.margin = margin(0, 0, 0, 7)
   )
-row.4=plot_grid(plot.quality.exp.close.prince,plot.quality.exp.close.rank,nrow = 1)
+row.4=plot_grid(plot.quality.exp.close.prince,plot.quality.exp.close.rank,nrow = 1,labels = c('C','D'))
 row.3=ggdraw() + 
   draw_label(
     "         Mean of Proposal Acceptance Indicator by Past (Close) Experience",
@@ -223,11 +223,11 @@ row.3=ggdraw() +
   theme(
     plot.margin = margin(0, 0, 0, 7)
   )
-row.2=plot_grid(plot.quality.exp,plot.quality.exp.restricted,nrow = 1)
+row.2=plot_grid(plot.quality.exp,plot.quality.exp.restricted,nrow = 1,labels='AUTO')
 
 plot.quality.results=plot_grid(row.1,row.2,row.3,row.4,rel_heights = c(0.1, 1,0.1,1),nrow = 4)
 
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_results.png",width = 8.5, height = 7.5,units = "in",res=1000)
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_results.png",width = 9, height = 7.5,units = "in",res=1000)
 plot.quality.results
 dev.off()
 
@@ -252,7 +252,7 @@ lm.55<-lm(probAc~(winspre)+idperiodpost,data = merged.wins)
 robust.lm55<- vcovHC(lm.55, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.55)
 
-  lm.56<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost,data=merged.wins)
+lm.56<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost,data=merged.wins)
 robust.lm56<- vcovHC(lm.56, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.56)
 
@@ -298,7 +298,7 @@ robust.lm62<- vcovHC(lm.62, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.62)
 
 lm.63<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank)+idperiodpost,data = merged.wins)
-robust.lm58<- vcovHC(lm.63, type = "HC1")%>%diag()%>%sqrt()
+robust.lm63<- vcovHC(lm.63, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.63)
 
 
