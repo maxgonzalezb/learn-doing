@@ -1,17 +1,52 @@
 
 \chapter{Data}
 
-Our main source of data is a set of proposals submitted by firms in public auctions for goods developed by government units in Chile between 2010 and 2021. Raw data for public purchases developed via Mercado Public is publicly available in the Open Data Portal of the Directorate of Public Purchases. As was mentioned before, most government units are mandated by the law to develop their procurement process via the Mercado Public platform, and even those who do not must publish a basic set of information to the database.
+\section{Source and characteristics}
+\subsection{Source}
+Our main source of data is a set of proposals submitted by firms in public auctions for goods procured by government units in Chile between 2010 and 2021. Each observation corresponds to the monetary amount submitted by a firm for a specific project or good. Each observation includes project characterization variables, auction characterization variables, and firm characterization variables.\footnote{Note that first two sets of variables are the same within bids for the same contract}.
 
-Each observation corresponds to the monetary amount submitted by a firm for a specific project or good. Each observation includes project characterization variables, auction characterization variables, and firm characterization variables.  Note that first two sets of variables are the same within bids for the same contract. Relevant characterization variables include the auctions’ date, geographic region, the type of project, and the procuring government unit. Regarding the project itself, the data includes the product units being auctioned, and an official estimate of the contract amount (for most projects). For each submitted bid we also get the corresponding firm´s name, unique tax identifier of the contractor (RUT), bid amount, whether it was accepted and whether it was awarded the project or not.
+Raw data for public purchases developed via Mercado Publico is publicly available in the Open Data Portal of the Directorate of Public Purchases. As was mentioned before, most government units are mandated by the law to develop their procurement process via the Mercado Public platform, and even those who do not must publish a basic set of information to the database. Given the law requirements for firms to submit purchasing data to the platform, we expect this dataset to include all purchases made by government units in the construction type save for some exceptions.
 
-The Open Data Platform has available year/month data in the form of .csv files, which were downloaded and merged to form the initial raw dataset. Here, each observation is a proposal sent by a firm to a certain public auction. This dataset has 10,000,000 observations, which span a wide array of different types of goods purchased by the government. The current investigation employed a standardized classification field to filter only projects of the Category “Construction Projects and Services”. This filtering steps renders observations.
+We mention some exceptions of the information. This is the case for purchases related to national security, for example, the construction of naval bases. Second, we do not have complete data for the Ministry of Public Works. This Ministry is exempt from the specific rules of law related to public purchases since it has its own set of regulations governing procurement of projects in road, airport, and other types of projects. Although the law mandates that even in this case the Ministry should publish basic information to the digital platform mentioned in the previous section, in practice we observe that information is only partial, especially before 2014.Finally, we expect that contracts with surrounding conditions that make published information will not be present, e.g., national security reasons.
 
-Furthermore, we perform additional filtering steps. We filter only single item projects and drop projects below the threshold of CLP. This aims to exclude excessively simple projects, like small repairs, which do not entail either relevant bureaucracy or public-specific domain expertise. We end of with observations. We end up with observations, submitted for unique projects. We also have unique contractors, developing on average contracts each.
+The Open Data Platform has available  data on public purchases in .csv files covering each one year-month of public purchases. The .csv files were downloaded and merged together to form the initial raw dataset of around 10,000,000 observations, which span a wide array of different types of goods purchased by the government.
 
-Given the law requirements for firms to submit purchasing data to the platform, we expect this dataset to include all purchases made by government units in the construction type save for some exceptions. First, we expect that contracts with surrounding conditions that make published information will not be present, e.g., national security reasons. This is the case for purchases related to national security, for example, the construction of naval bases. Second, we do not have complete data for the Ministry of Public Works. This Ministry is exempt from the specific rules of law related to public purchases since it has its own set of regulations governing procurement of projects in road, airport, and other types of projects. Although the law mandates that even in this case the Ministry should publish basic information to the digital platform mentioned in the previous section, in practice we observe that information is only partial, especially before 2014.
+The dataset has the following set of relevant variables:
+\begin{itemize}
+  \item Project characterization variables: auctions’ date, geographic region, the product category, legal size classification, procuring government unit, government estimate of cost.
+  \item Firm charcaterization variables: unique tax identifier, bid amount, acceptance status of the bid, awarding status of the bid.
+\end{itemize}
+
+%The category variables corresponding to standard U.N. product classification in three levels, each of increased detail. We decided to filter projects belonging widest category because not very clean otehrs. Additionally included number 2 in obras.
+The firm unique identifier can be of two types depending on the firm. For firms constituted as jurdic entities separate from final taxpayers(i.e. individuals), the unique identifier is the unique tax number given by the internal tax bureau. For firms identified with a final taxpayer, the unique identifier is the personal unique ID (RUN) that uniquely identifies every person in Chile. Therefore, the variable that allows us to follow entities across the years and contracts has very little noise and is subject to almost no errors. Government IDs are also tax identifiers, which unless extraordinary circumstances stay the same over the years.
+
+The acceptance/awarded bid variables indicate whether the bid did pass the first screening for formal correctedness and whether it was awarded the project.
+
+We  employed the product category standardized classification field to filter only projects of the Category “Construction Projects and Services”. This filtering steps renders observations. Furthermore, to obtain our analysis sample we perform additional filtering steps. We filter only single item projects and drop projects below the threshold of CLP. This aims to exclude excessively simple projects, like small repairs, which do not entail either relevant subject-matter or public-specific domain expertise. We end up with observations, submitted for unique projects.
+
+\subsection{Analysis Sample}
+The current section describes our main dataset. Altough different analysis in the chapter perform small adjustments that further filter the sample, here we characterize the main sample employed in the next chapter.
+
+We have unique projects in our dataset and unique bids. According to our size variable, of the projects are of size , and the rest is in between. As seen in table, we have coverage of all regions, in proportions that are expcted due to their relative population sizes.
+
+We construct a classification of the types of projects included in the sample via two constructed variables. The first is a categorization of the unit in charge of the project. This was done by matrching strings to the unit's name. We find the distribution of units in table . It can be seen that municipalities make the bulk.
+
+The second approach to understand the types of projects is via a constructed from the name of the project name. The name variable is usually descriptive of the nature of the project and can be used to generate an initial characterization of the types of projects. We match the individual name variable with two pre-defined lists of words, the first containing words containing the type of work (construction, maintenance, etc,) and the second the type of project (hospital, park, etc.). If a project has more than one word it is considered in both categories. The results are shown in the heatmap of Figure. We find that
+
+We have unique firms submitting bids which gives an average bids per firm in the dataset.
+
+The time dimension is essential in the current investigation. table displays the number of observations, unique firms and unique contracts for each year of the sample, along with key variables. As expected, contracts have increased over the years.
+
 The following table show descriptive statistics for projects, bids, and firms found in the final sample. We see that there is considerable variance in project sizes.
 
-We show in figure that the sample covers fairly all years in the sample, although as it would be expected, number of projects have been increasing since 2010. Furthermore, we see that projects span the full set of geographic Chilean administrative regions.
+\subsection{Awarding Criteria Data}
 
-We advance some basic characterizations regarding the types of government units procuring these projects and the types of projects in the sample. The name variable is usually descriptive of the nature of the project and can be used to generate an initial characterization of the types of projects. We match the individual name variable with two pre-defined lists of words, the first containing words containing the type of work (construction, maintenance, etc,) and the second the type of project (hospital, park, etc.). If a project has more than one word it is considered in both categories. The results are shown in the heatmap of Figure.
+Does not contain data on criteria used.
+
+We employ the API to search for infomration on the url of the acta of adjudication. we then employ a bot to download and parse the full page and extract the criteria data.
+
+We find good success on the process, as we match \% of the sample to a url and then \% of the sample to the corresponding criteria.
+
+we create the following variables: and indicator and the weight of criteria related to experience, quality and price. we do this by matching common strings to criteria, which is non-standarized text. Statistics for these criteria in the sample are shown in Table. -indic, complete cases, mean , sd, etc. Plt shows the distribution of the three weights. In our analysis, this data is key to identify which contracts already include experience as awarding factor and thus the ones we drop from our outcome computation.
+
+\section{Experience and Firms}
