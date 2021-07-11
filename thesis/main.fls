@@ -77,6 +77,17 @@ INPUT C:\Program Files\MiKTeX\tex\latex\tools\verbatim.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\tools\verbatim.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\tools\verbatim.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\tools\verbatim.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
+INPUT C:\Program Files\MiKTeX\tex\latex\enumitem\enumitem.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\amsmath\amsmath.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\amsmath\amsmath.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\amsmath\amsmath.sty
@@ -508,18 +519,58 @@ INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1728.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1440.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1440.tfm
 INPUT C:\ProgramData\MiKTeX\pdftex\config\pdftex.map
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecti1200.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
+INPUT C:\Program Files\MiKTeX\tex\latex\cmap\ot1.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\cmap\ot1.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\cmap\ot1.cmap
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\oml.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\oml.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\oml.cmap
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\oms.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\oms.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\oms.cmap
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\omx.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\omx.cmap
+INPUT C:\Program Files\MiKTeX\tex\latex\mmap\omx.cmap
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm0800.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1000.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm0700.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT main.aux
 INPUT .\chapInstitutional.aux
 INPUT chapInstitutional.aux
 INPUT chapInstitutional.aux
-INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\cm-super\cm-super-ts1.enc
 INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\cm-super\cm-super-t1.enc
+INPUT C:\Program Files\MiKTeX\fonts\enc\dvips\cm-super\cm-super-ts1.enc
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1200.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1200.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1440.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1440.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1728.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx1728.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx2488.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfbx2488.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm0700.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm0700.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm0800.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm0800.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm1000.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm1000.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm1200.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfrm1200.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfti1200.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\cm-super\sfti1200.pfb

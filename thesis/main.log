@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  9 JUL 2021 17:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  10 JUL 2021 19:13
 entering extended mode
 **./main.tex
 (main.tex
@@ -52,9 +52,19 @@ Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
 \verbatim@line=\toks17
 \verbatim@in@stream=\read2
 )
+(C:\Program Files\MiKTeX\tex/latex/enumitem\enumitem.sty
+Package: enumitem 2019/06/20 v3.9 Customized lists
+\enitkv@toks@=\toks18
+\labelindent=\skip51
+\enit@outerparindent=\dimen141
+\enit@toks=\toks19
+\enit@inbox=\box55
+\enit@count@id=\count196
+\enitdp@description=\count197
+)
 (C:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
 Package: amsmath 2021/04/20 v2.17j AMS math features
-\@mathmargin=\skip51
+\@mathmargin=\skip52
 
 For additional information on amsmath, use the `?' option.
 (C:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
@@ -62,80 +72,80 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (C:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks18
-\ex@=\dimen141
+\@emptytoks=\toks20
+\ex@=\dimen142
 ))
 (C:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen142
+\pmbraise@=\dimen143
 )
 (C:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count196
+\inf@bad=\count198
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count197
-\leftroot@=\count198
+\uproot@=\count199
+\leftroot@=\count266
 LaTeX Info: Redefining \overline on input line 399.
-\classnum@=\count199
-\DOTSCASE@=\count266
+\classnum@=\count267
+\DOTSCASE@=\count268
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
-\Mathstrutbox@=\box55
-\strutbox@=\box56
-\big@size=\dimen143
+\Mathstrutbox@=\box56
+\strutbox@=\box57
+\big@size=\dimen144
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count267
-\c@MaxMatrixCols=\count268
+\macc@depth=\count269
+\c@MaxMatrixCols=\count270
 \dotsspace@=\muskip16
-\c@parentequation=\count269
-\dspbrk@lvl=\count270
-\tag@help=\toks19
-\row@=\count271
-\column@=\count272
-\maxfields@=\count273
-\andhelp@=\toks20
-\eqnshift@=\dimen144
-\alignsep@=\dimen145
-\tagshift@=\dimen146
-\tagwidth@=\dimen147
-\totwidth@=\dimen148
-\lineht@=\dimen149
-\@envbody=\toks21
-\multlinegap=\skip52
-\multlinetaggap=\skip53
-\mathdisplay@stack=\toks22
+\c@parentequation=\count271
+\dspbrk@lvl=\count272
+\tag@help=\toks21
+\row@=\count273
+\column@=\count274
+\maxfields@=\count275
+\andhelp@=\toks22
+\eqnshift@=\dimen145
+\alignsep@=\dimen146
+\tagshift@=\dimen147
+\tagwidth@=\dimen148
+\totwidth@=\dimen149
+\lineht@=\dimen150
+\@envbody=\toks23
+\multlinegap=\skip53
+\multlinetaggap=\skip54
+\mathdisplay@stack=\toks24
 LaTeX Info: Redefining \[ on input line 2923.
 LaTeX Info: Redefining \] on input line 2924.
 )
 (C:\Program Files\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen150
-\lightrulewidth=\dimen151
-\cmidrulewidth=\dimen152
-\belowrulesep=\dimen153
-\belowbottomsep=\dimen154
-\aboverulesep=\dimen155
-\abovetopsep=\dimen156
-\cmidrulesep=\dimen157
-\cmidrulekern=\dimen158
-\defaultaddspace=\dimen159
-\@cmidla=\count274
-\@cmidlb=\count275
-\@aboverulesep=\dimen160
-\@belowrulesep=\dimen161
-\@thisruleclass=\count276
-\@lastruleclass=\count277
-\@thisrulewidth=\dimen162
+\heavyrulewidth=\dimen151
+\lightrulewidth=\dimen152
+\cmidrulewidth=\dimen153
+\belowrulesep=\dimen154
+\belowbottomsep=\dimen155
+\aboverulesep=\dimen156
+\abovetopsep=\dimen157
+\cmidrulesep=\dimen158
+\cmidrulekern=\dimen159
+\defaultaddspace=\dimen160
+\@cmidla=\count276
+\@cmidlb=\count277
+\@aboverulesep=\dimen161
+\@belowrulesep=\dimen162
+\@thisruleclass=\count278
+\@lastruleclass=\count279
+\@thisrulewidth=\dimen163
 )
 (C:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2020/12/05 v1.2c Enhanced LaTeX Graphics (DPC,SPQR)
 
 (C:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks23
+\KV@toks@=\toks25
 )
 (C:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
@@ -151,43 +161,43 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 (C:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen163
-\Gin@req@width=\dimen164
+\Gin@req@height=\dimen164
+\Gin@req@width=\dimen165
 )
 (C:\Program Files\MiKTeX\tex/latex/tools\array.sty
 Package: array 2021/04/20 v2.5e Tabular extension package (FMi)
-\col@sep=\dimen165
-\ar@mcellbox=\box57
-\extrarowheight=\dimen166
-\NC@list=\toks24
-\extratabsurround=\skip54
-\backup@length=\skip55
-\ar@cellbox=\box58
+\col@sep=\dimen166
+\ar@mcellbox=\box58
+\extrarowheight=\dimen167
+\NC@list=\toks26
+\extratabsurround=\skip55
+\backup@length=\skip56
+\ar@cellbox=\box59
 )
 (C:\Program Files\MiKTeX\tex/latex/float\float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count278
-\float@exts=\toks25
-\float@box=\box59
-\@float@everytoks=\toks26
-\@floatcapt=\box60
+\c@float@type=\count280
+\float@exts=\toks27
+\float@box=\box60
+\@float@everytoks=\toks28
+\@floatcapt=\box61
 )
 (C:\Program Files\MiKTeX\tex/latex/ragged2e\ragged2e.sty
 Package: ragged2e 2021/02/05 v3.0 ragged2e Package
-\CenteringLeftskip=\skip56
-\RaggedLeftLeftskip=\skip57
-\RaggedRightLeftskip=\skip58
-\CenteringRightskip=\skip59
-\RaggedLeftRightskip=\skip60
-\RaggedRightRightskip=\skip61
-\CenteringParfillskip=\skip62
-\RaggedLeftParfillskip=\skip63
-\RaggedRightParfillskip=\skip64
-\JustifyingParfillskip=\skip65
-\CenteringParindent=\skip66
-\RaggedLeftParindent=\skip67
-\RaggedRightParindent=\skip68
-\JustifyingParindent=\skip69
+\CenteringLeftskip=\skip57
+\RaggedLeftLeftskip=\skip58
+\RaggedRightLeftskip=\skip59
+\CenteringRightskip=\skip60
+\RaggedLeftRightskip=\skip61
+\RaggedRightRightskip=\skip62
+\CenteringParfillskip=\skip63
+\RaggedLeftParfillskip=\skip64
+\RaggedRightParfillskip=\skip65
+\JustifyingParfillskip=\skip66
+\CenteringParindent=\skip67
+\RaggedLeftParindent=\skip68
+\RaggedRightParindent=\skip69
+\JustifyingParindent=\skip70
 )
 (C:\Program Files\MiKTeX\tex/latex/adjustbox\adjustbox.sty
 Package: adjustbox 2020/08/19 v1.3 Adjusting TeX boxes (trim, clip, ...)
@@ -197,10 +207,10 @@ Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
 
 (C:\Program Files\MiKTeX\tex/generic/xkeyval\xkeyval.tex
 (C:\Program Files\MiKTeX\tex/generic/xkeyval\xkvutils.tex
-\XKV@toks=\toks27
-\XKV@tempa@toks=\toks28
+\XKV@toks=\toks29
+\XKV@tempa@toks=\toks30
 )
-\XKV@depth=\count279
+\XKV@depth=\count281
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 (C:\Program Files\MiKTeX\tex/latex/adjustbox\adjcalc.sty
@@ -212,53 +222,53 @@ Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
 
 (C:\Program Files\MiKTeX\tex/latex/collectbox\collectbox.sty
 Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
-\collectedbox=\box61
+\collectedbox=\box62
 )
-\tc@llx=\dimen167
-\tc@lly=\dimen168
-\tc@urx=\dimen169
-\tc@ury=\dimen170
+\tc@llx=\dimen168
+\tc@lly=\dimen169
+\tc@urx=\dimen170
+\tc@ury=\dimen171
 Package trimclip Info: Using driver 'tc-pdftex.def'.
 
 (C:\Program Files\MiKTeX\tex/latex/adjustbox\tc-pdftex.def
 File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
 ))
-\adjbox@Width=\dimen171
-\adjbox@Height=\dimen172
-\adjbox@Depth=\dimen173
-\adjbox@Totalheight=\dimen174
-\adjbox@pwidth=\dimen175
-\adjbox@pheight=\dimen176
-\adjbox@pdepth=\dimen177
-\adjbox@ptotalheight=\dimen178
+\adjbox@Width=\dimen172
+\adjbox@Height=\dimen173
+\adjbox@Depth=\dimen174
+\adjbox@Totalheight=\dimen175
+\adjbox@pwidth=\dimen176
+\adjbox@pheight=\dimen177
+\adjbox@pdepth=\dimen178
+\adjbox@ptotalheight=\dimen179
 
 (C:\Program Files\MiKTeX\tex/latex/ifoddpage\ifoddpage.sty
 Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
-\c@checkoddpage=\count280
+\c@checkoddpage=\count282
 )
 (C:\Program Files\MiKTeX\tex/latex/varwidth\varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box62
-\sift@deathcycles=\count281
-\@vwid@loff=\dimen179
-\@vwid@roff=\dimen180
+\@vwid@box=\box63
+\sift@deathcycles=\count283
+\@vwid@loff=\dimen180
+\@vwid@roff=\dimen181
 ))
 (C:\Program Files\MiKTeX\tex/latex/caption\caption.sty
 Package: caption 2020/10/26 v3.5g Customizing captions (AR)
 
 (C:\Program Files\MiKTeX\tex/latex/caption\caption3.sty
 Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen181
-\captionmargin@=\dimen182
-\captionwidth=\dimen183
-\caption@tempdima=\dimen184
-\caption@indent=\dimen185
-\caption@parindent=\dimen186
-\caption@hangindent=\dimen187
+\captionmargin=\dimen182
+\captionmargin@=\dimen183
+\captionwidth=\dimen184
+\caption@tempdima=\dimen185
+\caption@indent=\dimen186
+\caption@parindent=\dimen187
+\caption@hangindent=\dimen188
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count282
-\c@continuedfloat=\count283
+\c@caption@flags=\count284
+\c@continuedfloat=\count285
 Package caption Info: float package is loaded.
 )
 (C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
@@ -266,40 +276,40 @@ Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 <<t1.cmap>>)
 (C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count284
-\l__pdf_internal_box=\box63
+\l__color_backend_stack_int=\count286
+\l__pdf_internal_box=\box64
 ) (main.aux
 (chapInstitutional.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
 
 (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count285
-\scratchdimen=\dimen188
-\scratchbox=\box64
-\nofMPsegments=\count286
-\nofMParguments=\count287
-\everyMPshowfont=\toks29
-\MPscratchCnt=\count288
-\MPscratchDim=\dimen189
-\MPnumerator=\count289
-\makeMPintoPDFobject=\count290
-\everyMPtoPDFconversion=\toks30
+\scratchcounter=\count287
+\scratchdimen=\dimen189
+\scratchbox=\box65
+\nofMPsegments=\count288
+\nofMParguments=\count289
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count290
+\MPscratchDim=\dimen190
+\MPnumerator=\count291
+\makeMPintoPDFobject=\count292
+\everyMPtoPDFconversion=\toks32
 ) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 
@@ -353,44 +363,39 @@ Chapter 1.
 
 
 
-{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}]
-Overfull \hbox (1.089pt too wide) in paragraph at lines 19--20
-[]\T1/cmr/m/n/12 All com-pa-nies must reg-is-ter as pub-lic con-trac-tors in or
--der to bid for pub-lic projects,
- []
+{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}] [2]<<ot1.cmap>><<oml.cmap>><<
+oms.cmap>><<omx.cmap>>
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [3]
+[4]
 
-Underfull \vbox (badness 1675) has occurred while \output is active []
+Package enumitem Warning: Negative labelwidth. This does not make much
+(enumitem)                sense, on input line 51.
 
- [2]
-Overfull \hbox (8.00272pt too wide) in paragraph at lines 22--23
-\T1/cmr/m/n/12 In Chile, gen-er-ally all gov-ern-ment bod-ies must de-velop pro
--cure-ment pro-ce-dures through
- []
-
-[3] [4] [5])
-Underfull \vbox (badness 5652) has occurred while \output is active []
-
- [6]
-[7] (main.aux (chapInstitutional.aux)) )
-(\end occurred when \ifx on line 52 was incomplete) 
+[5] [6] [7]) [8] (main.aux (chapInstitutional.aux)) )
+(\end occurred when \ifx on line 53 was incomplete) 
 Here is how much of TeX's memory you used:
- 5434 strings out of 478826
- 85843 string characters out of 2857130
- 388799 words of memory out of 3000000
- 23274 multiletter control sequences out of 15000+600000
- 409463 words of font info for 36 fonts, out of 8000000 for 9000
+ 5836 strings out of 478826
+ 92349 string characters out of 2857130
+ 397313 words of memory out of 3000000
+ 23626 multiletter control sequences out of 15000+600000
+ 416784 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,5n,117p,1340b,119s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,8n,117p,1379b,244s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Program Files/MiKTeX/fon
-ts/enc/dvips/cm-super/cm-super-ts1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips
-/cm-super/cm-super-t1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/
-sfbx1440.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1728.pfb>
-<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx2488.pfb><C:/Program F
-iles/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (7 pages, 84158 bytes).
+ts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/
+cm-super/cm-super-ts1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/
+sfbx1200.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.pfb>
+<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1728.pfb><C:/Program F
+iles/MiKTeX/fonts/type1/public/cm-super/sfbx2488.pfb><C:/Program Files/MiKTeX/f
+onts/type1/public/cm-super/sfrm0700.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
+blic/cm-super/sfrm0800.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super
+/sfrm1000.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb
+><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (8 pages, 149262 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
+ 75 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 5 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
