@@ -1,6 +1,6 @@
 \begin{table}[!h]
 
-\caption{\label{tab:}Sample Descriptive Statistics}
+\caption{\label{tab:sample_descriptive}Sample Descriptive Statistics}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabular}[t]{ccccccc}

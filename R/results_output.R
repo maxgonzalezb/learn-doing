@@ -1,4 +1,47 @@
 #####################
+# Exploratory Outputs
+#####################
+
+df.weights=df%>%group_by(Codigo,percExp,percPrice,percQuality,hasExp)%>%slice_head(n=1)
+
+plot.Exp=ggplot(df.weights, aes(x = hasExp, y = ..count.. / sum(..count..))) + geom_bar() +
+  theme_bw() + ylab('Proportion') + theme(axis.text.x =  element_text(color =
+                                                                        'black'),
+                                          panel.grid = element_blank())+scale_y_continuous(breaks=seq(0,0.6,0.1))+
+                                    xlab('Contract Includes Experience in Awarding Criteria ')+
+                                      ggtitle('Inclusion of Experience in Awarding Criteria')
+  
+  
+
+plot.exp.hist=ggplot(df.weights,aes(x=percExp))+geom_histogram(binwidth = 10,color='black',fill='steelblue')+
+  theme_bw() + ylab('Count') + theme(axis.text.x =  element_text(color =
+                                                                        'black'),
+                                          panel.grid = element_blank())+xlab('Weight of Experience Item')+
+  ggtitle('Experience Weight in Awarding Criteria, non NA')
+
+
+plot.Price=ggplot(df.weights, aes(x = percPrice>0, y = ..count.. / sum(..count..))) + geom_bar() +
+  theme_bw() + ylab('Proportion') + theme(axis.text.x =  element_text(color =
+                                                                        'black'),
+                                          panel.grid = element_blank())+scale_y_continuous(breaks=seq(0,0.9,0.1))+
+  xlab('Contract Includes Experience in Awarding Criteria ')+
+  ggtitle('Inclusion of Price in Awarding Criteria')
+
+plot.price.hist=ggplot(df.weights,aes(x=percPrice))+geom_histogram(binwidth = 10,color='black',fill='steelblue')+
+  theme_bw() + ylab('Count') + theme(axis.text.x =  element_text(color =
+                                                                   'black'),
+                                     panel.grid = element_blank())+xlab('Weight of Price Item')+
+  ggtitle('Price Weight in Awarding Criteria, non NA')
+
+row.1=plot_grid(plot.Exp,plot.exp.hist,ncol = 2,labels = 'AUTO')
+row.2=plot_grid(plot.Price,plot.price.hist,ncol = 2,labels = c('C','D'))
+plot.weight.graphic=cowplot::plot_grid(row.1,row.2,nrow = 2,labels = '')
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plotweights_panel.png",width = 9, height = 6.5,units = "in",res=1000)
+plot.weight.graphic
+dev.off()
+
+#####################
 # Graphic Outputs
 #####################
 

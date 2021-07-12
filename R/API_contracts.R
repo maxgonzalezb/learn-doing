@@ -6,11 +6,13 @@ codes.find=df%>%dplyr::group_by(CodigoExterno)%>%dplyr::summarise(CodigoExterno=
 codes.find.missing=codes.find%>%filter(!(CodigoExterno%in%listaUrlsActas$id))
 listaids=(codes.find.missing$CodigoExterno)
 print(length(listaids))
+1-print(nrow(codes.find.missing)/nrow(codes.find))
 
 listaCriteria=createDefinitiveDatasetCriteria()
 
 listaUrlsActas.faltantes=listaUrlsActas%>%filter(!(id%in%listaCriteria$id))
 print(nrow(listaUrlsActas.faltantes))
+1-print(nrow(listaUrlsActas.faltantes)+nrow(codes.find.missing))/nrow(codes.find)
 
 #.1 Get Missing URLS
 contracts=data.frame()
