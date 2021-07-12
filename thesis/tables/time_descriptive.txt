@@ -1,0 +1,15 @@
+\begin{table}[!h]
+
+\caption{\label{tab:time_descriptive}Number of firms and contract per sample year}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{ccccccccccccc}
+\toprule
+Variable & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & 2016 & 2017 & 2018 & 2019 & 2020 & 2021\\
+\midrule
+Number of firms & 2501 & 2765 & 3038 & 3025 & 3155 & 3978 & 3677 & 3583 & 3436 & 3530 & 3700 & 1828\\
+Number of Auctions & 2372 & 3661 & 4710 & 3759 & 4110 & 5352 & 4640 & 4360 & 4280 & 4922 & 5313 & 2002\\
+Firms per Auctions & 7.27 & 5.67 & 4.87 & 4.26 & 4.43 & 17.5 & 4.61 & 5.34 & 4.94 & 4.94 & 5.77 & 4.23\\
+\bottomrule
+\end{tabular}}
+\end{table}

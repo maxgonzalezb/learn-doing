@@ -359,6 +359,48 @@ return(final.statistics)
   
 }
 
+generateGovSummary=function(df){
+  
+summary.organism=df%>%group_by(NombreOrganismo)%>%summarise(nfirms=length(unique(RutProveedor)),
+                                           nauctions=length(unique(Codigo)),
+                                           years=length(unique(year)),
+                                           mean.competitors=mean(NumeroOferentes))                                           
+    
+table.output=summary.organism %>% pivot_longer(cols = nfirms:mean.competitors) %>% group_by(name) %>%
+  summarise(
+    N = length(NombreOrganismo),
+    per_complete = length(name[!is.na(name)]) / N,
+    mean = mean(value, na.rm = T),
+    std = sd(value, na.rm = T),
+    max=max(value,na.rm = T),min=min(value,na.rm = T))%>%
+    mutate_if(is.numeric, funs(ifelse(.>1000&.<10000,yes=as.character(signif(., 4)),no=as.character(signif(., 3)))))
+  
+  table.output=table.output%>%mutate(name=c('Average Firms per Auction','Number of Auctions Performed','Total Firms Submitting Proposals','Years in the dataset'))
+  table.output=table.output[c(2,3,4,1),]
+  colnames(table.output)[3]<-'Complete Cases'
+  return(table.output)
+}
+
+generateTimeSummary=function(df){
+  
+  summary.time=df%>%group_by(year)%>%summarise(nfirms=length(unique(RutProveedor)),
+                                                              nauctions=length(unique(Codigo)),
+                                                              mean.competitors=mean(NumeroOferentes))
+    
+  tmydf = data.frame(t(summary.time[,-1]))%>%
+    mutate_if(is.numeric, funs(ifelse(.>1000&.<10000,yes=as.character(signif(., 4)),no=as.character(signif(., 3))))) 
+  colnames(tmydf)=summary.time$year
+  tmydf=tmydf%>%mutate(Variable=c('Number of firms','Number of Auctions','Firms per Auctions'))%>%
+    select(Variable,everything())
+  rownames(tmydf)<-NULL
+  
+  return(tmydf)
+  
+}
+
+
+
+
 createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.005,filterReqExp=F,weightPrice=50){
   cutoff0=ymd(min(df$FechaInicio)) + years(start)
   cutoff1=ymd(min(df$FechaInicio)) + years(split1+start)
