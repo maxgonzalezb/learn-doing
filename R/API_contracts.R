@@ -12,7 +12,7 @@ listaCriteria=createDefinitiveDatasetCriteria()
 
 listaUrlsActas.faltantes=listaUrlsActas%>%filter(!(id%in%listaCriteria$id))
 print(nrow(listaUrlsActas.faltantes))
-1-print(nrow(listaUrlsActas.faltantes)+nrow(codes.find.missing))/nrow(codes.find)
+1-(nrow(listaUrlsActas.faltantes)+nrow(codes.find.missing))/nrow(codes.find)
 
 #.1 Get Missing URLS
 contracts=data.frame()

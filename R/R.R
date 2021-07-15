@@ -82,7 +82,7 @@ df=df%>%group_by(id)%>%arrange(-indWinner,-indAccepted,desc(FechaEnvioOferta))%>
 df=df%>%ungroup()%>%select(-id)
 
 post.summarybids=generateDfBidsSummary(bids = df)
-post.summarybids%>%create_kable(caption = 'Sample Descriptive Statistics')%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\sample_descriptive.txt")
+post.summarybids%>%create_kable(caption = 'Sample Descriptive Statistics',label='sample_descriptive')%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\sample_descriptive.txt")
 post.summaryorganism=generateGovSummary(df = df)
 post.summaryorganism%>%create_kable(caption = 'Government Bodies Descriptive Statistics',label='gov_descriptive')%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\gov_descriptive.txt")
 post.summarygovtypes=df%>%group_by(TypeOrganism)%>%summarise(n=length(unique(Codigo)))%>%arrange(-n)%>%mutate(perc1=(n/sum(n)), cumu=label_percent(2)(cumsum(perc1)))%>%mutate(perc1=label_percent(2)(perc1))
