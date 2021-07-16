@@ -1,96 +1,25 @@
-library(PlayerRatings)
-library(tictoc)
-source('C:\\repos\\learn-doing\\R\\functions.R')
 
-df.ratings.1 = df %>% filter(Codigo != '6676853') %>% select(Codigo, RutProveedor, FechaInicio, winner) %>%
-  mutate(isWinner = as.numeric(winner == 'Seleccionada')) %>%
-  select(-winner) %>% group_by(Codigo) %>% filter(sum(isWinner) >=
-                                                    1 & length(Codigo) >= 2) %>%
-  mutate(idplayer = paste0('P', seq_len(length(Codigo)))) %>%
-  pivot_wider(
-    names_from = idplayer,
-    id_cols = c(Codigo, FechaInicio),
-    values_from = RutProveedor
-  )
-max_players = ncol(df.ratings.1) - 2
-
-df.ratings.2 = df %>% filter(Codigo != '6676853') %>%
-  select(Codigo, RutProveedor, FechaInicio, winner) %>%
-  mutate(isWinner = as.numeric(winner == 'Seleccionada')) %>%
-  select(-winner) %>%
-  group_by(Codigo) %>%
-  filter(sum(isWinner) >= 1 & length(Codigo) >= 2) %>%
-  mutate(idplayer = paste0('P', seq_len(length(Codigo)))) %>%
-  pivot_wider(
-    names_from = idplayer,
-    id_cols = c(Codigo, FechaInicio),
-    values_from = isWinner
-  )   
-
-#The resulting dataset is smaller because it does not contain single wins (with no opponents)
-df.rating = df.ratings.1 %>% left_join(df.ratings.2,
-                                       by = c('Codigo' = 'Codigo', 'FechaInicio' = 'FechaInicio')) %>% ungroup %>%
-  arrange(FechaInicio) %>% mutate(time = seq_len(length(FechaInicio)))
-df.rating.elo = df.rating %>% select(-Codigo, -FechaInicio) %>% select(time, everything())
-
-(df.rating.elo%>%ncol()-1)/2
-df.ratings.1%>%ncol()
-rm(df.ratings.1, df.ratings.2)
-
-##Set up parameters
-n = 10000
-#Important. Set up how much players win/lose with each auction
-base = c(25, rep(-10, max_players - 1))#seq(max_players,1,by = -1)
-tabletimes = df.rating %>% select(FechaInicio, Codigo, time)
-vector = seq_len(nrow(df))
-
-vectorubicacion = df$Codigo %in% tabletimes$Codigo
-winPoints=24
-losePoints=8
-
-df.ranked = CreateFullRankedDataset(
-  max_players,
-  df,
-  df.rating.elo,
-  n = 10000,
-  winPoints,
-  losePoints,
-  startPoints = 1500
-)
-##Save the table
-df.ranked%>%group_by(Codigo,RutProveedor)%>%count()%>%select(-n)%>%saveRDS(file='C:\\repos\\learn-doing\\data\\ranking_table.rds')
-
-#Load to avoid the previous analysis
-
-
-thresholdCloseRank = 1.03
-table.close.contracts = df.ranked %>% filter(estadoOferta == 'Aceptada') %>%
-  group_by(Codigo) %>% summarise(closeRanking = as.numeric(length(Codigo) >=
-                                                             2 & (
-                                                               max(rank) / min(rank) <= thresholdCloseRank
-                                                             )))
-df.ranked = df.ranked %>% left_join(table.close.contracts)
-number.close=df.ranked%>%group_by(Codigo)%>%summarise(closeRanking=max(closeRanking))
+number.close=df.ranked%>%group_by(Codigo)%>%summarise(isCloseRanking=max(isCloseRanking))
 ## Exploration. Describe Close wins.
 print(paste0(
   'There are ',
-  sum(df.ranked$closeRanking, na.rm = T),
+  sum(df.ranked$isCloseRanking, na.rm = T),
   ' total close wins by ranking'
 ))
 print(paste0(
   'There are ',
-  sum(df.ranked$closeRanking, na.rm = T) / nrow(df),
+  sum(df.ranked$isCloseRanking, na.rm = T) / nrow(df),
   ' total close wins by ranking'
 ))
 print(paste0(
   'There are ',
-  sum(number.close$closeRanking, na.rm = T),
-  ' total close wins by ranking'
+  sum(number.close$isCloseRanking, na.rm = T),
+  ' total close contracts by ranking'
 ))
 print(paste0(
   'There are ',
-  sum(number.close$closeRanking, na.rm = T) / nrow(number.close),
-  ' total close wins by ranking'
+  sum(number.close$isCloseRanking, na.rm = T) / nrow(number.close),
+  ' total close conctracts by ranking'
 ))
 
 png(
@@ -101,20 +30,21 @@ png(
   res = 1000
 )
 ggplot(df.ranked %>% filter(year %in% c(2010, 2012, 2014, 2016, 2018, 2020)), aes(x =
-                                                                                    rank)) + geom_histogram(fill = 'steelblue', color = 'black') + xlim(1000, 2000) +
+                                                                                    rank)) + geom_histogram(fill = 'steelblue', color = 'black')  +
   facet_wrap( ~ year, ncol = 3, nrow = 2) + theme_bw() +
   xlab('Rank') + ylab('Count') + theme(panel.grid.major = element_blank(),
-                                       panel.grid.minor = element_blank())
+                                       panel.grid.minor = element_blank())+
+  xlim(1000, 2000)
 dev.off()
 
 #df.ranked = df.ranked %>% left_join(listaContractExp, by = c('CodigoExterno' =
                                                                #'id'))
 
 ## Create the table with descriptive data
-comparison.1 = df.ranked %>% filter(closeRanking == 0) %>% generateDfBidsSummary() %>%
+comparison.1 = df.ranked %>% as.data.frame()%>% filter(isCloseRanking == 0) %>% generateDfBidsSummary() %>%
   dplyr::select('mean', 'std') %>% rename('mean_notClose' = 'mean', 'std_notClose' =
                                             'std')
-comparison.2 = df.ranked %>% filter(closeRanking == 1) %>% generateDfBidsSummary() %>%
+comparison.2 = df.ranked %>% as.data.frame() %>% filter(isCloseRanking == 1) %>% generateDfBidsSummary() %>%
   dplyr::select(name, 'mean', 'std') %>% rename('mean_close' = 'mean', 'std_close' =
                                                   'std') %>% cbind(comparison.1) %>% select(name, mean_notClose, mean_close, std_notClose, std_close)
 colnames(comparison.2) <-
@@ -132,8 +62,11 @@ table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_cl
 #################
 # First Measure of experience: rank measure
 #################
-
+df.ranked=df
 ## Create the merged wins with correct parameters
+start = 0
+split1 = 2
+split2 = 2
 merged.wins = createMultiPeriodDataset(
   df.ranked,
   start = start,
@@ -172,7 +105,9 @@ summary(lm.26)
 #################
 # Second Measure of experience: rank measure
 #################
-
+start = 0
+split1 = 2
+split2 = 2
 merged.wins = createAnnualizedWins(
   df.ranked,
   start = start,
@@ -190,10 +125,6 @@ merged.wins.close.rank.means.exp2=merged.wins.close.rank.exp2%>%group_by(annualw
                                                                                               std.dev=sd(probWinpost),
                                                                                               sd.error=std.dev/sqrt(n))%>%
   filter(n>10)%>%mutate(exp=ifelse(annualwinspre_closerank>0,'Experience','No experience'))
-
-
-
-
 
 
 ## Create the models with iv
@@ -216,7 +147,6 @@ summary(lm.28)
 ################################## 
 #Robustness checks
 ################################## 
-
 
 # The main problem are the points awarded. We check with various win/lose pairs
 winPoints.vector = c(10, 15,25 ,35, 50)
@@ -317,162 +247,9 @@ for (i in seq_len(nrow(parameters.checks))) {
   result.robustness.ranks = rbind(result.robustness.ranks.iter, result.robustness.ranks)
   
 }
-
 saveRDS(object = result.robustness.ranks,file = 'C:\\repos\\learn-doing\\data\\robustness_ranks.rds')
 
-plot.ranks.robust.1<-ggplot(result.robustness.ranks%>%filter(ff=='Binary Indicator'), aes(x=as.factor(winPoints),y=estimate))+
-  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.12)+
-  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
-  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
-  
-plot.ranks.robust.2<-ggplot(result.robustness.ranks%>%filter(ff=='Linear'), aes(x=as.factor(winPoints),y=estimate))+
-  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.02)+
-  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
-  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
-
-row.1=plot_grid(plot.ranks.robust.1)
-row.2=plot_grid(plot.ranks.robust.2)
-
-title.rob1 <- ggdraw() + 
-  draw_label(
-    "Robustness analysis for threshold and points awarded - close wins by rank",
-    fontface = 'bold',
-    x = 0,
-    hjust = 0
-  ) +
-  theme(
-    plot.margin = margin(0, 0, 0, 7)
-  )
-plot.robustness.rank=cowplot::plot_grid(title.rob1,row.1,row.2,
-                                        nrow = 3,labels = '',rel_heights = c(0.1, 1,1))
-
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_robustness_rank.png",width = 9, height = 5.5,units = "in",res=1000)
-plot.robustness.rank
-dev.off()
-
-
-
-createHelpElo=function(df){
-df=df%>%arrange(FechaInicio)  
-#Create the two auxiliary dataset.
-##Create the dataset of 
-df.ratings.1=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
-    select(-winner)%>%group_by(Codigo)%>%filter(sum(isWinner)>=1&length(Codigo)>=2)%>%mutate(idplayer=paste0('P',seq_len(length(Codigo))))%>%
-    pivot_wider(names_from = idplayer,id_cols = c(Codigo,FechaInicio),values_from=RutProveedor)   
-  
-##Create the dataset of
-df.ratings.2=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
-    select(-winner)%>%group_by(Codigo)%>%filter(sum(isWinner)>=1&length(Codigo)>=2)%>%mutate(idplayer=paste0('P',seq_len(length(Codigo))))%>%
-    pivot_wider(names_from = idplayer,id_cols = c(Codigo,FechaInicio),values_from=isWinner)   
-  
-#The resulting dataset is smalller because it does not contain single wins(with no opponents)
-df.rating=df.ratings.1%>%left_join(df.ratings.2,by=c('Codigo'='Codigo','FechaInicio'='FechaInicio'))%>%ungroup%>%
-    arrange(FechaInicio)%>%mutate(time=seq_len(length(FechaInicio)))
-df.rating.elo=df.rating%>%select(-Codigo,-FechaInicio)%>%select(time, everything())
-return(df.rating.elo)
-}
 
 
 
 
-
-summarise.firms=df.ranked%>%arrange(FechaInicio)%>%group_by(RutProveedor)%>%summarise(totwins=length(Codigo[winner=='Seleccionada']),
-                                               totbids=length(Codigo),
-                                               probwin=totwins/totbids,
-                                               avgsize=mean(montoOferta,na.rm=T),
-                                               years=length(unique(year)),rank.final=rank[length(rank)],
-                                               avgopponents=mean(NumeroOferentes,na.rm=T))%>%arrange(-totwins)%>%
-                                                mutate(rank.bin=ntile(rank.final,n = 5))
-
-
-#pca.result=PCA(summarise.firms%>%select(-RutProveedor,-rank.final), scale.unit = TRUE, ncp = 5, graph = TRUE)
-pca_out=prcomp(x = summarise.firms%>%select(-RutProveedor,-rank.final),scale. = T,center = T)
-df.coords.x=pca_out$x%>%as.data.frame()%>%mutate(rank.bin=summarise.firms$rank.bin)
-
-ggplot(df.coords.x,aes(x=PC1,y=PC2))+geom_point(alpha=0.1,aes(color=as.factor(rank.bin)))+xlim(-10,3)+ylim(-2.6,5)
-  ggplot(summarise.firms,aes(x=avgopponents,y=avgsize))+geom_jitter(alpha=0.8,aes(color=as.factor(rank.bin)))+scale_y_log10()+ylim(0,1e10)
-+xlim(-10,3)+ylim(-2.6,5)
-  #OLD PCA IDEA
-  df.coords.pc=df.coords.pc%>%mutate(varnames=rownames(df.coords.pc))
-  pca_out=get_pca(pca.result)
-  df.coords.pc=pca_out$coord%>%as.data.frame()
-  fviz_pca_ind(pca.result)
-  library(factoextra)
-  
-  ## Create by parts due to memory limitations
-  {
-    
-    #Create first rankings
-    df.ranked = df %>% mutate(rank = -1)
-    ratings = elom(
-      x = df.rating.elo[1:n, ],
-      nn = max_players,
-      exact = F,
-      base = base,
-      placing = F,
-      history = T
-    )
-    
-    df.ranked.1 = updateDfRanked(
-      df.ranked = df.ranked,
-      ratings = ratings,
-      df.rating = df.rating,
-      startPoint = 0
-    )
-    status = ratings$ratings
-    rm(ratings)
-    ratings.2 = elom(
-      x = df.rating.elo[(n + 1):(2 * n), ],
-      nn = max_players,
-      exact = F,
-      base = base,
-      placing = F,
-      history = T,
-      status = status
-    )
-    df.ranked.2 = updateDfRanked(
-      df.ranked = df.ranked.1,
-      ratings = ratings.2,
-      df.rating = df.rating,
-      startPoint = n
-    )
-    status = ratings.2$ratings
-    rm(ratings.2)
-    ratings.3 = elom(
-      x = df.rating.elo[(2 * n+1):nrow(df.rating.elo), ],
-      nn = max_players,
-      exact = F,
-      base = base,
-      placing = F,
-      history = T,
-      status = status
-    )
-    df.ranked.3 = updateDfRanked(
-      df.ranked = df.ranked.2,
-      ratings = ratings.3,
-      df.rating = df.rating,
-      startPoint = 2 * n
-    )
-    rm(ratings.3)
-    
-    #Fill all single contests which are NA right now
-    df.ranked=df.ranked.3%>%left_join(tabletimes[,c(2,3)])
-    table(df.ranked$rank==-1)
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=1500,no=rank))
-    table(df.ranked$rank==-1)
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-    save(df.ranked,file = 'C:\\repos\\learn-doing\\data\\rankeddf.rds')
-  }

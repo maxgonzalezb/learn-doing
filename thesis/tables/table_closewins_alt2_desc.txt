@@ -7,11 +7,11 @@
 \toprule
 Variable & Mean (Not close win) & Mean (Close win) & Sd (Not close win) & Sd (Close win)\\
 \midrule
-Bid (all) & 1.85e+10 & 7.23e+08 & 6e+12 & 7.11e+09\\
-Winning Bid & 2.65e+08 & 2.62e+08 & 2.32e+09 & 3.23e+09\\
-Difference between 1st bid and 2nd (\%) & 0.0626 & 0.079 & 0.0817 & 0.102\\
-Number of Bidders per Contract & 3.27 & 3.04 & 2.38 & 1.58\\
-Year & 2016 & 2015 & 2.95 & 3.12\\
+Bid (all) & 9.7e+10 & 8.01e+08 & 2.89e+13 & 9.96e+09\\
+Winning Bid & 2.52e+08 & 2.57e+08 & 2.22e+09 & 3.23e+09\\
+Difference between 1st bid and 2nd (\%) & 0.0891 & 0.0984 & 0.161 & 0.154\\
+Number of Bidders per Contract & 7.94 & 3.03 & 45.6 & 1.42\\
+Year & 2016 & 2014 & 3.02 & 3.18\\
 \bottomrule
 \end{tabular}}
 \end{table}

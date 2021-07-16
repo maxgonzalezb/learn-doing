@@ -103,11 +103,11 @@ df.names = df %>% dplyr::select(RutProveedor, NombreProveedor) %>% group_by(RutP
   slice(1)
 
 #Study how are the close wins
-df.difs.ind=df.difs%>%mutate(isClose=ifelse(dif<0.005,yes='Close Win','No Close Win'))
-df=df%>%left_join(df.difs.ind)
-comparison.1=df%>%filter(isClose=='No Close Win')%>%generateDfBidsSummary()%>%dplyr::select('mean','std')%>%rename('mean_notClose'='mean','std_notClose'='std')
-comparison.2=df%>%filter(isClose=='Close Win')%>%generateDfBidsSummary()%>%dplyr::select(name,'mean','std')%>%rename('mean_close'='mean','std_close'='std')%>%cbind(comparison.1)%>%select(name,mean_notClose,mean_close,std_notClose,std_close)
-colnames(comparison.2)<-c('Variable','Mean (Not close win)','Mean (Close win)','Sd (Not close win)','Sd (Close win)')
+#df.difs.ind=df.difs%>%mutate(isClose=ifelse(dif<0.005,yes='Close Win','No Close Win'))
+#df=df%>%left_join(df.difs.ind)
+#comparison.1=df%>%filter(isClose=='No Close Win')%>%generateDfBidsSummary()%>%dplyr::select('mean','std')%>%rename('mean_notClose'='mean','std_notClose'='std')
+#comparison.2=df%>%filter(isClose=='Close Win')%>%generateDfBidsSummary()%>%dplyr::select(name,'mean','std')%>%rename('mean_close'='mean','std_close'='std')%>%cbind(comparison.1)%>%select(name,mean_notClose,mean_close,std_notClose,std_close)
+#colnames(comparison.2)<-c('Variable','Mean (Not close win)','Mean (Close win)','Sd (Not close win)','Sd (Close win)')
 #create_kable(comparison.2,caption = "Comparison between close and non-close wins")
 
 ##Merge with experiece dataset
@@ -117,23 +117,29 @@ df=df%>%left_join(df.difs)
 rows2=(nrow(df))
 
 ##Create Ranked DF
-df.rating.elo=createHelpElo(df)
+helpers.ELO=createHelpElo(df)
+df.rating=helpers.ELO[[1]]
+df.rating.elo=helpers.ELO[[2]]
+
 max_players=(df.rating.elo%>%ncol()-1)/2
-n = 10000
-#Important. Set up how much players win/lose with each auction
-base = c(25, rep(-10, max_players - 1))#seq(max_players,1,by = -1)
-tabletimes = df.rating %>% select(FechaInicio, Codigo, time)
+n = 7500
+
+ #Important. Set up how much players win/lose with each auction
+#base = c(25, rep(-10, max_players - 1))#seq(max_players,1,by = -1)
+tabletimes = df%>% select(FechaInicio, Codigo, time)
 vector = seq_len(nrow(df))
 
-vectorubicacion = df$Codigo %in% tabletimes$Codigo
+rm(df.difs,df.names,listaContractExp,lowContracts,moreThanOneItem)
+#vectorubicacion = df$Codigo %in% tabletimes$Codigo
 winPoints=24
 losePoints=8
 
 df = CreateFullRankedDataset(
   max_players,
-  df,
-  df.rating.elo,
-  n = 10000,
+  df = df,
+  df.rating=df.rating,
+  df.rating.elo = df.rating.elo,
+  n = n,
   winPoints,
   losePoints,
   startPoints = 1500
@@ -143,7 +149,7 @@ df=df%>%left_join(lista.close.ranks)
 rows3=nrow(df)
 print(paste0('All correct in merging: ' , (rows1==rows2&rows2==rows3)))
 #saveRDS(df,file = 'C:\\repos\\learn-doing\\data\\contractData.rds')
-rm(df)
+#rm(df)
 
 
 

@@ -7,12 +7,12 @@
 \toprule
 Type of Government Body & Number of Contracts Performed & Percentage & Cumulative Percentage\\
 \midrule
-Municipality & 36359 & 74\% & 74\%\\
-Ministry & 8382 & 16\% & 90\%\\
-Other & 1550 & 4\% & 94\%\\
-Child School Board & 1335 & 2\% & 96\%\\
+Municipality & 36333 & 74\% & 74\%\\
+Ministry & 8379 & 16\% & 90\%\\
+Other & 1549 & 4\% & 94\%\\
+Child School Board & 1334 & 2\% & 96\%\\
 University & 892 & 2\% & 98\%\\
-Police, Investigations & 728 & 2\% & 100\%\\
+Police, Investigations & 727 & 2\% & 100\%\\
 Regional Government & 135 & 0\% & 100\%\\
 Army,Navy & 100 & 0\% & 100\%\\
 \bottomrule

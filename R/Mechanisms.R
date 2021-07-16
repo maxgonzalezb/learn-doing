@@ -2,6 +2,7 @@
 #################################
 ## First Investigation: Bids
 #################################
+
 df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   group_by(RutProveedor) %>% arrange(FechaInicio) %>% mutate(
     firstyear = min(year),
@@ -228,9 +229,6 @@ summary(lm.62)
 lm.63<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank)+idperiodpost,data = merged.wins)
 robust.lm63<- vcovHC(lm.63, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.63)
-
-
-
 
 
 

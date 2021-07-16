@@ -35,6 +35,9 @@ library(purrr)
 library(broom)
 library(cowplot)
 library(stringr)
+library(PlayerRatings)
+library(tictoc)
+
 
 createHelpElo=function(df){
   df=df%>%arrange(FechaInicio)  
@@ -53,11 +56,8 @@ createHelpElo=function(df){
   df.rating=df.ratings.1%>%left_join(df.ratings.2,by=c('Codigo'='Codigo','FechaInicio'='FechaInicio'))%>%ungroup%>%
     arrange(FechaInicio)%>%mutate(time=seq_len(length(FechaInicio)))
   df.rating.elo=df.rating%>%select(-Codigo,-FechaInicio)%>%select(time, everything())
-  return(df.rating.elo)
+  return(list(df.rating,df.rating.elo))
 }
-
-
-
 
 createDifsDf<-function(df,thresholdCLose,thresholdCloseRank,weightPrice){
   df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
@@ -87,14 +87,14 @@ createDifsDf_rank<-function(df,thresholdCloseRank){
 
 
 
-CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500){
+CreateFullRankedDataset<-function(max_players,df,df.rating,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500){
   
   #Important. Set up how much players win/lose with each auction
   base = c(winPoints, rep(-losePoints, max_players - 1))
   tabletimes = df.rating %>% select(FechaInicio, Codigo, time)
   vector = seq_len(nrow(df))
-  vectorubicacion = df$Codigo %in% tabletimes$Codigo
-  
+  #vectorubicacion = df$Codigo %in% tabletimes$Codigo
+  #browser()
   #Create first rankings
   df.ranked = df %>% mutate(rank = -1)
   ratings = elom(
@@ -113,6 +113,7 @@ CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPo
     df.rating = df.rating,
     startPoint = 0
   )
+  print('First update complete')
   status = ratings$ratings
   rm(ratings)
   ratings.2 = elom(
@@ -124,16 +125,20 @@ CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPo
     history = T,
     status = status
   )
+  
   df.ranked.2 = updateDfRanked(
     df.ranked = df.ranked.1,
     ratings = ratings.2,
     df.rating = df.rating,
     startPoint = n
   )
+  print('Second update complete')
+  
   status = ratings.2$ratings
-  rm(ratings.2)
+  rm(ratings.2,df.ranked)
+  
   ratings.3 = elom(
-    x = df.rating.elo[(2 * n+1):nrow(df.rating.elo), ],
+    x = df.rating.elo[(2 * n+1):(3*n), ],
     nn = max_players,
     exact = F,
     base = base,
@@ -141,41 +146,71 @@ CreateFullRankedDataset<-function(max_players,df,df.rating.elo,  n = 10000,winPo
     history = T,
     status = status
   )
+  
   df.ranked.3 = updateDfRanked(
     df.ranked = df.ranked.2,
     ratings = ratings.3,
     df.rating = df.rating,
     startPoint = 2 * n
   )
-  rm(ratings.3)
+  status = ratings.3$ratings
+  rm(ratings.3,df.ranked.2)
+  
+  ratings.4 = elom(
+    x = df.rating.elo[(3 * n+1):nrow(df.rating.elo), ],
+    nn = max_players,
+    exact = F,
+    base = base,
+    placing = F,
+    history = T,
+    status = status
+  )
+  
+  df.ranked.4 = updateDfRanked(
+    df.ranked = df.ranked.3,
+    ratings = ratings.4,
+    df.rating = df.rating,
+    startPoint = 3 * n
+  )
+  status = ratings.4$ratings
+  rm(ratings.4,df.ranked.3)
+  print('Third update complete')
   
   #Fill all single contests which are NA right now
-  df.ranked=df.ranked.3%>%left_join(tabletimes[,c(2,3)])
-  table(df.ranked$rank==-1)
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=startPoints,no=rank))
-  
-  
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked.4%>%left_join(tabletimes[,c(2,3)])
   return(df.ranked)
 }
 
-updateDfRanked<-function(df.ranked, ratings,df.rating,startPoint=0,n=10000){
+cleanRankDatase=function(df.ranked){
+  table(df.ranked$rank==-1)
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=startPoints,no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  
+  
+  
+}
+
+
+
+updateDfRanked<-function(df.ranked, ratings,df.rating,startPoint=800,n=10000){
   largo=ratings$history[1,,1]%>%length()
-  tabletimes=df.rating%>%select(FechaInicio,Codigo,time)%>%filter(time>=startPoint&time<=(startPoint+largo-1))
-  vector=seq_len(nrow(df))
+  tabletimes=df.rating%>%select(FechaInicio,Codigo,time)%>%filter(time>startPoint&time<=(startPoint+largo))
+  print(largo)
+  print(startPoint+largo-1)
+  vector=seq_len(nrow(df.ranked))
   maxcol=ncol(ratings$history[,,1])
   vectorubicacion=df$Codigo%in%tabletimes$Codigo
   
@@ -183,18 +218,44 @@ updateDfRanked<-function(df.ranked, ratings,df.rating,startPoint=0,n=10000){
  # for (i in seq(startPoint+1,startPoint+n)) {
   for (i in seq(1,nrow(df.ranked))) {
     if(i%%5000==0){print(label_percent()((i)/nrow(df.ranked)))}
-    codigo=df$Codigo[i]
+    codigo=df.ranked$Codigo[i]
     if(!vectorubicacion[i]){next()}
-    rut=df$RutProveedor[i]
+    rut=df.ranked$RutProveedor[i]
+    
     time1=((tabletimes[which(tabletimes$Codigo==codigo),'time'])%>%unlist())
     if(!is.na(time1)){
-      df.ranked$rank[i]=ratings$history[rut,time1-startPoint+1,1]
-      #print('replaced')
+      #print(paste0(rut,'        i:',i))
+      #print(paste0('replaced:','i:',i,' ,time1: ',time1,' ,start: ',startPoint,',nrow:',length(ratings$history[rut,,1])))
+      
+      df.ranked$rank[i]=ratings$history[rut,time1-startPoint,1]
     }
   }
   return(df.ranked)
   
 }  
+
+
+
+createHelpElo=function(df){
+  df=df%>%arrange(FechaInicio)  
+  #Create the two auxiliary dataset.
+  ##Create the dataset of 
+  df.ratings.1=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
+    select(-winner)%>%group_by(Codigo)%>%filter(sum(isWinner)>=1&length(Codigo)>=2)%>%mutate(idplayer=paste0('P',seq_len(length(Codigo))))%>%
+    pivot_wider(names_from = idplayer,id_cols = c(Codigo,FechaInicio),values_from=RutProveedor)   
+  
+  ##Create the dataset of
+  df.ratings.2=df%>%select(Codigo,RutProveedor,FechaInicio,winner)%>%mutate(isWinner=as.numeric(winner=='Seleccionada'))%>%
+    select(-winner)%>%group_by(Codigo)%>%filter(sum(isWinner)>=1&length(Codigo)>=2)%>%mutate(idplayer=paste0('P',seq_len(length(Codigo))))%>%
+    pivot_wider(names_from = idplayer,id_cols = c(Codigo,FechaInicio),values_from=isWinner)   
+  
+  #The resulting dataset is smalller because it does not contain single wins(with no opponents)
+  df.rating=df.ratings.1%>%left_join(df.ratings.2,by=c('Codigo'='Codigo','FechaInicio'='FechaInicio'))%>%ungroup%>%
+    arrange(FechaInicio)%>%mutate(time=seq_len(length(FechaInicio)))
+  df.rating.elo=df.rating%>%select(-Codigo,-FechaInicio)%>%select(time, everything())
+  return(list(df.rating,df.rating.elo))
+}
+
 
 
 update_api<-function(idcheck){
@@ -316,7 +377,7 @@ create_kable_nocaption<-function(df,numcols){
 
 generateDfBidsSummary<-function(bids){
 
-df=bids
+df=bids%>%as.data.frame()
 df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
 
 general.statistics=df%>%

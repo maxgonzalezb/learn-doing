@@ -8,9 +8,9 @@
 name & N & Complete Cases & mean & std & max & min\\
 \midrule
 Number of Auctions Performed & 928 & 1 & 53.3 & 118 & 2780 & 1\\
-Total Firms Submitting Proposals & 928 & 1 & 61.5 & 80.5 & 1170 & 1\\
+Total Firms Submitting Proposals & 928 & 1 & 61.4 & 80.5 & 1169 & 1\\
 Years in the dataset & 928 & 1 & 6.01 & 4.24 & 12 & 1\\
-Average Firms per Auction & 928 & 1 & 4.36 & 15.3 & 466 & 1\\
+Average Firms per Auction & 928 & 1 & 4.34 & 15.3 & 466 & 1\\
 \bottomrule
 \end{tabular}}
 \end{table}

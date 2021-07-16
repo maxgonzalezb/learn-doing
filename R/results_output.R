@@ -41,37 +41,46 @@ png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plotweights_panel.png",wi
 plot.weight.graphic
 dev.off()
 
-#####################
-# Graphic Outputs
-#####################
+## Display the slices descriptive
+table.slices.exp1 = create_kable(slices, caption = 'Analysis dataset characteristics for experience computed in rolling periods of two years', label = 'slices_exp1')
+table.slices.exp1 %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_slices_exp1.txt")
+
+table.slices.exp2=create_kable(slices.exp2,caption = 'Analysis dataset characteristics for experience computed as cumulative annualized ',label = 'slices_exp2')
+table.slices.exp2%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_slices_exp2.txt")
+
+
+###########################################################################
+## Main results
+###########################################################################
+top.limit=0.6
 
 # First Measure Experience
 plotDisc.allwins<-ggplot(merged.wins.means.exp1,aes(x=(winspre),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,16.1)+
   geom_errorbar(aes(x=winspre,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.2))+
   #stat_summary(aes(group=exp),fun.y = "mean", fun.ymin = "mean", fun.ymax= "mean", size= 0.3, geom = "crossbar")+
   #geom_smooth(se=F,formula=(function(x) mean(x)), method = 'lm')+geom_vline(xintercept = 0.3,alpha=0.3,color='black',lwd=1)+
-  theme_bw()+xlab('Contracts won in p_{t,1}')+ylab('Win probability on p_{t,2}')+
-  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0,0.7,0.1),limits = c(0,0.7))+
+  theme_bw()+xlab('Contracts won in p_{t,1}')+ylab('Win share on P2')+
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('All Wins')
 plotDisc.allwins
 
 plotDisc.closewins.price.exp1<-ggplot(merged.wins.close.price.means.exp1,aes(x=(winspre_close),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=winspre_close,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Close (by price) contracts won in p_{t,1}')+ylab('Win probability on p_{t,2}')+
-  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0,0.7,0.1),limits = c(0,0.7))+
-  ggtitle('Close Wins - By Price')
+  theme_bw()+xlab('Close (by price) wins')+ylab('Win share on Period 2')+
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
+  ggtitle('Firms with experience =  \n close experience (price)')
 plotDisc.closewins.price.exp1
 
 plotDisc.closewins.rank.exp1<-ggplot(merged.wins.close.rank.means.exp1,aes(x=(winspre_closerank),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=winspre_closerank,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Close (by rank) contracts won in p_{t,1}')+ylab('Win probability on p_{t,2}')+
-  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0,0.7,0.1),limits = c(0,0.7))+
-  ggtitle('Close Wins - By Rank')
+  theme_bw()+xlab('Close (by rank) wins')+ylab('Win share on Period 2')+
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
+  ggtitle('Firms with experience = \n  close experience (rank)')
 plotDisc.closewins.rank.exp1
 
 # Second Measure Experience
@@ -80,8 +89,8 @@ plotDisc.allwins.exp2<-ggplot(merged.wins.means.exp2,aes(x=(annualwinspre),y=pro
   #stat_summary(aes(group=exp),fun.y = "mean", fun.ymin = "mean", fun.ymax= "mean", size= 0.3, geom = "crossbar")+
   #geom_smooth(se=F,formula=(function(x) mean(x)), method = 'lm')+geom_vline(xintercept = 0.3,alpha=0.3,color='black',lwd=1)+
   theme_bw()+xlab('Annualized contracts won up to t')+ylab('Win probability on [t,t+2]')+
-  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0,0.7,0.1),limits = c(0,0.7))+
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('All Wins')
 plotDisc.allwins.exp2
 
@@ -89,8 +98,8 @@ plotDisc.closewins.price.exp2<-ggplot(merged.wins.close.price.means.exp2,aes(x=(
   geom_errorbar(aes(x=winspre_close,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
   theme_bw()+xlab('Annualized close (by price) contracts won up to t')+ylab('Win probability on [t,t+2]')+
-  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0,0.7,0.1),limits = c(0,0.7))+
+  theme(,panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('Close Wins - By Price')
 plotDisc.closewins.price.exp2
 
@@ -98,8 +107,8 @@ plotDisc.closewins.rank.exp2<-ggplot(merged.wins.close.rank.means.exp2,aes(x=(an
   geom_errorbar(aes(x=annualwinspre_closerank,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
   theme_bw()+xlab('Annualized close (by rank) contracts won up to t')+ylab('Win probability on [t,t+2]')+
-  theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0,0.7,0.1),limits = c(0,0.7))+
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
+  scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('Close Wins - By Rank')
 plotDisc.closewins.rank.exp2
 
@@ -130,13 +139,13 @@ title.exp2 <- ggdraw() +
 plot.results.graphic=cowplot::plot_grid(title.exp1,row.1,title.exp2,row.2,
                    nrow = 4,labels = '',rel_heights = c(0.1, 1,0.1,1))
 
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plotwins_panel.png",width = 9, height = 7.5,units = "in",res=1000)
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plotwins_panel.png",width = 10, height = 7.5,units = "in",res=1000)
 plot.results.graphic
 dev.off()
 
-
-
-# LM Outputs
+#####################
+# LM OUTPUT
+#####################
 ## These are two tables for each type of experience computation
 ## First computation of experience
 regression.output.1=capture.output({stargazer(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm.26, type = "latex",label = 'tab:table_exp_1', header = F,
@@ -161,7 +170,6 @@ regression.output.2=capture.output({stargazer(lm.16,lm.22, lm.27 , lm.17, lm.23,
 
 createStargazerTxt(regression.output.2,'table_ols_exp2.txt')
 
-
 #Plot
 x=seq(0,10,length.out = 1000)
 newdata=data.frame(winspre=x,a=x^2,idperiodpost='2019-01-04/2021-01-04')%>%rename('I(winspre^2)'='a')
@@ -178,8 +186,12 @@ png(filename="C:\\repos\\learn-doing\\R\\Output\\fit_sample.png",width = 7, heig
 plot_fit
 dev.off()
 
+###
 
-#####Robustnesss
+#####################
+# ROBUSTNESS
+#####################
+
 p1<-ggplot(robustness_close_wins,aes(x=thresholdClose,y=estimate))+geom_line(color='darkblue',lwd=1)+geom_vline(xintercept = 0.005,color='red')+#geom_point(color='darkblue')+
   geom_line(aes(y=lower95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+geom_line(aes(y=upper95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+ylim(-0.01,0.02)+theme_bw()+
   xlab('Threshold for a close win (Percentage)')+ylab('Experience Estimate')+annotate(geom="text", x=0.0125, y=0.012, label="Main specification threshold",
@@ -193,10 +205,10 @@ p1
 dev.off()
 
 ######## Comparison types
-a=coeftest(lm.10,vcov = vcovHC(lm.10, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV',Contracts='Does Not Consider Experience in Award Score')
-c=coeftest(lm.42,vcov = vcovHC(lm.42, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV',Contracts='Considers Experience in Award Score')
-b=coeftest(lm.11,vcov = vcovHC(lm.11, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV',Contracts='Does Not Consider Experience in Award Score')
-d=coeftest(lm.43,vcov = vcovHC(lm.43, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV',Contracts='Considers Experience in Award Score')
+a=coeftest(lm.10,vcov = vcovHC(lm.10, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV - Price',Contracts='Does Not Consider Experience in Award Score')
+c=coeftest(lm.42,vcov = vcovHC(lm.42, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV - Price',Contracts='Considers Experience in Award Score')
+b=coeftest(lm.11,vcov = vcovHC(lm.11, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV - Price',Contracts='Does Not Consider Experience in Award Score')
+d=coeftest(lm.43,vcov = vcovHC(lm.43, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV - Price',Contracts='Considers Experience in Award Score')
 comparison.types=rbind(a,b,c,d)%>%filter(term%in%c('winspre > 0TRUE','winspre'))
 comparison.types
 
@@ -212,8 +224,47 @@ png(filename="C:\\repos\\learn-doing\\thesis\\figures\\comparison_considers_expe
 plot.compexp.1
 dev.off()
 
-# Export the results of bids regressions
+###
+# Robustness Rank
+###
 
+plot.ranks.robust.1<-ggplot(result.robustness.ranks%>%filter(ff=='Binary Indicator'), aes(x=as.factor(winPoints),y=estimate))+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.12)+
+  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
+
+plot.ranks.robust.2<-ggplot(result.robustness.ranks%>%filter(ff=='Linear'), aes(x=as.factor(winPoints),y=estimate))+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.02)+
+  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
+
+row.1=plot_grid(plot.ranks.robust.1)
+row.2=plot_grid(plot.ranks.robust.2)
+
+title.rob1 <- ggdraw() + 
+  draw_label(
+    "Robustness analysis for threshold and points awarded - close wins by rank",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+plot.robustness.rank=cowplot::plot_grid(title.rob1,row.1,row.2,
+                                        nrow = 3,labels = '',rel_heights = c(0.1, 1,1))
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_robustness_rank.png",width = 9, height = 5.5,units = "in",res=1000)
+plot.robustness.rank
+dev.off()
+
+
+###########################################################################
+##Mechanisms
+###########################################################################
+
+
+# Export the results of bids regressions
 ## Show a table describing the dataset used
 generateDfBidsSummary(bids = df.bids)
 
@@ -303,7 +354,7 @@ plot.quality.exp.close.prince
 plot.quality.exp.close.rank=ggplot(df.quality.plot.close.rank,aes(x=exp_closerank,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,6)+
   geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+
   ylim(0.7,1)+theme_bw()+xlab('Close Experience (by rank)')+ylab('Mean Proposal Acceptance  Indicator')+scale_x_continuous(breaks=seq(0,6),limits = c(-0.2,6))+
-  theme(panel.grid.major.x = element_blank(),axis.text.x = element_text(size=9,color = 'black'),panel.grid.minor = element_blank())+ggtitle('Experience equal to close (by rank) experience')
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),axis.text.x = element_text(size=9,color = 'black'))+ggtitle('Experience equal to close (by rank) experience')
 plot.quality.exp.close.rank
 
 row.1=ggdraw() + 
