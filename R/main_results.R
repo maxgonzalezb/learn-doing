@@ -773,14 +773,14 @@ table_robustness_period_o %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tab
 ###################
 
 # Robustness checks: close wins
-close_wins_vector=c(thresholdClose=seq(0.001,0.03,by = 0.001))
+close_wins_vector=c(thresholdClose=seq(0.001,0.03,by = 0.002))%>%as.vector()
 ##Revisar como puede haber diferencia de cero
 start=0
 split1=2
 split2=2
 robustness_close_wins=close_wins_vector%>%map_dfr(function(x) (createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x,filterReqExp = T )%>%
-                                                                 ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|winspre_close+idperiodpost))%>%tidy()%>%
-                                                                 filter(term=='winspre')%>%mutate(thresholdClose=x)))%>%mutate(model='Linear Experience')
+                                                                 ivreg(data= .,formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
+                                                                 filter(term=='winspre')%>%mutate(thresholdClose=x)))%>%mutate(model='Binary Experience')
 
 
 robustness_close_wins=robustness_close_wins%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)

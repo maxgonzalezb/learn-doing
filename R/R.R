@@ -64,7 +64,7 @@ df=df%>%filter((is.na(MontoEstimado)|MontoEstimado>thresholdSize)&
 
 #Create unique ID
 df = df %>% mutate(id = paste0(Codigo, RutProveedor))
-df=df%>%mutate(indWinner=as.numeric(estadoOferta=='Seleccionada'),indAccepted=as.numeric(estadoOferta=='Seleccionada'))
+df=df%>%mutate(indWinner=as.numeric(winner=='Seleccionada'),indAccepted=as.numeric(estadoOferta=='Seleccionada'))
 df=df%>%group_by(id)%>%slice_max(n=1,with_ties = T,order_by =FechaEnvioOferta)
 
 df.repetidos = df %>% group_by(id) %>% select(Codigo,
@@ -112,12 +112,12 @@ df.names = df %>% dplyr::select(RutProveedor, NombreProveedor) %>% group_by(RutP
 
 ##Merge with experiece dataset
 df=df%>%left_join(listaContractExp,by=c('CodigoExterno'='id'))
-df.difs = createDifsDf(df,thresholdCLose = 0.005, weightPrice = 50,thresholdCloseRank = NA)
+df.difs = createDifsDf(df,thresholdClose = 0.005, weightPrice = 50,thresholdCloseRank = NA)
 df=df%>%left_join(df.difs)
 rows2=(nrow(df))
 
 ##Create Ranked DF
-helpers.ELO=createHelpElo(df)
+helpers.ELO=createHelpElo(df=df)
 df.rating=helpers.ELO[[1]]
 df.rating.elo=helpers.ELO[[2]]
 
@@ -129,7 +129,7 @@ n = 7500
 tabletimes = df%>% select(FechaInicio, Codigo, time)
 vector = seq_len(nrow(df))
 
-rm(df.difs,df.names,listaContractExp,lowContracts,moreThanOneItem)
+rm(df.names,listaContractExp,lowContracts,moreThanOneItem)
 #vectorubicacion = df$Codigo %in% tabletimes$Codigo
 winPoints=24
 losePoints=8
@@ -144,8 +144,12 @@ df = CreateFullRankedDataset(
   losePoints,
   startPoints = 1500
 )
+df=cleanRankDatabase(df.ranked = df)
 lista.close.ranks=createDifsDf_rank(df,thresholdCloseRank = 1.03)
 df=df%>%left_join(lista.close.ranks)
+df=df%>%mutate(isCloseRanking=ifelse(is.na(isCloseRanking),yes=0,no=isCloseRanking))
+df=df%>%mutate(isClose=ifelse(is.na(isClose),yes=0,no=isClose))
+
 rows3=nrow(df)
 print(paste0('All correct in merging: ' , (rows1==rows2&rows2==rows3)))
 #saveRDS(df,file = 'C:\\repos\\learn-doing\\data\\contractData.rds')

@@ -7,7 +7,7 @@
 \toprule
 Variable & Mean (Not close win) & Mean (Close win) & Sd (Not close win) & Sd (Close win)\\
 \midrule
-Bid (all) & 9.7e+10 & 8.01e+08 & 2.89e+13 & 9.96e+09\\
+Bid (all) & 8.94e+10 & 4.38e+08 & 2.77e+13 & 9.07e+09\\
 Winning Bid & 2.52e+08 & 2.57e+08 & 2.22e+09 & 3.23e+09\\
 Difference between 1st bid and 2nd (\%) & 0.0891 & 0.0984 & 0.161 & 0.154\\
 Number of Bidders per Contract & 7.94 & 3.03 & 45.6 & 1.42\\

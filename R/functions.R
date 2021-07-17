@@ -59,7 +59,8 @@ createHelpElo=function(df){
   return(list(df.rating,df.rating.elo))
 }
 
-createDifsDf<-function(df,thresholdCLose,thresholdCloseRank,weightPrice){
+createDifsDf<-function(df,thresholdClose,thresholdCloseRank,weightPrice){
+  
   df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
     arrange(montoOferta) %>%
     summarise(
@@ -71,21 +72,18 @@ createDifsDf<-function(df,thresholdCLose,thresholdCloseRank,weightPrice){
         (montoOferta[winner == 'Seleccionada'][1]-montoOferta[1]) / montoOferta[1]
       ) ,
       percPrice = max(percPrice),
-      validOffers=length(Codigo),
+      validOffers=length(Codigo),hasWinner=as.numeric(sum(indWinner)>0)
     )%>%
     mutate(isCloseBids=difWinSecondLow<=thresholdClose&difWinLowest<=thresholdClose,
-           isClose=isCloseBids&validOffers>=2&percPrice>=weightPrice)%>%select(Codigo,isClose)
+           isClose=isCloseBids&validOffers>=2&percPrice>=weightPrice&hasWinner)%>%select(Codigo,isClose)
   return(df.difs)
 }
 
 createDifsDf_rank<-function(df,thresholdCloseRank){
   df.difs = df %>% filter(estadoOferta == 'Aceptada') %>% group_by(Codigo) %>%
-    summarise(isCloseRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)))
+    summarise(isCloseRanking=as.numeric(length(Codigo)>=2&(max(rank)/min(rank)<=thresholdCloseRank)&sum(indWinner)>0))
   return(df.difs)
 }
-
-
-
 
 CreateFullRankedDataset<-function(max_players,df,df.rating,df.rating.elo,  n = 10000,winPoints,losePoints,startPoints=1500){
   
@@ -155,6 +153,7 @@ CreateFullRankedDataset<-function(max_players,df,df.rating,df.rating.elo,  n = 1
   )
   status = ratings.3$ratings
   rm(ratings.3,df.ranked.2)
+  print('Third update complete')
   
   ratings.4 = elom(
     x = df.rating.elo[(3 * n+1):nrow(df.rating.elo), ],
@@ -174,33 +173,23 @@ CreateFullRankedDataset<-function(max_players,df,df.rating,df.rating.elo,  n = 1
   )
   status = ratings.4$ratings
   rm(ratings.4,df.ranked.3)
-  print('Third update complete')
+  print('Fourth update complete')
   
   #Fill all single contests which are NA right now
   df.ranked=df.ranked.4%>%left_join(tabletimes[,c(2,3)])
   return(df.ranked)
 }
 
-cleanRankDatase=function(df.ranked){
-  table(df.ranked$rank==-1)
+cleanRankDatabase=function(df.ranked){
+  startPoints=1500
   df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=startPoints,no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  N=120
+  for (i in seq_len(N)) {
+  print(paste0('Total -1 contracts:' ,(length(unique((df.ranked%>%filter(rank==-1))$Codigo)))))
+    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
   
-  
-  
+  }
+  return(df.ranked)
 }
 
 
@@ -478,7 +467,7 @@ createTwoPeriodDataset<-function(df,start,stop,split1,split2,thresholdClose=0.00
   #                                                                                                    islowestBid = ((abs(montoOferta[1] - montoOferta[winner == 'Seleccionada'][1])/montoOferta[1])<=thresholdClose))
   
   
-  df.difs=createDifsDf(df,thresholdCLose = thresholdCLose,thresholdCloseRank = NA,weightPrice = weightPrice)
+  df.difs=createDifsDf(df,thresholdClose = thresholdClose,thresholdCloseRank = NA,weightPrice = weightPrice)
   
   df.period1.wins=df.period1%>%group_by(RutProveedor)%>%summarise(ofertas=length(winner),wins=length(winner[winner=='Seleccionada']),probWin=wins/ofertas,montoTotal=sum(`Monto Estimado Adjudicado`[winner=='Seleccionada'],na.rm=T),
                                                                  firstyearwin=min(year[winner=='Seleccionada']))%>%ungroup()%>%mutate(life= max(max(df.period1$year)-firstyearwin,1),annualwinspre=wins/(life))

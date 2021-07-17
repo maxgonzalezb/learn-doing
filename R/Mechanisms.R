@@ -12,9 +12,9 @@ df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
     isCloseWin = WinContr * isClose)%>%
   mutate(
     exp_close =
-      max(cumsum(isCloseWin) - 1, 0),
+      max(cumsum(isCloseWin) - isCloseWin, 0),
     exp_closerank =
-      max(cumsum(isCloseWin_rank) - 1, 0)
+      max(cumsum(isCloseWin_rank) - isCloseWin_rank, 0)
   ) %>%
   mutate(exp_close = ifelse(is.na(exp_close), yes = 0, no = exp_close)) %>%
   mutate(indExp = as.numeric(exp > 0),
@@ -61,7 +61,7 @@ comparison.1 = df %>% filter(isCloseRanking >= 0) %>%as.data.frame()%>% generate
   dplyr::select('mean', 'std') %>% rename('mean_notClose' = 'mean', 'std_notClose' =
                                             'std')
 comparison.2 = df %>% filter(isCloseRanking == 1) %>% as.data.frame()%>%generateDfBidsSummary() %>%
-  dplyr::select(name, 'mean', 'std') %>% rename('mean_close_price' = 'mean', 'std_close_price' =
+  dplyr::select(name, mean, std) %>% rename('mean_close_price' = 'mean', 'std_close_price' =
                                                   'std') 
 
 comparison.3 = df %>% filter(isClose == 1) %>% as.data.frame()%>%generateDfBidsSummary() %>%
@@ -92,7 +92,7 @@ df.bids$exp_closerank
 #Analysis
 lm.34=lm(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+(indFirstYear), data=df.bids)
 lm.35=lm(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
-lm.36=ivreg(MCA_MPO~(annualexp>0)+as.factor(year)+RegionUnidad+indFirstYear|
+lm.36=ivreg(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+indFirstYear|
               (exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
 
 lm.37=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear|
@@ -103,6 +103,8 @@ robust.lm35<- vcovHC(lm.35, type = "HC1")%>%diag()%>%sqrt()
 robust.lm36<- vcovHC(lm.36, type = "HC1")%>%diag()%>%sqrt()
 robust.lm37<- vcovHC(lm.37, type = "HC1")%>%diag()%>%sqrt()
 
+summary(lm.34)
+summary(lm.35)
 summary(lm.36)
 summary(lm.37)
 
@@ -208,6 +210,9 @@ robust.lm57<- vcovHC(lm.57, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.57)
 
 
+start=0
+split1=2
+split2=2
 merged.wins=createMultiPeriodDataset(df,start = start,ranks = T, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005)
 lm.58<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_closerank>0)+idperiodpost,data = merged.wins)
 robust.lm58<- vcovHC(lm.58, type = "HC1")%>%diag()%>%sqrt()
@@ -221,6 +226,7 @@ summary(lm.59)
 start=0
 split1=2
 split2=2
+
 merged.wins=createMultiPeriodDataset(df%>%filter(year>=2011),start = start, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005, ranks=T)
 lm.62<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_closerank>0)+idperiodpost,data = merged.wins)
 robust.lm62<- vcovHC(lm.62, type = "HC1")%>%diag()%>%sqrt()
@@ -230,19 +236,17 @@ lm.63<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank)+idperiodpost,data
 robust.lm63<- vcovHC(lm.63, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.63)
 
-
-
-##Annualized
-lm.59<-lm(probAc~(annualwinspre)+idperiodpost,data = merged.wins)
-robust.lm55<- vcovHC(lm.55, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.59)
-
-lm.60<-ivreg(probAc~(annualwinspre>0)+idperiodpost|(annualwinspre_close>0)+idperiodpost,data=merged.wins)
-robust.lm56<- vcovHC(lm.56, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.60)
-
-lm.61<-ivreg(probAc~(annualwinspre)+idperiodpost|(annualwinspre_close)+idperiodpost,data = merged.wins)
-robust.lm57<- vcovHC(lm.57, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.61)
+# ##Annualized
+# lm.59<-lm(probAc~(annualwinspre)+idperiodpost,data = merged.wins)
+# robust.lm55<- vcovHC(lm.55, type = "HC1")%>%diag()%>%sqrt()
+# summary(lm.59)
+# 
+# lm.60<-ivreg(probAc~(annualwinspre>0)+idperiodpost|(annualwinspre_close>0)+idperiodpost,data=merged.wins)
+# robust.lm56<- vcovHC(lm.56, type = "HC1")%>%diag()%>%sqrt()
+# summary(lm.60)
+# 
+# lm.61<-ivreg(probAc~(annualwinspre)+idperiodpost|(annualwinspre_close)+idperiodpost,data = merged.wins)
+# robust.lm57<- vcovHC(lm.57, type = "HC1")%>%diag()%>%sqrt()
+# summary(lm.61)
 
 

@@ -640,3 +640,50 @@ library(factoextra)
   df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
   save(df.ranked,file = 'C:\\repos\\learn-doing\\data\\rankeddf.rds')
 }
+
+
+hist(df.ranked$rank)
+
+problem=df.ranked%>%filter(rank<10)
+nrow(problem)
+
+
+noproblem=df.ranked%>%filter(rank>=10)
+a=problem%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%
+  mutate(p=length(RutProveedor),w=length(winner[winner=='Seleccionada']))%>%
+  select(estadoOferta,rank,RutProveedor,FechaInicio,rank,p,w,Codigo,winner, isCloseRanking)
+table(a$p)
+table(a$w)
+table(problem$isCloseRanking)
+summary(problem$FechaInicio)
+summary(noproblem$FechaInicio)
+
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(numseq=seq_len(length(RutProveedor)),rank_new=ifelse(rank==-1&numseq>1,yes=lag(rank[rank>-1|numseq==1],n = 1,order_by = FechaInicio),no=rank))
+
+b=df.ranked %>% group_by(Codigo)%>%mutate(p=length(RutProveedor[estadoOferta=='Aceptada']))%>%
+  arrange(FechaInicio) %>%
+  #group_by(RutProveedor,tmp=cumsum(rank!=-1))%>%mutate(rank_new=rank[1])%>
+  select(RutProveedor,FechaInicio,rank,rank_new,p,Codigo,winner,numseq)%>%ungroup()%>%group_by(RutProveedor)%>%mutate(hasminus=(min(rank)<0))%>%
+  filter(hasminus==TRUE)%>%arrange(RutProveedor,FechaInicio)
+
+c=b%>%filter(rank==-1)
+
+
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))

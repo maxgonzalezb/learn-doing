@@ -1,21 +1,21 @@
 \begin{table}
 
-\caption{\label{tab:table_bid_sample}Sample descriptive statistics for bid analyisis}
+\caption{\label{tab:table_bid_sample}Sample descriptive statistics for bid analysis}
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tabular}[t]{l>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{3.5cm}}
 \toprule
 name & N & mean & std & max & min\\
 \midrule
-Bid (all) & 37100 & 7.76e+08 & 6.88e+09 & 2.54e+11 & 1e+07\\
-Winning Bid & 9656 & 4.25e+08 & 4.54e+09 & 2.47e+11 & 1e+07\\
-Difference between 1st bid and 2nd (\%) & 9656 & 0.0681 & 0.0848 & 0.754 & 0\\
-Number of Bidders per Contract & 9656 & 3.36 & 2.37 & 20 & 1\\
-Year & 9656 & 2015 & 2.81 & 2021 & 2011\\
+Bid (all) & 38700 & 7.52e+08 & 6.74e+09 & 2.54e+11 & 2500000\\
+Winning Bid & 10100 & 4.13e+08 & 4.44e+09 & 2.47e+11 & 4940000\\
+Difference between 1st bid and 2nd (\%) & 10100 & 0.0735 & 0.0956 & 0.912 & 0\\
+Number of Bidders per Contract & 10100 & 3.49 & 2.6 & 33 & 1\\
+Year & 10100 & 2015 & 2.82 & 2021 & 2011\\
 \addlinespace
-Offers made by Firm & 7320 & 5.07 & 9.44 & 258 & 1\\
-Win prob. by Firm & 7320 & 0.232 & 0.325 & 1 & 0\\
-Offers won by Firm & 7320 & 1.32 & 2.99 & 62 & 0\\
+Offers made by Firm & 7430 & 5.21 & 9.89 & 265 & 1\\
+Win prob. by Firm & 7430 & 0.232 & 0.325 & 1 & 0\\
+Offers won by Firm & 7430 & 1.36 & 3.12 & 64 & 0\\
 \bottomrule
 \end{tabular}}
 \end{table}

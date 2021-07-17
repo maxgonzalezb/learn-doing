@@ -118,7 +118,7 @@ merged.wins = createAnnualizedWins(
 )
 
 
-merged.wins.close.rank.exp2=merged.wins%>%filter((((winspre==winspre_closerank)&winspre_closerank>=1))|(winspre==0&ofertaspre>0))
+merged.wins.close.rank.exp2=merged.wins%>%filter((((winspre==winspre_closerank)&winspre_closerank>=1))|(winspre==0&TRUE))
 merged.wins.close.rank.means.exp2=merged.wins.close.rank.exp2%>%group_by(annualwinspre_closerank=round(annualwinspre_closerank))%>%summarise(probWinpost_mean=mean(probWinpost),n=length(RutProveedor),
                                                                                               q0.25=quantile(probWinpost,probs = 0.25),
                                                                                               q0.75=quantile(probWinpost,probs = 0.75),
@@ -159,6 +159,13 @@ start=0
 split1=2
 split2=2
 check.thresholds=c(1.01,1.02,1.03,1.04)
+
+
+helpers.ELO=createHelpElo(df=df)
+df.rating=helpers.ELO[[1]]
+df.rating.elo=helpers.ELO[[2]]
+
+
 result.robustness.ranks=data.frame()
 for (i in seq_len(nrow(parameters.checks))) {
   print(i)
@@ -168,12 +175,13 @@ for (i in seq_len(nrow(parameters.checks))) {
   
   # Create full rankings
   df.ranked.robust = CreateFullRankedDataset(
-    max_players,
-    df,
-    df.rating.elo,
-    n = 10000,
-    winPoints,
-    losePoints,
+    max_players = max_players,
+    df = df,
+    df.rating.elo = df.rating.elo,
+    df.rating = df.rating,
+    n = 7500,
+    winPoints = winPoints,
+    losePoints = losePoints,
     startPoints = 1500
   )
   #df.ranked.robust = df.ranked.robust %>% left_join(listaContractExp, by =
