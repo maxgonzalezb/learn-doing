@@ -6,8 +6,8 @@
 df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   group_by(RutProveedor) %>% arrange(FechaInicio) %>% mutate(
     firstyear = min(year),
-    offers=cumsum(as.numeric(WinContr>=0)),
-    exp = max(cumsum(WinContr) - 1, 0),
+    offers=cumsum(as.numeric(WinContr>=0))-1,
+    exp = max(cumsum(WinContr) - WinContr, 0),
     isCloseWin_rank=WinContr * isCloseRanking,
     isCloseWin = WinContr * isClose)%>%
   mutate(
@@ -17,6 +17,7 @@ df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
       max(cumsum(isCloseWin_rank) - isCloseWin_rank, 0)
   ) %>%
   mutate(exp_close = ifelse(is.na(exp_close), yes = 0, no = exp_close)) %>%
+  mutate(expe = ifelse(is.na(exp), yes = 0, no = exp)) %>%
   mutate(indExp = as.numeric(exp > 0),
          indExpClose = as.numeric(exp_close > 0)) %>%
   mutate(
@@ -26,6 +27,7 @@ df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   )%>%
   mutate(indFirstYear=(year==firstyear))
 
+df.bids=df.bids%>%filter(hasExp == 0)
 df.bids = df.bids %>% filter(MCA_MPO <= 5 &
                                MCA_MPO > 0.1 & hasExp == 0 & year >= 2011 & !is.na(MCA_MPO))
 
@@ -85,8 +87,10 @@ table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_cl
 
 
 ## Validity and rank
-lm(data=df.bids,exp~exp_close)%>%summary()
-lm(data=df.bids,exp~exp_closerank)%>%summary()
+lm(data=df.bids,(exp>0)~(exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
+lm(data=df.bids,exp~exp_close+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
+lm(data=df.bids,exp>0~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
+lm(data=df.bids,exp~exp_closerank+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
 df.bids$exp_closerank
 
 #Analysis
@@ -97,6 +101,11 @@ lm.36=ivreg(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+indFirstYear|
 
 lm.37=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear|
               (exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
+
+lm.37.bis=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor|
+              log(exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor, data=df.bids)
+
+summary(lm.37.bis)
 
 robust.lm34<- vcovHC(lm.34, type = "HC1")%>%diag()%>%sqrt()
 robust.lm35<- vcovHC(lm.35, type = "HC1")%>%diag()%>%sqrt()

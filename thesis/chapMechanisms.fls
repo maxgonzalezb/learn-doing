@@ -2,6 +2,7 @@ PWD C:\repos\learn-doing\thesis
 INPUT C:\Users\Maximiliano\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
 INPUT chapMechanisms.tex
 OUTPUT chapMechanisms.log
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\repos\learn-doing\thesis\tables\table_bid_sample.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bid_sample.txt
@@ -15,11 +16,12 @@ INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
-INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
 INPUT C:\Program Files\MiKTeX\tex\latex\base\omlcmr.fd
 INPUT C:\Program Files\MiKTeX\tex\latex\base\omlcmr.fd
 INPUT C:\Program Files\MiKTeX\tex\latex\base\omlcmr.fd
 INPUT C:\Program Files\MiKTeX\tex\latex\base\omlcmr.fd
+OUTPUT chapMechanisms.pdf
+INPUT C:\ProgramData\MiKTeX\pdftex\config\pdftex.map
 INPUT C:\repos\learn-doing\thesis\tables\table_acceptance_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_acceptance_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_acceptance_1.txt

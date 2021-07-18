@@ -38,6 +38,13 @@ library(stringr)
 library(PlayerRatings)
 library(tictoc)
 
+createConf<-function(lm){
+  res=cbind(coefci(lm,vcov = vcovHC(lm, type = "HC1")),coeftest(lm,vcov = vcovHC(lm, type = "HC1"))%>%tidy)%>%as.data.frame()
+  rownames(res)=NULL
+  res=res%>%rename('lower95'='2.5 %','upper95'='97.5 %')
+  return(res)
+}
+
 
 createHelpElo=function(df){
   df=df%>%arrange(FechaInicio)  
@@ -368,15 +375,26 @@ generateDfBidsSummary<-function(bids){
 
 df=bids%>%as.data.frame()
 df.difs=df%>%filter(estadoOferta=='Aceptada')%>%group_by(Codigo)%>%arrange(montoOferta)%>%summarise(dif=(montoOferta[2]-montoOferta[1])/montoOferta[2],ganador=montoOferta[1],segundo=montoOferta[2])
+#df.difs=createDifsDf(df,thresholdClose = 0.005,weightPrice = 50)
 
-general.statistics=df%>%
-    filter(winner=='Seleccionada')%>%dplyr::select(Codigo,montoOferta,NumeroOferentes,year)%>%
-    group_by(Codigo)%>%pivot_longer(cols=montoOferta:year)%>%group_by(name)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(name[!is.na(value)])/N,mean=round(mean(value),4),std=sd(value),
-                                                                                          max=max(value),min=min(value))%>%mutate(name=gsub(x=name,pattern = 'montoOferta',replacement = 'Bid_Winning'))
-  general.statistics.allbids=df%>%
+general.statistics=df%>%group_by(Codigo)%>%slice_head(n=1)%>%
+    dplyr::select(Codigo,NumeroOferentes,year)%>%
+    group_by(Codigo)%>%pivot_longer(cols=NumeroOferentes:year)%>%group_by(name)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(name[!is.na(value)])/N,mean=round(mean(value),4),std=sd(value),
+                                                                                          max=max(value),min=min(value))
+  
+
+winbid.statistics=df%>%group_by(Codigo)%>%filter(winner=='Seleccionada')%>%dplyr::select(montoOferta)%>%pivot_longer(cols=montoOferta:montoOferta)%>%
+  group_by(name)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),
+                             per_complete=length(name[!is.na(value)])/N,mean=round(mean(value),4),std=sd(value),
+                             max=max(value),min=min(value))%>%mutate(name=gsub(x=name,pattern = 'montoOferta',replacement = 'Bid_Winning'))
+
+general.statistics=general.statistics%>%rbind(winbid.statistics)
+
+general.statistics.allbids=df%>%
     dplyr::select(Codigo,montoOferta)%>%
     group_by(Codigo)%>%pivot_longer(cols=montoOferta)%>%group_by(name)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(name[!is.na(value)])/N,mean=mean(value),std=sd(value),
                                                                                         max=max(value),min=min(value))%>%mutate(name=gsub(x=name,pattern = 'montoOferta',replacement = 'Bid (all)'))
+  
   dif.statistics=df%>%left_join(df.difs)%>%
     filter(winner=='Seleccionada')%>%dplyr::select(Codigo,dif)%>%summarise(N=length(Codigo[!(is.na(Codigo))]),per_complete=length(dif[!is.na(dif)])/N,mean=mean(dif,na.rm = T),std=sd(dif,na.rm = T),
                                                                            max=max(dif,na.rm = T),min=min(dif,na.rm = T))%>%mutate(name='dif')%>%as.data.frame()

@@ -1,15 +1,16 @@
 # Fdb version 3
-["pdflatex"] 1625623878 "chapMechanisms.tex" "chapMechanisms.pdf" "chapMechanisms" 1625623880
+["pdflatex"] 1626528568 "chapMechanisms.tex" "chapMechanisms.pdf" "chapMechanisms" 1626528572
   "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
   "C:/Program Files/MiKTeX/tex/latex/base/omlcmr.fd" 1622623408 2470 c2c019f70756763a210c8c4439f55d8a ""
+  "C:/ProgramData/MiKTeX/pdftex/config/pdftex.map" 1623970329 5217809 7be800332f8babd8b9d9c49d5564a114 ""
   "C:/Users/Maximiliano/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1623971266 10444370 ba6582a549b487bc830f85c0dba00352 ""
-  "chapMechanisms.aux" 1625620970 3409 0c01b0daa2bc2e44be139d8c02c9aafb ""
-  "chapMechanisms.tex" 1625621953 17988 c6a5da21933b9e247f9239276af91fcc ""
-  "tables/table_acceptance_1.txt" 1625545916 1761 05678a3e40b22870b989d0e58f085d01 ""
-  "tables/table_bid_sample.txt" 1625532729 939 2ae81344804b5c6ce27cf07c42d89494 ""
-  "tables/table_bids_results_1.txt" 1625540389 1528 f092d103212e4dcad11a4d547ef3a55b ""
-  "tables/table_closewins_bids.txt" 1625533082 583 bfef8aec38d581ed40bac324c1618052 ""
+  "chapMechanisms.aux" 1626528482 3561 bc893dde74a53dfaa35ddd5948c59e0e ""
+  "chapMechanisms.tex" 1626528562 20397 634018b37c66a016b7192cfe10fe755c ""
+  "tables/table_acceptance_1.txt" 1625869006 1749 e0ec518b819cadf9b87555e0c0ae0aa1 ""
+  "tables/table_bid_sample.txt" 1626499312 945 12afe816c603f5d6dd95d22f302de4fa ""
+  "tables/table_bids_results_1.txt" 1625869006 1528 f092d103212e4dcad11a4d547ef3a55b ""
+  "tables/table_closewins_bids.txt" 1626499354 583 11c6739320e71239d6b35dbcac28a6a9 ""
   (generated)
-  "chapMechanisms.pdf"
   "chapMechanisms.log"
+  "chapMechanisms.pdf"

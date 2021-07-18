@@ -6,15 +6,15 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Experience and Outcomes
 }
-This chapter adresses tha main research question of whether public experience improves future prospects for firms in the market of public construction projects.  The rationale behind the hypothesis that experience confers advantages to firms is that firms learn by doing how to perform better public contracts, becoming more efficient and delivering better products; and get familiarized with the bidding process and the bureaucracy of the public sector.
+This chapter addresses tha main research question of whether public experience improves future prospects for firms in the market of public construction projects.  The rationale behind the hypothesis is that firms learn by doing how to perform better public contracts, becoming more efficient and delivering better products; and get familiarized with the bidding process and the bureaucracy of the public sector.
 
 The empirical strategy proceeds by slicing the data in specific points in time and examining how past experience for a firm is related to the proportion of proposals it wins out of the proposals that it bids for in the future. The focus is on the existence of a discontinuity in the outcomes of firms with strictly positive experience and the outcomes of firms with no experience.
 
-Section 1 presents the data, Section 2 the empirical strategy, section 3 the results and section 4 the robustness checks.
+Section 1 presents the data, Section 2 the empirical strategy, Section 3 the results and Section 4 performs robustness checks.
 
 \section{Data}
 \label{section:datamain}
-Recall that our dataset consists in a set of bids submitted by firms in auctions developed by the government in Chile between 2010 and 2020 for construction projects. The source and main characteristics of the dataset employed in the investigation were detailed in the previous section.
+Our dataset consists in a set of bids submitted by firms in auctions developed by the government in Chile between 2010 and 2020 for construction projects. The source and main characteristics of the dataset employed in the investigation were detailed in the previous chapters. The Table \ref{tab:sample_descriptive} shows descriptive statistics for the sample employed.
 
  %We further filter the dataset in the following way. we only consider contracts with and estimated price above 20.000.000 CLP to exclude extremely simple contracts, and proposals below 10.000.000 CLP as well. We also excluded contracts without an official estimate. We exclude non-single-item proposals. Finally, we exclude contracts with several proposals from a given contractor as we have no clear way of distinguishing which was the last submitted one.
 
@@ -22,13 +22,11 @@ Recall that our dataset consists in a set of bids submitted by firms in auctions
 
 %We have contracts in our sample which are awarded based on experience. Contracts awarded with experience as an awarding factor are relevant from the point of past experience, but would bias up our estimates if considered in the computation of outrcomes. Table shows how many contracts have experience in their awarding criteria, how many have price and some descriptive statistics of the weight of each one in the sample.
 
-The Table \ref{tab:sample_descriptive} shows descriptive statistics for the final sample employed.
-
 \input{C:/repos/learn-doing/thesis/tables/sample_descriptive.txt}
 
 \section{Empirical Strategy}
-\label[section:main_empirical]
-Our empirical strategy consists in a Regression Discontinuity design in which we compare the bidding outcomes for firms with different levels of previous experience in the market. This section presents the main OLS specifications and variables of the regression. The next section deals with the causal interpretation of the coefficients.
+\label{section:main_empirical}
+Our empirical strategy consists in a Regression Discontinuity design in which we compare the bidding outcomes for firms with different levels of previous experience in the market. This section presents the main OLS specifications and the variables of the regression. The next section deals with the causal interpretation of the coefficients.
 
 Our two main OLS specification are presented in equations \ref{eqn:olsspec1} and \ref{eqn:olsspec2}. Here, $S_{it2}$ is the share of contracts won in period 2 of slice $t$, $EXP^k_{it1}$ and $EXP^k_{it1}>0$ are the experience treatment variables, and $T_t$ are period fixed effects. We employ indexes 1 and 2 to make explicit that each time slice $t$ involves two periods: period 1 of experience computation and period 2 of outcome computation. Also, the slice is indexed by time $t$ which is the date in between the two periods. Period fixed effects are added for each period of outcomes to control for changes in the market environment throughout the sample.
 
@@ -80,7 +78,7 @@ After the transformation steps, we obtain five slice-firm datasets for the first
 
 
 \subsection{Endogeneity and Identification}
-We discuss two problems in the causal interpretation of equations \ref{eqn:olsspec1} and \ref{eqn:olsspec2}: endogeneity and heterogenous effects. We then present the empirical approach to identify consisntently a feature of the distribution of treatment effects, the Local Average Treatment Effect. The discussion in made mainly for our binary treatment, i.e. $EXP>0$.
+We discuss two problems in the causal interpretation of equations \ref{eqn:olsspec1} and \ref{eqn:olsspec2}: endogeneity and heterogenous effects. We then present the empirical approach to identify consistently a feature of the distribution of treatment effects, the Local Average Treatment Effect. The discussion is made mainly for our binary treatment, i.e. $EXP>0$.
 
 First we discuss endogeneity. Unobserved cost variables, specific to each firm, are omitted in the OLS regressions above and expectedly endogenous. If there are highly efficient firms who are able to bid more aggressively or submit better proposals, they should win more projects, and in turn accumulate more experience over time. We thus expect our estimate $\hat{\beta},\hat{\gamma}$ in \ref{eqn:olsspec1} and \ref{eqn:olsspec2} to be biased upwards due to correlation (expectedly positive) between omitted cost variables and the amount of past experience.
 
@@ -101,14 +99,14 @@ S_{it2}= \beta EXP_{it2}>0+T_t+\varepsilon_{it}
 Both measures of experience ($EXP$ and $EXPCLOSE$) should be correlated since every extra unit of experience increases the probability of having at least one close win, fulfilling this way the rank condition. Moreover, close wins should not be correlated with cost measures, as they are attributed to random factors, such as risk-aversion differences between firms, random approximation differences between engineering teams in each firm, etc. and thus ensuring a valid instrument as well.
 
 Even tough our estimate $\hat{\beta}$ is consistent,
-we do not expect to identify the Average Treatment effect because treatment effects should be heterogenous:
+we do not expect to identify the a single Treatment Effect because treatment effects should be heterogenous:
 \begin{itemize}[itemsep=1pt]
   \item Experience itself is heterogenous given the complexity, length and size of a project, so it is expected that treatment effects are also heterogenous.
   \item Firm's absorptive capacity and learning ability depends on internal skill, financial strength and other organizational variables.
   \item More experienced firms should see diminishing returns to experience.
   \end{itemize}
 
- Following the discussion of Imbens and Angrist (1994), we argue that the estimation strategy identifies the Local Average Treatment Effect, i.e. the average treatment effect for the firms that are affected by the experience treatment if and only if they win a contract by chance (i.e “compliers”). This interpretation, additionally to rank and validity, also requires a monotonicity condition, that here is equivalent to having no firms negatively impacted in their experience by experiencing a close win. This condition is satisfied in our setting, since a close win belongs by construction to the set of all wins.
+ Following the discussion of \parencite{angrist1995identification} as presented in \parencite{hansen2009econometrics}, we argue that the estimation strategy identifies the Local Average Treatment Effect, i.e. the average treatment effect for the firms that are affected by the experience treatment if and only if they win a contract by chance (i.e “compliers”). This interpretation, additionally to rank and validity, also requires a monotonicity condition, that here is equivalent to having no firms negatively impacted in their experience by experiencing a close win. This condition is satisfied in our setting, since a close win belongs by construction to the set of all wins.
 
 Having discussed the theoretical rationale and identification for the instrument of close wins, the problem remains of how to successfully find close wins and label them as such, which is the purpose of the next sections. Two alternatives are proposed: first, find contracts with very close wins where price was heavely weighted, and second, develop a ranking measure of firms to find "balanced" auctions. Both are discussed and analyzed in the next sections.
 
@@ -119,11 +117,11 @@ The optimal way to identify close wins would be to single out auctions for which
 \subsubsection{Close wins by price}
 In this method, close wins are operationally identified as the wins meeting copulatively  two conditions: i) the price weight in the awarding decision criteria is 50\% or higher and ii) the difference between the lowest bid and the second lowest bid is less than .05\%. This way of identifying close wins should indeed capture a subset of the random wins, namely, random wins in projects where price is the major awarding criteria.
 
-This definition of close wins leads to approximately 2\% of winning bids being classified as a close one. In Table \ref{tab:closewins_alt1_desc} we examine whether close wins defined as above are different from the population in several types of metrics. We can see that in most aspects these bids are not exceedingly different from the rest of the sample, so we expect no underlying project characteristics that could affect competition for these contracts.
+This definition of close wins leads to approximately 2\% of winning bids being classified as a close one. In Table \ref{tab:closewins_alt1_desc} we examine whether close wins defined as above are different from the population in several types of metrics. We can see that in most aspects these bids have less dispersion in variables such as participants and less size. These might because of fat tails in the distributions of sizes and participants.
 
 \input{C:/repos/learn-doing/thesis/tables/table_closewins_alt1_desc.txt}
 
-The rank condition is verified via a regression of experience on close experience. The F-Statistic of this regression is for the indicator treatment and for the continuous measure.
+The rank condition is verified via a regression of experience on close experience. The F-Statistic of this regression is 118.2 for the indicator treatment and 1,500 for the continuous measure.
 
 \subsubsection{Close wins by rank}
 %There coul two main objections to the previous identification strategy:
@@ -132,24 +130,24 @@ The rank condition is verified via a regression of experience on close experienc
 %  \item The closeness between the first and the second bid does not take into account the full pool of participants.
 %\end{itemize}
 
-The second strategy to identify close wins does not rely in prices or any other aspect of the bid itself. Instead, we label for any winning given firm a close win if all the firms involved in the auction were close in ranking. The argument here is that, given a well constructed ranking, winning a contract against closely placed opponents should be attributable to random factors.
+The second strategy to identify close wins does not rely in prices or any other aspect of the bid itself. Instead, we label a winning bid as a close win if all the firms involved in the auction were close in ranking. The argument here is that, given a well constructed ranking, winning a contract against closely placed opponents should be attributable to random factors.
 
-Obviously, the main issue is how to construct a good ranking measure. We proceed by  modeling each auction as a multi-player game event (in the non-economic sense of the term) in which firms gain points by winning the project and lose points by not winning it. We award and substract points based on a modified ELO algorithm suited for multi-player games.
+Obviously, the main issue is how to construct a good ranking measure. We proceed by  modeling each auction as a multi-player game event (in the non-economic sense of the term) in which firms gain points by winning the project and lose points by not winning it. We award and subtract points based on a modified ELO algorithm suited for multi-player games.
 
-Each firm has its ranking initialized at a pre-specified level (1,500 in the initial version). Then, it is awarded 25 points for winning against a similar oponnent and substracted 8 by losing. The implementation of the algorithm recommends that points awarded and substracted sum to zero, so we fix awarded points and choose substracted points such that on average (given the number of players in an auction) this condition holds. Against non-similar opponents, the algorithm makes a correction based on the ranking of the players and the outcome of the game.
+Each firm has its ranking initialized at a pre-specified level (1,500 in the initial version). Then, it is awarded 25 points for winning against a similar oponnent and subtracted 8 by losing. The implementation of the algorithm recommends that points awarded and subtracted sum to zero, so we fix awarded points and choose subtracted points so that on average (given the number of players in an auction) this condition holds. Against non-similar opponents, the algorithm makes a correction on points awarded and subtracted based on the ranking of the players and the outcome of the game.
 
-Proceeding from the oldest to the most recent auction, we update the initial rankings for each firm and obtain for each firm its ranking at any point in time. Next, we label a win as a "close win" when the highest rank among the bidders for the auction was not more than 3\% higher than the lowest rank among the same set of bidders. This yields around 7,322 closely won contracts (16\% of the contracts in the analysis sample) which corresponds to 21,763 observations (16\% of the observations in the analysis sample). In Table \ref{tab:closewins_alt2_desc} we present summary statistics for close wins identified via rank.
+Proceeding from the oldest to the most recent auction, we update the initial rankings for each firm and obtain for each firm its ranking at any point in time. Next, we label a win as a "close win" when the highest rank among the bidders for the auction was not more than 3\% higher than the lowest rank among the same set of bidders. This yields around  5,800 closely won contracts (11\% of the contracts in the analysis sample) which corresponds to 17,000 observations (11\% of the observations in the analysis sample). In Table \ref{tab:closewins_alt2_desc} we present summary statistics for close wins identified via rank.
 
 \input{C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt}
 
-In the analysis, we drop the first slice of data outcomes (as defined above) to allow for a period of rank adjustment. This is necessary since the algorithm does not work well when the average rank in the population is not clearly defined. The way ranks evolve as time progresses  can be seen in Figure \ref{fig:rankings_times}. Note that ranks appear highly concentrated at the end of the first year of data, while they are much more dispersed at the end. In the robustness checks we analyze both i) different values for the won/lost points after an auction and ii) the threshold in ranking for a close win.
+In the analysis, we drop the first year of data to allow for a period of rank adjustment. This is necessary since the algorithm does not work well when the average rank in the population is not clearly defined. The way ranks evolve as time progresses  can be seen in Figure \ref{fig:rankings_times}. Note that ranks appear highly concentrated at the end of the first year of data, while they are much more dispersed at the end. In the robustness checks we analyze both i) different values for the won/lost points after an auction and ii) the threshold in ranking for a close win.
 
 \begin{figure}
   \includegraphics[scale=0.90]{rankings_times}
   \caption{Evolution of ranks by selected years}
   \label{fig:rankings_times}
   \vskip 0.5mm
-  { \footnotesize \underline{Note:} \par}
+  { \footnotesize \underline{ } \par}
 \end{figure}
 
 
@@ -163,9 +161,9 @@ In the analysis, we drop the first slice of data outcomes (as defined above) to 
 
 \section{Main Results}
 
-First we explore graphically the relationship between experience and outcomes. Figure \ref{fig:plotresults_both} shows the relationship between rolling (top row) and annualized (bottom row) measures of experience and outcomes.  Each column represents a different subsample and dependent variable. The first column (panels A and D) selects all firms and displays past experience in the $x$-axis. The second column (panels B and E) contains only two types of firm-period observations: firms that either bid but did not won contracts in period 1 of slice $t$, or firms which won one or more close contracts in period 1 and no non-close contracts. The $x$-axis displays the close wins. The third column (panels C and F) is analogous to column two but employs the definition of a close win as close win by firm rank.
+First we explore graphically the relationship between experience and outcomes. Figure \ref{fig:plotresults_both} shows the relationship between rolling (top row) and annualized (bottom row) measures of experience and outcomes.  Each column represents a different subsample and dependent variable. The first column (panels A and D) selects all firms and displays past experience in the $x$-axis. The second column (panels B and E) contains only firms with equal experience and close experience (including zero). The $x$-axis displays the close wins. The third column (panels C and F) is analogous to column two but employs the definition of a close win as close win by firm rank.
 
-We observe that average winning shares increase with more experience. The effect appears to be close to linear, altough for experiences higher than ten contracts performed (rolling) or five contracts performed (annualized) we have wide error bars or no observations avalaible. In the case of our "reduced form" graphs, we observe that almost always the close wins seem to improve average winning shares, altough we observe wide error bars in the second column, caused by the low amount of observations that fulfill the conditions imposed.
+We observe that average winning shares increase with more experience. The effect appears to be close to linear, altough for experiences higher than ten contracts performed (rolling) or five contracts performed (annualized) we have wide error bars or no observations available. In the case of our "reduced form" graphs, we observe that almost always the close wins seem to improve average winning shares, altough we observe wide error bars in the second column, caused by the low amount of observations that fulfill the conditions imposed.
 
 Next we show the results from our regression analysis. Table \ref{tab:table_exp_1} shows the results for OLS and IV regressions for our first experience measure (i.e. rolling two year periods) while Table \ref{tab:table_exp_2} shows the results for our second measure of experience (i.e. annualized experience). The first three panels in each table employ as treatment the binary indicator of experience, whereas the last three panels employ total experience.
 
@@ -173,16 +171,16 @@ The OLS estimate of the effect of having experience on winning proportion is 0.0
 
 A concerning result is the low $R^2$ of the regressions, which shows that altough the effect of experience on the mean outcome is significant, there is much variability among firms' outcomes which is not explained by the increase in experience.
 
-Given the baseline winning shares (the constant in our regressions), the effect of having experience is equivalent to an increase of between 20\% and 25\% of the winning share of a firm (i.e around 7 percentage points out of 28 percentage points). This points towards significant importance of previous experience in future outcomes.
+Given the baseline winning shares (the constant in our regressions), the effect of having experience is equivalent to an increase of between 20\% and 25\% of the winning share of a firm (i.e around 7 percentage points out of 28 percentage points, being conservative). This points towards significant importance of previous experience in future outcomes.
 
 %Altough initially we intended to show results regarding a quadratic term on experience, exploratory results showed that there was almost no difference with employing a linear term so we omitted these specifications in the main results.
 
 \begin{figure}
-  \includegraphics[scale=0.60]{plotwins_panel.png}
+  \includegraphics[scale=0.6]{plotwins_panel.png}
   \caption{Relationship between contracts won on $t-1$ and mean winning probability across contractors in $t$.}
   \label{fig:plotresults_both}
   \vskip 0.5mm
-  { \footnotesize \underline{Note:} The plots show the mean across firms of the number of contracts won out of the number of contracts bid for in period $t$ (in the $y$-axis), against experience accrued in period $(t-1)$ in the $x$-axis. $t$ and $t-1$ correspond to two periods of two years each. Since the data contains ten years, the observations correspond to outcomes computed for eight outcome periods.  Only $x$ for which the number of observations is greater than ten are shown. Error bars correspond to the interquartile range. Panel A: all sample observations are considered. Panel B:  shows results for a subsample where the only contractors considered are those who either i) won closely one or more close contracts  on period 1 or ii) did bid but not win a contract in period 1\par}
+  { \footnotesize \underline{Note:} The plots show the mean across firms of the number of contracts won out of the number of contracts bid for in period $t$ (in the $y$-axis), against experience accrued in period $(t-1)$ in the $x$-axis. $t$ and $t-1$ correspond to two periods of two years each for the top row, for the bottom row $t$ is also a period of two years bu $t-1$ are all years in the interval $[2010,t]$. Error bars correspond to means plus/minus two standard errors. First column: all sample observations are considered. Second column: only contractors with experience = close experience. Third column: analogous to second column employing the rank definition of close win.  First row: rolling experience. Second row: cumulative annualized experience.\par}
 \end{figure}
 \clearpage
 
@@ -196,7 +194,7 @@ Given the baseline winning shares (the constant in our regressions), the effect 
 
 We compare the main results obtained in the previous section with the results obtained by considering for outcome computation only contracts which $do$ require experience in the awarding criteria. This helps to put the results in context and also serves as a validation check of the empirical strategy. We expect to find greater estimates for the effect of experience on outcomes among contracts which explicitly reward experience.
 
-Figure \ref{fig:comparison_considers_experience} shows the estimate from the IV specifications, both with linear and binary functional forms of experience, by the type of contract considered to compute outcomes. It can be seen that the effect of experience on outcomes is about twice as big in contracts which do consider experience as a factor in the awarding criteria with respect to those who do not.
+Figure \ref{fig:comparison_considers_experience} shows the estimate from the IV specifications, both with linear and binary functional forms of experience, by the type of contract considered to compute outcomes (we only employed rolling experience). It can be seen that the effect of experience on outcomes is about twice as big in contracts which do consider experience as a factor in the awarding criteria with respect to those who do not.
 
 \begin{figure}[H]
   \includegraphics[scale=0.9]{comparison_considers_experience.png}
@@ -225,18 +223,18 @@ Figure \ref{fig:comparison_considers_experience} shows the estimate from the IV 
 
 
 \section{Robustness checks}
-Several of the parameters in the empirical strategy of the previous section admit more than one reasonable choice. This section considers alternatives for them . Robustness checks are studied for the following parameters:
+Several of the parameters in the empirical strategy of the previous section admit more than one reasonable choice. This section considers alternatives for them. Robustness checks are studied for the following parameters:
 \begin{enumerate}
-  \item Periods of outcome computation
-  \item Definition of a close win (by price)
-  \item Definition of a close win (by rank)
+  \item Periods of outcome computation.
+  \item Definition of a close win (by price).
+  \item Definition of a close win (by rank).
 \end{enumerate}
 \subsection{Periods of outcomes}
 In the main analysis, we computed outcomes across a period of two years for each of our slices. This choice is sensibilized by computing outcomes in one and three year periods as well. While varying the length of the period where outcomes are computed, the procedures to compute experience are kept the same as before.
 
 A shorter timeframe would be a better parameter choice if: firms bid frequently, so their true outcomes manifest quickly;  learning is itself instantaneous,  so past experience immediately influences outcomes; or  the learning effect is short lived, which would make much more important for the outcomes the recent history. Conversely, a longer time frame is better in the case of infrequent bidding, slow learning, and long lasting knowledge.
 
-For construction projects, it is expected that the better parameter would be more close to a longer timeframe than to a shorter one. Construction projects, especially complex ones, can be less frequently auctioned than in simpler, undifferentiated products. More importantly, since construction projects take longer to perform than regular purchases, it is reasonable to expect for the learning process to take longer.
+For construction projects, it is expected that the better parameter would be more close to a longer timeframe than to a shorter one. Construction projects, especially complex ones, can be less frequently auctioned than in simpler, undifferentiated products. More importantly, since construction projects take longer to perform than regular purchases, it is reasonable to expect a longer learning process.
 
 Table \ref{tab:robust_bin_outcomes} shows estimated experience coefficients where outcomes were computed in periods of 1, 2 (the original specification) and 3 years. The rows correspond to OLS, IV (by price) and IV (by rank) specifications. Notably, i) all results are significant with $p<0.01$ and ii) estimates are close to each other across different values of the parameter. Standard errors decrease with the number of years considered because of the increase in sample size. In almost every case, estimates remain within a standard error of the original estimates, and in all cases they remain within two standard errors.
 \input{C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt}
@@ -244,7 +242,7 @@ Table \ref{tab:robust_bin_outcomes} shows estimated experience coefficients wher
 \subsection{Definition of a close win - Price IVs}
 In the main section, close wins by price were defined as those in which the winning contractor submitted a bid that i) was not more than .05\% below the second lowest win, if he had the lowest bid, ii) was not more than 0.05\% below the lowest bid, if he did not submit the lowest bid and iii) the weight of the price item in the awarding decision is more than 50\%. In this section the main estimates are sensibilized to different values of the threshold parameter and the weight parameter.
 
-We first sensibilize the threshold for bid differences for the linear estimate of experience in the rolling experience measure. The plot in Figure \ref{fig:close_wins_robust} displays the coefficient of interest as we vary the threshold for a close win.  For thresholds below .4\%, we obtain non statistically significant coefficients. The reduction in sample size for the instrument is significant below .5\%, since this percentage is already at around the 15th percentile of bid differences in the sample.
+We first sensibilize the threshold for bid differences for the linear estimate of experience in the rolling experience measure. The plot in Figure \ref{fig:close_wins_robust} displays the coefficient of interest and 95\% confidence as we vary the threshold for a close win.  For thresholds below .25\%, we obtain much wider standard errors. The reduction in sample size for the instrument is significant below .5\%, since this percentage is already at around the 15th percentile of bid differences in the sample. However, we keep significant outcomes at p=0.05 for all values analyzed.
 
  \begin{figure}[H]
          \centering
@@ -253,21 +251,21 @@ We first sensibilize the threshold for bid differences for the linear estimate o
          \label{fig:close_wins_robust}
 
   \vskip 0.5mm
-  {\justifying\footnotesize\underline{Note:} The plot shows the coefficient on experience as in the specification of Panel (5) of table \ref{tab:table_exp_1}, that is, the dependent variable is the share of contracts won in period $t$ and the dependent variable is linear experience, i.e. number of contracts won in period $(t-1)$, instrumented with close wins in period $(t-1)$. The $x$-axis shows how the coefficient varies with the threshold for what is considered a close win.\par}
+  {\justifying\footnotesize\underline{Note:} The plot shows the coefficient on experience as in the specification of Panels 4 (left) and 5 (right) of table \ref{tab:table_exp_1}, that is, the dependent variable is the share of contracts won in period $t$ and the dependent variable is a linear indicator of experience or linear experience, i.e. number of contracts won in period $(t-1)$, instrumented with close wins in period $(t-1)$. The $x$-axis shows how the coefficient varies with the threshold for what is considered a close win.\par}
  \end{figure}
 
-Now we examine the parameter for the weight of the price component in the total score. We replicate our main IV-price results but consider weights  of 60\%,70\%, and 80\% as the minimum weights of the price component. Table \ref{tab:robust_weightprice_outcomes} shows the results. At 60\%, most results remain significant, but beyond 80\% almost all results are not. Since 60\% is the 80th percentile of the score weight across contracts, we have again a sample size problem for the instrument when there are higher requirements for the threshold of the price weight.
+Next we examine the parameter for the weight of the price component in the total score. We replicate our main IV-price results but consider weights  of 60\%, 70\%, and 80\% as the minimum weights of the price component in the factors considered to evaluate proposals. Table \ref{tab:robust_weightprice_outcomes} shows the results. At 60\%, most results remain significant, but beyond 70\% almost all results are not. Since 60\% is the 80th percentile of the score weight across contracts, we have again a sample size problem for the instrument when there are higher requirements for the threshold of the price weight.
 
 \input{C:/repos/learn-doing/thesis/tables/robust_weightprice_outcomes.txt}
 
 \subsection{Definition of a close win - Rank IVs}
-The IV-Rank estimates are sensibilized by choosing alternative thresholds for the maximum difference between the highest and lowest bidder's rank (bandwidth) and different values for the points awarded for a win. Recall that an auction is labeled as close in the main specification if the difference in rank between the highest and lowest ranked in the auction is less than 3\%. In the main specifications 25 points are awarded for a win and around third (8) are substracted for a loss.
+The IV-Rank estimates are sensibilized by choosing alternative thresholds for the maximum difference between the highest and lowest bidder's rank (bandwidth) and different values for the points awarded for a win. Recall that an auction is labeled as close in the main specification if the difference in rank between the highest and lowest ranked in the auction is less than 3\%. In the main specifications 25 points are awarded for a win and eight are subtracted for a loss.
 
-We analyze bandwidths of 1\%, 2\%, 3\% and 4\%. Regarding points for a win, we analyze as alternatives 10, 15, 25, 35 and 50 points. Again, to preserve stability points substracted for a loss are approximately a third of the points awarded for a win.
+We analyze bandwidths of 1\%, 2\%, 3\% and 4\%. Regarding points for a win, we analyze as alternatives 10, 15, 25, 35 and 50 points. Again, to preserve stability, points subtracted for a loss are approximately a third of the points awarded for a win. Since average bidders are close to three, we divide awarded points by three to obtain subtracted points
 
-Given the amount of possible parameter combinations, results are shown in graphic form in Figure \ref{fig:plot_robustness_rank} and they only consider the first type of experience computation (rolling). Results show that IV estimates are robust to all the alternatives considered. Considering a lower thresholds for the difference in ranks does increase the standard errors. However, estimates do not vary much, staying close to .05 for a binary indicator of experience as treatment and to .006 for the total experience treatment.
+Given the amount of possible parameter combinations, results are shown in graphic form in Figure \ref{fig:plot_robustness_rank} and they only consider the first type of experience computation (rolling). Results show that IV estimates are robust to all the alternatives considered. Considering a lower thresholds for the difference in ranks does increase the standard errors. However, estimates do not vary much, staying close to .07 for a binary indicator of experience as treatment and to .012 for the total experience treatment.
 
-\begin{figure}[H]
+\begin{figure}[h]
   \includegraphics[scale=0.65]{plot_robustness_rank.png}
   \caption{Robustness analysis for parameters in the IV-Rank strategy}
   \label{fig:plot_robustness_rank}

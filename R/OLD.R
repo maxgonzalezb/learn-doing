@@ -687,3 +687,14 @@ df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=l
 df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
 df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
 df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+
+
+df2=df%>%group_by(Codigo)%>%mutate(p=length(Codigo[estadoOferta=='Aceptada']))
+
+cor(df2$NumeroOferentes,df2$p)
+
+
+robustness_close_wins.bin=robustness_close_wins.lin%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)
+robustness_close_wins.bin=robustness_close_wins.bin%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)
+#robustness_close_wins.lin=robustness_close_wins.lin%>%mutate(lower95=estimate-1.96*std.error,upper95=estimate+1.96*std.error)
+

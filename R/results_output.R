@@ -88,7 +88,7 @@ plotDisc.allwins.exp2<-ggplot(merged.wins.means.exp2,aes(x=(annualwinspre),y=pro
   geom_errorbar(aes(x=annualwinspre,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.2))+
   #stat_summary(aes(group=exp),fun.y = "mean", fun.ymin = "mean", fun.ymax= "mean", size= 0.3, geom = "crossbar")+
   #geom_smooth(se=F,formula=(function(x) mean(x)), method = 'lm')+geom_vline(xintercept = 0.3,alpha=0.3,color='black',lwd=1)+
-  theme_bw()+xlab('Annualized contracts won up to t')+ylab('Win probability on [t,t+2]')+
+  theme_bw()+xlab('Annualized contracts won')+ylab('Win probability on [t,t+2]')+
   theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
   scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('All Wins')
@@ -97,7 +97,7 @@ plotDisc.allwins.exp2
 plotDisc.closewins.price.exp2<-ggplot(merged.wins.close.price.means.exp2,aes(x=(winspre_close),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=winspre_close,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Annualized close (by price) contracts won up to t')+ylab('Win probability on [t,t+2]')+
+  theme_bw()+xlab('Annualized close (by price) contracts won ')+ylab('Win probability on [t,t+2]')+
   theme(,panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
   scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('Close Wins - By Price')
@@ -106,7 +106,7 @@ plotDisc.closewins.price.exp2
 plotDisc.closewins.rank.exp2<-ggplot(merged.wins.close.rank.means.exp2,aes(x=(annualwinspre_closerank),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=annualwinspre_closerank,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Annualized close (by rank) contracts won up to t')+ylab('Win probability on [t,t+2]')+
+  theme_bw()+xlab('Annualized close (by rank) contracts won')+ylab('Win probability on [t,t+2]')+
   theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
   scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('Close Wins - By Rank')
@@ -192,16 +192,94 @@ dev.off()
 # ROBUSTNESS
 #####################
 
-p1<-ggplot(robustness_close_wins,aes(x=thresholdClose,y=estimate))+geom_line(color='darkblue',lwd=1)+geom_vline(xintercept = 0.005,color='red')+#geom_point(color='darkblue')+
-  geom_line(aes(y=lower95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+geom_line(aes(y=upper95),color='darkgrey',alpha=0.9,linetype=2,lwd=1)+ylim(-0.01,0.02)+theme_bw()+
-  xlab('Threshold for a close win (Percentage)')+ylab('Experience Estimate')+annotate(geom="text", x=0.0125, y=0.012, label="Main specification threshold",
-                                                                                      color="red")+
-  annotate(geom="text", x=0.025, y=0.023, label="Estimate of experience",
-           color="blue")
+p.robustness_close_wins.lin <-
+  ggplot(robustness_close_wins.lin, aes(x = thresholdClose, y = estimate)) +
+  geom_point(color = 'darkblue', lwd = 1) + geom_vline(xintercept = 0.005, color =
+                                                         'red') + #geom_point(color='darkblue')+
+  geom_line(
+    aes(y = lower95),
+    color = 'darkgrey',
+    alpha = 0.9,
+    linetype = 2,
+    lwd = 1
+  ) + geom_line(
+    aes(y = upper95),
+    color = 'darkgrey',
+    alpha = 0.9,
+    linetype = 2,
+    lwd = 1
+  ) + ylim(-0.001, 0.02) + theme_bw() +
+  xlab('Threshold for a close win (Percentage)') + ylab('Experience Estimate') +
+  annotate(
+    geom = "text",
+    x = 0.01,
+    y = 0.012,
+    label = "Main specification threshold",
+    color =
+      "red"
+  ) +
+  annotate(
+    geom = "text",
+    x = 0.025,
+    y = 0.023,
+    label = "Estimate of experience",
+    color = "blue"
+  )+xlim(0,0.015)+ggtitle('Linear Experience')
+p.robustness_close_wins.lin
 
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\robustness_threshold.png",width = 5, height = 3.2,
+p.robustness_close_wins.bin <-
+  ggplot(robustness_close_wins.bin, aes(x = thresholdClose, y = estimate)) +
+  geom_point(color = 'darkblue', lwd = 1) + geom_vline(xintercept = 0.005, color =
+                                                         'red') + #geom_point(color='darkblue')+
+  geom_line(
+    aes(y = lower95),
+    color = 'darkgrey',
+    alpha = 0.9,
+    linetype = 2,
+    lwd = 1
+  ) + geom_line(
+    aes(y = upper95),
+    color = 'darkgrey',
+    alpha = 0.9,
+    linetype = 2,
+    lwd = 1
+  ) + ylim(-0.001, 0.2) + theme_bw() +
+  xlab('Threshold for a close win (Percentage)') + ylab('Experience Estimate') +
+  annotate(
+    geom = "text",
+    x = 0.01,
+    y = 0.12,
+    label = "Main specification threshold",
+    color =
+      "red"
+  ) +
+  annotate(
+    geom = "text",
+    x = 0.025,
+    y = 0.023,
+    label = "Estimate of experience",
+    color = "blue"
+  )+xlim(0,0.015)+ggtitle('Binary Indicator')
+p.robustness_close_wins.bin
+
+row.1=plot_grid(p.robustness_close_wins.bin,p.robustness_close_wins.lin,ncol = 2,labels = 'AUTO')
+title.rob.price <- ggdraw() + 
+  draw_label(
+    "Estimates of IV treatment effects by threshold for close wins by price",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+plot.robustness.prices.boxes=cowplot::plot_grid(title.rob.price,row.1,
+                                        nrow = 2,labels = '',rel_heights = c(0.1, 1))
+
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\robustness_threshold.png",width = 7.5, height = 3.2,
     units = "in",res=1000)
-p1
+plot.robustness.prices.boxes
 dev.off()
 
 ######## Comparison types
@@ -229,14 +307,16 @@ dev.off()
 ###
 
 plot.ranks.robust.1<-ggplot(result.robustness.ranks%>%filter(ff=='Binary Indicator'), aes(x=as.factor(winPoints),y=estimate))+
-  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.12)+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.16)+
   geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
   theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
+plot.ranks.robust.1
 
 plot.ranks.robust.2<-ggplot(result.robustness.ranks%>%filter(ff=='Linear'), aes(x=as.factor(winPoints),y=estimate))+
-  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.02)+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.026)+
   geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
   theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
+plot.ranks.robust.2
 
 row.1=plot_grid(plot.ranks.robust.1)
 row.2=plot_grid(plot.ranks.robust.2)
@@ -271,7 +351,8 @@ generateDfBidsSummary(bids = df.bids)
 
 ## Show a plot of the histogram of bids
 plot.bids.standarized=ggplot(df.bids,aes(x=MCA_MPO))+
-  geom_histogram(binwidth = 0.05,fill='steelblue',color='black')+theme_bw()+xlab('Standarized Bids')+ylab('Bid Count')+ggtitle('Histogram of standarized bids (bid / government estimate)')+xlim(0,2)
+  geom_histogram(binwidth = 0.05,fill='steelblue',color='black')+theme_bw()+xlab('Standarized Bids')+ylab('Bid Count')+ggtitle('Histogram of standarized bids (bid / government estimate)')+
+  xlim(0,2)
 
 png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_bids_standarized.png",width = 6, height = 3.5,units = "in",res=1000)
 plot.bids.standarized
@@ -323,8 +404,8 @@ regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, t
                                               se = list(NULL, c(robust.lm34,robust.lm36,robust.lm35,robust.lm37)),omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
                                               title="Regression of bid amounts to experience",
                                               dep.var.labels=c("Standarized Bid"),
-                                              column.labels = c("OLS", "OLS",'IV',"IV"),
-                                              #covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)'),
+                                              #column.labels = c("OLS", "OLS",'IV',"IV"),
+                                              covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','IndFirstYear'),
                                               add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt')
 

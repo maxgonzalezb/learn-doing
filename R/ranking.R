@@ -1,4 +1,4 @@
-
+df.ranked=df
 number.close=df.ranked%>%group_by(Codigo)%>%summarise(isCloseRanking=max(isCloseRanking))
 ## Exploration. Describe Close wins.
 print(paste0(
@@ -158,7 +158,7 @@ parameters.checks=data.frame(winPoints.vector,losePoints.vector)
 start=0
 split1=2
 split2=2
-check.thresholds=c(1.01,1.02,1.03,1.04)
+check_thresholds=c(1.01,1.02,1.03,1.04)
 
 
 helpers.ELO=createHelpElo(df=df)
@@ -255,7 +255,8 @@ for (i in seq_len(nrow(parameters.checks))) {
   result.robustness.ranks = rbind(result.robustness.ranks.iter, result.robustness.ranks)
   
 }
-saveRDS(object = result.robustness.ranks,file = 'C:\\repos\\learn-doing\\data\\robustness_ranks.rds')
+#saveRDS(object = result.robustness.ranks,file = 'C:\\repos\\learn-doing\\data\\robustness_ranks.rds')
+
 
 
 

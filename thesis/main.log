@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  16 JUL 2021 21:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  17 JUL 2021 21:10
 entering extended mode
 **./main.tex
 (main.tex
@@ -271,77 +271,314 @@ Package caption Info: Standard document class detected.
 \c@continuedfloat=\count285
 Package caption Info: float package is loaded.
 )
-(C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
-Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-<<t1.cmap>>)
-(C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
-File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count286
-\l__pdf_internal_box=\box64
-) (main.aux
-(chapMechanisms.aux) (chapDisc.aux))
-\openout1 = `main.aux'.
+(C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.sty
+Package: biblatex 2020/12/31 v3.16 programmable bibliographies (PK/MW)
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-
-(C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count287
-\scratchdimen=\dimen189
-\scratchbox=\box65
-\nofMPsegments=\count288
-\nofMParguments=\count289
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count290
-\MPscratchDim=\dimen190
-\MPnumerator=\count291
-\makeMPintoPDFobject=\count292
-\everyMPtoPDFconversion=\toks32
-) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
-Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+(C:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
 
 (C:\Program Files\MiKTeX\tex/generic/infwarerr\infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
+(C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)
+(C:\Program Files\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(C:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count286
+)
+(C:\Program Files\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+
+(C:\Program Files\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+))
+(C:\Program Files\MiKTeX\tex/latex/logreq\logreq.sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count287
+
+(C:\Program Files\MiKTeX\tex/latex/logreq\logreq.def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+))
+(C:\Program Files\MiKTeX\tex/latex/base\ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(C:\Program Files\MiKTeX\tex/latex/url\url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+\c@tabx@nest=\count288
+\c@listtotal=\count289
+\c@listcount=\count290
+\c@liststart=\count291
+\c@liststop=\count292
+\c@citecount=\count293
+\c@citetotal=\count294
+\c@multicitecount=\count295
+\c@multicitetotal=\count296
+\c@instcount=\count297
+\c@maxnames=\count298
+\c@minnames=\count299
+\c@maxitems=\count300
+\c@minitems=\count301
+\c@citecounter=\count302
+\c@maxcitecounter=\count303
+\c@savedcitecounter=\count304
+\c@uniquelist=\count305
+\c@uniquename=\count306
+\c@refsection=\count307
+\c@refsegment=\count308
+\c@maxextratitle=\count309
+\c@maxextratitleyear=\count310
+\c@maxextraname=\count311
+\c@maxextradate=\count312
+\c@maxextraalpha=\count313
+\c@abbrvpenalty=\count314
+\c@highnamepenalty=\count315
+\c@lownamepenalty=\count316
+\c@maxparens=\count317
+\c@parenlevel=\count318
+\blx@tempcnta=\count319
+\blx@tempcntb=\count320
+\blx@tempcntc=\count321
+\blx@maxsection=\count322
+\blx@maxsegment@0=\count323
+\blx@notetype=\count324
+\blx@parenlevel@text=\count325
+\blx@parenlevel@foot=\count326
+\blx@sectionciteorder@0=\count327
+\blx@entrysetcounter=\count328
+\blx@biblioinstance=\count329
+\labelnumberwidth=\skip71
+\labelalphawidth=\skip72
+\biblabelsep=\skip73
+\bibitemsep=\skip74
+\bibnamesep=\skip75
+\bibinitsep=\skip76
+\bibparsep=\skip77
+\bibhang=\skip78
+\blx@bcfin=\read3
+\blx@bcfout=\write3
+\blx@langwohyphens=\language84
+\c@mincomprange=\count330
+\c@maxcomprange=\count331
+\c@mincompwidth=\count332
+Package biblatex Info: Trying to load biblatex default data model...
+Package biblatex Info: ... file 'blx-dm.def' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex\blx-dm.def
+File: blx-dm.def 2020/12/31 v3.16 biblatex localization (PK/MW)
+)
+Package biblatex Info: Trying to load biblatex style data model...
+Package biblatex Info: ... file 'authoryear.dbx' not found.
+Package biblatex Info: Trying to load biblatex custom data model...
+Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
+\c@afterword=\count333
+\c@savedafterword=\count334
+\c@annotator=\count335
+\c@savedannotator=\count336
+\c@author=\count337
+\c@savedauthor=\count338
+\c@bookauthor=\count339
+\c@savedbookauthor=\count340
+\c@commentator=\count341
+\c@savedcommentator=\count342
+\c@editor=\count343
+\c@savededitor=\count344
+\c@editora=\count345
+\c@savededitora=\count346
+\c@editorb=\count347
+\c@savededitorb=\count348
+\c@editorc=\count349
+\c@savededitorc=\count350
+\c@foreword=\count351
+\c@savedforeword=\count352
+\c@holder=\count353
+\c@savedholder=\count354
+\c@introduction=\count355
+\c@savedintroduction=\count356
+\c@namea=\count357
+\c@savednamea=\count358
+\c@nameb=\count359
+\c@savednameb=\count360
+\c@namec=\count361
+\c@savednamec=\count362
+\c@translator=\count363
+\c@savedtranslator=\count364
+\c@shortauthor=\count365
+\c@savedshortauthor=\count366
+\c@shorteditor=\count367
+\c@savedshorteditor=\count368
+\c@labelname=\count369
+\c@savedlabelname=\count370
+\c@institution=\count371
+\c@savedinstitution=\count372
+\c@lista=\count373
+\c@savedlista=\count374
+\c@listb=\count375
+\c@savedlistb=\count376
+\c@listc=\count377
+\c@savedlistc=\count378
+\c@listd=\count379
+\c@savedlistd=\count380
+\c@liste=\count381
+\c@savedliste=\count382
+\c@listf=\count383
+\c@savedlistf=\count384
+\c@location=\count385
+\c@savedlocation=\count386
+\c@organization=\count387
+\c@savedorganization=\count388
+\c@origlocation=\count389
+\c@savedoriglocation=\count390
+\c@origpublisher=\count391
+\c@savedorigpublisher=\count392
+\c@publisher=\count393
+\c@savedpublisher=\count394
+\c@language=\count395
+\c@savedlanguage=\count396
+\c@origlanguage=\count397
+\c@savedoriglanguage=\count398
+\c@pageref=\count399
+\c@savedpageref=\count400
+\shorthandwidth=\skip79
+\shortjournalwidth=\skip80
+\shortserieswidth=\skip81
+\shorttitlewidth=\skip82
+\shortauthorwidth=\skip83
+\shorteditorwidth=\skip84
+\locallabelnumberwidth=\skip85
+\locallabelalphawidth=\skip86
+\localshorthandwidth=\skip87
+\localshortjournalwidth=\skip88
+\localshortserieswidth=\skip89
+\localshorttitlewidth=\skip90
+\localshortauthorwidth=\skip91
+\localshorteditorwidth=\skip92
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex\blx-compat.def
+File: blx-compat.def 2020/12/31 v3.16 biblatex compatibility (PK/MW)
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.def
+File: biblatex.def 2020/12/31 v3.16 biblatex compatibility (PK/MW)
+\c@textcitecount=\count401
+\c@textcitetotal=\count402
+\c@textcitemaxnames=\count403
+\c@biburlbigbreakpenalty=\count404
+\c@biburlbreakpenalty=\count405
+\c@biburlnumpenalty=\count406
+\c@biburlucpenalty=\count407
+\c@biburllcpenalty=\count408
+\biburlbigskip=\muskip18
+\biburlnumskip=\muskip19
+\biburlucskip=\muskip20
+\biburllcskip=\muskip21
+\c@smartand=\count409
+)
+Package biblatex Info: Trying to load natbib compatibility...
+Package biblatex Info: ... file 'blx-natbib.def' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex\blx-natbib.def
+File: blx-natbib.def 2020/12/31 v3.16 biblatex compatibility (PK/MW)
+Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined,
+ overwriting.
+)
+Package biblatex Info: Trying to load bibliography style 'authoryear'...
+Package biblatex Info: ... file 'authoryear.bbx' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex/bbx\authoryear.bbx
+File: authoryear.bbx 2020/12/31 v3.16 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex/bbx\standard.bbx
+File: standard.bbx 2020/12/31 v3.16 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count410
+\c@bbx:relatedtotal=\count411
+))
+Package biblatex Info: Trying to load citation style 'authoryear'...
+Package biblatex Info: ... file 'authoryear.cbx' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex/cbx\authoryear.cbx
+File: authoryear.cbx 2020/12/31 v3.16 biblatex citation style (PK/MW)
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\textcite'.
+Package biblatex Info: Redefining '\textcites'.
+)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.cfg
+File: biblatex.cfg 
+))
+(C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+<<t1.cmap>>)
+\@quotelevel=\count412
+\@quotereset=\count413
+
+(C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count414
+\l__pdf_internal_box=\box64
+) (main.aux
+(chapLiterature.aux))
+\openout1 = `main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+
+(C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count415
+\scratchdimen=\dimen189
+\scratchbox=\box65
+\nofMPsegments=\count416
+\nofMParguments=\count417
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count418
+\MPscratchDim=\dimen190
+\MPnumerator=\count419
+\makeMPintoPDFobject=\count420
+\everyMPtoPDFconversion=\toks32
+) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
 (C:\Program Files\MiKTeX\tex/latex/grfext\grfext.sty
 Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
 
 (C:\Program Files\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 ))
-(C:\Program Files\MiKTeX\tex/latex/kvoptions\kvoptions.sty
-Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
-
-(C:\Program Files\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
-Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
-)
-(C:\Program Files\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.sty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-))
-(C:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
-Package: iftex 2020/03/06 v1.0d TeX engine tests
-)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 Package grfext Info: Graphics extension search list:
@@ -354,173 +591,84 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-\openout2 = `chapMechanisms.aux'.
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex/lbx\english.lbx
+File: english.lbx 2020/12/31 v3.16 biblatex localization (PK/MW)
+)
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+Package biblatex Info: Document encoding is UTF8 ....
+
+(C:\Program Files\MiKTeX\tex/latex/l3kernel\expl3.sty
+Package: expl3 2021-06-01 L3 programming layer (loader) 
+)
+Package biblatex Info: ... and expl3
+(biblatex)             2021-06-01 L3 programming layer (loader) 
+(biblatex)             is new enough (at least 2020/04/06),
+(biblatex)             setting 'casechanger=expl3'.
+
+(C:\Program Files\MiKTeX\tex/latex/biblatex\blx-case-expl3.sty
+(C:\Program Files\MiKTeX\tex/latex/l3packages/xparse\xparse.sty
+Package: xparse 2021-06-01 L3 Experimental document command parser
+)
+Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
+)
+\openout3 = `main.bcf'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'main.bbl' found.
+ (main.bbl)
+Package biblatex Info: Reference section=0 on input line 57.
+Package biblatex Info: Reference segment=0 on input line 57.
+\openout2 = `chapLiterature.aux'.
 
 
-(chapMechanisms.tex
+(chapLiterature.tex
 Chapter 1.
 [1
 
 
 
-{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}] [2]
-<C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png, id=14, 433.62p
-t x 252.945pt>
-File: C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png Graphic fi
-le (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_bids_standar
-ized.png  used on input line 35.
-(pdftex.def)             Requested size: 303.53192pt x 177.06029pt.
-
-(C:/repos/learn-doing/thesis/tables/table_bid_sample.txt<<ot1.cmap>><<oml.cmap>
-><<oms.cmap>><<omx.cmap>>)
+{C:/ProgramData/MiKTeX/pdftex/config/pdftex.map}] [2]<<ot1.cmap>><<oml.cmap>><<
+oms.cmap>><<omx.cmap>>
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
-chapMechanisms.tex:51: Missing $ inserted.
-<inserted text> 
-                $
-l.51 BID_
-         {ijt}=\alpha+ \beta EXP_{ijt}+X_j+FIRST_{ijt}+\varepsilon_{ijt}
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
+[4]
 
+Package enumitem Warning: Negative labelwidth. This does not make much
+(enumitem)                sense, on input line 51.
 
-chapMechanisms.tex:52: LaTeX Error: \begin{document} ended by \end{equation}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.52 \end{equation}
-                   
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-chapMechanisms.tex:52: Missing $ inserted.
-<inserted text> 
-                $
-l.52 \end{equation}
-                   
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-chapMechanisms.tex:52: Extra \endgroup.
-<recently read> \endgroup 
-                          
-l.52 \end{equation}
-                   
-Things are pretty mixed up, but I think the worst is over.
-
-[4 <C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png>]
-(C:/repos/learn-doing/thesis/tables/table_closewins_bids.txt)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5]
-<C:/repos/learn-doing/thesis/figures//plotbids_panel.png, id=32, 650.43pt x 307
-.1475pt>
-File: C:/repos/learn-doing/thesis/figures//plotbids_panel.png Graphic file (typ
-e png)
-<use C:/repos/learn-doing/thesis/figures//plotbids_panel.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotbids_panel.pn
-g  used on input line 68.
-(pdftex.def)             Requested size: 422.77449pt x 199.6435pt.
-
-[6 <C:/repos/learn-doing/thesis/figures//plotbids_panel.png>]
-(C:/repos/learn-doing/thesis/tables/table_bids_results_1.txt)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7]
-
-LaTeX Warning: Reference `section:main_empirical' on page 8 undefined on input 
-line 94.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png, id=47, 867.24p
-t x 289.08pt>
-File: C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png Graphic fi
-le (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-ates.png  used on input line 103.
-(pdftex.def)             Requested size: 433.61894pt x 144.53964pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [9 <C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [10]
-Underfull \vbox (badness 4634) has occurred while \output is active []
-
- [11]
-[12]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png, id=65, 650.4
-3pt x 542.025pt>
-File: C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png Graphic 
-file (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-esults.png  used on input line 142.
-(pdftex.def)             Requested size: 422.77449pt x 352.31207pt.
- (C:/repos/learn-doing/thesis/tables/table_acceptance_1.txt) [13
-
- <C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png>])
-\openout2 = `chapDisc.aux'.
-
- (chapDisc.tex
-[14
-
-
-
-
-
-]
-Chapter 2.
-[15] [16] [17] [18]
-Chapter 3.
-) [19
-
-] (main.aux (chapMechanisms.aux) (chapDisc.aux))
-
-LaTeX Warning: There were undefined references.
+[5] [6] [7]) [8] (main.aux (chapLiterature.aux))
+Package logreq Info: Writing requests to 'main.run.xml'.
+\openout1 = `main.run.xml'.
 
  )
-(\end occurred when \ifx on line 53 was incomplete) 
+(\end occurred when \ifx on line 55 was incomplete) 
 Here is how much of TeX's memory you used:
- 5894 strings out of 478826
- 95452 string characters out of 2857130
- 406795 words of memory out of 3000000
- 23677 multiletter control sequences out of 15000+600000
- 413698 words of font info for 48 fonts, out of 8000000 for 9000
+ 12974 strings out of 478826
+ 231983 string characters out of 2857130
+ 956670 words of memory out of 3000000
+ 30696 multiletter control sequences out of 15000+600000
+ 416784 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,12n,117p,1892b,343s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,8n,117p,1376b,806s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Program Files/MiKTeX/fon
-ts/enc/dvips/cm-super/cm-super-t1.enc}<C:/Program Files/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb
-><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program 
-Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb
-><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1200.pfb><C:/Program 
-Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.pfb><C:/Program Files/MiKTeX/
-fonts/type1/public/cm-super/sfbx1728.pfb><C:/Program Files/MiKTeX/fonts/type1/p
-ublic/cm-super/sfbx2488.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-supe
-r/sfrm1200.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pf
-b>
-Output written on main.pdf (19 pages, 1134981 bytes).
+ts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/
+cm-super/cm-super-ts1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/
+sfbx1200.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.pfb>
+<C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1728.pfb><C:/Program F
+iles/MiKTeX/fonts/type1/public/cm-super/sfbx2488.pfb><C:/Program Files/MiKTeX/f
+onts/type1/public/cm-super/sfrm0700.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
+blic/cm-super/sfrm0800.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super
+/sfrm1000.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb
+><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (8 pages, 149262 bytes).
 PDF statistics:
- 139 PDF objects out of 1000 (max. 8388607)
+ 75 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

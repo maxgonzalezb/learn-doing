@@ -7,10 +7,10 @@
 \toprule
 Experience Computation & Functional Form & 50 & 60 & 70 & 80\\
 \midrule
-Annualized & Binary Indicator & 0.075 (0.016) *** & 0.074 (0.019) *** & 0.049 (0.022) ** & 0.033 (0.03)\\
-Annualized & Linear & 0.02 (0.006) *** & 0.015 (0.007) ** & 0.008 (0.009) & 0.007 (0.014)\\
-Rolling & Binary Indicator & 0.061 (0.019) *** & 0.055 (0.023) ** & 0.025 (0.028) & 0.037 (0.038)\\
-Rolling & Linear & 0.006 (0.002) *** & 0.005 (0.003) ** & 0.002 (0.003) & 0.004 (0.004)\\
+Annualized & Binary Indicator & 0.079 (0.016) *** & 0.079 (0.019) *** & 0.059 (0.023) *** & 0.051 (0.031)\\
+Annualized & Linear & 0.021 (0.006) *** & 0.017 (0.007) ** & 0.011 (0.008) & 0.011 (0.013)\\
+Rolling & Binary Indicator & 0.063 (0.019) *** & 0.059 (0.024) ** & 0.028 (0.028) & 0.045 (0.04)\\
+Rolling & Linear & 0.006 (0.002) *** & 0.006 (0.003) ** & 0.002 (0.003) & 0.004 (0.004)\\
 \bottomrule
 \end{tabular}}
 \end{table}

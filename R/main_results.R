@@ -167,6 +167,8 @@ lm.f.cont <- lm((winspre) ~ (winspre_close)+idperiodpost, data = merged.wins)
 lm.f.bin%>%summary()
 lm.f.cont%>%summary()
 
+## Percentiles of weight
+quantile((df%>%group_by(Codigo)%>%slice_head(n=1))$percPrice,probs = c(0.75,0.8),na.rm=T)
 # Regression Analysis
 ##OLS Specs
 ##1
@@ -773,17 +775,26 @@ table_robustness_period_o %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tab
 ###################
 
 # Robustness checks: close wins
-close_wins_vector=c(thresholdClose=seq(0.001,0.03,by = 0.002))%>%as.vector()
+close_wins_vector=c(thresholdClose=seq(0.001,0.015,by = 0.002))%>%as.vector()
 ##Revisar como puede haber diferencia de cero
 start=0
 split1=2
 split2=2
-robustness_close_wins=close_wins_vector%>%map_dfr(function(x) (createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x,filterReqExp = T )%>%
-                                                                 ivreg(data= .,formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%tidy()%>%
-                                                                 filter(term=='winspre')%>%mutate(thresholdClose=x)))%>%mutate(model='Binary Experience')
+robustness_close_wins.lin=close_wins_vector%>%map_dfr(function(x) (createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x,filterReqExp = T )%>%
+                                                                 ivreg(data= .,formula=(probWinpost~(winspre)+idperiodpost|(winspre_close)+idperiodpost))%>%
+                                                                   createConf(.)%>%
+                                                                   filter(term=='winspre')%>%mutate(thresholdClose=x)))%>%mutate(model='Linear Experience')
+
+start=0
+split1=2
+split2=2
+robustness_close_wins.bin=close_wins_vector%>%map_dfr(function(x) (createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x,filterReqExp = T )%>%
+                                                                     ivreg(data= .,formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost))%>%
+                                                                     createConf(.)%>%
+                                                                     filter(term=='winspre > 0TRUE')%>%mutate(thresholdClose=x)))%>%mutate(model='Binary Experience')
 
 
-robustness_close_wins=robustness_close_wins%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)
+
 
 ##Study the different weight thresholds
 
