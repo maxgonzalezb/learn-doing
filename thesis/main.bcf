@@ -2345,6 +2345,15 @@
     <bcf:datasource type="file" datatype="bibtex">Bibliography.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1">fudenberg1983learning</bcf:citekey>
+    <bcf:citekey order="2">dasgupta1988learning</bcf:citekey>
+    <bcf:citekey order="3">fu2002effect</bcf:citekey>
+    <bcf:citekey order="4">li2012construction</bcf:citekey>
+    <bcf:citekey order="5">estache2010bidder</bcf:citekey>
+    <bcf:citekey order="6">lee2004voters</bcf:citekey>
+    <bcf:citekey order="7">angrist1995identification</bcf:citekey>
+    <bcf:citekey order="8">hansen2009econometrics</bcf:citekey>
+    <bcf:citekey order="9">bajari2014bidding</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nyt">
@@ -2376,4 +2385,13 @@
     </bcf:sort>
   </bcf:sortingtemplate>
   <!-- DATALISTS -->
+  <bcf:datalist section="0"
+                name="nyt/global//global/global"
+                type="entry"
+                sortingtemplatename="nyt"
+                sortingnamekeytemplatename="global"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global">
+  </bcf:datalist>
 </bcf:controlfile>

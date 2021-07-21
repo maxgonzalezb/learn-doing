@@ -59,7 +59,7 @@ merged.wins.close.price.means.exp1 = merged.wins.close.price.exp1 %>% group_by(w
   filter(n > 10) %>% mutate(exp = ifelse(winspre_close > 0, 'Experience', 'No experience'))
 
 ## Create descriptive of the slices
-slices = data.frame()
+slices.exp1 = data.frame()
 i = 0
 maxcutoff = ymd(max(df$FechaInicio))
 cutoff2 = ymd(min(df$FechaInicio))
@@ -70,7 +70,7 @@ while (cutoff2 <= maxcutoff) {
   split1 = 2
   split2 = 2
   
-  #Describe the slices
+  #Describe the slices.exp1
   newstart = start + i
   cutoff0 = ymd(min(df$FechaInicio)) + years(i)
   cutoff1 = cutoff0 + years(split1)
@@ -112,10 +112,10 @@ while (cutoff2 <= maxcutoff) {
     tot.contracts.p1 = tot.contracts.p1,
     tot.contracts.p2 = tot.contracts.p2
   )
-  slices = rbind(row, slices)
+  slices.exp1 = rbind(row, slices.exp1)
 }
-slices = slices %>% arrange(slice)
-colnames(slices) <-
+slices.exp1 = slices.exp1 %>% arrange(slice)
+colnames(slices.exp1) <-
   c(
     'Slice',
     'Period 1 dates',

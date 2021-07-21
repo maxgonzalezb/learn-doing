@@ -42,7 +42,7 @@ plot.weight.graphic
 dev.off()
 
 ## Display the slices descriptive
-table.slices.exp1 = create_kable(slices, caption = 'Analysis dataset characteristics for experience computed in rolling periods of two years', label = 'slices_exp1')
+table.slices.exp1 = create_kable(slices.exp1, caption = 'Analysis dataset characteristics for experience computed in rolling periods of two years', label = 'slices_exp1')
 table.slices.exp1 %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_slices_exp1.txt")
 
 table.slices.exp2=create_kable(slices.exp2,caption = 'Analysis dataset characteristics for experience computed as cumulative annualized ',label = 'slices_exp2')

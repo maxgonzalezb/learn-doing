@@ -16,5 +16,346 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{angrist1995identification}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=71a74466a85192690bb7668576e4f2f3}{%
+           family={Angrist},
+           familyi={A\bibinitperiod},
+           given={Joshua},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f74fd63923a56fa58b8687fdf1cc7ff2}{%
+           family={Imbens},
+           familyi={I\bibinitperiod},
+           given={Guido},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {National Bureau of Economic Research Cambridge, Mass., USA}%
+      }
+      \strng{namehash}{886b85a2ddf951c235f78ad8e3e6d818}
+      \strng{fullhash}{886b85a2ddf951c235f78ad8e3e6d818}
+      \strng{bibnamehash}{886b85a2ddf951c235f78ad8e3e6d818}
+      \strng{authorbibnamehash}{886b85a2ddf951c235f78ad8e3e6d818}
+      \strng{authornamehash}{886b85a2ddf951c235f78ad8e3e6d818}
+      \strng{authorfullhash}{886b85a2ddf951c235f78ad8e3e6d818}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Identification and estimation of local average treatment effects}
+      \field{year}{1995}
+    \endentry
+    \entry{bajari2014bidding}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=4f267406c6ffa5f5cab3804cd113de0a}{%
+           family={Bajari},
+           familyi={B\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2aa0fc816d9f136fc0f88728dfa5ff7c}{%
+           family={Houghton},
+           familyi={H\bibinitperiod},
+           given={Stephanie},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=255b3415855a02b13009a347ddc5c22f}{%
+           family={Tadelis},
+           familyi={T\bibinitperiod},
+           given={Steven},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{fullhash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{bibnamehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{authorbibnamehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{authornamehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{authorfullhash}{5d7480c65d16960f674ba830a77e5815}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Economic Review}
+      \field{number}{4}
+      \field{title}{Bidding for incomplete contracts: An empirical analysis of adaptation costs}
+      \field{volume}{104}
+      \field{year}{2014}
+      \field{pages}{1288\bibrangedash 1319}
+      \range{pages}{32}
+    \endentry
+    \entry{dasgupta1988learning}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=82937a4b25f846dda3044a49e0e1fb1a}{%
+           family={Dasgupta},
+           familyi={D\bibinitperiod},
+           given={Partha},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d558347d5073456d9bd326d074c8c13f}{%
+           family={Stiglitz},
+           familyi={S\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {JSTOR}%
+      }
+      \strng{namehash}{a8d618f471654e3d466a4a002972b419}
+      \strng{fullhash}{a8d618f471654e3d466a4a002972b419}
+      \strng{bibnamehash}{a8d618f471654e3d466a4a002972b419}
+      \strng{authorbibnamehash}{a8d618f471654e3d466a4a002972b419}
+      \strng{authornamehash}{a8d618f471654e3d466a4a002972b419}
+      \strng{authorfullhash}{a8d618f471654e3d466a4a002972b419}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Oxford Economic Papers}
+      \field{number}{2}
+      \field{title}{Learning-by-doing, market structure and industrial and trade policies}
+      \field{volume}{40}
+      \field{year}{1988}
+      \field{pages}{246\bibrangedash 268}
+      \range{pages}{23}
+    \endentry
+    \entry{estache2010bidder}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=d147ad1aa739a5d861c654930c2df11c}{%
+           family={Estache},
+           familyi={E\bibinitperiod},
+           given={Antonio},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9e5e6e3c33f24df0089620b49ae78008}{%
+           family={Iimi},
+           familyi={I\bibinitperiod},
+           given={Atsushi},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{a1daa861ff26d13f2ae6fa901131cdbf}
+      \strng{fullhash}{a1daa861ff26d13f2ae6fa901131cdbf}
+      \strng{bibnamehash}{a1daa861ff26d13f2ae6fa901131cdbf}
+      \strng{authorbibnamehash}{a1daa861ff26d13f2ae6fa901131cdbf}
+      \strng{authornamehash}{a1daa861ff26d13f2ae6fa901131cdbf}
+      \strng{authorfullhash}{a1daa861ff26d13f2ae6fa901131cdbf}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Review of Industrial Organization}
+      \field{number}{2}
+      \field{title}{Bidder asymmetry in infrastructure procurement: Are there any fringe bidders?}
+      \field{volume}{36}
+      \field{year}{2010}
+      \field{pages}{163\bibrangedash 187}
+      \range{pages}{25}
+    \endentry
+    \entry{fu2002effect}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=8e8856d28dc7d184faca4eb045ad7e2a}{%
+           family={Fu},
+           familyi={F\bibinitperiod},
+           given={WK},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dfcc106de343a7ad8a978fb6e9d980db}{%
+           family={Drew},
+           familyi={D\bibinitperiod},
+           given={Derek\bibnamedelima S},
+           giveni={D\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6c3476f0d9aa0e87950ebaab8e2de417}{%
+           family={Lo},
+           familyi={L\bibinitperiod},
+           given={HP},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{75a7e141d43a13a4dd3fba935280465d}
+      \strng{fullhash}{75a7e141d43a13a4dd3fba935280465d}
+      \strng{bibnamehash}{75a7e141d43a13a4dd3fba935280465d}
+      \strng{authorbibnamehash}{75a7e141d43a13a4dd3fba935280465d}
+      \strng{authornamehash}{75a7e141d43a13a4dd3fba935280465d}
+      \strng{authorfullhash}{75a7e141d43a13a4dd3fba935280465d}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Construction Management \& Economics}
+      \field{number}{8}
+      \field{title}{The effect of experience on contractors' competitiveness in recurrent bidding}
+      \field{volume}{20}
+      \field{year}{2002}
+      \field{pages}{655\bibrangedash 666}
+      \range{pages}{12}
+    \endentry
+    \entry{fudenberg1983learning}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=590edd5dea58f11155a2e574136ff683}{%
+           family={Fudenberg},
+           familyi={F\bibinitperiod},
+           given={Drew},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=00e537376470e49a45c05eab98111caa}{%
+           family={Tirole},
+           familyi={T\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {JSTOR}%
+      }
+      \strng{namehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{fullhash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{bibnamehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{authorbibnamehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{authornamehash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \strng{authorfullhash}{13b2de8a5a2f3daffc85eba8dbd0910d}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Bell Journal of Economics}
+      \field{title}{Learning-by-doing and market performance}
+      \field{year}{1983}
+      \field{pages}{522\bibrangedash 530}
+      \range{pages}{9}
+    \endentry
+    \entry{hansen2009econometrics}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=8ca4db09e38933c7a4bd5629789effa6}{%
+           family={Hansen},
+           familyi={H\bibinitperiod},
+           given={Bruce\bibnamedelima E},
+           giveni={B\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8ca4db09e38933c7a4bd5629789effa6}
+      \strng{fullhash}{8ca4db09e38933c7a4bd5629789effa6}
+      \strng{bibnamehash}{8ca4db09e38933c7a4bd5629789effa6}
+      \strng{authorbibnamehash}{8ca4db09e38933c7a4bd5629789effa6}
+      \strng{authornamehash}{8ca4db09e38933c7a4bd5629789effa6}
+      \strng{authorfullhash}{8ca4db09e38933c7a4bd5629789effa6}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Econometrics}
+      \field{year}{2009}
+    \endentry
+    \entry{lee2004voters}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=95a248b56768f250923ee04ec474cf6c}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={David\bibnamedelima S},
+           giveni={D\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f58347226b88750723f89cb2b99cd2e9}{%
+           family={Moretti},
+           familyi={M\bibinitperiod},
+           given={Enrico},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=471dc2390dd6fd29264888718db71dae}{%
+           family={Butler},
+           familyi={B\bibinitperiod},
+           given={Matthew\bibnamedelima J},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{5ff2637c485229ed7281a2c2f6bd0e51}
+      \strng{fullhash}{5ff2637c485229ed7281a2c2f6bd0e51}
+      \strng{bibnamehash}{5ff2637c485229ed7281a2c2f6bd0e51}
+      \strng{authorbibnamehash}{5ff2637c485229ed7281a2c2f6bd0e51}
+      \strng{authornamehash}{5ff2637c485229ed7281a2c2f6bd0e51}
+      \strng{authorfullhash}{5ff2637c485229ed7281a2c2f6bd0e51}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{The Quarterly Journal of Economics}
+      \field{number}{3}
+      \field{title}{Do voters affect or elect policies? Evidence from the US House}
+      \field{volume}{119}
+      \field{year}{2004}
+      \field{pages}{807\bibrangedash 859}
+      \range{pages}{53}
+    \endentry
+    \entry{li2012construction}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=d8125976d0f2f0c4fddc5c4adeda313d}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Sheng},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6ca0258b4535a4b2241318cb4df14a3c}{%
+           family={Philips},
+           familyi={P\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{19d58b58af83f06eb05ccdd86368dcbf}
+      \strng{fullhash}{19d58b58af83f06eb05ccdd86368dcbf}
+      \strng{bibnamehash}{19d58b58af83f06eb05ccdd86368dcbf}
+      \strng{authorbibnamehash}{19d58b58af83f06eb05ccdd86368dcbf}
+      \strng{authornamehash}{19d58b58af83f06eb05ccdd86368dcbf}
+      \strng{authorfullhash}{19d58b58af83f06eb05ccdd86368dcbf}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Review of Industrial Organization}
+      \field{number}{3}
+      \field{title}{Construction procurement auctions: Do entrant bidders employ more aggressive strategies than incumbent bidders?}
+      \field{volume}{40}
+      \field{year}{2012}
+      \field{pages}{191\bibrangedash 205}
+      \range{pages}{15}
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 

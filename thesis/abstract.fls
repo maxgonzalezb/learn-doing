@@ -1,0 +1,5 @@
+PWD C:\repos\learn-doing\thesis
+INPUT C:\Users\Maximiliano\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT abstract.tex
+OUTPUT abstract.log
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm

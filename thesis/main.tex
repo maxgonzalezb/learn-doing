@@ -26,7 +26,7 @@
 %% Page Intentionally Left Blank'', use the ``leftblank'' option, as
 %% above.
 
-\documentclass[12pt,twoside]{mitthesis}
+\documentclass[12pt,oneside]{mitthesis}
 \usepackage{lgrind}
 %% These have been added at the request of the MIT Libraries, because
 %% some PDF conversions mess up the ligatures.  -LB, 1/22/2014
@@ -35,6 +35,7 @@
 \usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage[bottom]{footmisc}
 \usepackage{graphicx}
 \usepackage{array}
 \usepackage{float}
@@ -53,24 +54,45 @@
 %\typein [\files]{Enter file names to process, (chap1,chap2 ...), or `all' to process all files:}
 \def\all{all}
 \ifx\files\all \typeout{Including all files.} \else %\typeout{Including only \files.} \includeonly{\files} \fi
+\usepackage{titlesec}
+
+
+
+%\degree{Master of Arts in Social Science, Economics Concentration}
+%\degreeword{degree}
 
 \begin{document}
 
+\include{title_page}
+\setcounter{tocdepth}{1}
+
+
+\include{abstract}
+\small
+\tableofcontents
+%\thispagestyle{empty}
+\listoffigures
+\listoftables
+\normalsize
+\justify
 %\include{cover}
 % Some departments (e.g. 5) require an additional signature page.  See
 % signature.tex for more information and ◙uncomment the following line if
 % applicable.
 % \include{signature}
 %\pagestyle{plain}
-%\include{chapIntro}
-%\include{chapInstitutional}
+\titleformat{\chapter}{}{}{0em}{\bf\LARGE \thechapter.~}
+
+\include{chapIntro}
 \include{chapLiterature}
-%\include{chapData}
-%\include{chapLBD}
-%s\include{chapMechanisms}
-%\include{chapDisc}
+\include{chapInstitutional}
+\include{chapData}
+\include{chapLBD}
+\include{chapMechanisms}
+\include{chapDisc}
 %\appendix
 %\include{appa}
 %\include{appb}
-%\include{biblio}
+%\bibliography{Bibliography.bib}
+\printbibliography
 \end{document}
