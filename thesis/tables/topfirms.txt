@@ -1,0 +1,22 @@
+\begin{table}[!h]
+
+\caption{\label{tab:topfirms}Top Firms}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3.5in}ccc}
+\toprule
+Firm Name & Contracts Won & Bids & Gov. Units Related\\
+\midrule
+Bitumix S.a. & 640 & 140 & 97\\
+Constructora Santa Sofia & 260 & 120 & 48\\
+Empresa Constructora Ecmovial Limitada & 320 & 120 & 53\\
+Ingecom & 250 & 120 & 45\\
+Patricia López Romero & 170 & 100 & 21\\
+Idr Chile Spa & 410 & 93 & 120\\
+Constructora Beltrán Y Venegas Ltda. & 230 & 91 & 69\\
+Trinjos & 160 & 91 & 16\\
+Constructora Salfa (punta Arenas) & 260 & 84 & 21\\
+Ingetalk & 200 & 74 & 31\\
+\bottomrule
+\end{tabular}}
+\end{table}

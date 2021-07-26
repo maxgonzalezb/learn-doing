@@ -148,8 +148,10 @@ dev.off()
 #####################
 ## These are two tables for each type of experience computation
 ## First computation of experience
+robust.se=list(robust.lm4,robust.lm10,robust.lm25,robust.lm5,robust.lm11,robust.lm26)
 regression.output.1=capture.output({stargazer(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm.26, type = "latex",label = 'tab:table_exp_1', header = F,
-                                              se = list(NULL, c(robust.lm4,robust.lm10,robust.lm25,robust.lm5,robust.lm11,robust.lm26)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+                                              se = (robust.se),
+                                              omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
                                               title="Regression for OLS and IV specifications with Experience computed in rolling 2-year periods",
                                               dep.var.labels=c("Share of Contracts won in t"),
                                               column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
@@ -158,10 +160,10 @@ regression.output.1=capture.output({stargazer(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm
 
 createStargazerTxt(regression.output.1,'table_ols_exp1.txt')
 
-
 ## Second computation of experience
 regression.output.2=capture.output({stargazer(lm.16,lm.22, lm.27 , lm.17, lm.23,lm.28, type = "latex",label = 'tab:table_exp_2', header = F,
-                                              se = list(NULL, c(robust.lm16,robust.lm22,robust.lm27,robust.lm17,robust.lm23,robust.lm28)),omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+                                              se = list(robust.lm16,robust.lm22, robust.lm27 , robust.lm17, robust.lm23,robust.lm28),
+                                              omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
                                               title="Regression for OLS and IV specifications with Experience computed as annualized cumulative experience",
                                               dep.var.labels=c("Share of Contracts won in t"),
                                               column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
@@ -186,7 +188,32 @@ png(filename="C:\\repos\\learn-doing\\R\\Output\\fit_sample.png",width = 7, heig
 plot_fit
 dev.off()
 
-###
+#####################
+# F-Statistics
+#####################
+regression.F.main=capture.output({stargazer(lm.f.bin.price.exp1,lm.f.bin.rank.exp1,lm.f.cont.price.exp1,lm.f.cont.rank.exp1, type = "latex",label = 'tab:table_F_main_exp1', header = F,
+                                              #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp1)),
+                                              se = starprep(lm.f.bin.price.exp1,lm.f.bin.rank.exp1,lm.f.cont.price.exp1,lm.f.cont.rank.exp1,se_type = "HC1"),
+                                              omit='idperiodpost',omit.stat = c("adj.rsq"),
+                                              title="Regressions for rank condition verification",
+                                              dep.var.labels=c("Rolling Experience > 0","Rolling Experience"),
+                                            #column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
+                                              covariate.labels=c("Close Experience > 0 (Price)","Close Experience (Price)",'Close Experience > 0 (Rank)','Close Experience (Rank)'),
+                                              add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes')))})
+
+createStargazerTxt(regression.F.main,'table_F_main_exp1.txt')
+
+regression.F.main.2=capture.output({stargazer(lm.f.bin.price.exp2,lm.f.bin.rank.exp2,lm.f.cont.price.exp2,lm.f.cont.rank.exp2, type = "latex",label = 'tab:table_F_main_exp2', header = F,
+                                            #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp2)),
+                                            se = starprep(lm.f.bin.price.exp2,lm.f.bin.rank.exp2,lm.f.cont.price.exp2,lm.f.cont.rank.exp2,se_type = "HC1"),
+                                            omit='idperiodpost',omit.stat = c("adj.rsq"),
+                                            title="Regressions for rank condition verification",
+                                            dep.var.labels=c("Annualized Experience > 0","Annualized Experience"),
+                                            #column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
+                                            covariate.labels=c("Close Experience > 0 (Price)",'Close Experience > 0 (Rank)',"Close Experience (Price)",'Close Experience (Rank)'),
+                                            add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes')))})
+
+createStargazerTxt(regression.F.main.2,'table_F_main_exp2.txt')
 
 #####################
 # ROBUSTNESS
@@ -401,7 +428,8 @@ dev.off()
 
 ## Bid Regressions
 regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
-                                              se = list(NULL, c(robust.lm34,robust.lm36,robust.lm35,robust.lm37)),omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
+                                              se = list(robust.lm34,robust.lm36, robust.lm35 , robust.lm37),
+                                              omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
                                               title="Regression of bid amounts to experience",
                                               dep.var.labels=c("Standarized Bid"),
                                               #column.labels = c("OLS", "OLS",'IV',"IV"),
@@ -409,6 +437,16 @@ regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, t
                                               add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt')
 
+## Bid Helps to Win
+regression.output.bids_Helps=capture.output({stargazer(lm.bids.correlation.1,lm.bids.correlation.2, type = "latex",label = 'tab:table_bids_help', header = F,
+                                                   #se = list(robust.lm.bids.correlation.1,NULL),
+                                                   omit=c('RegionUnidad','year','Codigo'),omit.stat = c( "f","adj.rsq"),
+                                                   dep.var.labels=c("Indicator of Contract Won"),
+                                                   #column.labels = c("OLS", "OLS",'IV',"IV"),
+                                                   covariate.labels=c("Standarized Bid",'Number of firms in Auction','IndFirstYear'),
+                                                   add.lines = list(c("Fixed effects By Period and Region", "Yes", "No"),
+                                                   c("Fixed effects By Contract", "No", "Yes")))})
+createStargazerTxt(regression.output.bids_Helps,'table_bids_help.txt')
 
 ######################## Quality
 ## Quality plot results
@@ -468,7 +506,7 @@ dev.off()
 
 ## Quality Regressions
   regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.62, lm.55,lm.57,lm.63 , type = "latex",label = 'tab:table_acceptance_1', header = F,
-                                                 se = list(NULL, c(robust.lm54,robust.lm56,robust.lm62,robust.lm55,robust.lm57,robust.lm63)),
+                                                 se = list(robust.lm54,robust.lm56,robust.lm62, robust.lm55,robust.lm57,robust.lm63),
                                                  omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
                                                  title="Regression of proposal acceptance on experience",
                                                  dep.var.labels=c("Proposal Acceptance Rate"),
@@ -478,5 +516,54 @@ dev.off()
                                                  add.lines = list(c("Fixed effects By Period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.acceptance,'table_acceptance_1.txt')
 
+
+
+###########################################################################
+## Appendix
+###########################################################################
+
+library(tidyr)
+
+chose.evol.output=chose.evol%>%mutate(across(where(is.numeric),function(x) signif(x,4)))
+colnames(chose.evol.output)<-c('Date','Participants','Firm', 'Rank','Win','Opponent Mean Rank','Points Adjustment')
+
+chose.evol.output=kable(
+  chose.evol.output%>%mutate(Firm="A"), "latex",
+  booktabs = T,
+  label='rank_example_1',
+  linesep = "",
+  align = c('l',rep('c', ncol(chose.evol)-1)),
+  caption = 'Evolution of Firm A'
+)  %>% 
+  #column_spec(1, width = "2.5in") %>%
+  kable_styling(latex_options = c("hold_position","scale_down"))
+
+chose.evol.output%>% cat(., file = file("C:\\repos\\learn-doing\\thesis\\tables\\rank_example_1.txt",encoding = 'UTF-8'))
+
+
+chose.evol2.output=chose.evol2%>%mutate(across(where(is.numeric),function(x) signif(x,4)))
+colnames(chose.evol2.output)<-c('Date','Participants','Firm', 'Rank','Win','Opponent Mean Rank','Points Adjustment')
+
+chose.evol2.output=kable(
+  chose.evol2.output%>%mutate(Firm="B"), "latex",
+  booktabs = T,
+  label='rank_example_2',
+  linesep = "",
+  align = c('l',rep('c', ncol(chose.evol)-1)),
+  caption = 'Evolution of Firm B'
+)  %>% 
+  #column_spec(1, width = "2.5in") %>%
+  kable_styling(latex_options = c("hold_position","scale_down"))
+
+chose.evol2.output%>% cat(., file = file("C:\\repos\\learn-doing\\thesis\\tables\\rank_example_2.txt",encoding = 'UTF-8'))
+
+png(filename = "C:\\repos\\learn-doing\\thesis\\figures\\rankings_nums.png", width = 6.5,height = 6.5, units = "in", res = 1000)
+
+ggplot(exploration.ranks%>%filter(num<=10&num>=2), aes(x =
+                                                         rank)) + geom_histogram(fill = 'steelblue', color = 'black')  +
+  facet_wrap( ~ num, ncol = 3, nrow = 4,scales = 'free') + theme_bw() +
+  xlab('Rank') + ylab('Count') + theme(panel.grid.major = element_blank(),
+                                       panel.grid.minor = element_blank())+ggtitle('Distribution of ranks for firms in their nth auction')
+dev.off()
 
 

@@ -1,4 +1,6 @@
 library(readxl)
+library(Rcpp)
+library(estimatr)
 library(feather)
 library(magrittr)
 library(arrow)
@@ -189,16 +191,33 @@ CreateFullRankedDataset<-function(max_players,df,df.rating,df.rating.elo,  n = 1
 
 cleanRankDatabase=function(df.ranked){
   startPoints=1500
-  df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=startPoints,no=rank))
-  N=120
+  ## Need to lag one period the ranks
+  df.ranked=df.ranked%>%mutate(rank.old=rank)
+  df.ranked.1=df.ranked%>%filter(rank==-1)
+  df.ranked.2=df.ranked%>%filter(rank!=-1)
+  
+  if(!(nrow(df.ranked)==nrow(df.ranked.1)+nrow(df.ranked.2))){return(0)}
+  
+  df.ranked.2=df.ranked.2%>%group_by(RutProveedor)%>%mutate(rank=lag(rank,n=1,order_by=FechaInicio))
+  df.ranked.2=df.ranked.2%>%group_by(RutProveedor)%>%mutate(rank=ifelse(FechaInicio==min(FechaInicio),yes=startPoints,no=rank))
+  
+  df.ranked.adjusted=bind_rows(df.ranked.1,df.ranked.2)
+  
+  # Adjust for the last
+  N=140
   for (i in seq_len(N)) {
-  print(paste0('Total -1 contracts:' ,(length(unique((df.ranked%>%filter(rank==-1))$Codigo)))))
-    df.ranked=df.ranked%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+  print(paste0('Total -1 contracts:' ,(length(unique((df.ranked.adjusted%>%filter(rank==-1))$Codigo)))))
+    df.ranked.adjusted=df.ranked.adjusted%>%group_by(RutProveedor)%>%mutate(rank=ifelse(rank==-1,yes=lead(rank,n = 1,order_by = FechaInicio),no=rank))
   
   }
-  return(df.ranked)
+  for (i in seq_len(N)) {
+    print(paste0('Total NA contracts:' ,(length(unique((df.ranked.adjusted%>%filter(is.na(rank)))$Codigo)))))
+    df.ranked.adjusted=df.ranked.adjusted%>%group_by(RutProveedor)%>%mutate(rank=ifelse(is.na(rank),yes=lag(rank,n = 1,order_by = FechaInicio),no=rank))
+    
+  }
+  df.ranked.adjusted=df.ranked.adjusted%>%mutate(rank=ifelse(is.na(rank),yes=1500,no=rank))
+  return(df.ranked.adjusted)
 }
-
 
 
 updateDfRanked<-function(df.ranked, ratings,df.rating,startPoint=800,n=10000){
@@ -679,4 +698,12 @@ createTwoPeriodDataset_ranks<-function(df,start,stop,split1,split2,thresholdClos
   
 }
   
+
+
+simpleCap <- Vectorize(function(x) {
+  x<-str_squish((tolower(x)))
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1,1)), substring(s, 2),
+        sep="", collapse=" ")
+})
 

@@ -40,8 +40,11 @@
 \usepackage{array}
 \usepackage{float}
 \usepackage{ragged2e}
+\usepackage{makecell}
 \usepackage{adjustbox}
+\usepackage{threeparttablex}
 \usepackage{caption}
+\usepackage{multicol}
 \usepackage[natbib,style=authoryear]{biblatex}
 \bibliography{Bibliography.bib}
 \usepackage[T1]{fontenc}
@@ -63,36 +66,40 @@
 
 \begin{document}
 
-\include{title_page}
+\include{title_page_official}
 \setcounter{tocdepth}{1}
 
 
 \include{abstract}
 \small
-\tableofcontents
+%\tableofcontents
 %\thispagestyle{empty}
-\listoffigures
-\listoftables
+%\listoffigures
+%\listoftables
 \normalsize
 \justify
-%\include{cover}
-% Some departments (e.g. 5) require an additional signature page.  See
+%\include{cover}b
+% Some departments (e.g. 5
+%) require an additional signature page.  See
 % signature.tex for more information and ◙uncomment the following line if
 % applicable.
 % \include{signature}
 %\pagestyle{plain}
 \titleformat{\chapter}{}{}{0em}{\bf\LARGE \thechapter.~}
 
-\include{chapIntro}
-\include{chapLiterature}
-\include{chapInstitutional}
-\include{chapData}
+%\include{chapIntro}
+%\include{chapLiterature}
+%\include{chapInstitutional}
+%\include{chapData}
 \include{chapLBD}
-\include{chapMechanisms}
-\include{chapDisc}
+%\include{chapMechanisms}
+%\include{chapDisc}
+
 %\appendix
+%\include{chapApp}
+
 %\include{appa}
 %\include{appb}
-%\bibliography{Bibliography.bib}
+
 \printbibliography
 \end{document}

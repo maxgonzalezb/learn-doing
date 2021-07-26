@@ -1,0 +1,33 @@
+PWD C:\repos\learn-doing\thesis
+INPUT C:\Users\Maximiliano\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT chapApp.tex
+OUTPUT chapApp.log
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp1.txt
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_F_main_exp2.txt
+OUTPUT chapApp.pdf
+INPUT C:\ProgramData\MiKTeX\pdftex\config\pdftex.map
+INPUT C:\repos\learn-doing\thesis\tables\sampleregion.txt
+INPUT C:\repos\learn-doing\thesis\tables\sampleregion.txt
+INPUT C:\repos\learn-doing\thesis\tables\sampleregion.txt
+INPUT C:\repos\learn-doing\thesis\tables\sampleregion.txt
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
+INPUT C:\repos\learn-doing\thesis\tables\topgov.txt
+INPUT C:\repos\learn-doing\thesis\tables\topgov.txt
+INPUT C:\repos\learn-doing\thesis\tables\topgov.txt
+INPUT C:\repos\learn-doing\thesis\tables\topgov.txt
+INPUT C:\repos\learn-doing\thesis\tables\topfirms.txt
+INPUT C:\repos\learn-doing\thesis\tables\topfirms.txt
+INPUT C:\repos\learn-doing\thesis\tables\topfirms.txt
+INPUT C:\repos\learn-doing\thesis\tables\topfirms.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_bids_help.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_bids_help.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_bids_help.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_bids_help.txt

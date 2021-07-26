@@ -1,0 +1,20 @@
+\begin{table}[!h]
+
+\caption{\label{tab:rank_example_2}Evolution of Firm B}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{lcccccc}
+\toprule
+Date & Participants & Firm & Rank & Win & Opponent Mean Rank & Points Adjustment\\
+\midrule
+2016-11-29 & 11 & B & 1500 & 0 & 1482 & 0.00\\
+2016-11-29 & 11 & B & 1500 & 0 & 1478 & -15.05\\
+2017-02-23 & 11 & B & 1485 & 0 & 1485 & -7.62\\
+2017-06-08 & 7 & B & 1477 & 1 & 1477 & 24.42\\
+2017-07-05 & 8 & B & 1502 & 1 & 1503 & 24.05\\
+2017-07-18 & 4 & B & 1526 & 0 & 1526 & -8.59\\
+2017-12-20 & 8 & B & 1517 & 0 & 1519 & -8.44\\
+2018-08-24 & 11 & B & 1509 & 0 & 1509 & NA\\
+\bottomrule
+\end{tabular}}
+\end{table}

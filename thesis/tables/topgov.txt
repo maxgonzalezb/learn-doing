@@ -1,0 +1,22 @@
+\begin{table}[!h]
+
+\caption{\label{tab:topgov}Top Gov.Units}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3.5in}ccc}
+\toprule
+Government Unit & Contracts Held & Bids & Firms Related\\
+\midrule
+Ministerio De Obras Publicas Direc Cion Gral De Oo Pp Dcyf & 2780 & 11850 & 706\\
+Junta Nacional De Jardines Infantiles & 1334 & 5953 & 1169\\
+Dirección De Obras Hidráulicas - Moptt & 510 & 1986 & 318\\
+I.municipalidad De Concepcion & 441 & 1604 & 344\\
+Ilustre Municipalidad De Osorno & 405 & 1115 & 264\\
+Municipalidad De Temuco & 403 & 1328 & 413\\
+Direccion De Logistica De Carabineros & 394 & 974 & 381\\
+Serviu Vii Región & 382 & 1581 & 133\\
+Ilustre Municipalidad De Rancagua & 356 & 1088 & 251\\
+Municipalidad De Ovalle & 338 & 1502 & 340\\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -64,7 +64,7 @@ df=df%>%filter((is.na(MontoEstimado)|MontoEstimado>thresholdSize)&
 
 #Create unique ID
 df = df %>% mutate(id = paste0(Codigo, RutProveedor))
-df=df%>%mutate(indWinner=as.numeric(winner=='Seleccionada'),indAccepted=as.numeric(estadoOferta=='Seleccionada'))
+df=df%>%mutate(indWinner=as.numeric(winner=='Seleccionada'),indAccepted=as.numeric(estadoOferta=='Aceptada'))
 df=df%>%group_by(id)%>%slice_max(n=1,with_ties = T,order_by =FechaEnvioOferta)
 
 df.repetidos = df %>% group_by(id) %>% select(Codigo,
@@ -124,7 +124,7 @@ df.rating.elo=helpers.ELO[[2]]
 max_players=(df.rating.elo%>%ncol()-1)/2
 n = 7500
 
- #Important. Set up how much players win/lose with each auction
+#Important. Set up how much players win/lose with each auction
 #base = c(25, rep(-10, max_players - 1))#seq(max_players,1,by = -1)
 tabletimes = df%>% select(FechaInicio, Codigo, time)
 vector = seq_len(nrow(df))
@@ -152,7 +152,7 @@ df=df%>%mutate(isClose=ifelse(is.na(isClose),yes=0,no=isClose))
 
 rows3=nrow(df)
 print(paste0('All correct in merging: ' , (rows1==rows2&rows2==rows3)))
-#saveRDS(df,file = 'C:\\repos\\learn-doing\\data\\contractData.rds')
+saveRDS(df,file = 'C:\\repos\\learn-doing\\data\\contractData_new.rds')
 #rm(df)
 
 

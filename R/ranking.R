@@ -59,6 +59,69 @@ table_output = create_kable(comparison.2[1:5, ], caption = "Comparison between c
                               'closewins_alt2_desc')
 table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_closewins_alt2_desc.txt")
 
+
+## Illustrate
+df.ranked=df
+exploration.ranks = df %>% group_by(RutProveedor) %>% mutate(
+  nbids = length(Codigo),
+  max.rank = max(rank),
+  min.rank = min(rank)
+) %>% filter(nbids >= 5 & nbids <= 15) %>%ungroup()%>%
+  group_by(Codigo) %>% mutate(mean.rank = mean(rank, na.rm = T),npar=max(NumeroOferentes),hasW=max(indWinner))
+
+set.seed(2)
+chosen.1 = sample((exploration.ranks %>% filter(max.rank >= 1650))$RutProveedor, 1)
+chose.evol =  exploration.ranks %>% filter(RutProveedor == chosen.1) %>% select(FechaInicio,
+                                                                                Codigo,
+                                                                                NombreProveedor,
+                                                                                npar,
+                                                                                rank,
+                                                                                hasW,
+                                                                                indWinner,
+                                                                                indAccepted,mean.rank,rank.old) %>% ungroup() %>%
+  arrange(FechaInicio) %>%
+  mutate(dif = ifelse(rank.old==-1,yes=0,no=lead(rank, n = 1, order_by = FechaInicio) - rank))%>%select(1,4,3,5,7,9,11)
+chose.evol
+
+set.seed(3)
+
+chosen.2 = sample((exploration.ranks %>% filter(min.rank <= 1450))$RutProveedor, 1)
+chose.evol2 =  exploration.ranks %>% filter(RutProveedor == chosen.2) %>% select(FechaInicio,
+                                                                                Codigo,
+                                                                                NombreProveedor,
+                                                                                npar,
+                                                                                rank,
+                                                                                hasW,
+                                                                                indWinner,
+                                                                                indAccepted,mean.rank,rank.old) %>% ungroup() %>%
+  arrange(FechaInicio) %>%
+  mutate(dif = ifelse(rank.old==-1,yes=0,no=round(lead(rank, n = 1, order_by = FechaInicio) - rank,2)))%>%select(1,4,3,5,7,9,11)
+chose.evol2
+
+chose.evol2 =  exploration.ranks %>% filter(NombreProveedor == 'Inmobiliaria Fenix E.I.R.L.') %>% select(FechaInicio,
+                                                                                 Codigo,
+                                                                                 NombreProveedor,
+                                                                                 rank,
+                                                                                 npar,
+                                                                                 mean.rank,
+                                                                                 hasW,
+                                                                                 rank.old,
+                                                                                 indWinner,
+                                                                                 indAccepted) %>% ungroup() %>%
+  arrange(FechaInicio) %>%
+  mutate(dif = lead(rank, n = 1, order_by = FechaInicio) - rank)
+
+# Quimco          
+#Mana Tazo Pascua #fernando lopez
+#76.193.599-2"
+chose.evol2
+
+## Study distribution rankings across life
+exploration.ranks.nums=df%>%group_by(RutProveedor)%>%arrange(FechaInicio)%>%mutate(num=seq_len(length(Codigo)))
+
+
+
+
 #################
 # First Measure of experience: rank measure
 #################
@@ -84,6 +147,14 @@ merged.wins.close.rank.means.exp1=merged.wins.close.rank.exp1%>%group_by(winspre
                                                                                                 sd.error=std.dev/sqrt(n))%>%
   filter(n>10)%>%mutate(exp=ifelse(winspre_closerank>0,'Experience','No experience'))
 
+
+###Create F-Statistics
+merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(winspre>0))
+lm.f.bin.rank.exp1 <- lm(indWinsPre ~ (winspre_closerank > 0)+idperiodpost, data = merged.wins)
+lm.f.cont.rank.exp1 <- lm(winspre ~ (winspre_closerank)+idperiodpost, data = merged.wins)
+
+summary(lm.f.bin.rank.exp1)
+summary(lm.f.cont.rank.exp1)
 
 ## Create the models with iv
 lm.25 <-
@@ -126,6 +197,10 @@ merged.wins.close.rank.means.exp2=merged.wins.close.rank.exp2%>%group_by(annualw
                                                                                               sd.error=std.dev/sqrt(n))%>%
   filter(n>10)%>%mutate(exp=ifelse(annualwinspre_closerank>0,'Experience','No experience'))
 
+##F-statistic
+merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(annualwinspre>0))
+lm.f.bin.rank.exp2 <- lm(indWinsPre ~ (annualwinspre_closerank > 0)+idperiodpost, data = merged.wins)
+lm.f.cont.rank.exp2 <- lm(annualwinspre ~ (annualwinspre_closerank)+idperiodpost, data = merged.wins)
 
 ## Create the models with iv
 lm.27 <-
@@ -143,122 +218,3 @@ lm.28 <-
         data = merged.wins)
 robust.lm28 <- vcovHC(lm.28, type = "HC1") %>% diag() %>% sqrt()
 summary(lm.28)
-
-################################## 
-#Robustness checks
-################################## 
-
-# The main problem are the points awarded. We check with various win/lose pairs
-winPoints.vector = c(10, 15,25 ,35, 50)
-average.players = df %>% group_by(Codigo) %>% count() %>% ungroup() %>% summarise(mean =
-                                                                                    mean(n, na.rm = T)) %>% round() %>% as.numeric()
-losePoints.vector = round(winPoints.vector / average.players)
-
-parameters.checks=data.frame(winPoints.vector,losePoints.vector)
-start=0
-split1=2
-split2=2
-check_thresholds=c(1.01,1.02,1.03,1.04)
-
-
-helpers.ELO=createHelpElo(df=df)
-df.rating=helpers.ELO[[1]]
-df.rating.elo=helpers.ELO[[2]]
-
-
-result.robustness.ranks=data.frame()
-for (i in seq_len(nrow(parameters.checks))) {
-  print(i)
-  # Select win and lose points
-  winPoints =  parameters.checks$winPoints.vector[i]
-  losePoints = parameters.checks$losePoints.vector[i]
-  
-  # Create full rankings
-  df.ranked.robust = CreateFullRankedDataset(
-    max_players = max_players,
-    df = df,
-    df.rating.elo = df.rating.elo,
-    df.rating = df.rating,
-    n = 7500,
-    winPoints = winPoints,
-    losePoints = losePoints,
-    startPoints = 1500
-  )
-  #df.ranked.robust = df.ranked.robust %>% left_join(listaContractExp, by =
-                                                      #c('CodigoExterno' = 'id'))
-  
-  # Create results by threshold
-  # result.robustness.ranks.iter.bin = check_thresholds %>% map_dfr(
-  #   function(x)
-  #     createMultiPeriodDataset(
-  #       df.ranked,
-  #       start = start,
-  #       split1 = split1,
-  #       split2 =
-  #         split2,
-  #       ranks = TRUE,
-  #       filterReqExp = T,
-  #       thresholdCloseRank = x
-  #     ) %>%
-  #     ivreg(
-  #       probWinpost ~ (winspre > 0) + idperiodpost |
-  #         (winspre_closerank > 0) + winspre_close + idperiodpost,
-  #       data = .
-  #     ) %>%
-  #     coeftest(vcov = vcovHC(., type = "HC1")) %>%
-  #     tidy() %>% filter(term == 'winspre > 0TRUE') %>% mutate(
-  #       threshold = x,
-  #       winPoints = winPoints,
-  #       losePoints = losePoints
-  #     )
-  # )%>%mutate(ff='Binary Indicator')
-  
-  result.robustness.ranks.iter= check_thresholds %>% map_dfr(
-    function(x) 
-      list(createMultiPeriodDataset(
-        df.ranked.robust,
-        start = start,
-        split1 = split1,
-        split2 =
-          split2,
-        ranks = TRUE,
-        filterReqExp = T,
-        thresholdCloseRank = x
-      )) %>% map_dfr( function(y) rbind(
-      (ivreg(
-        probWinpost ~ (winspre) + idperiodpost |
-          (winspre_closerank)  + idperiodpost,
-        data = y
-      ) %>%
-      coeftest(vcov = vcovHC(., type = "HC1")) %>%
-      tidy() %>% filter(term == 'winspre') %>% mutate(
-        threshold = x,
-        winPoints = winPoints,
-        losePoints = losePoints
-      )
-   %>%mutate(ff='Linear')),
-  (ivreg(
-    probWinpost ~ (winspre > 0) + idperiodpost |
-      (winspre_closerank > 0)  + idperiodpost,
-    data = y
-  ) %>%
-    coeftest(vcov = vcovHC(., type = "HC1")) %>%
-    tidy() %>% filter(term == 'winspre > 0TRUE') %>% mutate(
-      threshold = x,
-      winPoints = winPoints,
-      losePoints = losePoints
-    )
-  %>%mutate(ff='Binary Indicator')))
-  
-  %>%mutate(threshold=x)))
-  
-  result.robustness.ranks = rbind(result.robustness.ranks.iter, result.robustness.ranks)
-  
-}
-#saveRDS(object = result.robustness.ranks,file = 'C:\\repos\\learn-doing\\data\\robustness_ranks.rds')
-
-
-
-
-
-

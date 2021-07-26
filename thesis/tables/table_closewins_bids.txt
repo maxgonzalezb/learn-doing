@@ -7,11 +7,11 @@
 \toprule
 Variable & Mean (close win - rank) & Mean (all) & Mean (close win - price)\\
 \midrule
-N & 2697 & 152575 & 17448\\
-Bid (all) & 5.74e+11 & 7.92e+10 & 2.14e+08\\
-Winning Bid & 2.57e+08 & 2.52e+08 & 1.87e+08\\
-Difference between 1st bid and 2nd (\%) & 0.101 & 0.0933 & 0.00216\\
-Number of Bidders per Contract & 3.01 & 3.1 & 3.96\\
+N & 2697 & 152575 & 20924\\
+Bid (all) & 4.61e+08 & 7.92e+10 & 2.14e+08\\
+Winning Bid & 2.5e+08 & 2.52e+08 & 1.87e+08\\
+Difference between 1st bid and 2nd (\%) & 0.0987 & 0.0933 & 0.00216\\
+Number of Bidders per Contract & 3.03 & 3.1 & 3.96\\
 Year & 2014 & 2016 & 2015\\
 \bottomrule
 \end{tabular}}

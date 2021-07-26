@@ -1,0 +1,35 @@
+\begin{table}[!h]
+
+\caption{\label{tab:sampleregion}Sample coverage by Region}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{threeparttable}
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{2.5in}lllll}
+\toprule
+Region & Contracts & Bids (N) & Bids/Contract & Unique Gov. Units & Unique Firms\\
+\midrule
+Arica y Parinacota & 830 & 2600 & 3.1 & 37 & 410\\
+Tarapacá & 1400 & 3900 & 2.8 & 39 & 640\\
+Antofagasta & 1400 & 4300 & 3.0 & 59 & 830\\
+Atacama & 1300 & 3500 & 2.8 & 47 & 710\\
+Coquimbo & 2600 & 8400 & 3.2 & 64 & 1400\\
+Valparaíso & 5100 & 15000 & 2.9 & 130 & 2400\\
+Metropolitana de Santiago & 8600 & 30000 & 3.5 & 260 & 4500\\
+Libertador General Bernardo O´Higgin & 3500 & 10000 & 2.9 & 69 & 1600\\
+Maule & 4100 & 14000 & 3.4 & 78 & 1600\\
+Ñuble & 570 & 2100 & 3.7 & 44 & 530\\
+Biobío & 7000 & 22000 & 3.2 & 150 & 2900\\
+Araucanía & 3900 & 12000 & 3.1 & 88 & 1800\\
+Los Ríos & 2100 & 5700 & 2.8 & 52 & 1100\\
+Los Lagos & 4000 & 10000 & 2.5 & 90 & 1600\\
+Aysén del General Carlos Ibáñez del Campo & 1400 & 3700 & 2.6 & 120 & 850\\
+Magallanes y de la Antártica & 1600 & 4300 & 2.7 & 49 & 520\\
+NA & 5 & 17 & 3.4 & 2 & 16\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[para]
+\item \underline{\textit{Note: }}
+\item{The table displays key variables for the data sample avalaible for each geographic region in Chile. Note that Ñuble was created as a separate political division in 2018.\  Previously, it was a part of the Biobio Región, and its contracts were labeled as such. }
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}

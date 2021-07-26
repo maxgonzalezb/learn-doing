@@ -1,0 +1,18 @@
+# Fdb version 3
+["pdflatex"] 1627216242 "chapApp.tex" "chapApp.pdf" "chapApp" 1627216244
+  "C:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/tcrm1000.tfm" 993062508 1436 c7f957a372ef2fbe93c0982f96625e12 ""
+  "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
+  "C:/Program Files/MiKTeX/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
+  "C:/ProgramData/MiKTeX/pdftex/config/pdftex.map" 1623970329 5217809 7be800332f8babd8b9d9c49d5564a114 ""
+  "C:/Users/Maximiliano/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1623971266 10444370 ba6582a549b487bc830f85c0dba00352 ""
+  "chapApp.aux" 1627216203 7145 50d7c6e624d5e9f100d1e578a87a05b6 ""
+  "chapApp.tex" 1627216226 8256 da50a5efafcdc6f3502526004cd04d56 ""
+  "tables/sampleregion.txt" 1627145483 1125 a317150ea100fea28005de490b5154ee ""
+  "tables/table_F_main_exp1.txt" 1627215991 1560 c9346a94b66c58c7ade10a867ece16ee ""
+  "tables/table_F_main_exp2.txt" 1627215993 1562 6d1e88f384a53746d07c8e152581081d ""
+  "tables/table_bids_help.txt" 1627161685 1102 58153c1ea4e95f4493cfd5afe9273a9a ""
+  "tables/topfirms.txt" 1627142647 637 11fc7f167d946faf9ca196a6a00c6c0c ""
+  "tables/topgov.txt" 1627145512 941 c282aea53c59f9cd807f3fb37f9736e9 ""
+  (generated)
+  "chapApp.log"
+  "chapApp.pdf"

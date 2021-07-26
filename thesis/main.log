@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  18 JUL 2021 21:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  25 JUL 2021 17:54
 entering extended mode
 **./main.tex
 (main.tex
@@ -213,6 +213,12 @@ Package: ragged2e 2021/02/05 v3.0 ragged2e Package
 \RaggedRightParindent=\skip69
 \JustifyingParindent=\skip70
 )
+(C:\Program Files\MiKTeX\tex/latex/makecell\makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen169
+\c@nlinenum=\count282
+\TeXr@lab=\toks30
+)
 (C:\Program Files\MiKTeX\tex/latex/adjustbox\adjustbox.sty
 Package: adjustbox 2020/08/19 v1.3 Adjusting TeX boxes (trim, clip, ...)
 
@@ -221,10 +227,10 @@ Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
 
 (C:\Program Files\MiKTeX\tex/generic/xkeyval\xkeyval.tex
 (C:\Program Files\MiKTeX\tex/generic/xkeyval\xkvutils.tex
-\XKV@toks=\toks30
-\XKV@tempa@toks=\toks31
+\XKV@toks=\toks31
+\XKV@tempa@toks=\toks32
 )
-\XKV@depth=\count282
+\XKV@depth=\count283
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 (C:\Program Files\MiKTeX\tex/latex/adjustbox\adjcalc.sty
@@ -238,52 +244,138 @@ Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
 Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
 \collectedbox=\box62
 )
-\tc@llx=\dimen169
-\tc@lly=\dimen170
-\tc@urx=\dimen171
-\tc@ury=\dimen172
+\tc@llx=\dimen170
+\tc@lly=\dimen171
+\tc@urx=\dimen172
+\tc@ury=\dimen173
 Package trimclip Info: Using driver 'tc-pdftex.def'.
 
 (C:\Program Files\MiKTeX\tex/latex/adjustbox\tc-pdftex.def
 File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
 ))
-\adjbox@Width=\dimen173
-\adjbox@Height=\dimen174
-\adjbox@Depth=\dimen175
-\adjbox@Totalheight=\dimen176
-\adjbox@pwidth=\dimen177
-\adjbox@pheight=\dimen178
-\adjbox@pdepth=\dimen179
-\adjbox@ptotalheight=\dimen180
+\adjbox@Width=\dimen174
+\adjbox@Height=\dimen175
+\adjbox@Depth=\dimen176
+\adjbox@Totalheight=\dimen177
+\adjbox@pwidth=\dimen178
+\adjbox@pheight=\dimen179
+\adjbox@pdepth=\dimen180
+\adjbox@ptotalheight=\dimen181
 
 (C:\Program Files\MiKTeX\tex/latex/ifoddpage\ifoddpage.sty
 Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
-\c@checkoddpage=\count283
+\c@checkoddpage=\count284
 )
 (C:\Program Files\MiKTeX\tex/latex/varwidth\varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box63
-\sift@deathcycles=\count284
-\@vwid@loff=\dimen181
-\@vwid@roff=\dimen182
+\sift@deathcycles=\count285
+\@vwid@loff=\dimen182
+\@vwid@roff=\dimen183
 ))
+(C:\Program Files\MiKTeX\tex/latex/threeparttablex\threeparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+
+(C:\Program Files\MiKTeX\tex/latex/threeparttable\threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box64
+)
+(C:\Program Files\MiKTeX\tex/latex/environ\environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(C:\Program Files\MiKTeX\tex/latex/trimspaces\trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip71
+)
 (C:\Program Files\MiKTeX\tex/latex/caption\caption.sty
 Package: caption 2020/10/26 v3.5g Customizing captions (AR)
 
 (C:\Program Files\MiKTeX\tex/latex/caption\caption3.sty
 Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen183
-\captionmargin@=\dimen184
-\captionwidth=\dimen185
-\caption@tempdima=\dimen186
-\caption@indent=\dimen187
-\caption@parindent=\dimen188
-\caption@hangindent=\dimen189
+\captionmargin=\dimen184
+\captionmargin@=\dimen185
+\captionwidth=\dimen186
+\caption@tempdima=\dimen187
+\caption@indent=\dimen188
+\caption@parindent=\dimen189
+\caption@hangindent=\dimen190
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count285
-\c@continuedfloat=\count286
+\c@caption@flags=\count286
+\c@continuedfloat=\count287
 Package caption Info: float package is loaded.
+Package caption Info: threeparttable package is loaded.
+)
+(C:\Program Files\MiKTeX\tex/latex/tools\multicol.sty
+Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
+\c@tracingmulticols=\count288
+\mult@box=\box65
+\multicol@leftmargin=\dimen191
+\c@unbalance=\count289
+\c@collectmore=\count290
+\doublecol@number=\count291
+\multicoltolerance=\count292
+\multicolpretolerance=\count293
+\full@width=\dimen192
+\page@free=\dimen193
+\premulticols=\dimen194
+\postmulticols=\dimen195
+\multicolsep=\skip72
+\multicolbaselineskip=\skip73
+\partial@page=\box66
+\last@line=\box67
+\maxbalancingoverflow=\dimen196
+\mult@rightbox=\box68
+\mult@grightbox=\box69
+\mult@gfirstbox=\box70
+\mult@firstbox=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\@tempa=\box92
+\@tempa=\box93
+\@tempa=\box94
+\@tempa=\box95
+\@tempa=\box96
+\@tempa=\box97
+\@tempa=\box98
+\@tempa=\box99
+\@tempa=\box100
+\@tempa=\box101
+\@tempa=\box102
+\@tempa=\box103
+\@tempa=\box104
+\@tempa=\box105
+\@tempa=\box106
+\@tempa=\box107
+\@tempa=\box108
+\c@minrows=\count294
+\c@columnbadness=\count295
+\c@finalcolumnbadness=\count296
+\last@try=\dimen197
+\multicolovershoot=\dimen198
+\multicolundershoot=\dimen199
+\mult@nat@firstbox=\box109
+\colbreak@box=\box110
+\mc@col@check@num=\count297
 )
 (C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.sty
 Package: biblatex 2020/12/31 v3.16 programmable bibliographies (PK/MW)
@@ -307,7 +399,7 @@ Package pdftexcmds Info: \pdfdraftmode found.
 )
 (C:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count287
+\etb@tempcnta=\count298
 )
 (C:\Program Files\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
@@ -317,7 +409,7 @@ Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 ))
 (C:\Program Files\MiKTeX\tex/latex/logreq\logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count288
+\lrq@indent=\count299
 
 (C:\Program Files\MiKTeX\tex/latex/logreq\logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
@@ -329,62 +421,62 @@ Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-\c@tabx@nest=\count289
-\c@listtotal=\count290
-\c@listcount=\count291
-\c@liststart=\count292
-\c@liststop=\count293
-\c@citecount=\count294
-\c@citetotal=\count295
-\c@multicitecount=\count296
-\c@multicitetotal=\count297
-\c@instcount=\count298
-\c@maxnames=\count299
-\c@minnames=\count300
-\c@maxitems=\count301
-\c@minitems=\count302
-\c@citecounter=\count303
-\c@maxcitecounter=\count304
-\c@savedcitecounter=\count305
-\c@uniquelist=\count306
-\c@uniquename=\count307
-\c@refsection=\count308
-\c@refsegment=\count309
-\c@maxextratitle=\count310
-\c@maxextratitleyear=\count311
-\c@maxextraname=\count312
-\c@maxextradate=\count313
-\c@maxextraalpha=\count314
-\c@abbrvpenalty=\count315
-\c@highnamepenalty=\count316
-\c@lownamepenalty=\count317
-\c@maxparens=\count318
-\c@parenlevel=\count319
-\blx@tempcnta=\count320
-\blx@tempcntb=\count321
-\blx@tempcntc=\count322
-\blx@maxsection=\count323
-\blx@maxsegment@0=\count324
-\blx@notetype=\count325
-\blx@parenlevel@text=\count326
-\blx@parenlevel@foot=\count327
-\blx@sectionciteorder@0=\count328
-\blx@entrysetcounter=\count329
-\blx@biblioinstance=\count330
-\labelnumberwidth=\skip71
-\labelalphawidth=\skip72
-\biblabelsep=\skip73
-\bibitemsep=\skip74
-\bibnamesep=\skip75
-\bibinitsep=\skip76
-\bibparsep=\skip77
-\bibhang=\skip78
+\c@tabx@nest=\count300
+\c@listtotal=\count301
+\c@listcount=\count302
+\c@liststart=\count303
+\c@liststop=\count304
+\c@citecount=\count305
+\c@citetotal=\count306
+\c@multicitecount=\count307
+\c@multicitetotal=\count308
+\c@instcount=\count309
+\c@maxnames=\count310
+\c@minnames=\count311
+\c@maxitems=\count312
+\c@minitems=\count313
+\c@citecounter=\count314
+\c@maxcitecounter=\count315
+\c@savedcitecounter=\count316
+\c@uniquelist=\count317
+\c@uniquename=\count318
+\c@refsection=\count319
+\c@refsegment=\count320
+\c@maxextratitle=\count321
+\c@maxextratitleyear=\count322
+\c@maxextraname=\count323
+\c@maxextradate=\count324
+\c@maxextraalpha=\count325
+\c@abbrvpenalty=\count326
+\c@highnamepenalty=\count327
+\c@lownamepenalty=\count328
+\c@maxparens=\count329
+\c@parenlevel=\count330
+\blx@tempcnta=\count331
+\blx@tempcntb=\count332
+\blx@tempcntc=\count333
+\blx@maxsection=\count334
+\blx@maxsegment@0=\count335
+\blx@notetype=\count336
+\blx@parenlevel@text=\count337
+\blx@parenlevel@foot=\count338
+\blx@sectionciteorder@0=\count339
+\blx@entrysetcounter=\count340
+\blx@biblioinstance=\count341
+\labelnumberwidth=\skip74
+\labelalphawidth=\skip75
+\biblabelsep=\skip76
+\bibitemsep=\skip77
+\bibnamesep=\skip78
+\bibinitsep=\skip79
+\bibparsep=\skip80
+\bibhang=\skip81
 \blx@bcfin=\read3
 \blx@bcfout=\write3
 \blx@langwohyphens=\language84
-\c@mincomprange=\count331
-\c@maxcomprange=\count332
-\c@mincompwidth=\count333
+\c@mincomprange=\count342
+\c@maxcomprange=\count343
+\c@mincompwidth=\count344
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
@@ -395,88 +487,88 @@ Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'authoryear.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count334
-\c@savedafterword=\count335
-\c@annotator=\count336
-\c@savedannotator=\count337
-\c@author=\count338
-\c@savedauthor=\count339
-\c@bookauthor=\count340
-\c@savedbookauthor=\count341
-\c@commentator=\count342
-\c@savedcommentator=\count343
-\c@editor=\count344
-\c@savededitor=\count345
-\c@editora=\count346
-\c@savededitora=\count347
-\c@editorb=\count348
-\c@savededitorb=\count349
-\c@editorc=\count350
-\c@savededitorc=\count351
-\c@foreword=\count352
-\c@savedforeword=\count353
-\c@holder=\count354
-\c@savedholder=\count355
-\c@introduction=\count356
-\c@savedintroduction=\count357
-\c@namea=\count358
-\c@savednamea=\count359
-\c@nameb=\count360
-\c@savednameb=\count361
-\c@namec=\count362
-\c@savednamec=\count363
-\c@translator=\count364
-\c@savedtranslator=\count365
-\c@shortauthor=\count366
-\c@savedshortauthor=\count367
-\c@shorteditor=\count368
-\c@savedshorteditor=\count369
-\c@labelname=\count370
-\c@savedlabelname=\count371
-\c@institution=\count372
-\c@savedinstitution=\count373
-\c@lista=\count374
-\c@savedlista=\count375
-\c@listb=\count376
-\c@savedlistb=\count377
-\c@listc=\count378
-\c@savedlistc=\count379
-\c@listd=\count380
-\c@savedlistd=\count381
-\c@liste=\count382
-\c@savedliste=\count383
-\c@listf=\count384
-\c@savedlistf=\count385
-\c@location=\count386
-\c@savedlocation=\count387
-\c@organization=\count388
-\c@savedorganization=\count389
-\c@origlocation=\count390
-\c@savedoriglocation=\count391
-\c@origpublisher=\count392
-\c@savedorigpublisher=\count393
-\c@publisher=\count394
-\c@savedpublisher=\count395
-\c@language=\count396
-\c@savedlanguage=\count397
-\c@origlanguage=\count398
-\c@savedoriglanguage=\count399
-\c@pageref=\count400
-\c@savedpageref=\count401
-\shorthandwidth=\skip79
-\shortjournalwidth=\skip80
-\shortserieswidth=\skip81
-\shorttitlewidth=\skip82
-\shortauthorwidth=\skip83
-\shorteditorwidth=\skip84
-\locallabelnumberwidth=\skip85
-\locallabelalphawidth=\skip86
-\localshorthandwidth=\skip87
-\localshortjournalwidth=\skip88
-\localshortserieswidth=\skip89
-\localshorttitlewidth=\skip90
-\localshortauthorwidth=\skip91
-\localshorteditorwidth=\skip92
+\c@afterword=\count345
+\c@savedafterword=\count346
+\c@annotator=\count347
+\c@savedannotator=\count348
+\c@author=\count349
+\c@savedauthor=\count350
+\c@bookauthor=\count351
+\c@savedbookauthor=\count352
+\c@commentator=\count353
+\c@savedcommentator=\count354
+\c@editor=\count355
+\c@savededitor=\count356
+\c@editora=\count357
+\c@savededitora=\count358
+\c@editorb=\count359
+\c@savededitorb=\count360
+\c@editorc=\count361
+\c@savededitorc=\count362
+\c@foreword=\count363
+\c@savedforeword=\count364
+\c@holder=\count365
+\c@savedholder=\count366
+\c@introduction=\count367
+\c@savedintroduction=\count368
+\c@namea=\count369
+\c@savednamea=\count370
+\c@nameb=\count371
+\c@savednameb=\count372
+\c@namec=\count373
+\c@savednamec=\count374
+\c@translator=\count375
+\c@savedtranslator=\count376
+\c@shortauthor=\count377
+\c@savedshortauthor=\count378
+\c@shorteditor=\count379
+\c@savedshorteditor=\count380
+\c@labelname=\count381
+\c@savedlabelname=\count382
+\c@institution=\count383
+\c@savedinstitution=\count384
+\c@lista=\count385
+\c@savedlista=\count386
+\c@listb=\count387
+\c@savedlistb=\count388
+\c@listc=\count389
+\c@savedlistc=\count390
+\c@listd=\count391
+\c@savedlistd=\count392
+\c@liste=\count393
+\c@savedliste=\count394
+\c@listf=\count395
+\c@savedlistf=\count396
+\c@location=\count397
+\c@savedlocation=\count398
+\c@organization=\count399
+\c@savedorganization=\count400
+\c@origlocation=\count401
+\c@savedoriglocation=\count402
+\c@origpublisher=\count403
+\c@savedorigpublisher=\count404
+\c@publisher=\count405
+\c@savedpublisher=\count406
+\c@language=\count407
+\c@savedlanguage=\count408
+\c@origlanguage=\count409
+\c@savedoriglanguage=\count410
+\c@pageref=\count411
+\c@savedpageref=\count412
+\shorthandwidth=\skip82
+\shortjournalwidth=\skip83
+\shortserieswidth=\skip84
+\shorttitlewidth=\skip85
+\shortauthorwidth=\skip86
+\shorteditorwidth=\skip87
+\locallabelnumberwidth=\skip88
+\locallabelalphawidth=\skip89
+\localshorthandwidth=\skip90
+\localshortjournalwidth=\skip91
+\localshortserieswidth=\skip92
+\localshorttitlewidth=\skip93
+\localshortauthorwidth=\skip94
+\localshorteditorwidth=\skip95
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
 
@@ -488,19 +580,19 @@ Package biblatex Info: ... file 'biblatex.def' found.
 
 (C:\Program Files\MiKTeX\tex/latex/biblatex\biblatex.def
 File: biblatex.def 2020/12/31 v3.16 biblatex compatibility (PK/MW)
-\c@textcitecount=\count402
-\c@textcitetotal=\count403
-\c@textcitemaxnames=\count404
-\c@biburlbigbreakpenalty=\count405
-\c@biburlbreakpenalty=\count406
-\c@biburlnumpenalty=\count407
-\c@biburlucpenalty=\count408
-\c@biburllcpenalty=\count409
+\c@textcitecount=\count413
+\c@textcitetotal=\count414
+\c@textcitemaxnames=\count415
+\c@biburlbigbreakpenalty=\count416
+\c@biburlbreakpenalty=\count417
+\c@biburlnumpenalty=\count418
+\c@biburlucpenalty=\count419
+\c@biburllcpenalty=\count420
 \biburlbigskip=\muskip18
 \biburlnumskip=\muskip19
 \biburlucskip=\muskip20
 \biburllcskip=\muskip21
-\c@smartand=\count410
+\c@smartand=\count421
 )
 Package biblatex Info: Trying to load natbib compatibility...
 Package biblatex Info: ... file 'blx-natbib.def' found.
@@ -520,8 +612,8 @@ Package biblatex Info: ... file 'standard.bbx' found.
 
 (C:\Program Files\MiKTeX\tex/latex/biblatex/bbx\standard.bbx
 File: standard.bbx 2020/12/31 v3.16 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count411
-\c@bbx:relatedtotal=\count412
+\c@bbx:relatedcount=\count422
+\c@bbx:relatedtotal=\count423
 ))
 Package biblatex Info: Trying to load citation style 'authoryear'...
 Package biblatex Info: ... file 'authoryear.cbx' found.
@@ -547,60 +639,55 @@ Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 <<t1.cmap>>)
 (C:\Program Files\MiKTeX\tex/latex/titlesec\titlesec.sty
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
-\ttl@box=\box64
-\beforetitleunit=\skip93
-\aftertitleunit=\skip94
-\ttl@plus=\dimen190
-\ttl@minus=\dimen191
-\ttl@toksa=\toks32
-\titlewidth=\dimen192
-\titlewidthlast=\dimen193
-\titlewidthfirst=\dimen194
+\ttl@box=\box111
+\beforetitleunit=\skip96
+\aftertitleunit=\skip97
+\ttl@plus=\dimen256
+\ttl@minus=\dimen257
+\ttl@toksa=\toks33
+\titlewidth=\dimen258
+\titlewidthlast=\dimen259
+\titlewidthfirst=\dimen260
 )
-\@quotelevel=\count413
-\@quotereset=\count414
+\@quotelevel=\count424
+\@quotereset=\count425
 
 (C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count415
-\l__pdf_internal_box=\box65
+\l__color_backend_stack_int=\count426
+\l__pdf_internal_box=\box112
 ) (main.aux
-(title_page.aux) (abstract.aux) (chapIntro.aux) (chapLiterature.aux)
-(chapInstitutional.aux) (chapData.aux) (chapLBD.aux
-
-LaTeX Warning: Label `tab:sample_descriptive' multiply defined.
-
-) (chapMechanisms.aux) (chapDisc.aux))
+(title_page_official.aux) (abstract.aux) (chapLBD.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
 
 (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count416
-\scratchdimen=\dimen195
-\scratchbox=\box66
-\nofMPsegments=\count417
-\nofMParguments=\count418
-\everyMPshowfont=\toks33
-\MPscratchCnt=\count419
-\MPscratchDim=\dimen196
-\MPnumerator=\count420
-\makeMPintoPDFobject=\count421
-\everyMPtoPDFconversion=\toks34
+\scratchcounter=\count427
+\scratchdimen=\dimen261
+\scratchbox=\box113
+\nofMPsegments=\count428
+\nofMParguments=\count429
+\everyMPshowfont=\toks34
+\MPscratchCnt=\count430
+\MPscratchDim=\dimen262
+\MPnumerator=\count431
+\makeMPintoPDFobject=\count432
+\everyMPtoPDFconversion=\toks35
 ) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -641,12 +728,12 @@ Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (main.bbl)
-Package biblatex Info: Reference section=0 on input line 64.
-Package biblatex Info: Reference segment=0 on input line 64.
-\openout2 = `title_page.aux'.
+Package biblatex Info: Reference section=0 on input line 67.
+Package biblatex Info: Reference segment=0 on input line 67.
+\openout2 = `title_page_official.aux'.
 
 
-(title_page.tex [1
+(title_page_official.tex [1
 
 
 
@@ -658,99 +745,25 @@ Package biblatex Info: Reference segment=0 on input line 64.
 
 
 
-] (main.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
-[3
+] [3
 
-
-
-])
-\tf@toc=\write4
-\openout4 = `main.toc'.
-
- [4] (main.lof)
-\tf@lof=\write5
-\openout5 = `main.lof'.
-
- [5
-
-] (main.lot)
-\tf@lot=\write6
-\openout6 = `main.lot'.
-
- [6
 
 ]
-\openout2 = `chapIntro.aux'.
-
- (chapIntro.tex
-Chapter 1.
-[7
-
-
-] [8] [9]) [10]
-\openout2 = `chapLiterature.aux'.
-
- (chapLiterature.tex
-Chapter 2.
-[11
-
-
-
-
-]) [12]
-\openout2 = `chapInstitutional.aux'.
-
- (chapInstitutional.tex
-Chapter 3.
-[13
-
-
-
-
-] [14] [15] [16]
-
-Package enumitem Warning: Negative labelwidth. This does not make much
-(enumitem)                sense, on input line 49.
-
-[17] [18] [19]) [20]
-\openout2 = `chapData.aux'.
-
- (chapData.tex
-Chapter 4.
-[21
-
-
-
-
-] [22] [23] (C:/repos/learn-doing/thesis/tables/gov_descriptive.txt)
-(C:/repos/learn-doing/thesis/tables/gov_descriptive_types.txt) [24]
-(C:/repos/learn-doing/thesis/tables/sample_descriptive.txt)
-(C:/repos/learn-doing/thesis/tables/time_descriptive.txt) [25]
-<C:/repos/learn-doing/thesis/figures//plotweights_panel.png, id=105, 650.43pt x
- 469.755pt>
-File: C:/repos/learn-doing/thesis/figures//plotweights_panel.png Graphic file (
-type png)
-<use C:/repos/learn-doing/thesis/figures//plotweights_panel.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotweights_panel
-.png  used on input line 65.
-(pdftex.def)             Requested size: 390.261pt x 281.85518pt.
-) [26] [27 <C:/repos/learn-doing/thesis/figures//plotweights_panel.png>]
 \openout2 = `chapLBD.aux'.
 
  (chapLBD.tex
-Chapter 5.
-(C:/repos/learn-doing/thesis/tables/sample_descriptive.txt
+Chapter 1.
+(C:/repos/learn-doing/thesis/tables/sample_descriptive.txt<<ot1.cmap>><<oml.cma
+p>><<oms.cmap>><<omx.cmap>>
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [28
+) [4
 
 
-
-
-] [29] [30]
-<C:/repos/learn-doing/thesis/figures//diagram_experiences.png, id=123, 807.015p
-t x 380.622pt>
+] [5] [6]
+<C:/repos/learn-doing/thesis/figures//diagram_experiences.png, id=38, 807.015pt
+ x 380.622pt>
 File: C:/repos/learn-doing/thesis/figures//diagram_experiences.png Graphic file
  (type png)
 <use C:/repos/learn-doing/thesis/figures//diagram_experiences.png>
@@ -762,11 +775,11 @@ es.png  used on input line 61.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [31 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>] [32]
-[33] [34] (C:/repos/learn-doing/thesis/tables/table_closewins_alt1_desc.txt)
-[35] (C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt)
-<C:/repos/learn-doing/thesis/figures//rankings_times.png, id=142, 469.755pt x 2
-31.264pt>
+) [7 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>] [8]
+[9] [10] (C:/repos/learn-doing/thesis/tables/table_closewins_alt1_desc.txt)
+[11] (C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt)
+<C:/repos/learn-doing/thesis/figures//rankings_times.png, id=59, 469.755pt x 23
+1.264pt>
 File: C:/repos/learn-doing/thesis/figures//rankings_times.png Graphic file (typ
 e png)
 <use C:/repos/learn-doing/thesis/figures//rankings_times.png>
@@ -774,11 +787,11 @@ Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//rankings_times.pn
 g  used on input line 146.
 (pdftex.def)             Requested size: 422.7756pt x 208.13567pt.
 
-[36] [37 <C:/repos/learn-doing/thesis/figures//rankings_times.png>] [38
+[12] [13 <C:/repos/learn-doing/thesis/figures//rankings_times.png>] [14
 
 ]
-<C:/repos/learn-doing/thesis/figures//plotwins_panel.png, id=154, 722.7pt x 542
-.025pt>
+<C:/repos/learn-doing/thesis/figures//plotwins_panel.png, id=71, 722.7pt x 542.
+025pt>
 File: C:/repos/learn-doing/thesis/figures//plotwins_panel.png Graphic file (typ
 e png)
 <use C:/repos/learn-doing/thesis/figures//plotwins_panel.png>
@@ -786,25 +799,25 @@ Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotwins_panel.pn
 g  used on input line 179.
 (pdftex.def)             Requested size: 433.62334pt x 325.2175pt.
 
-[39] [40 <C:/repos/learn-doing/thesis/figures//plotwins_panel.png>]
+[15] [16 <C:/repos/learn-doing/thesis/figures//plotwins_panel.png>]
 (C:/repos/learn-doing/thesis/tables/table_ols_exp1.txt)
-(C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt) [41
+(C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt) [17
 
 ]
-<C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png, id=1
-66, 469.755pt x 231.264pt>
+<C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png, id=8
+6, 469.755pt x 231.264pt>
 File: C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png 
 Graphic file (type png)
 <use C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//comparison_consid
 ers_experience.png  used on input line 200.
 (pdftex.def)             Requested size: 422.7756pt x 208.13567pt.
- [42
+ [18
 
  <C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png>]
-(C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt) [43]
-<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=175, 542.025
-pt x 231.264pt>
+(C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt) [19]
+<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=95, 542.025p
+t x 231.264pt>
 File: C:/repos/learn-doing/thesis/figures//robustness_threshold.png Graphic fil
 e (type png)
 <use C:/repos/learn-doing/thesis/figures//robustness_threshold.png>
@@ -816,9 +829,9 @@ Overfull \hbox (27.10342pt too wide) in paragraph at lines 249--250
  [][] 
  []
 
-[44] (C:/repos/learn-doing/thesis/tables/robust_weightprice_outcomes.txt)
-[45 <C:/repos/learn-doing/thesis/figures//robustness_threshold.png>]
-<C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png, id=183, 650.43p
+[20] (C:/repos/learn-doing/thesis/tables/robust_weightprice_outcomes.txt)
+[21 <C:/repos/learn-doing/thesis/figures//robustness_threshold.png>]
+<C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png, id=103, 650.43p
 t x 397.485pt>
 File: C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png Graphic fil
 e (type png)
@@ -830,121 +843,46 @@ ank.png  used on input line 269.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [46] [47 <C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png>]
-\openout2 = `chapMechanisms.aux'.
-
-
-(chapMechanisms.tex
-Chapter 6.
-[48
+) [22] [23 <C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png>]
+[24
 
 
 
-
-] [49]
-<C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png, id=198, 433.62
-pt x 252.945pt>
-File: C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png Graphic fi
-le (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_bids_standar
-ized.png  used on input line 34.
-(pdftex.def)             Requested size: 303.53192pt x 177.06029pt.
- (C:/repos/learn-doing/thesis/tables/table_bid_sample.txt) [50 <C:/repos/learn-
-doing/thesis/figures//plot_bids_standarized.png>] [51]
-<C:/repos/learn-doing/thesis/figures//plotbids_panel.png, id=206, 650.43pt x 30
-7.1475pt>
-File: C:/repos/learn-doing/thesis/figures//plotbids_panel.png Graphic file (typ
-e png)
-<use C:/repos/learn-doing/thesis/figures//plotbids_panel.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotbids_panel.pn
-g  used on input line 64.
-(pdftex.def)             Requested size: 422.77449pt x 199.6435pt.
- [52 <C:/repos/learn-doing/thesis/figures//plotbids_panel.png>]
-(C:/repos/learn-doing/thesis/tables/table_bids_results_1.txt) [53] [54]
-[55]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png, id=221, 867.24
-pt x 289.08pt>
-File: C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png Graphic fi
-le (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-ates.png  used on input line 99.
-(pdftex.def)             Requested size: 433.61894pt x 144.53964pt.
- [56 <C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>]
-[57] [58]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png, id=235, 650.
-43pt x 542.025pt>
-File: C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png Graphic 
-file (type png)
-<use C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png>
-Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-esults.png  used on input line 138.
-(pdftex.def)             Requested size: 422.77449pt x 352.31207pt.
- (C:/repos/learn-doing/thesis/tables/table_acceptance_1.txt)) [59
-
- <C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png>]
-\openout2 = `chapDisc.aux'.
-
- (chapDisc.tex
-Chapter 7.
-[60
-
-
-
-
-] [61] [62] [63] [64] [65]
-Chapter 8.
-[66
-
-]) [67] [68
-
-
-
-] (main.aux (title_page.aux) (abstract.aux) (chapIntro.aux)
-(chapLiterature.aux) (chapInstitutional.aux) (chapData.aux) (chapLBD.aux)
-(chapMechanisms.aux) (chapDisc.aux))
-
-LaTeX Warning: There were multiply-defined labels.
-
+] (main.aux (title_page_official.aux) (abstract.aux) (chapLBD.aux))
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  )
-(\end occurred when \ifx on line 56 was incomplete) 
+(\end occurred when \ifx on line 59 was incomplete) 
 Here is how much of TeX's memory you used:
- 13918 strings out of 478826
- 254518 string characters out of 2857130
- 1006951 words of memory out of 3000000
- 31503 multiletter control sequences out of 15000+600000
- 420254 words of font info for 61 fonts, out of 8000000 for 9000
+ 14101 strings out of 478826
+ 253191 string characters out of 2857130
+ 1001428 words of memory out of 3000000
+ 31749 multiletter control sequences out of 15000+600000
+ 416797 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,12n,117p,1945b,1409s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,11n,117p,1945b,1408s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Program Files/MiKTeX/fon
 ts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/
 cm-super/cm-super-ts1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
-cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Progra
-m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1
-/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.p
-fb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program
- Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX/fonts/type1
-/public/cm-super/sfbx1095.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-su
-per/sfbx1200.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.
-pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1728.pfb><C:/Progr
-am Files/MiKTeX/fonts/type1/public/cm-super/sfbx2074.pfb><C:/Program Files/MiKT
-eX/fonts/type1/public/cm-super/sfbx2488.pfb><C:/Program Files/MiKTeX/fonts/type
-1/public/cm-super/sfrm0700.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-s
-uper/sfrm0800.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1000
-.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1095.pfb><C:/Prog
-ram Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Program Files/MiK
-TeX/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (68 pages, 2861764 bytes).
+cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pf
+b><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program
+ Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/
+public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.p
+fb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfbx1200.pfb><C:/Progra
+m Files/MiKTeX/fonts/type1/public/cm-super/sfbx1440.pfb><C:/Program Files/MiKTe
+X/fonts/type1/public/cm-super/sfbx1728.pfb><C:/Program Files/MiKTeX/fonts/type1
+/public/cm-super/sfbx2074.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-su
+per/sfrm1000.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.
+pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-super/sfrm1440.pfb><C:/Progr
+am Files/MiKTeX/fonts/type1/public/cm-super/sfrm2074.pfb><C:/Program Files/MiKT
+eX/fonts/type1/public/cm-super/sfrm2488.pfb><C:/Program Files/MiKTeX/fonts/type
+1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (24 pages, 1419153 bytes).
 PDF statistics:
- 347 PDF objects out of 1000 (max. 8388607)
+ 175 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 76 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

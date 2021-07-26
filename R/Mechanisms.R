@@ -2,7 +2,7 @@
 #################################
 ## First Investigation: Bids
 #################################
-
+print('Bid section')
 df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   group_by(RutProveedor) %>% arrange(FechaInicio) %>% mutate(
     firstyear = min(year),
@@ -27,7 +27,7 @@ df.bids = df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   )%>%
   mutate(indFirstYear=(year==firstyear))
 
-df.bids=df.bids%>%filter(hasExp == 0)
+  df.bids=df.bids%>%filter(hasExp == 0)
 df.bids = df.bids %>% filter(MCA_MPO <= 5 &
                                MCA_MPO > 0.1 & hasExp == 0 & year >= 2011 & !is.na(MCA_MPO))
 
@@ -91,7 +91,6 @@ lm(data=df.bids,(exp>0)~(exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear)
 lm(data=df.bids,exp~exp_close+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
 lm(data=df.bids,exp>0~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
 lm(data=df.bids,exp~exp_closerank+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
-df.bids$exp_closerank
 
 #Analysis
 lm.34=lm(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+(indFirstYear), data=df.bids)
@@ -102,8 +101,8 @@ lm.36=ivreg(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+indFirstYear|
 lm.37=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear|
               (exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
 
-lm.37.bis=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor|
-              log(exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor, data=df.bids)
+#lm.37.bis=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor|
+ #             log(exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor, data=df.bids)
 
 summary(lm.37.bis)
 
@@ -117,10 +116,20 @@ summary(lm.35)
 summary(lm.36)
 summary(lm.37)
 
+## Check how much do smaller bids influence on winning a contract.
+df.bids.relationship=df.bids%>%group_by(Codigo)%>%mutate(p=length(Codigo[estadoOferta=='Aceptada']),hasW=max(indWinner))%>%
+  filter(hasW==1,p>=2)%>%mutate(Codigo=as.factor(Codigo),year=as.factor(year))
+
+lm.bids.correlation.1=lm(data=df.bids.relationship, indWinner~MCA_MPO+p+indFirstYear+RegionUnidad+(year))
+#lm.bids.correlation.2=lm(data=df.bids.relationship, indWinner~MCA_MPO+indFirstYear+(Codigo)-1)
+
+#robust.lm.bids.correlation.1<- vcovHC(lm.bids.correlation.1, type = "HC1")%>%diag()%>%sqrt()
+#robust.lm.bids.correlation.2<- vcovHC(lm.bids.correlation.2, type = "HC1")%>%diag()%>%sqrt()
+
 #####
 ##Second Investigation: Quality
 #####
-
+print('Quality section')
 df.quality=df %>% mutate(WinContr = as.numeric(winner == 'Seleccionada')) %>%
   group_by(RutProveedor) %>% arrange(FechaInicio) %>% mutate(
     firstyear = min(year),
@@ -189,7 +198,8 @@ df.quality.plot.close.price = df.quality %>% filter(exp==exp_close)%>%group_by(e
   ) %>% mutate(std.error = std.error / sqrt(n))
 df.quality.plot.close.price
 
-###### Second quality idea. 
+###### Second quality idea.
+
 start=0
 split1=2
 split2=2
@@ -200,7 +210,7 @@ merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=spl
 merged.wins%>%group_by(q=ntile(probAc,5),indexp=(winspre>0))%>%summarise(n=length(winspre))%>%
   ungroup()%>%group_by(q)%>%mutate(perc=n/sum(n))%>%filter(indexp==TRUE)
 
-sd(merged.wins$probAc)
+print('Quality section - lm')
 
 lm.54<-lm(probAc~(winspre>0)+idperiodpost,data = merged.wins)
 robust.lm54<- vcovHC(lm.54, type = "HC1")%>%diag()%>%sqrt()
@@ -217,7 +227,6 @@ summary(lm.56)
 lm.57<-ivreg(probAc~(winspre)+idperiodpost|(winspre_close)+idperiodpost,data = merged.wins)
 robust.lm57<- vcovHC(lm.57, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.57)
-
 
 start=0
 split1=2
