@@ -1,6 +1,6 @@
 \chapter{Appendix}
 \section{Rank Regressions}
-
+\label{section:appendix_rank}
 The following regressions have as dependent variable experience and as independent variable close experience, which is our instrument in the main results section. Table \ref{tab:table_F_main_exp2} shows the results for the first measure of experience (rolling), while Table \ref{tab:table_F_main_exp2} shows the results for the second measure of experience (annualized cumulative).
 \input{C:/repos/learn-doing/thesis/tables/table_F_main_exp1.txt}
 
@@ -36,6 +36,7 @@ Results are shown in Table \ref{tab:table_bids_help}. Notably, the results imply
 
 \clearpage
 \section{ELO algorithm : theory and implementation}
+\label{section:eloappendix}
 \subsection{Introduction}\footnote{This section is based on Arpad Elo's book introduction to the Elo system in \citep{elo1978rating}}
 The Elo Ranking is a system to place players in a numerical rating scale, in which differences among players can be converted into scoring or winning probabilities. Similarly, scoring percentages (over time or competitions) can be converted into ranking differences. Ratings in the Elo system are points in a scale which, for historical reasons, has been chosen to have its midpoint at 2000. However, the importance is on difference of ratings rather than in absolute number, since a Elo ranking is only valid within a specific pool of players.
 
@@ -72,7 +73,7 @@ Results consists in a ranking for every firm at every contract in the sample con
 
 Later, in the main estimation step, the rankings are employed to identify close wins, as described in the empirical strategy section. Note that the algorithm itself employs the assumption that, for (two) equally ranked opponents, winning chances are 50 - 50. Wins against close opponents are thus attributed in both schemes mainly to random factors.
 
-\subsection{Analysis of algorithm Results}
+\subsection{Analysis of algorithm results}
 In this section we describe some of the results to validate and interpret the rankings obtained. Figure \ref{fig:rankings_nums} shows the progression of ranks over the history of firms. Every panel is the distribution of firms at a point in their bidding history. For example, panel two shows the distribution of ranks between firms who are bidding for the second time. Note that ranks split in two after the first bidding by the win or a lose. Successive biddings "fill in" the gaps. Given that points awarded for wins are more than points substracted by loses, the distributions are right-skewed.
 
 \begin{figure}[H]
@@ -82,7 +83,7 @@ In this section we describe some of the results to validate and interpret the ra
   \label{fig:rankings_nums}
 \end{figure}
 
-The progression of rankings over time is further illustrated with two firms which end higher and lower respectively in ranking than their starting points at 1,500. We call the first firm "A" and the second firm "B".  The next tables show the contracts participated in, the ranking at each contract, the average ranking of opponents, the result of the bidding (i.e. win or lose) and the net effect of the "game" of the firm's ranking (measured in points). Table \ref{tab:rank_example_1} shows a firm which won all but its last contracts. While all winning contracts resulted in points added to ranking, the first wins rendered more points, as the advantage of the firm was lower. Table \ref{tab:rank_example_2} shows firm B, which mostly experienced defeats. Note that points substracted by losing are less than the ones granted for winning, so the ranking still remains close to 1,500. Also, this firm faced similar opponents, as measured by the similar average ranks.
+The progression of rankings over time is further illustrat ed with two firms which end higher and lower respectively in ranking than their starting points at 1,500. We call the first firm "A" and the second firm "B".  The next tables show the contracts participated in, the ranking at each contract, the average ranking of opponents, the result of the bidding (i.e. win or lose) and the net effect of the "game" of the firm's ranking (measured in points). Table \ref{tab:rank_example_1} shows a firm which won all but its last contracts. While all winning contracts resulted in points added to ranking, the first wins rendered more points, as the advantage of the firm was lower. Table \ref{tab:rank_example_2} shows firm B, which mostly experienced defeats. Note that points substracted by losing are less than the ones granted for winning, so the ranking still remains close to 1,500. Also, this firm faced similar opponents, as measured by the similar average ranks.
 
 \input{C:/repos/learn-doing/thesis/tables/rank_example_1.txt}
 

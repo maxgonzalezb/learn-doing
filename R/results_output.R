@@ -97,19 +97,19 @@ plotDisc.allwins.exp2
 plotDisc.closewins.price.exp2<-ggplot(merged.wins.close.price.means.exp2,aes(x=(winspre_close),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=winspre_close,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Annualized close (by price) contracts won ')+ylab('Win probability on [t,t+2]')+
+  theme_bw()+xlab('Close (by rank) wins')+ylab('Win share on Period 2')+
   theme(,panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
   scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
-  ggtitle('Close Wins - By Price')
+  ggtitle('Firms with experience =  \n close experience (price)')
 plotDisc.closewins.price.exp2
 
 plotDisc.closewins.rank.exp2<-ggplot(merged.wins.close.rank.means.exp2,aes(x=(annualwinspre_closerank),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=annualwinspre_closerank,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Annualized close (by rank) contracts won')+ylab('Win probability on [t,t+2]')+
+  theme_bw()+xlab('Close (by rank) wins')+ylab('Win share on Period 2')+
   theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
   scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
-  ggtitle('Close Wins - By Rank')
+  ggtitle('Firms with experience = \n  close experience (rank)')
 plotDisc.closewins.rank.exp2
 
 row.1=plot_grid(plotDisc.allwins,plotDisc.closewins.price.exp1,plotDisc.closewins.rank.exp1,ncol = 3,labels = 'AUTO')
@@ -148,6 +148,7 @@ dev.off()
 #####################
 ## These are two tables for each type of experience computation
 ## First computation of experience
+hausman.vector.1=list(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm.26)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
 robust.se=list(robust.lm4,robust.lm10,robust.lm25,robust.lm5,robust.lm11,robust.lm26)
 regression.output.1=capture.output({stargazer(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm.26, type = "latex",label = 'tab:table_exp_1', header = F,
                                               se = (robust.se),
@@ -161,6 +162,7 @@ regression.output.1=capture.output({stargazer(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm
 createStargazerTxt(regression.output.1,'table_ols_exp1.txt')
 
 ## Second computation of experience
+hausman.vector.2=list(lm.16,lm.22, lm.27 , lm.17, lm.23,lm.28)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
 regression.output.2=capture.output({stargazer(lm.16,lm.22, lm.27 , lm.17, lm.23,lm.28, type = "latex",label = 'tab:table_exp_2', header = F,
                                               se = list(robust.lm16,robust.lm22, robust.lm27 , robust.lm17, robust.lm23,robust.lm28),
                                               omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
@@ -394,15 +396,15 @@ plotDisc.allwins.bids<-ggplot(df.bids.means,aes(x=(exp),y=MCA_MPO.mean))+geom_po
   #geom_smooth(se=F,formula=(function(x) mean(x)), method = 'lm')+geom_vline(xintercept = 0.3,alpha=0.3,color='black',lwd=1)+
   theme_bw()+xlab('Previous Wins')+ylab('Mean Standarized Bid')+
   theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0.5,1,0.1),limits = c(0.75,1))+
+  scale_y_continuous(breaks=seq(0.5,1,0.1),limits = c(0.75,0.9))+
   ggtitle('All Firms and Bids')+geom_hline(yintercept = df.bids.means$MCA_MPO.mean[df.bids.means$exp==0],alpha=0.8,color='black')
 plotDisc.allwins.bids
 
-plotDisc.closerank.bids<-ggplot(df.bids.means.closeranks%>%filter(n>=10),aes(x=(exp_closerank),y=MCA_MPO.mean))+geom_point(size=2,color='red')+xlim(-0.1,1.3)+
+plotDisc.closerank.bids<-ggplot(df.bids.means.closeranks%>%filter(n>=10),aes(x=(exp_closerank),y=MCA_MPO.mean))+geom_point(size=2,color='red')+xlim(-0.1,2.3)+
   geom_errorbar(aes(ymin=MCA_MPO.mean+2*std.error, ymax=MCA_MPO.mean-2*std.error,width=0.1))+
    theme_bw()+xlab('Previous Close Wins By rank')+ylab('Mean Standarized Bid')+
   theme(plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
-  scale_y_continuous(breaks=seq(0.5,1,0.1),limits = c(0.75,1))+
+  scale_y_continuous(breaks=seq(0.5,1,0.1),limits = c(0.75,0.9))+
   ggtitle('Firms with experience = close experience')#+geom_hline(yintercept = df.bids.means$MCA_MPO.mean[df.bids.means.closeranks$exp==0],alpha=0.8,color='black')
 plotDisc.closerank.bids
 
@@ -427,6 +429,8 @@ dev.off()
 
 
 ## Bid Regressions
+hausman.vector.bids_2=list(lm.34,lm.36, lm.35 , lm.37)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
+
 regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
                                               se = list(robust.lm34,robust.lm36, robust.lm35 , robust.lm37),
                                               omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
@@ -505,17 +509,19 @@ plot.quality.results
 dev.off()
 
 ## Quality Regressions
+hausman.vector.acceptance=list(lm.54,lm.56,lm.62,lm.55,lm.57,lm.63)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
+
+hausman.vector%>%as.vector()
   regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.62, lm.55,lm.57,lm.63 , type = "latex",label = 'tab:table_acceptance_1', header = F,
                                                  se = list(robust.lm54,robust.lm56,robust.lm62, robust.lm55,robust.lm57,robust.lm63),
                                                  omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
                                                  title="Regression of proposal acceptance on experience",
                                                  dep.var.labels=c("Proposal Acceptance Rate"),
                                                  column.labels = c("OLS","IV (by price)",'IV (by rank)',"OLS","IV (by price)",'IV (by rank)'),
-                                                 #covariate.labels=c("Experience in (t-1) > 0",'Experience in (t-1) (Total)'),
+                                                 covariate.labels=c("Experience in (t-1) > 0 (Binary)",'Experience in (t-1) (Continuous)'),
                                                  #c("Fixed effects By Government Body", "Yes", "Yes",'No','No')))})
-                                                 add.lines = list(c("Fixed effects By Period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
+                                                 add.lines = list(hausman.vector,c("Fixed effects By Period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.acceptance,'table_acceptance_1.txt')
-
 
 
 ###########################################################################

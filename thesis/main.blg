@@ -1,19 +1,19 @@
 [0] Config.pm:311> INFO - This is Biber 2.16
-[1] Config.pm:314> INFO - Logfile is 'main.blg'
-[327] biber-MSWIN64:340> INFO - === 
-[420] Biber.pm:415> INFO - Reading 'main.bcf'
-[743] Biber.pm:952> INFO - Found 2 citekeys in bib section 0
-[777] Biber.pm:4340> INFO - Processing section 0
-[824] Biber.pm:4531> INFO - Looking for bibtex format file 'Bibliography.bib' for section 0
-[1029] bibtex.pm:1689> INFO - LaTeX decoding ...
-[1201] bibtex.pm:1494> INFO - Found BibTeX data source 'Bibliography.bib'
-[1204] Utils.pm:395> WARN - Duplicate entry key: 'estache2010bidder' in file 'Bibliography.bib', skipping ...
-[1206] Utils.pm:395> WARN - Duplicate entry key: 'li2012construction' in file 'Bibliography.bib', skipping ...
-[1206] Utils.pm:395> WARN - Duplicate entry key: 'fu2002effect' in file 'Bibliography.bib', skipping ...
-[1330] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[1330] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[1330] Biber.pm:4168> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[1331] Biber.pm:4174> INFO - No sort tailoring available for locale 'en-US'
-[1345] bbl.pm:654> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[1349] bbl.pm:757> INFO - Output to main.bbl
-[1350] Biber.pm:128> INFO - WARNINGS: 3
+[0] Config.pm:314> INFO - Logfile is 'main.blg'
+[395] biber-MSWIN64:340> INFO - === 
+[501] Biber.pm:415> INFO - Reading 'main.bcf'
+[787] Biber.pm:952> INFO - Found 5 citekeys in bib section 0
+[826] Biber.pm:4340> INFO - Processing section 0
+[855] Biber.pm:4531> INFO - Looking for bibtex format file 'Bibliography.bib' for section 0
+[1060] bibtex.pm:1689> INFO - LaTeX decoding ...
+[1233] bibtex.pm:1494> INFO - Found BibTeX data source 'Bibliography.bib'
+[1236] Utils.pm:395> WARN - Duplicate entry key: 'estache2010bidder' in file 'Bibliography.bib', skipping ...
+[1240] Utils.pm:395> WARN - Duplicate entry key: 'li2012construction' in file 'Bibliography.bib', skipping ...
+[1241] Utils.pm:395> WARN - Duplicate entry key: 'fu2002effect' in file 'Bibliography.bib', skipping ...
+[1397] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1397] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1397] Biber.pm:4168> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[1397] Biber.pm:4174> INFO - No sort tailoring available for locale 'en-US'
+[1422] bbl.pm:654> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[1429] bbl.pm:757> INFO - Output to main.bbl
+[1430] Biber.pm:128> INFO - WARNINGS: 3

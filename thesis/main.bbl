@@ -52,6 +52,74 @@
       \field{title}{Identification and estimation of local average treatment effects}
       \field{year}{1995}
     \endentry
+    \entry{bajari2014bidding}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=4f267406c6ffa5f5cab3804cd113de0a}{%
+           family={Bajari},
+           familyi={B\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2aa0fc816d9f136fc0f88728dfa5ff7c}{%
+           family={Houghton},
+           familyi={H\bibinitperiod},
+           given={Stephanie},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=255b3415855a02b13009a347ddc5c22f}{%
+           family={Tadelis},
+           familyi={T\bibinitperiod},
+           given={Steven},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{fullhash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{bibnamehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{authorbibnamehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{authornamehash}{5d7480c65d16960f674ba830a77e5815}
+      \strng{authorfullhash}{5d7480c65d16960f674ba830a77e5815}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Economic Review}
+      \field{number}{4}
+      \field{title}{Bidding for incomplete contracts: An empirical analysis of adaptation costs}
+      \field{volume}{104}
+      \field{year}{2014}
+      \field{pages}{1288\bibrangedash 1319}
+      \range{pages}{32}
+    \endentry
+    \entry{elo1978rating}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=ba734edd6a1a96ab7e1903630e8f56f0}{%
+           family={Elo},
+           familyi={E\bibinitperiod},
+           given={Arpad\bibnamedelima E},
+           giveni={A\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Arco Pub.}%
+      }
+      \strng{namehash}{ba734edd6a1a96ab7e1903630e8f56f0}
+      \strng{fullhash}{ba734edd6a1a96ab7e1903630e8f56f0}
+      \strng{bibnamehash}{ba734edd6a1a96ab7e1903630e8f56f0}
+      \strng{authorbibnamehash}{ba734edd6a1a96ab7e1903630e8f56f0}
+      \strng{authornamehash}{ba734edd6a1a96ab7e1903630e8f56f0}
+      \strng{authorfullhash}{ba734edd6a1a96ab7e1903630e8f56f0}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The rating of chessplayers, past and present}
+      \field{year}{1978}
+    \endentry
     \entry{hansen2009econometrics}{book}{}
       \name{author}{1}{}{%
         {{un=0,uniquepart=base,hash=8ca4db09e38933c7a4bd5629789effa6}{%
@@ -75,6 +143,43 @@
       \field{labeltitlesource}{title}
       \field{title}{Econometrics}
       \field{year}{2009}
+    \endentry
+    \entry{stephenson2020package}{manual}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7980ab353e9a758af49565182a3af6ee}{%
+           family={Stephenson},
+           familyi={S\bibinitperiod},
+           given={Alec},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=71c5750a11f2c4e1c5848e1b0a319275}{%
+           family={Sonas.},
+           familyi={S\bibinitperiod},
+           given={Jeff},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8562557676a885a6dbf565fc1a67891c}
+      \strng{fullhash}{8562557676a885a6dbf565fc1a67891c}
+      \strng{bibnamehash}{8562557676a885a6dbf565fc1a67891c}
+      \strng{authorbibnamehash}{8562557676a885a6dbf565fc1a67891c}
+      \strng{authornamehash}{8562557676a885a6dbf565fc1a67891c}
+      \strng{authorfullhash}{8562557676a885a6dbf565fc1a67891c}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{R package version 1.1-0}
+      \field{title}{PlayerRatings: Dynamic Updating Methods for Player Ratings Estimation}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://CRAN.R-project.org/package=PlayerRatings
+      \endverb
+      \verb{url}
+      \verb https://CRAN.R-project.org/package=PlayerRatings
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

@@ -104,7 +104,6 @@ lm.37=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear|
 #lm.37.bis=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor|
  #             log(exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor, data=df.bids)
 
-summary(lm.37.bis)
 
 robust.lm34<- vcovHC(lm.34, type = "HC1")%>%diag()%>%sqrt()
 robust.lm35<- vcovHC(lm.35, type = "HC1")%>%diag()%>%sqrt()

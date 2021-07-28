@@ -3,6 +3,11 @@ INPUT C:\Users\Maximiliano\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.f
 INPUT chapLBD.tex
 OUTPUT chapLBD.log
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
+INPUT C:\repos\learn-doing\thesis\tables\sample_descriptive.txt
+INPUT C:\repos\learn-doing\thesis\tables\sample_descriptive.txt
+INPUT C:\repos\learn-doing\thesis\tables\sample_descriptive.txt
+INPUT C:\repos\learn-doing\thesis\tables\sample_descriptive.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
@@ -11,6 +16,10 @@ INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
@@ -21,7 +30,6 @@ INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
-INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
@@ -34,11 +42,3 @@ INPUT C:\repos\learn-doing\thesis\tables\robust_weightprice_outcomes.txt
 INPUT C:\repos\learn-doing\thesis\tables\robust_weightprice_outcomes.txt
 INPUT C:\repos\learn-doing\thesis\tables\robust_weightprice_outcomes.txt
 INPUT C:\repos\learn-doing\thesis\tables\robust_weightprice_outcomes.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_tax_categories_data.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_firm_sizes_intercepts.txt
