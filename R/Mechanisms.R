@@ -88,9 +88,9 @@ table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_cl
 
 ## Validity and rank
 lm(data=df.bids,(exp>0)~(exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
-lm(data=df.bids,exp~exp_close+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
+lm(data=df.bids,exp~(exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
 lm(data=df.bids,exp>0~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
-lm(data=df.bids,exp~exp_closerank+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
+lm(data=df.bids,exp~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
 
 #Analysis
 lm.34=lm(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+(indFirstYear), data=df.bids)
@@ -99,7 +99,7 @@ lm.36=ivreg(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+indFirstYear|
               (exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
 
 lm.37=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear|
-              (exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
+              (exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear, data=df.bids)
 
 #lm.37.bis=ivreg(MCA_MPO~(exp)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor|
  #             log(exp_closerank)+as.factor(year)+RegionUnidad+indFirstYear+RutProveedor, data=df.bids)
@@ -223,7 +223,7 @@ lm.56<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost,data
 robust.lm56<- vcovHC(lm.56, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.56)
 
-lm.57<-ivreg(probAc~(winspre)+idperiodpost|(winspre_close)+idperiodpost,data = merged.wins)
+lm.57<-ivreg(probAc~(winspre)+idperiodpost|(winspre_close>0)+idperiodpost,data = merged.wins)
 robust.lm57<- vcovHC(lm.57, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.57)
 
@@ -235,7 +235,7 @@ lm.58<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_closerank>0)+idperiodpost,
 robust.lm58<- vcovHC(lm.58, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.58)
 
-lm.59<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank)+idperiodpost,data = merged.wins)
+lm.59<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank>0)+idperiodpost,data = merged.wins)
 robust.lm59<- vcovHC(lm.59, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.59)
 
@@ -249,7 +249,7 @@ lm.62<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_closerank>0)+idperiodpost,
 robust.lm62<- vcovHC(lm.62, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.62)
 
-lm.63<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank)+idperiodpost,data = merged.wins)
+lm.63<-ivreg(probAc~(winspre)+idperiodpost|(winspre_closerank>0)+idperiodpost,data = merged.wins)
 robust.lm63<- vcovHC(lm.63, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.63)
 

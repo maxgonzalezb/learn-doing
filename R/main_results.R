@@ -158,21 +158,6 @@ lm.f.cont.price.exp1 <- lm(winspre ~ (winspre_close)+idperiodpost, data = merged
 ## Percentiles of weight
 quantile((df%>%group_by(Codigo)%>%slice_head(n=1))$percPrice,probs = c(0.75,0.8),na.rm=T)
 # Regression Analysis
-##OLS Specs
-##1
-lm.1 <- lm(probWinpost ~ (winspre > 0), data = merged.wins)
-robust.lm1 <- vcovHC(lm.1, type = "HC1") %>% diag() %>% sqrt()
-summary(lm.1)
-
-##2
-lm.2 <- lm(probWinpost ~ winspre, data = merged.wins)
-robust.lm2 <- vcovHC(lm.2, type = "HC1") %>% diag() %>% sqrt()
-summary(lm.2)
-
-##3
-lm.3 <- lm(probWinpost ~ poly(winspre, 2), data = merged.wins)
-robust.lm3 <- vcovHC(lm.3, type = "HC1") %>% diag() %>% sqrt()
-summary(lm.3)
 
 ##4
 lm.4 <- lm(probWinpost ~ (winspre > 0) + idperiodpost, data = merged.wins)
@@ -361,21 +346,6 @@ merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(annualwinspre>0))
 lm.f.bin.price.exp2 <- lm(indWinsPre ~ (annualwinspre_close > 0)+idperiodpost, data = merged.wins)
 lm.f.cont.price.exp2 <- lm(annualwinspre ~ (annualwinspre_close)+idperiodpost, data = merged.wins)
 
-##13
-lm.13<-lm(probWinpost~(annualwinspre>0),data = merged.wins)
-robust.lm13<- vcovHC(lm.13, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.13)
-
-##14
-lm.14<-lm(probWinpost~annualwinspre,data = merged.wins)
-robust.lm.14<- vcovHC(lm.14, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.14)
-
-##15
-lm.15<-lm(probWinpost~poly(annualwinspre,2),data = merged.wins)
-robust.lm15<- vcovHC(lm.15, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.15)
-
 ##16
 lm.16<-lm(probWinpost~(annualwinspre>0)+idperiodpost,data = merged.wins)
 robust.lm16<- vcovHC(lm.16, type = "HC1")%>%diag()%>%sqrt()
@@ -392,35 +362,17 @@ robust.lm18<- vcovHC(lm.18, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.18)
 
 #IVs
-##19
-lm.19<-ivreg(probWinpost~(annualwinspre>0)|(annualwinspre_close>0),data=merged.wins)
-robust.lm19<- vcovHC(lm.19, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.18,diagnostics = TRUE)
-
-##20
-lm.20<-ivreg(probWinpost~annualwinspre|(annualwinspre_close),data=merged.wins)
-robust.lm20<- vcovHC(lm.20, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.20,diagnostics = TRUE)
-
-##21
-lm.21<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)|annualwinspre_close+I(annualwinspre_close^2),data=merged.wins)
-robust.lm21<- vcovHC(lm.21, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.21,diagnostics = TRUE)
-
 ##22
 lm.22<-ivreg(probWinpost~(annualwinspre>0)+idperiodpost|(annualwinspre_close>0)+idperiodpost,data=merged.wins)
 robust.lm22<- vcovHC(lm.22, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.22,diagnostics = TRUE)
 
 ##23
-lm.23<-ivreg(probWinpost~(annualwinspre)+idperiodpost|(annualwinspre_close+idperiodpost),data=merged.wins)
+lm.23<-ivreg(probWinpost~(annualwinspre)+idperiodpost|((annualwinspre_close>0)+idperiodpost),data=merged.wins)
 robust.lm23<- vcovHC(lm.23, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.23,diagnostics = TRUE)
 
-##24
-lm.24<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)+idperiodpost|annualwinspre+I(annualwinspre_close^2)+idperiodpost,data=merged.wins)
-robust.lm24<- vcovHC(lm.24, type = "HC1")%>%diag()%>%sqrt()
-summary(lm.24,diagnostics = TRUE)
+
 
 
 #################### 
@@ -452,7 +404,7 @@ robust.lm42<- vcovHC(lm.42, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.42,diagnostics = TRUE)
 
 ##11
-lm.43<-ivreg(probWinpost~(winspre)+idperiodpost|(winspre_close+idperiodpost),data=merged.wins)
+lm.43<-ivreg(probWinpost~(winspre)+idperiodpost|((winspre_close>0)+idperiodpost),data=merged.wins)
 robust.lm43<- vcovHC(lm.43, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.43,diagnostics = TRUE)
 coeftest(lm.43,vcov = vcovHC(lm.43, type = "HC1"))%>%tidy()

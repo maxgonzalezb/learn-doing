@@ -8,10 +8,10 @@
 Experience Computation & Specification & 1 year outcomes & 2 year outcomes (Main) & 3 year outcomes\\
 \midrule
 Indicator & IV-Price & 0.098 (0.028) *** & 0.063 (0.019) *** & 0.07 (0.017) ***\\
-Indicator & IV-Ranks & 0.07 (0.015) *** & 0.077 (0.011) *** & 0.076 (0.009) ***\\
+Indicator & IV-Ranks & 0.075 (0.014) *** & 0.082 (0.01) *** & 0.081 (0.009) ***\\
 Indicator & OLS & 0.076 (0.006) *** & 0.074 (0.005) *** & 0.07 (0.004) ***\\
-Linear & IV-Price & 0.008 (0.002) *** & 0.006 (0.002) *** & 0.007 (0.002) ***\\
-Linear & IV-Ranks & 0.01 (0.002) *** & 0.013 (0.002) *** & 0.014 (0.002) ***\\
+Linear & IV-Price & 0.009 (0.003) *** & 0.007 (0.002) *** & 0.008 (0.002) ***\\
+Linear & IV-Ranks & 0.014 (0.003) *** & 0.017 (0.002) *** & 0.017 (0.002) ***\\
 Linear & OLS & 0.009 (0.001) *** & 0.01 (0.001) *** & 0.012 (0.001) ***\\
 \bottomrule
 \end{tabular}}

@@ -193,7 +193,7 @@ res.iv.price = splits %>% map_dfr(
       data = .,
       formula = (
         probWinpost ~ winspre + idperiodpost |
-          (winspre_close) + idperiodpost
+          (winspre_close>0) + idperiodpost
       )
     ) %>%
     coeftest(vcov = vcovHC(., type = "HC1")) %>%
@@ -219,7 +219,7 @@ res.iv.ranks = splits %>% map_dfr(
       data = .,
       formula = (
         probWinpost ~ winspre + idperiodpost |
-          (winspre_closerank) + idperiodpost
+          (winspre_closerank>0) + idperiodpost
       )
     ) %>%
     coeftest(vcov = vcovHC(., type = "HC1")) %>%
@@ -262,7 +262,7 @@ res.iv.price2 = splits %>% map_dfr(
       data = .,
       formula = (
         probWinpost ~ annualwinspre + idperiodpost |
-          (annualwinspre_close) + idperiodpost
+          (annualwinspre_close>0) + idperiodpost
       )
     ) %>%
     coeftest(vcov = vcovHC(., type = "HC1")) %>%
@@ -289,7 +289,7 @@ res.iv.ranks2 = splits %>% map_dfr(
       data = .,
       formula = (
         probWinpost ~ annualwinspre + idperiodpost |
-          (annualwinspre_closerank) + idperiodpost
+          (annualwinspre_closerank>0) + idperiodpost
       )
     ) %>%
     coeftest(vcov = vcovHC(., type = "HC1")) %>%
@@ -310,37 +310,8 @@ table_robustness_period.linear = rbind(res.ols,
 table_robustness_period = rbind(table_robustness_period.binary,
                                 table_robustness_period.linear)
 
-save(table_robustness_period, file = 'C:\\repos\\learn-doing\\data\\table_robustness_period.rds')
-load(file = 'C:\\repos\\learn-doing\\data\\table_robustness_period.rds')
+saveRDS(object=table_robustness_period, file = 'C:\\repos\\learn-doing\\data\\table_robustness_period_new.rds')
 
-table_robustness_period_o = table_robustness_period %>% mutate(estimate =
-                                                                 round(estimate, 3),
-                                                               std.error = round(std.error, 3)) %>%
-  mutate(condensed.output = paste0(
-    estimate,
-    ' (',
-    std.error,
-    ') ',
-    ifelse(p.value < 0.01, yes = '***', no = '')
-  )) %>% select(exp, ff, type, outcome.per, condensed.output) %>%
-  arrange(exp, outcome.per) %>% pivot_wider(id_cols = exp:type,
-                                            names_from = outcome.per,
-                                            values_from = condensed.output) %>% arrange(exp, ff, type) %>% filter(exp ==
-                                                                                                                    'Rolling') %>% select(-exp)
-
-colnames(table_robustness_period_o) <-
-  c(
-    'Experience Computation',
-    'Specification',
-    '1 year outcomes',
-    '2 year outcomes (Main)',
-    '3 year outcomes'
-  )
-
-table_robustness_period_o = create_kable(table_robustness_period_o,
-                                         caption = 'Robustness analysis for the coefficient on Experience (Rolling) by length of outcome computation period',
-                                         label = 'robust_bin_outcomes')
-table_robustness_period_o %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_bin_outcomes.txt")
 
 
 ###################
@@ -354,7 +325,7 @@ start=0
 split1=2
 split2=2
 robustness_close_wins.lin=close_wins_vector%>%map_dfr(function(x) (createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x,filterReqExp = T )%>%
-                                                                     ivreg(data= .,formula=(probWinpost~(winspre)+idperiodpost|(winspre_close)+idperiodpost))%>%
+                                                                     ivreg(data= .,formula=(probWinpost~(winspre)+idperiodpost|(winspre_close>0)+idperiodpost))%>%
                                                                      createConf(.)%>%
                                                                      filter(term=='winspre')%>%mutate(thresholdClose=x)))%>%mutate(model='Linear Experience')
 
@@ -366,7 +337,8 @@ robustness_close_wins.bin=close_wins_vector%>%map_dfr(function(x) (createMultiPe
                                                                      createConf(.)%>%
                                                                      filter(term=='winspre > 0TRUE')%>%mutate(thresholdClose=x)))%>%mutate(model='Binary Experience')
 
-
+saveRDS(robustness_close_wins.lin,file='C:\\repos\\learn-doing\\data\\robustness_close_wins.lin_new.rds')
+saveRDS(robustness_close_wins.bin,file='C:\\repos\\learn-doing\\data\\robustness_close_wins.bin_new.rds')
 
 
 ##Study the different weight thresholds
@@ -385,27 +357,19 @@ table_robustness_weightpricebin=rbind(res.iv.price,res.iv.price2)%>%mutate(term=
 
 
 res.iv.price=thresholds%>%map_dfr(function(x)  createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,filterReqExp = T,weightPrice=x,thresholdClose = 0.005)%>%
-                                    ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|(winspre_close)+idperiodpost)) %>%
+                                    ivreg(data= .,formula=(probWinpost~winspre+idperiodpost|(winspre_close>0)+idperiodpost)) %>%
                                     coeftest(vcov = vcovHC(., type = "HC1")) %>%
                                     tidy() %>% filter(term == 'winspre')%>%mutate(outcome.per=x, type='IV-Price',exp='Rolling')) 
 
 res.iv.price2=thresholds%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=split2,filterReqExp = T, weightPrice=x,thresholdClose = 0.005)%>%
-                                     ivreg(data= .,formula=(probWinpost~(annualwinspre)+idperiodpost|(annualwinspre_close)+idperiodpost)) %>%
+                                     ivreg(data= .,formula=(probWinpost~(annualwinspre)+idperiodpost|(annualwinspre_close>0)+idperiodpost)) %>%
                                      coeftest(vcov = vcovHC(., type = "HC1")) %>%
                                      tidy() %>% filter(term == 'annualwinspre')%>%mutate(outcome.per=x, type='IV-Price',exp='Annualized')) 
 
 table_robustness_weightpricelinear=rbind(res.iv.price,res.iv.price2)%>%mutate(term='Linear')
 table_robustness_weightprice=rbind(table_robustness_weightpricebin,table_robustness_weightpricelinear)
 
-table_robustness_weightprice_o=table_robustness_weightprice%>%mutate(estimate=round(estimate,3),std.error=round(std.error,3))%>%filter(outcome.per!=65)%>%
-  mutate(condensed.output=paste0(estimate,' (',std.error,') ',ifelse(p.value<0.01,yes='***',no=ifelse(p.value<0.05,yes='**',no=""))))%>%select(exp,term,outcome.per,condensed.output)%>%
-  arrange(exp,term,outcome.per)%>%pivot_wider(  id_cols=exp:term,names_from = outcome.per,values_from = condensed.output)
-
-
-colnames(table_robustness_weightprice_o)[1:2]<-c('Experience Computation','Functional Form')
-table_robustness_weightprice_o=create_kable(table_robustness_weightprice_o,caption = 'Robustness analysis for the price weight parameter in the IV Regression by price',label = 'robust_weightprice_outcomes')
-table_robustness_weightprice_o%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_weightprice_outcomes.txt")
-
+saveRDS(object = table_robustness_weightprice, file = 'C:\\repos\\learn-doing\\data\\table_robustness_weight_new.rds')
 
 
 ################################## 

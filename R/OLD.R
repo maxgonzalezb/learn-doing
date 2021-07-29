@@ -697,4 +697,55 @@ cor(df2$NumeroOferentes,df2$p)
 robustness_close_wins.bin=robustness_close_wins.lin%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)
 robustness_close_wins.bin=robustness_close_wins.bin%>%mutate(lower95=estimate-2*std.error,upper95=estimate+2*std.error)
 #robustness_close_wins.lin=robustness_close_wins.lin%>%mutate(lower95=estimate-1.96*std.error,upper95=estimate+1.96*std.error)
+##OLS Specs
+##1
+lm.1 <- lm(probWinpost ~ (winspre > 0), data = merged.wins)
+robust.lm1 <- vcovHC(lm.1, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.1)
 
+##2
+lm.2 <- lm(probWinpost ~ winspre, data = merged.wins)
+robust.lm2 <- vcovHC(lm.2, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.2)
+
+##OLD annualized
+##13
+lm.13<-lm(probWinpost~(annualwinspre>0),data = merged.wins)
+robust.lm13<- vcovHC(lm.13, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.13)
+
+##14
+lm.14<-lm(probWinpost~annualwinspre,data = merged.wins)
+robust.lm.14<- vcovHC(lm.14, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.14)
+
+##15
+lm.15<-lm(probWinpost~poly(annualwinspre,2),data = merged.wins)
+robust.lm15<- vcovHC(lm.15, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.15)
+
+
+##3
+lm.3 <- lm(probWinpost ~ poly(winspre, 2), data = merged.wins)
+robust.lm3 <- vcovHC(lm.3, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.3)
+
+##OLD IVS
+lm.19<-ivreg(probWinpost~(annualwinspre>0)|(annualwinspre_close>0),data=merged.wins)
+robust.lm19<- vcovHC(lm.19, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.18,diagnostics = TRUE)
+
+##20
+lm.20<-ivreg(probWinpost~annualwinspre|(annualwinspre_close>0),data=merged.wins)
+robust.lm20<- vcovHC(lm.20, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.20,diagnostics = TRUE)
+
+##21
+lm.21<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)|annualwinspre_close+I(annualwinspre_close^2),data=merged.wins)
+robust.lm21<- vcovHC(lm.21, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.21,diagnostics = TRUE)
+
+##24
+lm.24<-ivreg(probWinpost~annualwinspre+I(annualwinspre^2)+idperiodpost|annualwinspre+I(annualwinspre_close^2)+idperiodpost,data=merged.wins)
+robust.lm24<- vcovHC(lm.24, type = "HC1")%>%diag()%>%sqrt()
+summary(lm.24,diagnostics = TRUE)

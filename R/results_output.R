@@ -97,7 +97,7 @@ plotDisc.allwins.exp2
 plotDisc.closewins.price.exp2<-ggplot(merged.wins.close.price.means.exp2,aes(x=(winspre_close),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=winspre_close,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Close (by rank) wins')+ylab('Win share on Period 2')+
+  theme_bw()+xlab('Close (by rank) annualized wins')+ylab('Win share on Period 2')+
   theme(,panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
   scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('Firms with experience =  \n close experience (price)')
@@ -106,7 +106,7 @@ plotDisc.closewins.price.exp2
 plotDisc.closewins.rank.exp2<-ggplot(merged.wins.close.rank.means.exp2,aes(x=(annualwinspre_closerank),y=probWinpost_mean))+geom_point(size=2,color='red')+xlim(-0.1,2.1)+
   geom_errorbar(aes(x=annualwinspre_closerank,ymin=probWinpost_mean+2*sd.error, ymax=probWinpost_mean-2*sd.error,width=0.1))+
   #geom_smooth(data=merged.wins.close.means%>%filter(winspre>0), se=F,formula=y ~ poly(x,degree = 2), method = 'lm')+
-  theme_bw()+xlab('Close (by rank) wins')+ylab('Win share on Period 2')+
+  theme_bw()+xlab('Close (by rank) annualized wins')+ylab('Win share on Period 2')+
   theme(panel.grid.major.x = element_blank(),panel.grid.minor = element_blank(),plot.title = element_text(hjust = 0.5),axis.text=element_text(size=rel(1.2)),axis.title = element_text(size=rel(1)))+
   scale_y_continuous(breaks=seq(0,top.limit,0.1),limits = c(0,top.limit))+
   ggtitle('Firms with experience = \n  close experience (rank)')
@@ -331,41 +331,6 @@ png(filename="C:\\repos\\learn-doing\\thesis\\figures\\comparison_considers_expe
 plot.compexp.1
 dev.off()
 
-###
-# Robustness Rank
-###
-
-plot.ranks.robust.1<-ggplot(result.robustness.ranks%>%filter(ff=='Binary Indicator'), aes(x=as.factor(winPoints),y=estimate))+
-  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.16)+
-  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
-  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
-plot.ranks.robust.1
-
-plot.ranks.robust.2<-ggplot(result.robustness.ranks%>%filter(ff=='Linear'), aes(x=as.factor(winPoints),y=estimate))+
-  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.026)+
-  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
-  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
-plot.ranks.robust.2
-
-row.1=plot_grid(plot.ranks.robust.1)
-row.2=plot_grid(plot.ranks.robust.2)
-
-title.rob1 <- ggdraw() + 
-  draw_label(
-    "Robustness analysis for threshold and points awarded - close wins by rank",
-    fontface = 'bold',
-    x = 0,
-    hjust = 0
-  ) +
-  theme(
-    plot.margin = margin(0, 0, 0, 7)
-  )
-plot.robustness.rank=cowplot::plot_grid(title.rob1,row.1,row.2,
-                                        nrow = 3,labels = '',rel_heights = c(0.1, 1,1))
-
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_robustness_rank.png",width = 9, height = 5.5,units = "in",res=1000)
-plot.robustness.rank
-dev.off()
 
 
 ###########################################################################
@@ -442,7 +407,7 @@ regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, t
 createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt')
 
 ## Bid Helps to Win
-regression.output.bids_Helps=capture.output({stargazer(lm.bids.correlation.1,lm.bids.correlation.2, type = "latex",label = 'tab:table_bids_help', header = F,
+regression.output.bids_Helps=capture.output({stargazer(lm.bids.correlation.1, type = "latex",label = 'tab:table_bids_help', header = F,
                                                    #se = list(robust.lm.bids.correlation.1,NULL),
                                                    omit=c('RegionUnidad','year','Codigo'),omit.stat = c( "f","adj.rsq"),
                                                    dep.var.labels=c("Indicator of Contract Won"),
@@ -511,7 +476,6 @@ dev.off()
 ## Quality Regressions
 hausman.vector.acceptance=list(lm.54,lm.56,lm.62,lm.55,lm.57,lm.63)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
 
-hausman.vector%>%as.vector()
   regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.62, lm.55,lm.57,lm.63 , type = "latex",label = 'tab:table_acceptance_1', header = F,
                                                  se = list(robust.lm54,robust.lm56,robust.lm62, robust.lm55,robust.lm57,robust.lm63),
                                                  omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
@@ -520,7 +484,7 @@ hausman.vector%>%as.vector()
                                                  column.labels = c("OLS","IV (by price)",'IV (by rank)',"OLS","IV (by price)",'IV (by rank)'),
                                                  covariate.labels=c("Experience in (t-1) > 0 (Binary)",'Experience in (t-1) (Continuous)'),
                                                  #c("Fixed effects By Government Body", "Yes", "Yes",'No','No')))})
-                                                 add.lines = list(hausman.vector,c("Fixed effects By Period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
+                                                 add.lines = list(c("Fixed effects By Period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 createStargazerTxt(regression.output.acceptance,'table_acceptance_1.txt')
 
 
@@ -570,6 +534,84 @@ ggplot(exploration.ranks%>%filter(num<=10&num>=2), aes(x =
   facet_wrap( ~ num, ncol = 3, nrow = 4,scales = 'free') + theme_bw() +
   xlab('Rank') + ylab('Count') + theme(panel.grid.major = element_blank(),
                                        panel.grid.minor = element_blank())+ggtitle('Distribution of ranks for firms in their nth auction')
+dev.off()
+
+
+########ROBUSTENSSS
+table_robustness_period_o = table_robustness_period %>% mutate(estimate =
+                                                                 round(estimate, 3),
+                                                               std.error = round(std.error, 3)) %>%
+  mutate(condensed.output = paste0(
+    estimate,
+    ' (',
+    std.error,
+    ') ',
+    ifelse(p.value < 0.01, yes = '***', no = '')
+  )) %>% select(exp, ff, type, outcome.per, condensed.output) %>%
+  arrange(exp, outcome.per) %>% pivot_wider(id_cols = exp:type,
+                                            names_from = outcome.per,
+                                            values_from = condensed.output) %>% arrange(exp, ff, type) %>% filter(exp ==
+                                                                                                                    'Rolling') %>% select(-exp)
+
+colnames(table_robustness_period_o) <-
+  c(
+    'Experience Computation',
+    'Specification',
+    '1 year outcomes',
+    '2 year outcomes (Main)',
+    '3 year outcomes'
+  )
+
+table_robustness_period_o = create_kable(table_robustness_period_o,
+                                         caption = 'Robustness analysis for the coefficient on Experience (Rolling) by length of outcome computation period',
+                                         label = 'robust_bin_outcomes')
+table_robustness_period_o %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_bin_outcomes.txt")
+
+########ROBUSTENSSS.2 weight. 
+table_robustness_weightprice_o=table_robustness_weightprice%>%mutate(estimate=round(estimate,3),std.error=round(std.error,3))%>%filter(outcome.per!=65)%>%
+  mutate(condensed.output=paste0(estimate,' (',std.error,') ',ifelse(p.value<0.01,yes='***',no=ifelse(p.value<0.05,yes='**',no=""))))%>%select(exp,term,outcome.per,condensed.output)%>%
+  arrange(exp,term,outcome.per)%>%pivot_wider(  id_cols=exp:term,names_from = outcome.per,values_from = condensed.output)
+
+
+colnames(table_robustness_weightprice_o)[1:2]<-c('Experience Computation','Functional Form')
+table_robustness_weightprice_o=create_kable(table_robustness_weightprice_o,caption = 'Robustness analysis for the price weight parameter in the IV Regression by price',label = 'robust_weightprice_outcomes')
+table_robustness_weightprice_o%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_weightprice_outcomes.txt")
+
+#############ROB RANK
+###
+# Robustness Rank
+###
+
+plot.ranks.robust.1<-ggplot(result.robustness.ranks%>%filter(ff=='Binary Indicator'), aes(x=as.factor(winPoints),y=estimate))+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.16)+
+  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
+plot.ranks.robust.1
+
+plot.ranks.robust.2<-ggplot(result.robustness.ranks%>%filter(ff=='Linear'), aes(x=as.factor(winPoints),y=estimate))+
+  geom_point()+facet_wrap(ff~threshold,nrow = 1)+ylim(0,0.026)+
+  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')
+plot.ranks.robust.2
+
+row.1=plot_grid(plot.ranks.robust.1)
+row.2=plot_grid(plot.ranks.robust.2)
+
+title.rob1 <- ggdraw() + 
+  draw_label(
+    "Robustness analysis for threshold and points awarded - close wins by rank",
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(
+    plot.margin = margin(0, 0, 0, 7)
+  )
+plot.robustness.rank=cowplot::plot_grid(title.rob1,row.1,row.2,
+                                        nrow = 3,labels = '',rel_heights = c(0.1, 1,1))
+
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_robustness_rank.png",width = 9, height = 5.5,units = "in",res=1000)
+plot.robustness.rank
 dev.off()
 
 

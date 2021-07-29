@@ -168,7 +168,7 @@ summary(lm.25)
 
 lm.26 <-
   ivreg(probWinpost ~ winspre + idperiodpost |
-          winspre_closerank + idperiodpost,
+          (winspre_closerank>0) + idperiodpost,
         data = merged.wins)
 robust.lm26 <- vcovHC(lm.26, type = "HC1") %>% diag() %>% sqrt()
 summary(lm.26)
@@ -200,7 +200,7 @@ merged.wins.close.rank.means.exp2=merged.wins.close.rank.exp2%>%group_by(annualw
 ##F-statistic
 merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(annualwinspre>0))
 lm.f.bin.rank.exp2 <- lm(indWinsPre ~ (annualwinspre_closerank > 0)+idperiodpost, data = merged.wins)
-lm.f.cont.rank.exp2 <- lm(annualwinspre ~ (annualwinspre_closerank)+idperiodpost, data = merged.wins)
+lm.f.cont.rank.exp2 <- lm(annualwinspre ~ (annualwinspre_closerank>0)+idperiodpost, data = merged.wins)
 
 ## Create the models with iv
 lm.27 <-
@@ -214,7 +214,7 @@ summary(lm.27)
 
 lm.28 <-
   ivreg(probWinpost ~ annualwinspre + idperiodpost |
-          annualwinspre_closerank + idperiodpost,
+          (annualwinspre_closerank>0) + idperiodpost,
         data = merged.wins)
 robust.lm28 <- vcovHC(lm.28, type = "HC1") %>% diag() %>% sqrt()
 summary(lm.28)
