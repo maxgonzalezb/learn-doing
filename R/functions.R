@@ -328,13 +328,31 @@ updatelist=function(urlActa){
 
 
 
-createStargazerTxt<-function(table,filename){
+createStargazerTxt<-function(table,filename,note=''){
 table <- gsub("\\begin{tabular}","\\resizebox{0.95\\textwidth}{!}{\\begin{tabular}", table,fixed=T)
 table <- gsub("\\end{tabular}","\\end{tabular}}", table,fixed=T)
-table%>%cat(., file = paste0("C:\\repos\\learn-doing\\thesis\\tables\\",filename))
+
+if(note!=''){
+  table<-stargazernote(table,note)
+  
 }
 
 
+table%>%cat(., file = paste0("C:\\repos\\learn-doing\\thesis\\tables\\",filename))
+
+
+
+}
+
+stargazernote <- function(starGazerCmd, note){
+  # inserts 'note' to the end of stargazer generated latex table
+  ssn <- gsub(x=starGazerCmd, pattern='\\end{tabular}}',
+              replacement=paste('\\end{tabular}}', '\n',
+                                '\\centerline{\\begin{minipage}{0.95\\textwidth}~\\', '\n',
+                                '\\noindent \\scriptsize{' , note, 
+                                '} \\end{minipage}}',  sep=''), fixed=T)
+  return(ssn)
+}
 
 
 createDirectoryofCompanies<-function(){

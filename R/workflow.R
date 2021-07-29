@@ -12,7 +12,7 @@ source('C:\\repos\\learn-doing\\R\\main_results.R')
 result.robustness.ranks=readRDS(file = 'C:\\repos\\learn-doing\\data\\robustness_ranks_new.rds')
 table_robustness_period=readRDS(file = 'C:\\repos\\learn-doing\\data\\table_robustness_period_new.rds')
 table_robustness_weightprice=readRDS(file = 'C:\\repos\\learn-doing\\data\\table_robustness_weight_new.rds')
-robustness_close_wins.linsaveRDS=readRDS(file='C:\\repos\\learn-doing\\data\\robustness_close_wins.lin_new.rds')
+robustness_close_wins.lin=readRDS(file='C:\\repos\\learn-doing\\data\\robustness_close_wins.lin_new.rds')
 robustness_close_wins.bin=readRDS(file='C:\\repos\\learn-doing\\data\\robustness_close_wins.bin_new.rds')
 
 

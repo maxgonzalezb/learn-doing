@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  28 JUL 2021 20:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6) (preloaded format=pdflatex 2021.6.17)  29 JUL 2021 01:21
 entering extended mode
 **./main.tex
 (main.tex
@@ -657,25 +657,25 @@ File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count426
 \l__pdf_internal_box=\box112
 ) (main.aux
-(abstract.aux) (chapIntro.aux) (chapLBD.aux) (chapMechanisms.aux) (chapApp.aux)
-)
+(abstract.aux) (chapLBD.aux) (chapMechanisms.aux) (chapApp.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
- (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+
+(C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count427
 \scratchdimen=\dimen261
@@ -728,8 +728,8 @@ Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (main.bbl)
-Package biblatex Info: Reference section=0 on input line 67.
-Package biblatex Info: Reference segment=0 on input line 67.
+Package biblatex Info: Reference section=0 on input line 68.
+Package biblatex Info: Reference segment=0 on input line 68.
 \openout2 = `abstract.aux'.
 
 
@@ -740,33 +740,17 @@ Package biblatex Info: Reference segment=0 on input line 67.
 
 
 ]
-\openout2 = `chapIntro.aux'.
-
-
-(chapIntro.tex
-Chapter 1.
-[3
-
-
-]<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>> [4]
-Overfull \hbox (1.7112pt too wide) in paragraph at lines 22--23
-[]\T1/cmr/m/n/12 The Dis-us-sion re-views the mag-ni-tude of the es-ti-mates fo
-und, an-a-lyzes the strengths
- []
-
-[5]) [6]
 \openout2 = `chapLBD.aux'.
 
- (chapLBD.tex
-Chapter 2.
-[7
+
+(chapLBD.tex
+Chapter 1.
+<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>> [3
 
 
-
-
-] [8] [9] [10] (C:/repos/learn-doing/thesis/tables/sample_descriptive.txt)
-[11]
-<C:/repos/learn-doing/thesis/figures//diagram_experiences.png, id=54, 807.015pt
+] [4] [5] [6]
+(C:/repos/learn-doing/thesis/tables/sample_descriptive.txt) [7]
+<C:/repos/learn-doing/thesis/figures//diagram_experiences.png, id=42, 807.015pt
  x 380.622pt>
 File: C:/repos/learn-doing/thesis/figures//diagram_experiences.png Graphic file
  (type png)
@@ -774,7 +758,8 @@ File: C:/repos/learn-doing/thesis/figures//diagram_experiences.png Graphic file
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//diagram_experienc
 es.png  used on input line 119.
 (pdftex.def)             Requested size: 427.71591pt x 201.72868pt.
- (C:/repos/learn-doing/thesis/tables/table_slices_exp1.txt
+
+(C:/repos/learn-doing/thesis/tables/table_slices_exp1.txt
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -782,10 +767,10 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [12] [13 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>]
-[14] (C:/repos/learn-doing/thesis/tables/table_closewins_alt1_desc.txt)
-[15] (C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt)
-<C:/repos/learn-doing/thesis/figures//rankings_times.png, id=70, 469.755pt x 23
+) [8] [9 <C:/repos/learn-doing/thesis/figures//diagram_experiences.png>]
+[10] (C:/repos/learn-doing/thesis/tables/table_closewins_alt1_desc.txt)
+[11] (C:/repos/learn-doing/thesis/tables/table_closewins_alt2_desc.txt)
+<C:/repos/learn-doing/thesis/figures//rankings_times.png, id=57, 469.755pt x 23
 1.264pt>
 File: C:/repos/learn-doing/thesis/figures//rankings_times.png Graphic file (typ
 e png)
@@ -795,11 +780,11 @@ g  used on input line 170.
 (pdftex.def)             Requested size: 422.7756pt x 208.13567pt.
 
 
-LaTeX Warning: Reference `section: eloappendix' on page 16 undefined on input l
+LaTeX Warning: Reference `section: eloappendix' on page 12 undefined on input l
 ine 177.
 
-[16] [17 <C:/repos/learn-doing/thesis/figures//rankings_times.png>]
-<C:/repos/learn-doing/thesis/figures//plotwins_panel.png, id=78, 722.7pt x 542.
+[12] [13 <C:/repos/learn-doing/thesis/figures//rankings_times.png>]
+<C:/repos/learn-doing/thesis/figures//plotwins_panel.png, id=66, 722.7pt x 542.
 025pt>
 File: C:/repos/learn-doing/thesis/figures//plotwins_panel.png Graphic file (typ
 e png)
@@ -807,60 +792,63 @@ e png)
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotwins_panel.pn
 g  used on input line 198.
 (pdftex.def)             Requested size: 433.62334pt x 325.2175pt.
- [18]
-[19 <C:/repos/learn-doing/thesis/figures//plotwins_panel.png>]
+ [14]
+[15 <C:/repos/learn-doing/thesis/figures//plotwins_panel.png>]
 (C:/repos/learn-doing/thesis/tables/table_ols_exp1.txt)
-(C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt) [20
+(C:/repos/learn-doing/thesis/tables/table_ols_exp2.txt) [16
 
 ]
-<C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png, id=9
-3, 469.755pt x 231.264pt>
+<C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png, id=8
+1, 469.755pt x 231.264pt>
 File: C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png 
 Graphic file (type png)
 <use C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//comparison_consid
-ers_experience.png  used on input line 219.
+ers_experience.png  used on input line 220.
 (pdftex.def)             Requested size: 422.7756pt x 208.13567pt.
- [21
+ [17
 
- <C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png>]
-(C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt) [22]
-<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=101, 542.025
-pt x 231.264pt>
+] [18 <C:/repos/learn-doing/thesis/figures//comparison_considers_experience.png
+>]
+(C:/repos/learn-doing/thesis/tables/robust_bin_outcomes.txt)
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[19]
+<C:/repos/learn-doing/thesis/figures//robustness_threshold.png, id=93, 542.025p
+t x 231.264pt>
 File: C:/repos/learn-doing/thesis/figures//robustness_threshold.png Graphic fil
 e (type png)
 <use C:/repos/learn-doing/thesis/figures//robustness_threshold.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//robustness_thresh
-old.png  used on input line 269.
+old.png  used on input line 272.
 (pdftex.def)             Requested size: 406.51775pt x 173.44757pt.
- [23]
-(C:/repos/learn-doing/thesis/tables/robust_weightprice_outcomes.txt) [24 <C:/re
-pos/learn-doing/thesis/figures//robustness_threshold.png (PNG copy)>]
-<C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png, id=108, 650.43p
+ [20] (C:/repos/learn-doing/thesis/tables/robust_weightprice_outcomes.txt)
+[21 <C:/repos/learn-doing/thesis/figures//robustness_threshold.png (PNG copy)>]
+<C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png, id=100, 650.43p
 t x 397.485pt>
 File: C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png Graphic fil
 e (type png)
 <use C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_robustness_r
-ank.png  used on input line 289.
+ank.png  used on input line 292.
 (pdftex.def)             Requested size: 422.77449pt x 258.36218pt.
-
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [25] [26 <C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png>]
+) [22] [23 <C:/repos/learn-doing/thesis/figures//plot_robustness_rank.png>]
 \openout2 = `chapMechanisms.aux'.
 
 
 (chapMechanisms.tex
-Chapter 3.
-[27
+Chapter 2.
+[24
 
 
 
 
-] [28]
-<C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png, id=123, 433.62
+] [25]
+<C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png, id=115, 433.62
 pt x 252.945pt>
 File: C:/repos/learn-doing/thesis/figures//plot_bids_standarized.png Graphic fi
 le (type png)
@@ -868,9 +856,9 @@ le (type png)
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_bids_standar
 ized.png  used on input line 34.
 (pdftex.def)             Requested size: 303.53192pt x 177.06029pt.
- (C:/repos/learn-doing/thesis/tables/table_bid_sample.txt) [29 <C:/repos/learn-
-doing/thesis/figures//plot_bids_standarized.png>] [30]
-<C:/repos/learn-doing/thesis/figures//plotbids_panel.png, id=131, 650.43pt x 30
+ (C:/repos/learn-doing/thesis/tables/table_bid_sample.txt) [26 <C:/repos/learn-
+doing/thesis/figures//plot_bids_standarized.png>] [27]
+<C:/repos/learn-doing/thesis/figures//plotbids_panel.png, id=123, 650.43pt x 30
 7.1475pt>
 File: C:/repos/learn-doing/thesis/figures//plotbids_panel.png Graphic file (typ
 e png)
@@ -878,59 +866,60 @@ e png)
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plotbids_panel.pn
 g  used on input line 64.
 (pdftex.def)             Requested size: 422.77449pt x 199.6435pt.
- [31 <C:/repos/learn-doing/thesis/figures//plotbids_panel.png>]
-(C:/repos/learn-doing/thesis/tables/table_bids_results_1.txt) [32] [33]
-[34]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png, id=148, 867.24
+ [28]
+(C:/repos/learn-doing/thesis/tables/table_bids_results_1.txt) [29 <C:/repos/lea
+rn-doing/thesis/figures//plotbids_panel.png>] [30] [31] [32]
+<C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png, id=142, 867.24
 pt x 289.08pt>
 File: C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png Graphic fi
 le (type png)
 <use C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-ates.png  used on input line 97.
+ates.png  used on input line 101.
 (pdftex.def)             Requested size: 433.61894pt x 144.53964pt.
- [35 <C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>]
-[36] [37]
-<C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png, id=163, 650.
+ [33 <C:/repos/learn-doing/thesis/figures//plot_acceptance_rates.png>] [34] [35
+]
+<C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png, id=156, 650.
 43pt x 542.025pt>
 File: C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png Graphic 
 file (type png)
 <use C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png>
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//plot_acceptance_r
-esults.png  used on input line 136.
+esults.png  used on input line 140.
 (pdftex.def)             Requested size: 422.77449pt x 352.31207pt.
- (C:/repos/learn-doing/thesis/tables/table_acceptance_1.txt)) [38
 
- <C:/repos/learn-doing/thesis/figures//plot_acceptance_results.png>]
+(C:/repos/learn-doing/thesis/tables/table_acceptance_1.txt)) [36 <C:/repos/lear
+n-doing/thesis/figures//plot_acceptance_results.png>] [37]
 \openout2 = `chapApp.aux'.
 
  (chapApp.tex
 Appendix A.
 (C:/repos/learn-doing/thesis/tables/table_F_main_exp1.txt)
-(C:/repos/learn-doing/thesis/tables/table_F_main_exp2.txt) [39
+(C:/repos/learn-doing/thesis/tables/table_F_main_exp2.txt) [38
 
 
 
 
-] [40]
-(C:/repos/learn-doing/thesis/tables/sampleregion.txt) [41
+
+] [39]
+(C:/repos/learn-doing/thesis/tables/sampleregion.txt) [40
 
 ]
 (C:/repos/learn-doing/thesis/tables/topgov.txt)
-(C:/repos/learn-doing/thesis/tables/topfirms.txt) [42
+(C:/repos/learn-doing/thesis/tables/topfirms.txt) [41
 
 ]
-(C:/repos/learn-doing/thesis/tables/table_bids_help.txt) [43
+(C:/repos/learn-doing/thesis/tables/table_bids_help.txt) [42
 
-] [44] [45
+] [43] [44
 
 ]
 
-LaTeX Warning: Reference `eqn:ratingadjust' on page 46 undefined on input line 
+LaTeX Warning: Reference `eqn:ratingadjust' on page 45 undefined on input line 
 62.
 
-[46]
-<C:/repos/learn-doing/thesis/figures//rankings_nums.png, id=196, 469.755pt x 46
+[45]
+<C:/repos/learn-doing/thesis/figures//rankings_nums.png, id=193, 469.755pt x 46
 9.755pt>
 File: C:/repos/learn-doing/thesis/figures//rankings_nums.png Graphic file (type
  png)
@@ -938,20 +927,19 @@ File: C:/repos/learn-doing/thesis/figures//rankings_nums.png Graphic file (type
 Package pdftex.def Info: C:/repos/learn-doing/thesis/figures//rankings_nums.png
   used on input line 81.
 (pdftex.def)             Requested size: 422.7756pt x 422.7756pt.
- [47] [48 <C:/repos/learn-doing/thesis/figures//rankings_nums.png>]
+ [46] [47 <C:/repos/learn-doing/thesis/figures//rankings_nums.png>]
 (C:/repos/learn-doing/thesis/tables/rank_example_1.txt)
-(C:/repos/learn-doing/thesis/tables/rank_example_2.txt)) [49]
+(C:/repos/learn-doing/thesis/tables/rank_example_2.txt)) [48]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
-04.
+05.
 
 (C:\Program Files\MiKTeX\tex/latex/base\t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-) [50
+) [49
 
 
 
-] (main.aux (abstract.aux) (chapIntro.aux) (chapLBD.aux) (chapMechanisms.aux) (
-chapApp.aux))
+] (main.aux (abstract.aux) (chapLBD.aux) (chapMechanisms.aux) (chapApp.aux))
 
 LaTeX Warning: There were undefined references.
 
@@ -959,15 +947,15 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  )
-(\end occurred when \ifx on line 59 was incomplete) 
+(\end occurred when \ifx on line 60 was incomplete) 
 Here is how much of TeX's memory you used:
- 14322 strings out of 478826
- 260648 string characters out of 2857130
- 1006871 words of memory out of 3000000
- 31903 multiletter control sequences out of 15000+600000
+ 14309 strings out of 478826
+ 260368 string characters out of 2857130
+ 1002418 words of memory out of 3000000
+ 31897 multiletter control sequences out of 15000+600000
  420385 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,13n,117p,1945b,1506s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,13n,117p,1629b,1506s stack positions out of 5000i,500n,10000p,200000b,80000s
 {C:/Program Files/MiKTeX/fon
 ts/enc/dvips/cm-super/cm-super-t1.enc}{C:/Program Files/MiKTeX/fonts/enc/dvips/
 cm-super/cm-super-ts1.enc}<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/
@@ -992,9 +980,9 @@ ram Files/MiKTeX/fonts/type1/public/cm-super/sfrm1200.pfb><C:/Program Files/MiK
 TeX/fonts/type1/public/cm-super/sfti1095.pfb><C:/Program Files/MiKTeX/fonts/typ
 e1/public/cm-super/sfti1200.pfb><C:/Program Files/MiKTeX/fonts/type1/public/cm-
 super/sftt1200.pfb>
-Output written on main.pdf (50 pages, 2605013 bytes).
+Output written on main.pdf (49 pages, 2900177 bytes).
 PDF statistics:
- 297 PDF objects out of 1000 (max. 8388607)
+ 294 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  76 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -53,7 +53,7 @@ df.bids.means=df.bids%>%dplyr::group_by(exp)%>%summarise(std=sd(MCA_MPO,na.rm = 
 #df.bids.means.close=df.bids%>%dplyr::group_by(exp_close)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
  #                                                        n=length(exp))%>%mutate(std.error=std/sqrt(n))
 
-df.bids.means.closeranks=df.bids%>%filter(exp==exp_closerank)%>%dplyr::group_by(exp_closerank)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
+df.bids.means.closeranks=df.bids%>%filter(exp==exp_closerank&offers=1)%>%dplyr::group_by(exp_closerank)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
                                                                      n=length(exp))%>%mutate(std.error=std/sqrt(n))%>%filter(n>=10)
 
 ##Summarised close wins
@@ -210,6 +210,7 @@ merged.wins%>%group_by(q=ntile(probAc,5),indexp=(winspre>0))%>%summarise(n=lengt
   ungroup()%>%group_by(q)%>%mutate(perc=n/sum(n))%>%filter(indexp==TRUE)
 
 print('Quality section - lm')
+sd(merged.wins$probAc)
 
 lm.54<-lm(probAc~(winspre>0)+idperiodpost,data = merged.wins)
 robust.lm54<- vcovHC(lm.54, type = "HC1")%>%diag()%>%sqrt()

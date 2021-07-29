@@ -3,7 +3,7 @@
 \caption{\label{tab:robust_weightprice_outcomes}Robustness analysis for the price weight parameter in the IV Regression by price}
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tabular}[t]{cccccc}
+\begin{tabular}[t]{lccccc}
 \toprule
 Experience Computation & Functional Form & 50 & 60 & 70 & 80\\
 \midrule
@@ -12,5 +12,6 @@ Annualized & Linear & 0.024 (0.005) *** & 0.024 (0.006) *** & 0.017 (0.007) *** 
 Rolling & Binary Indicator & 0.063 (0.019) *** & 0.059 (0.024) ** & 0.028 (0.028) & 0.045 (0.04)\\
 Rolling & Linear & 0.007 (0.002) *** & 0.006 (0.003) ** & 0.003 (0.003) & 0.004 (0.004)\\
 \bottomrule
+\multicolumn{6}{l}{\rule{0pt}{1em}\textit{Note: } ***p<0.01,**p<0.05. Numeric columns show the weight required for the price parameter to be considered a close win.}\\
 \end{tabular}}
 \end{table}

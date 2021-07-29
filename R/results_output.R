@@ -150,29 +150,39 @@ dev.off()
 ## First computation of experience
 hausman.vector.1=list(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm.26)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
 robust.se=list(robust.lm4,robust.lm10,robust.lm25,robust.lm5,robust.lm11,robust.lm26)
+note.1="The regression analyzes the relationship between past experience (dependent var.) and future winning shares in the market (indep. var.).
+The winning share is contracts bid / contracts won in the next two years. Experience is contracts won in the past two years. 
+The instrument for panels 2,3,5 and 6 is a binary indicator for a closely won contract among the past contracts won. Robust (HC1) errors are on parethesis."
 regression.output.1=capture.output({stargazer(lm.4,lm.10, lm.25  ,lm.5, lm.11,lm.26, type = "latex",label = 'tab:table_exp_1', header = F,
                                               se = (robust.se),
-                                              omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+                                            model.names = F,
+                                              omit='idperiodpost',omit.stat = c( "f","adj.rsq","ser"),
                                               title="Regression for OLS and IV specifications with Experience computed in rolling 2-year periods",
-                                              dep.var.labels=c("Share of Contracts won in t"),
+                                              dep.var.labels=c("Share of Contracts won in t"),column.sep.width = '5pt',
                                               column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
                                               covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)'),
+                                              notes.append = F,
                                               add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 
-createStargazerTxt(regression.output.1,'table_ols_exp1.txt')
+createStargazerTxt(regression.output.1,'table_ols_exp1.txt',note=note.1)
 
 ## Second computation of experience
+note.2="The regression analyzes the relationship between past experience (dependent var.) and future winning shares in the market (indep. var.).
+The winning share is contracts bid / contracts won in the next two years. Experience is contracts won since the beggining of the sample, divided by number of years since the first win. 
+The instrument for panels 2,3,5 and 6 is a binary indicator for a closely won contract among the past contracts won. Robust (HC1) errors are on parethesis."
 hausman.vector.2=list(lm.16,lm.22, lm.27 , lm.17, lm.23,lm.28)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
 regression.output.2=capture.output({stargazer(lm.16,lm.22, lm.27 , lm.17, lm.23,lm.28, type = "latex",label = 'tab:table_exp_2', header = F,
                                               se = list(robust.lm16,robust.lm22, robust.lm27 , robust.lm17, robust.lm23,robust.lm28),
-                                              omit='idperiodpost',omit.stat = c( "f","adj.rsq"),
+                                              omit='idperiodpost',omit.stat = c( "f","adj.rsq","ser"),
                                               title="Regression for OLS and IV specifications with Experience computed as annualized cumulative experience",
                                               dep.var.labels=c("Share of Contracts won in t"),
+                                              column.sep.width = '5pt',
+                                              model.names = F,
                                               column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
                                               covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)'),
                                               add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
 
-createStargazerTxt(regression.output.2,'table_ols_exp2.txt')
+createStargazerTxt(regression.output.2,'table_ols_exp2.txt',note=note.2)
 
 #Plot
 x=seq(0,10,length.out = 1000)
@@ -196,10 +206,11 @@ dev.off()
 regression.F.main=capture.output({stargazer(lm.f.bin.price.exp1,lm.f.bin.rank.exp1,lm.f.cont.price.exp1,lm.f.cont.rank.exp1, type = "latex",label = 'tab:table_F_main_exp1', header = F,
                                               #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp1)),
                                               se = starprep(lm.f.bin.price.exp1,lm.f.bin.rank.exp1,lm.f.cont.price.exp1,lm.f.cont.rank.exp1,se_type = "HC1"),
-                                              omit='idperiodpost',omit.stat = c("adj.rsq"),
+                                              omit='idperiodpost',omit.stat = c("adj.rsq","ser"),
                                               title="Regressions for rank condition verification",
                                               dep.var.labels=c("Rolling Experience > 0","Rolling Experience"),
-                                            #column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
+                                            model.names=F,
+                                            column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
                                               covariate.labels=c("Close Experience > 0 (Price)","Close Experience (Price)",'Close Experience > 0 (Rank)','Close Experience (Rank)'),
                                               add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes')))})
 
@@ -208,10 +219,11 @@ createStargazerTxt(regression.F.main,'table_F_main_exp1.txt')
 regression.F.main.2=capture.output({stargazer(lm.f.bin.price.exp2,lm.f.bin.rank.exp2,lm.f.cont.price.exp2,lm.f.cont.rank.exp2, type = "latex",label = 'tab:table_F_main_exp2', header = F,
                                             #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp2)),
                                             se = starprep(lm.f.bin.price.exp2,lm.f.bin.rank.exp2,lm.f.cont.price.exp2,lm.f.cont.rank.exp2,se_type = "HC1"),
-                                            omit='idperiodpost',omit.stat = c("adj.rsq"),
+                                            omit='idperiodpost',omit.stat = c("adj.rsq","ser"),
                                             title="Regressions for rank condition verification",
+                                            model.names = F,
                                             dep.var.labels=c("Annualized Experience > 0","Annualized Experience"),
-                                            #column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
+                                            column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
                                             covariate.labels=c("Close Experience > 0 (Price)",'Close Experience > 0 (Rank)',"Close Experience (Price)",'Close Experience (Rank)'),
                                             add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes')))})
 
@@ -312,16 +324,16 @@ plot.robustness.prices.boxes
 dev.off()
 
 ######## Comparison types
-a=coeftest(lm.10,vcov = vcovHC(lm.10, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV - Price',Contracts='Does Not Consider Experience in Award Score')
-c=coeftest(lm.42,vcov = vcovHC(lm.42, type = "HC1"))%>%tidy()%>%mutate(Model='Binary Experience IV - Price',Contracts='Considers Experience in Award Score')
-b=coeftest(lm.11,vcov = vcovHC(lm.11, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV - Price',Contracts='Does Not Consider Experience in Award Score')
-d=coeftest(lm.43,vcov = vcovHC(lm.43, type = "HC1"))%>%tidy()%>%mutate(Model='Linear Experience IV - Price',Contracts='Considers Experience in Award Score')
+a=lm.10%>%createConf(.)%>%mutate(Model='Binary Experience IV - Price',Contracts='Does Not Consider Experience in Award Score')
+b=lm.11%>%createConf(.)%>%mutate(Model='Linear Experience IV - Price',Contracts='Does Not Consider Experience in Award Score')
+c=lm.42%>%createConf(.)%>%mutate(Model='Binary Experience IV - Price',Contracts='Considers Experience in Award Score')
+d=lm.43%>%createConf(.)%>%mutate(Model='Linear Experience IV - Price',Contracts='Considers Experience in Award Score')
 comparison.types=rbind(a,b,c,d)%>%filter(term%in%c('winspre > 0TRUE','winspre'))
 comparison.types
 
 plot.compexp.1<-ggplot(comparison.types, aes(x=(Contracts),y=estimate))+
   geom_point(color='red')+facet_wrap(~Model,nrow = 1)+ylim(0,0.16)+
-  geom_errorbar(aes(ymin=estimate+2*std.error, ymax=estimate-2*std.error,width=0.1))+
+  geom_errorbar(aes(ymin=lower95, ymax=upper95,width=0.1))+
   theme_bw()+xlab('Points Awarded for win')+ylab('IV estimate')+scale_y_continuous(breaks = seq(0,.16,by=0.01))+
   xlab('')+theme(axis.text.x = element_text(size=9,color = 'black'),strip.text.x =   element_text(size=12),panel.grid.minor = element_blank())+
   scale_x_discrete(labels = function(x) str_wrap(x, width = 15))
@@ -395,21 +407,24 @@ dev.off()
 
 ## Bid Regressions
 hausman.vector.bids_2=list(lm.34,lm.36, lm.35 , lm.37)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
+note.bids="The regression analyzes the relationship between past experience (dependent var.) and standarized bid amount (indep. var.). The 
+standarized bid amount is the monetary bid amount divided by the government estimate of the cost of the project. We include an indicator IndFirstYear for firms that are 
+bidding on their first year in the market. Robust standard errors are on parenthesis."
 
 regression.output.bids_2=capture.output({stargazer(lm.34,lm.36, lm.35 , lm.37, type = "latex",label = 'tab:table_bids_1', header = F,
                                               se = list(robust.lm34,robust.lm36, robust.lm35 , robust.lm37),
-                                              omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq"),
+                                              omit=c('idperiodpost','RegionUnidad','year'),omit.stat = c( "f","adj.rsq",'ser'),
                                               title="Regression of bid amounts to experience",
                                               dep.var.labels=c("Standarized Bid"),
                                               #column.labels = c("OLS", "OLS",'IV',"IV"),
                                               covariate.labels=c("Experience in (t-1) (Binary)",'Experience in (t-1) (Linear)','IndFirstYear'),
                                               add.lines = list(c("Fixed effects By Period and Region", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
-createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt')
+createStargazerTxt(regression.output.bids_2,'table_bids_results_1.txt',note = note.bids)
 
 ## Bid Helps to Win
 regression.output.bids_Helps=capture.output({stargazer(lm.bids.correlation.1, type = "latex",label = 'tab:table_bids_help', header = F,
                                                    #se = list(robust.lm.bids.correlation.1,NULL),
-                                                   omit=c('RegionUnidad','year','Codigo'),omit.stat = c( "f","adj.rsq"),
+                                                   omit=c('RegionUnidad','year','Codigo'),omit.stat = c("adj.rsq",'ser'),
                                                    dep.var.labels=c("Indicator of Contract Won"),
                                                    #column.labels = c("OLS", "OLS",'IV',"IV"),
                                                    covariate.labels=c("Standarized Bid",'Number of firms in Auction','IndFirstYear'),
@@ -475,17 +490,20 @@ dev.off()
 
 ## Quality Regressions
 hausman.vector.acceptance=list(lm.54,lm.56,lm.62,lm.55,lm.57,lm.63)%>%map_dfr(~(glance(.x,diagnostics=TRUE)))%>%pull((16))%>%round(2)%>%c('Wu-Hausman p-value',.)
-
+note.acceptance="Results of a Regression of proposal acceptance on experience. The independent variable is contracts won in the previous two years(rolling experience). The 
+dependent variable is the rate of proposal acceptance over the next two years, i.e. (proposals accepted by the government unit in charge of the auction) / (proposals sent by the firm) . The proposals are accepted or rejected at the first stage
+of the awarding decision, where formal and/or technical requirements are checked."
   regression.output.acceptance=capture.output({stargazer(lm.54,lm.56,lm.62, lm.55,lm.57,lm.63 , type = "latex",label = 'tab:table_acceptance_1', header = F,
                                                  se = list(robust.lm54,robust.lm56,robust.lm62, robust.lm55,robust.lm57,robust.lm63),
-                                                 omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq"),
+                                                 omit=c('idperiodpost','RegionUnidad','year','NombreOrganismo'),omit.stat = c( "f","adj.rsq",'ser'),
                                                  title="Regression of proposal acceptance on experience",
                                                  dep.var.labels=c("Proposal Acceptance Rate"),
+                                                 model.names=F,
                                                  column.labels = c("OLS","IV (by price)",'IV (by rank)',"OLS","IV (by price)",'IV (by rank)'),
                                                  covariate.labels=c("Experience in (t-1) > 0 (Binary)",'Experience in (t-1) (Continuous)'),
                                                  #c("Fixed effects By Government Body", "Yes", "Yes",'No','No')))})
                                                  add.lines = list(c("Fixed effects By Period", "Yes", "Yes",'Yes','Yes','Yes','Yes')))})
-createStargazerTxt(regression.output.acceptance,'table_acceptance_1.txt')
+createStargazerTxt(regression.output.acceptance,'table_acceptance_1.txt',note.acceptance)
 
 
 ###########################################################################
@@ -562,9 +580,20 @@ colnames(table_robustness_period_o) <-
     '3 year outcomes'
   )
 
-table_robustness_period_o = create_kable(table_robustness_period_o,
-                                         caption = 'Robustness analysis for the coefficient on Experience (Rolling) by length of outcome computation period',
-                                         label = 'robust_bin_outcomes')
+
+
+
+table_robustness_period_o = kable(
+  table_robustness_period_o, "latex",
+  booktabs = T,
+  label='robust_bin_outcomes',
+  linesep = "",
+  align = c('l',rep('c', ncol(table_robustness_period_o)-1)),
+  caption = 'Robustness analysis for the coefficient on Experience (Rolling) by length of outcome computation period',
+)  %>% 
+  #column_spec(1, width = "2.5in") %>%
+  kable_styling(latex_options = c("hold_position","scale_down"))%>%footnote(general='***p<0.01,**p<0.05', footnote_as_chunk = T)
+
 table_robustness_period_o %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_bin_outcomes.txt")
 
 ########ROBUSTENSSS.2 weight. 
@@ -574,7 +603,24 @@ table_robustness_weightprice_o=table_robustness_weightprice%>%mutate(estimate=ro
 
 
 colnames(table_robustness_weightprice_o)[1:2]<-c('Experience Computation','Functional Form')
-table_robustness_weightprice_o=create_kable(table_robustness_weightprice_o,caption = 'Robustness analysis for the price weight parameter in the IV Regression by price',label = 'robust_weightprice_outcomes')
+#table_robustness_weightprice_o=create_kable(table_robustness_weightprice_o,caption = 'Robustness analysis for the price weight parameter in the IV Regression by price',label = 'robust_weightprice_outcomes')
+
+table_robustness_weightprice_o = kable(
+  table_robustness_weightprice_o, "latex",
+  booktabs = T,
+  label='robust_weightprice_outcomes',
+  linesep = "",
+  align = c('l',rep('c', ncol(table_robustness_weightprice_o)-1)),
+  caption = 'Robustness analysis for the price weight parameter in the IV Regression by price',
+)  %>% 
+  #column_spec(1, width = "2.5in") %>%
+  kable_styling(latex_options = c("hold_position","scale_down"))%>%footnote(general='***p<0.01,**p<0.05. Numeric columns show the weight required for the price item to be considered a close win.' , footnote_as_chunk = T)
+
+
+
+
+
+
 table_robustness_weightprice_o%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\robust_weightprice_outcomes.txt")
 
 #############ROB RANK

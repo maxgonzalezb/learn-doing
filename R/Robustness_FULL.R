@@ -310,7 +310,7 @@ table_robustness_period.linear = rbind(res.ols,
 table_robustness_period = rbind(table_robustness_period.binary,
                                 table_robustness_period.linear)
 
-saveRDS(object=table_robustness_period, file = 'C:\\repos\\learn-doing\\data\\table_robustness_period_new.rds')
+#saveRDS(object=table_robustness_period, file = 'C:\\repos\\learn-doing\\data\\table_robustness_period_new.rds')
 
 
 
@@ -346,8 +346,10 @@ saveRDS(robustness_close_wins.bin,file='C:\\repos\\learn-doing\\data\\robustness
 thresholds=c(0.5,0.6,0.65,0.7,0.8)*100
 res.iv.price=thresholds%>%map_dfr(function(x)  createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,filterReqExp = T,weightPrice=x,thresholdClose = 0.005)%>%
                                     ivreg(data= .,formula=(probWinpost~(winspre>0)+idperiodpost|(winspre_close>0)+idperiodpost)) %>%
-                                    coeftest(vcov = vcovHC(., type = "HC1")) %>%
-                                    tidy() %>% filter(term == 'winspre > 0TRUE')%>%mutate(outcome.per=x, type='IV-Price',exp='Rolling')) 
+                                    #coeftest(vcov = vcovHC(., type = "HC1")) %>%
+                                    #tidy() %>% 
+                                    createConf(.)%>%
+                                    filter(term == 'winspre > 0TRUE')%>%mutate(outcome.per=x, type='IV-Price',exp='Rolling')) 
 
 res.iv.price2=thresholds%>%map_dfr(function(x) createAnnualizedWins(df,start = start, split1 =split1,split2=split2,filterReqExp = T, weightPrice=x,thresholdClose = 0.005)%>%
                                      ivreg(data= .,formula=(probWinpost~(annualwinspre>0)+idperiodpost|(annualwinspre_close>0)+idperiodpost)) %>%
@@ -459,8 +461,10 @@ for (i in seq_len(nrow(parameters.checks))) {
             (winspre_closerank)  + idperiodpost,
           data = y
         ) %>%
-          coeftest(vcov = vcovHC(., type = "HC1")) %>%
-          tidy() %>% filter(term == 'winspre') %>% mutate(
+          createConf(.)%>%
+          #coeftest(vcov = vcovHC(., type = "HC1")) %>%
+          #tidy() %>% 
+          filter(term == 'winspre') %>% mutate(
             threshold = x,
             winPoints = winPoints,
             losePoints = losePoints

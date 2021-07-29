@@ -633,9 +633,6 @@ INPUT main.aux
 INPUT .\abstract.aux
 INPUT abstract.aux
 INPUT abstract.aux
-INPUT .\chapIntro.aux
-INPUT chapIntro.aux
-INPUT chapIntro.aux
 INPUT .\chapLBD.aux
 INPUT chapLBD.aux
 INPUT chapLBD.aux
@@ -724,17 +721,19 @@ INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1200.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1000.tfm
 INPUT C:\ProgramData\MiKTeX\pdftex\config\pdftex.map
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1095.tfm
-INPUT .\chapIntro.tex
-INPUT .\chapIntro.tex
-INPUT .\chapIntro.tex
-OUTPUT chapIntro.aux
-INPUT .\chapIntro.tex
-INPUT .\chapIntro.tex
-INPUT .\chapIntro.tex
-INPUT chapIntro.tex
-INPUT .\chapIntro.tex
-INPUT chapIntro.tex
+INPUT .\chapLBD.tex
+INPUT .\chapLBD.tex
+INPUT .\chapLBD.tex
+OUTPUT chapLBD.aux
+INPUT .\chapLBD.tex
+INPUT .\chapLBD.tex
+INPUT .\chapLBD.tex
+INPUT chapLBD.tex
+INPUT .\chapLBD.tex
+INPUT chapLBD.tex
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx2074.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1728.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1728.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
 INPUT C:\Program Files\MiKTeX\tex\latex\cmap\ot1.cmap
 INPUT C:\Program Files\MiKTeX\tex\latex\cmap\ot1.cmap
@@ -758,18 +757,6 @@ INPUT C:\Program Files\MiKTeX\tex\latex\mmap\omx.cmap
 INPUT C:\Program Files\MiKTeX\tex\latex\mmap\omx.cmap
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
-INPUT .\chapLBD.tex
-INPUT .\chapLBD.tex
-INPUT .\chapLBD.tex
-OUTPUT chapLBD.aux
-INPUT .\chapLBD.tex
-INPUT .\chapLBD.tex
-INPUT .\chapLBD.tex
-INPUT chapLBD.tex
-INPUT .\chapLBD.tex
-INPUT chapLBD.tex
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1728.tfm
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1728.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecti1200.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm1440.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecbx1440.tfm
@@ -785,30 +772,30 @@ INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
 INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
 INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
 INPUT C:\repos\learn-doing\thesis\figures\\diagram_experiences.png
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
+INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
+INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
+INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
+INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
+INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
+INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp1.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_slices_exp2.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt1_desc.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
-INPUT C:\repos\learn-doing\thesis\tables\table_closewins_alt2_desc.txt
-INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
-INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
-INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
-INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
-INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
-INPUT C:\repos\learn-doing\thesis\figures\\rankings_times.png
 INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
 INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
 INPUT C:\repos\learn-doing\thesis\figures\\plotwins_panel.png
@@ -820,6 +807,7 @@ INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp1.txt
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm0800.tfm
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_ols_exp2.txt
@@ -885,7 +873,6 @@ INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
 INPUT C:\repos\learn-doing\thesis\tables\table_bids_results_1.txt
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm0800.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecrm0700.tfm
 INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
 INPUT C:\repos\learn-doing\thesis\figures\\plot_acceptance_rates.png
@@ -969,9 +956,6 @@ INPUT main.aux
 INPUT .\abstract.aux
 INPUT abstract.aux
 INPUT abstract.aux
-INPUT .\chapIntro.aux
-INPUT chapIntro.aux
-INPUT chapIntro.aux
 INPUT .\chapLBD.aux
 INPUT chapLBD.aux
 INPUT chapLBD.aux

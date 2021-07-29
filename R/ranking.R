@@ -21,7 +21,7 @@ print(paste0(
   sum(number.close$isCloseRanking, na.rm = T) / nrow(number.close),
   ' total close conctracts by ranking'
 ))
-
+dev.off()
 png(
   filename = "C:\\repos\\learn-doing\\thesis\\figures\\rankings_times.png",
   width = 6.5,
