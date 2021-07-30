@@ -158,6 +158,10 @@ lm.f.cont.price.exp1 <- lm(winspre ~ (winspre_close>0)+idperiodpost, data = merg
 robust.lm.f.bin.price.exp1<- vcovHC(lm.f.bin.price.exp1, type = "HC1")%>%diag()%>%sqrt()
 robust.lm.f.cont.price.exp1<- vcovHC(lm.f.cont.price.exp1, type = "HC1")%>%diag()%>%sqrt()
 
+### Reduced form
+#formula=c('probWinpost ~ (winspre_close > 0)+idperiodpost','probWinpost ~ (winspre_close > 0)+idperiodpost'9
+rf.price.exp1=lm(probWinpost ~ (winspre_close > 0)+idperiodpost,data=merged.wins)%>%createConf(.)%>%filter(term=='winspre_close > 0TRUE')%>%mutate(Experience='Rolling Experience',IV='Price')
+
 ## Percentiles of weight
 quantile((df%>%group_by(Codigo)%>%slice_head(n=1))$percPrice,probs = c(0.75,0.8),na.rm=T)
 # Regression Analysis
@@ -352,7 +356,8 @@ lm.f.cont.price.exp2 <- lm(annualwinspre ~ (annualwinspre_close>0)+idperiodpost,
 robust.lm.f.bin.price.exp2<- vcovHC(lm.f.bin.price.exp2, type = "HC1")%>%diag()%>%sqrt()
 robust.lm.f.cont.price.exp2<- vcovHC(lm.f.cont.price.exp2, type = "HC1")%>%diag()%>%sqrt()
 
-
+### Reduced Form
+rf.price.exp2=lm(probWinpost ~ (annualwinspre_close > 0)+idperiodpost,data=merged.wins)%>%createConf(.)%>%filter(term=='annualwinspre_close > 0TRUE')%>%mutate(Experience='Annualized Experience',IV='Price')
 
 ##16
 lm.16<-lm(probWinpost~(annualwinspre>0)+idperiodpost,data = merged.wins)

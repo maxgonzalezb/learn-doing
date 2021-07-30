@@ -21,3 +21,23 @@ source('C:\\repos\\learn-doing\\R\\results_output.R')
 #library(Rcpp)
 #library(estimatr)
 #source('C:\\repos\\learn-doing\\R\\Robustness_FULL.R')
+
+
+
+
+restricted=merged.wins%>%filter(winspre_close==winspre)
+table(restricted$winspre)
+lm.res <-
+  ivreg(probWinpost ~ (winspre ) + idperiodpost |
+          (winspre_close > 0) + idperiodpost,
+  
+              data = restricted)
+lm.res.1 <-
+  ivreg(winspr ~ (winspre > 0) + idperiodpost |
+          (winspre_close > 0) + idperiodpost,
+        data = restricted)
+
+
+
+robust.lm10 <- vcovHC(lm.10, type = "HC1") %>% diag() %>% sqrt()
+summary(lm.res,diagnostics = TRUE)

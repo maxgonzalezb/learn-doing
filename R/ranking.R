@@ -22,20 +22,14 @@ print(paste0(
   ' total close conctracts by ranking'
 ))
 
-png(
-  filename = "C:\\repos\\learn-doing\\thesis\\figures\\rankings_times_2.png",
-  width = 6.5,
-  height = 3.2,
-  units = "in",
-  res = 1000
-)
-ggplot(df.ranked %>% filter(year %in% c(2010, 2012, 2014, 2016, 2018, 2020)), aes(x =
+
+plot.ranked.evolution=ggplot(df.ranked %>% filter(year %in% c(2010, 2012, 2014, 2016, 2018, 2020)), aes(x =
                                                                                     rank)) + geom_histogram(fill = 'steelblue', color = 'black')  +
   facet_wrap( ~ year, ncol = 3, nrow = 2) + theme_bw() +
   xlab('Rank') + ylab('Count') + theme(panel.grid.major = element_blank(),
                                        panel.grid.minor = element_blank())+
   xlim(1000, 2000)
-dev.off()
+
 
 #df.ranked = df.ranked %>% left_join(listaContractExp, by = c('CodigoExterno' =
                                                                #'id'))
@@ -155,6 +149,8 @@ lm.f.cont.rank.exp1 <- lm(winspre ~ (winspre_closerank>0)+idperiodpost, data = m
 robust.lm.f.bin.rank.exp1<- vcovHC(lm.f.bin.rank.exp1, type = "HC1")%>%diag()%>%sqrt()
 robust.lm.f.cont.rank.exp1<- vcovHC(lm.f.cont.rank.exp1, type = "HC1")%>%diag()%>%sqrt()
 
+##RF
+rf.rank.exp1=lm(probWinpost ~ (winspre_closerank > 0)+idperiodpost,data=merged.wins)%>%createConf(.)%>%filter(term=='winspre_closerank > 0TRUE')%>%mutate(Experience='Rolling Experience',IV='Rank')
 
 
 ## Create the models with iv
@@ -207,6 +203,10 @@ robust.lm.f.bin.rank.exp2<- vcovHC(lm.f.bin.rank.exp2, type = "HC1")%>%diag()%>%
 robust.lm.f.cont.rank.exp2<- vcovHC(lm.f.cont.rank.exp2, type = "HC1")%>%diag()%>%sqrt()
 
 coeftest(lm.f.cont.rank.exp2,vcov = vcovHC(lm.f.cont.rank.exp2, type = "HC1"))
+
+##Rank
+rf.rank.exp2=lm(probWinpost ~ (annualwinspre_closerank > 0)+idperiodpost,data=merged.wins)%>%createConf(.)%>%filter(term=='annualwinspre_closerank > 0TRUE')%>%mutate(Experience='Annualized Experience',IV='Rank')
+
 
 ## Create the models with iv
 lm.27 <-

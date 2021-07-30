@@ -165,10 +165,6 @@ plot.accepted.rates=ggplot(accepted.rates,aes(x=AcceptanceRate))+geom_histogram(
 plot.accepted.rates.3=ggplot(accepted.rates.3,aes(x=AcceptanceRate))+geom_histogram(binwidth = 0.1,fill='steelblue',color='black')+theme_bw()+xlab('Acceptance Rate')+ylab('Firm Count')+ggtitle('Histogram of proposal acceptance rate, firms with 3+ proposals')
 plot.accepted.rates.10=ggplot(accepted.rates.3%>%filter(submitted>=10),aes(x=AcceptanceRate))+geom_histogram(binwidth = 0.1,fill='steelblue',color='black')+theme_bw()+xlab('Acceptance Rate')+ylab('Firm Count')
 
-plot.acc.rates.all=plot_grid(plot.accepted.rates,plot.accepted.rates.3)
-png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_rates.png",width = 12, height = 4.0,units = "in",res=1000)
-plot.acc.rates.all
-dev.off()
 
 ## Results
 

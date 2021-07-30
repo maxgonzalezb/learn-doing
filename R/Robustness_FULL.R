@@ -324,10 +324,29 @@ close_wins_vector=c(thresholdClose=seq(0.001,0.015,by = 0.002))%>%as.vector()
 start=0
 split1=2
 split2=2
-robustness_close_wins.lin=close_wins_vector%>%map_dfr(function(x) (createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2,thresholdClose = x,filterReqExp = T )%>%
-                                                                     ivreg(data= .,formula=(probWinpost~(winspre)+idperiodpost|(winspre_close>0)+idperiodpost))%>%
-                                                                     createConf(.)%>%
-                                                                     filter(term=='winspre')%>%mutate(thresholdClose=x)))%>%mutate(model='Linear Experience')
+robustness_close_wins.lin = close_wins_vector %>% map_dfr(
+  function(x)
+    (
+      createMultiPeriodDataset(
+        df,
+        start = start,
+        split1 = split1,
+        split2 = split2,
+        thresholdClose = x,
+        filterReqExp = T
+      ) %>%
+        ivreg(
+          data = .,
+          formula = (
+            probWinpost ~ (winspre) + idperiodpost |
+              (winspre_close > 0) + idperiodpost
+          )
+        ) %>%
+        createConf(.) %>%
+        filter(term ==
+                 'winspre') %>% mutate(thresholdClose = x)
+    )
+) %>% mutate(model = 'Linear Experience')
 
 start=0
 split1=2

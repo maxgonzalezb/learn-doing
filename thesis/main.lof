@@ -8,36 +8,36 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4-1}{\ignorespaces \small Types of factors in the awarding criteria.\relax }}{27}{}%
+\contentsline {figure}{\numberline {4-1}{\ignorespaces \small Types of factors in the awarding criteria.\relax }}{25}{}%
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5-1}{\ignorespaces Example computation of slice-firm dataset, employing two-year fixed periods of past experience (A), and cumulative yearly experience (B).\relax }}{34}{}%
+\contentsline {figure}{\numberline {5-1}{\ignorespaces Example computation of slice-firm dataset, employing two-year fixed periods of past experience (A), and cumulative yearly experience (B).\relax }}{32}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5-2}{\ignorespaces Evolution of ranks by selected years\relax }}{37}{}%
+\contentsline {figure}{\numberline {5-2}{\ignorespaces Evolution of ranks by selected years\relax }}{35}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5-3}{\ignorespaces Relationship between contracts won on $t-1$ and mean winning probability across contractors in $t$.\relax }}{40}{}%
+\contentsline {figure}{\numberline {5-3}{\ignorespaces Relationship between contracts won on $t-1$ and mean winning probability across contractors in $t$.\relax }}{38}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5-4}{\ignorespaces Comparison between estimates obtained in contracts with and without experience in the awarding criteria employed by the government\relax }}{42}{}%
+\contentsline {figure}{\numberline {5-4}{\ignorespaces Comparison between estimates obtained in contracts with and without experience in the awarding criteria employed by the government\relax }}{40}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5-5}{\ignorespaces Robustness analysis for threshold of close wins\relax }}{45}{}%
+\contentsline {figure}{\numberline {5-5}{\ignorespaces Robustness analysis for threshold of close wins\relax }}{43}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5-6}{\ignorespaces Robustness analysis for parameters in the IV-Rank strategy\relax }}{47}{}%
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {6-1}{\ignorespaces Histogram of standarized bids\relax }}{50}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {6-2}{\ignorespaces Relationship between experience and standardized bid amounts\relax }}{52}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {6-3}{\ignorespaces Histograms of proposal acceptance rate by firms in the dataset\relax }}{55}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {6-4}{\ignorespaces Acceptance rate for proposals sent by firms to auctions for public construction projects.\relax }}{58}{}%
+\contentsline {figure}{\numberline {5-6}{\ignorespaces Robustness analysis for parameters in the IV-Rank strategy\relax }}{45}{}%
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6-1}{\ignorespaces Histogram of standarized bids\relax }}{48}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6-2}{\ignorespaces Relationship between experience and standardized bid amounts\relax }}{50}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6-3}{\ignorespaces Histograms of proposal acceptance rate by firms in the dataset\relax }}{53}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6-4}{\ignorespaces Acceptance rate for proposals sent by firms to auctions for public construction projects.\relax }}{56}{}%
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {A-1}{\ignorespaces Rank progression over firm's bidding history \footnotesize \underline {Note}: each panel contains the firms bidding for their $i$-th contract. The graph only displays the ranks for the first 10 bidding events. Ranks displayed are ranks $previous$ to the contract, i.e. they are not adjusted by the outcome of the i-th bidding event.\relax }}{77}{}%
+\contentsline {figure}{\numberline {A-1}{\ignorespaces Rank progression over firm's bidding history \footnotesize \underline {Note}: each panel contains the firms bidding for their $i$-th contract. The graph only displays the ranks for the first 10 bidding events. Ranks displayed are ranks $previous$ to the contract, i.e. they are not adjusted by the outcome of the i-th bidding event.\relax }}{75}{}%

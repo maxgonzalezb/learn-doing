@@ -52,6 +52,8 @@ table.slices.exp2%>%cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table
 ###########################################################################
 ## Main results
 ###########################################################################
+
+
 top.limit=0.6
 
 # First Measure Experience
@@ -142,6 +144,23 @@ plot.results.graphic=cowplot::plot_grid(title.exp1,row.1,title.exp2,row.2,
 png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plotwins_panel.png",width = 10, height = 7.5,units = "in",res=1000)
 plot.results.graphic
 dev.off()
+
+###Others
+png(
+  filename = "C:\\repos\\learn-doing\\thesis\\figures\\rankings_times_2.png",
+  width = 6.5,
+  height = 3.2,
+  units = "in",
+  res = 1000
+)
+plot.ranked.evolution
+dev.off()
+
+######################
+## Reduced from
+######################
+all.rf=rbind(rf.price.exp1,rf.price.exp2,rf.rank.exp1,rf.rank.exp2)
+
 
 #####################
 # LM OUTPUT
@@ -477,6 +496,10 @@ createStargazerTxt(regression.output.bids_Helps,'table_bids_help.txt')
 
 ######################## Quality
 ## Quality plot results
+plot.acc.rates.all=plot_grid(plot.accepted.rates,plot.accepted.rates.3)
+png(filename="C:\\repos\\learn-doing\\thesis\\figures\\plot_acceptance_rates_2.png",width = 12, height = 4.0,units = "in",res=1000)
+plot.acc.rates.all
+dev.off()
 
 plot.quality.exp=ggplot(df.quality.plot,aes(x=exp,y=ac.rate.mean))+geom_point(alpha=1,size=2,color='red')+xlim(0,10)+
   geom_errorbar(aes(ymin=ac.rate.mean+2*std.error, ymax=ac.rate.mean-2*std.error,width=0.1))+

@@ -8,41 +8,41 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4.1}{\ignorespaces Government Bodies Descriptive Statistics\relax }}{24}{}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Government Bodies Descriptive Statistics\relax }}{22}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4.2}{\ignorespaces Types of Government Bodies Developing contracts\relax }}{24}{}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Types of Government Bodies Developing contracts\relax }}{22}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4.3}{\ignorespaces Sample Descriptive Statistics\relax }}{25}{}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Sample Descriptive Statistics\relax }}{23}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4.4}{\ignorespaces Number of firms and contract per sample year\relax }}{25}{}%
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.1}{\ignorespaces Sample Descriptive Statistics\relax }}{32}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.2}{\ignorespaces Analysis dataset characteristics for experience computed in rolling periods of two years\relax }}{34}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.3}{\ignorespaces Analysis dataset characteristics for experience computed as cumulative annualized \relax }}{34}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.4}{\ignorespaces Comparison between close and non-close wins, by price\relax }}{36}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.5}{\ignorespaces Comparison between close and non-close wins\relax }}{37}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.6}{\ignorespaces Regression for OLS and IV specifications with Experience computed in rolling 2-year periods\relax }}{41}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.7}{\ignorespaces Regression for OLS and IV specifications with Experience computed as annualized cumulative experience\relax }}{41}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.8}{\ignorespaces Robustness analysis for the coefficient on Experience (Rolling) by length of outcome computation period\relax }}{44}{}%
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {5.9}{\ignorespaces Robustness analysis for the price weight parameter in the IV Regression by price\relax }}{45}{}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Number of firms and contract per sample year\relax }}{23}{}%
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {6.1}{\ignorespaces Sample descriptive statistics for bid analysis\relax }}{51}{}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Sample Descriptive Statistics\relax }}{30}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {6.2}{\ignorespaces Regression of bid amounts to experience\relax }}{53}{}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Analysis dataset characteristics for experience computed in rolling periods of two years\relax }}{32}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {6.3}{\ignorespaces Regression of proposal acceptance on experience\relax }}{58}{}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Analysis dataset characteristics for experience computed as cumulative annualized \relax }}{32}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {5.4}{\ignorespaces Comparison between close and non-close wins, by price\relax }}{34}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {5.5}{\ignorespaces Comparison between close and non-close wins\relax }}{35}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {5.6}{\ignorespaces Regression for OLS and IV specifications with Experience computed in rolling 2-year periods\relax }}{39}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {5.7}{\ignorespaces Regression for OLS and IV specifications with Experience computed as annualized cumulative experience\relax }}{39}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {5.8}{\ignorespaces Robustness analysis for the coefficient on Experience (Rolling) by length of outcome computation period\relax }}{42}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {5.9}{\ignorespaces Robustness analysis for the price weight parameter in the IV Regression by price\relax }}{43}{}%
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {6.1}{\ignorespaces Sample descriptive statistics for bid analysis\relax }}{49}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {6.2}{\ignorespaces Regression of bid amounts to experience\relax }}{51}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {6.3}{\ignorespaces Regression of proposal acceptance on experience\relax }}{56}{}%
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
@@ -50,22 +50,22 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.1}{\ignorespaces First stage regression, rolling experience\relax }}{68}{}%
+\contentsline {table}{\numberline {A.1}{\ignorespaces First stage regression, rolling experience\relax }}{66}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.2}{\ignorespaces First stage regression, annualized experience\relax }}{68}{}%
+\contentsline {table}{\numberline {A.2}{\ignorespaces First stage regression, annualized experience\relax }}{66}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.3}{\ignorespaces First stage regression, rolling experience (bid section)\relax }}{69}{}%
+\contentsline {table}{\numberline {A.3}{\ignorespaces First stage regression, rolling experience (bid section)\relax }}{67}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.4}{\ignorespaces First stage regression, rolling experience (quality section)\relax }}{69}{}%
+\contentsline {table}{\numberline {A.4}{\ignorespaces First stage regression, rolling experience (quality section)\relax }}{67}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.5}{\ignorespaces Sample coverage by Region\relax }}{70}{}%
+\contentsline {table}{\numberline {A.5}{\ignorespaces Sample coverage by Region\relax }}{68}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.6}{\ignorespaces Top Gov.Units\relax }}{71}{}%
+\contentsline {table}{\numberline {A.6}{\ignorespaces Top Gov.Units\relax }}{69}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.7}{\ignorespaces Top Firms\relax }}{71}{}%
+\contentsline {table}{\numberline {A.7}{\ignorespaces Top Firms\relax }}{69}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.8}{\ignorespaces \relax }}{73}{}%
+\contentsline {table}{\numberline {A.8}{\ignorespaces \relax }}{71}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.9}{\ignorespaces Evolution of Firm A\relax }}{78}{}%
+\contentsline {table}{\numberline {A.9}{\ignorespaces Evolution of Firm A\relax }}{76}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {A.10}{\ignorespaces Evolution of Firm B\relax }}{78}{}%
+\contentsline {table}{\numberline {A.10}{\ignorespaces Evolution of Firm B\relax }}{76}{}%
