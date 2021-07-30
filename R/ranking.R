@@ -21,9 +21,9 @@ print(paste0(
   sum(number.close$isCloseRanking, na.rm = T) / nrow(number.close),
   ' total close conctracts by ranking'
 ))
-dev.off()
+
 png(
-  filename = "C:\\repos\\learn-doing\\thesis\\figures\\rankings_times.png",
+  filename = "C:\\repos\\learn-doing\\thesis\\figures\\rankings_times_2.png",
   width = 6.5,
   height = 3.2,
   units = "in",
@@ -114,7 +114,6 @@ chose.evol2 =  exploration.ranks %>% filter(NombreProveedor == 'Inmobiliaria Fen
 # Quimco          
 #Mana Tazo Pascua #fernando lopez
 #76.193.599-2"
-chose.evol2
 
 ## Study distribution rankings across life
 exploration.ranks.nums=df%>%group_by(RutProveedor)%>%arrange(FechaInicio)%>%mutate(num=seq_len(length(Codigo)))
@@ -151,10 +150,12 @@ merged.wins.close.rank.means.exp1=merged.wins.close.rank.exp1%>%group_by(winspre
 ###Create F-Statistics
 merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(winspre>0))
 lm.f.bin.rank.exp1 <- lm(indWinsPre ~ (winspre_closerank > 0)+idperiodpost, data = merged.wins)
-lm.f.cont.rank.exp1 <- lm(winspre ~ (winspre_closerank)+idperiodpost, data = merged.wins)
+lm.f.cont.rank.exp1 <- lm(winspre ~ (winspre_closerank>0)+idperiodpost, data = merged.wins)
 
-summary(lm.f.bin.rank.exp1)
-summary(lm.f.cont.rank.exp1)
+robust.lm.f.bin.rank.exp1<- vcovHC(lm.f.bin.rank.exp1, type = "HC1")%>%diag()%>%sqrt()
+robust.lm.f.cont.rank.exp1<- vcovHC(lm.f.cont.rank.exp1, type = "HC1")%>%diag()%>%sqrt()
+
+
 
 ## Create the models with iv
 lm.25 <-
@@ -201,6 +202,11 @@ merged.wins.close.rank.means.exp2=merged.wins.close.rank.exp2%>%group_by(annualw
 merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(annualwinspre>0))
 lm.f.bin.rank.exp2 <- lm(indWinsPre ~ (annualwinspre_closerank > 0)+idperiodpost, data = merged.wins)
 lm.f.cont.rank.exp2 <- lm(annualwinspre ~ (annualwinspre_closerank>0)+idperiodpost, data = merged.wins)
+
+robust.lm.f.bin.rank.exp2<- vcovHC(lm.f.bin.rank.exp2, type = "HC1")%>%diag()%>%sqrt()
+robust.lm.f.cont.rank.exp2<- vcovHC(lm.f.cont.rank.exp2, type = "HC1")%>%diag()%>%sqrt()
+
+coeftest(lm.f.cont.rank.exp2,vcov = vcovHC(lm.f.cont.rank.exp2, type = "HC1"))
 
 ## Create the models with iv
 lm.27 <-

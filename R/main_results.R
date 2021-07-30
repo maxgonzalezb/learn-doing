@@ -153,7 +153,10 @@ table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_cl
 ## Create the F-Statistics
 merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(winspre>0))
 lm.f.bin.price.exp1 <- lm(indWinsPre ~ (winspre_close > 0)+idperiodpost, data = merged.wins)
-lm.f.cont.price.exp1 <- lm(winspre ~ (winspre_close)+idperiodpost, data = merged.wins)
+lm.f.cont.price.exp1 <- lm(winspre ~ (winspre_close>0)+idperiodpost, data = merged.wins)
+
+robust.lm.f.bin.price.exp1<- vcovHC(lm.f.bin.price.exp1, type = "HC1")%>%diag()%>%sqrt()
+robust.lm.f.cont.price.exp1<- vcovHC(lm.f.cont.price.exp1, type = "HC1")%>%diag()%>%sqrt()
 
 ## Percentiles of weight
 quantile((df%>%group_by(Codigo)%>%slice_head(n=1))$percPrice,probs = c(0.75,0.8),na.rm=T)
@@ -344,7 +347,12 @@ colnames(slices.exp2)<-c('Slice','Period 1 dates','Period 2 dates','Observations
 ## Create the F-Statistics
 merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(annualwinspre>0))
 lm.f.bin.price.exp2 <- lm(indWinsPre ~ (annualwinspre_close > 0)+idperiodpost, data = merged.wins)
-lm.f.cont.price.exp2 <- lm(annualwinspre ~ (annualwinspre_close)+idperiodpost, data = merged.wins)
+lm.f.cont.price.exp2 <- lm(annualwinspre ~ (annualwinspre_close>0)+idperiodpost, data = merged.wins)
+
+robust.lm.f.bin.price.exp2<- vcovHC(lm.f.bin.price.exp2, type = "HC1")%>%diag()%>%sqrt()
+robust.lm.f.cont.price.exp2<- vcovHC(lm.f.cont.price.exp2, type = "HC1")%>%diag()%>%sqrt()
+
+
 
 ##16
 lm.16<-lm(probWinpost~(annualwinspre>0)+idperiodpost,data = merged.wins)

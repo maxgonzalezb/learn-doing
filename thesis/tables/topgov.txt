@@ -7,7 +7,7 @@
 \toprule
 Government Unit & Contracts Held & Bids & Firms Related\\
 \midrule
-Ministerio De Obras Publicas Direc Cion Gral De Oo Pp Dcyf & 2780 & 11850 & 706\\
+Ministerio De Obras Publicas Direccion Gral De OOPP & 2780 & 11850 & 706\\
 Junta Nacional De Jardines Infantiles & 1334 & 5953 & 1169\\
 Dirección De Obras Hidráulicas - Moptt & 510 & 1986 & 318\\
 I.municipalidad De Concepcion & 441 & 1604 & 344\\

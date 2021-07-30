@@ -53,7 +53,7 @@ df.bids.means=df.bids%>%dplyr::group_by(exp)%>%summarise(std=sd(MCA_MPO,na.rm = 
 #df.bids.means.close=df.bids%>%dplyr::group_by(exp_close)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
  #                                                        n=length(exp))%>%mutate(std.error=std/sqrt(n))
 
-df.bids.means.closeranks=df.bids%>%filter(exp==exp_closerank&offers=1)%>%dplyr::group_by(exp_closerank)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
+df.bids.means.closeranks=df.bids%>%filter(exp==exp_closerank&offers==1)%>%dplyr::group_by(exp_closerank)%>%summarise(std=sd(MCA_MPO,na.rm = T),MCA_MPO.mean=mean(MCA_MPO, na.rm=T),
                                                                      n=length(exp))%>%mutate(std.error=std/sqrt(n))%>%filter(n>=10)
 
 ##Summarised close wins
@@ -86,11 +86,15 @@ table_output = create_kable(comparison, caption = "Comparison between close and 
 table_output %>% cat(., file = "C:\\repos\\learn-doing\\thesis\\tables\\table_closewins_bids.txt")
 
 
-## Validity and rank
-lm(data=df.bids,(exp>0)~(exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
-lm(data=df.bids,exp~(exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
-lm(data=df.bids,exp>0~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
-lm(data=df.bids,exp~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
+## Rank
+lm.bids.f.bin.rank=lm(data=df.bids,(exp>0)~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)
+lm.bids.f.cont.rank=lm(data=df.bids,exp~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)
+robust.lm.bids.f.bin.rank<- vcovHC(lm.bids.f.bin.rank, type = "HC1")%>%diag()%>%sqrt()
+robust.lm.bids.f.cont.rank<- vcovHC(lm.bids.f.cont.rank, type = "HC1")%>%diag()%>%sqrt()
+
+
+#lm(data=df.bids,exp~(exp_close>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
+#lm(data=df.bids,exp>0~(exp_closerank>0)+as.factor(year)+RegionUnidad+indFirstYear)%>%summary()
 
 #Analysis
 lm.34=lm(MCA_MPO~(exp>0)+as.factor(year)+RegionUnidad+(indFirstYear), data=df.bids)
@@ -204,10 +208,18 @@ split1=2
 split2=2
 merged.wins=createMultiPeriodDataset(df,start = start, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005)
 #merged.wins=createAnnualizedWins(df,start = start, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005)%>%filter(!is.na(idperiodpre))
-
+merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(winspre>0))
 #quintile study
 merged.wins%>%group_by(q=ntile(probAc,5),indexp=(winspre>0))%>%summarise(n=length(winspre))%>%
   ungroup()%>%group_by(q)%>%mutate(perc=n/sum(n))%>%filter(indexp==TRUE)
+
+
+## Rank
+lm.quality.f.bin.price=lm(data=merged.wins,indWinsPre~(winspre_close>0)+idperiodpost)
+lm.quality.f.cont.price=lm(data=merged.wins,winspre~(winspre_close>0)+idperiodpost)
+robust.lm.quality.f.bin.price<- vcovHC(lm.quality.f.bin.price, type = "HC1")%>%diag()%>%sqrt()
+robust.lm.quality.f.cont.price<- vcovHC(lm.quality.f.cont.price, type = "HC1")%>%diag()%>%sqrt()
+
 
 print('Quality section - lm')
 sd(merged.wins$probAc)
@@ -246,6 +258,14 @@ split1=2
 split2=2
 
 merged.wins=createMultiPeriodDataset(df%>%filter(year>=2011),start = start, split1 =split1,split2=split2 ,filterReqExp = T,thresholdClose = 0.005, ranks=T)
+
+#first stage
+merged.wins=merged.wins%>%mutate(indWinsPre=as.numeric(winspre>0))
+lm.quality.f.bin.rank=lm(data=merged.wins,indWinsPre~(winspre_closerank>0)+idperiodpost)
+lm.quality.f.cont.rank=lm(data=merged.wins,winspre~(winspre_closerank>0)+idperiodpost)
+robust.lm.quality.f.bin.rank<- vcovHC(lm.quality.f.bin.rank, type = "HC1")%>%diag()%>%sqrt()
+robust.lm.quality.f.cont.rank<- vcovHC(lm.quality.f.cont.rank, type = "HC1")%>%diag()%>%sqrt()
+
 lm.62<-ivreg(probAc~(winspre>0)+idperiodpost|(winspre_closerank>0)+idperiodpost,data = merged.wins)
 robust.lm62<- vcovHC(lm.62, type = "HC1")%>%diag()%>%sqrt()
 summary(lm.62)

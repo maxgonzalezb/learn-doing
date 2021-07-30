@@ -33,8 +33,8 @@ top10.gov=df%>%group_by(NombreOrganismo)%>%summarise(
   Years= length(unique(year)),
   unique.firms = length(unique(RutProveedor)),
   .groups = 'drop' )%>%arrange(-N.contracts)%>%slice_head(n=10)%>%mutate(av.participants=1/N.contracts*N.bids)%>%
-  select(1,2,3,5)%>%mutate(across(where(is.numeric),function(x) signif(x,4)))%>%mutate(NombreOrganismo=simpleCap(NombreOrganismo))
-
+  select(1,2,3,5)%>%mutate(across(where(is.numeric),function(x) signif(x,4)))%>%mutate(NombreOrganismo=simpleCap(substr(NombreOrganismo,1,40)))
+top10.gov
 colnames(top10.gov)<-c('Government Unit','Contracts Held','Bids','Firms Related')
 
 top10.gov.output=kable(

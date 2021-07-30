@@ -1,3 +1,11 @@
+##
+mop=df%>%group_by(NombreOrganismo)%>%count()%>%ungroup()%>%arrange(-n)
+mop=df%>%filter(NombreOrganismo=='MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF')
+a%>%select(Nombre,NombreUnidad)
+mop=df%>%filter(NombreOrganismo=='MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF')%>%select(Nombre,NombreUnidad)
+sample(mop,5)
+table(mop$NombreUnidad)
+
 ## FRom mechanisms
 
 

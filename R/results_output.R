@@ -203,31 +203,74 @@ dev.off()
 #####################
 # F-Statistics
 #####################
+se.f.1=list(robust.lm.f.bin.price.exp1,robust.lm.f.bin.rank.exp1,robust.lm.f.cont.price.exp1,robust.lm.f.cont.rank.exp1)
+
 regression.F.main=capture.output({stargazer(lm.f.bin.price.exp1,lm.f.bin.rank.exp1,lm.f.cont.price.exp1,lm.f.cont.rank.exp1, type = "latex",label = 'tab:table_F_main_exp1', header = F,
                                               #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp1)),
-                                              se = starprep(lm.f.bin.price.exp1,lm.f.bin.rank.exp1,lm.f.cont.price.exp1,lm.f.cont.rank.exp1,se_type = "HC1"),
+                                            se=se.f.1,  
+                                            #se = starprep(lm.f.bin.price.exp1,lm.f.bin.rank.exp1,lm.f.cont.price.exp1,lm.f.cont.rank.exp1,se_type = "HC1"),
                                               omit='idperiodpost',omit.stat = c("adj.rsq","ser"),
-                                              title="Regressions for rank condition verification",
+                                              title="First stage regression, rolling experience",
                                               dep.var.labels=c("Rolling Experience > 0","Rolling Experience"),
                                             model.names=F,
-                                            column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
-                                              covariate.labels=c("Close Experience > 0 (Price)","Close Experience (Price)",'Close Experience > 0 (Rank)','Close Experience (Rank)'),
+                                            df = FALSE,
+                                              covariate.labels=c("Close Experience > 0 (Price)",'Close Experience > 0 (Rank)'),
                                               add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes')))})
 
 createStargazerTxt(regression.F.main,'table_F_main_exp1.txt')
 
+summary(lm.f.bin.price.exp1)
+summary(lm.f.bin.price.exp2)
+
+se.f.2=list(robust.lm.f.bin.price.exp2,robust.lm.f.bin.rank.exp2,robust.lm.f.cont.price.exp2,robust.lm.f.cont.rank.exp2)
 regression.F.main.2=capture.output({stargazer(lm.f.bin.price.exp2,lm.f.bin.rank.exp2,lm.f.cont.price.exp2,lm.f.cont.rank.exp2, type = "latex",label = 'tab:table_F_main_exp2', header = F,
                                             #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp2)),
-                                            se = starprep(lm.f.bin.price.exp2,lm.f.bin.rank.exp2,lm.f.cont.price.exp2,lm.f.cont.rank.exp2,se_type = "HC1"),
-                                            omit='idperiodpost',omit.stat = c("adj.rsq","ser"),
-                                            title="Regressions for rank condition verification",
+                                           # se = starprep(lm.f.bin.price.exp2,lm.f.bin.rank.exp2,lm.f.cont.price.exp2,lm.f.cont.rank.exp2,se_type = "HC1"),
+                                            se=se.f.2,
+                                           omit=c('idperiodpost'),omit.stat = c("adj.rsq","ser"),
+                                            title="First stage regression, annualized experience",
                                             model.names = F,
+                                            df = FALSE,
                                             dep.var.labels=c("Annualized Experience > 0","Annualized Experience"),
-                                            column.labels = c("OLS", "IV (Price)",'IV (Rank)',"OLS", "IV (Price)",'IV (Rank)'),
-                                            covariate.labels=c("Close Experience > 0 (Price)",'Close Experience > 0 (Rank)',"Close Experience (Price)",'Close Experience (Rank)'),
+                                            covariate.labels=c("Close Experience > 0 (Price)",'Close Experience > 0 (Rank)'),
                                             add.lines = list(c("Fixed effects By period", "Yes", "Yes",'Yes','Yes')))})
 
 createStargazerTxt(regression.F.main.2,'table_F_main_exp2.txt')
+
+## Quality
+se.f.quality=list(robust.lm.quality.f.bin.price,robust.lm.quality.f.bin.rank,robust.lm.quality.f.cont.price,robust.lm.quality.f.cont.rank)
+regression.F.quality.1=capture.output({stargazer(lm.quality.f.bin.price,lm.quality.f.bin.rank,lm.quality.f.cont.price,lm.quality.f.cont.rank, type = "latex",label = 'tab:table_F_quality.txt', header = F,
+                                              #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp2)),
+                                              se = se.f.quality,
+                                              omit=c('idperiodpost'),omit.stat = c("adj.rsq","ser"),
+                                              title="First stage regression, rolling  experience (quality section)",
+                                              model.names = F,
+                                              df = FALSE,
+                                              dep.var.labels=c("Rolling Experience > 0","Rolling Experience"),
+                                              covariate.labels=c('Close Experience > 0 (Price)','Close Experience > 0 (Rank)'),
+                                              add.lines = list(c("Fixed effects by period", "Yes", "Yes", "Yes", "Yes")))})
+
+createStargazerTxt(regression.F.quality.1,'table_F_quality.txt')
+summary(lm.quality.f.cont.rank)
+## Bids
+se.f.bids=list(robust.lm.bids.f.bin.rank,robust.lm.bids.f.cont.rank)
+regression.F.bids.1=capture.output({stargazer(lm.bids.f.bin.rank,lm.bids.f.cont.rank, type = "latex",label = 'tab:table_F_bids', header = F,
+                                              #se = list(c(robust.lm.f.bin.main.exp1,robust.lm.f.cont.main.exp2)),
+                                              se = se.f.bids,
+                                              omit=c('idperiodpost','year','RegionUnidad'),omit.stat = c("adj.rsq","ser"),
+                                              title="First stage regression, rolling  experience (bid section)",
+                                              model.names = F,
+                                              df = FALSE,
+                                              dep.var.labels=c("Rolling Experience > 0","Rolling Experience"),
+                                              covariate.labels=c('Close Experience > 0 (Rank)'),
+                                              add.lines = list(c("Fixed effects by Year and Region", "Yes", "Yes")))})
+
+createStargazerTxt(regression.F.bids.1,'table_F_bids.txt')
+
+
+
+
+
 
 #####################
 # ROBUSTNESS

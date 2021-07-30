@@ -3,9 +3,9 @@ df=readRDS(file = 'C:\\repos\\learn-doing\\data\\contractData_new.rds')
 df.ranked=df
 
 #Checked to run correctly
+source('C:\\repos\\learn-doing\\R\\main_results.R')
 source('C:\\repos\\learn-doing\\R\\Mechanisms.R')
 source('C:\\repos\\learn-doing\\R\\ranking.R')
-source('C:\\repos\\learn-doing\\R\\main_results.R')
 
 
 # Load robustness analysis

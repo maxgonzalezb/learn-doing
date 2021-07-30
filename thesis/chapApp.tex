@@ -1,10 +1,25 @@
 \chapter{Appendix}
-\section{Rank Regressions}
+
+\section{First Stage Regressions and Relevance condition}
 \label{section:appendix_rank}
-The following regressions have as dependent variable experience and as independent variable close experience, which is our instrument in the main results section. Table \ref{tab:table_F_main_exp2} shows the results for the first measure of experience (rolling), while Table \ref{tab:table_F_main_exp2} shows the results for the second measure of experience (annualized cumulative).
+This sections shows the details of the first stage for our IV strategies. The following regressions have as dependent variable experience and as independent variable a binary indicator of close experience, which is the instrument throughtout the paper. The following IV regressions have a first stage which is showed in the corresponding table. Note all F-statistics are significant at p<0.01.
+
+\begin{enumerate}
+  \item Main results section: Table \ref{tab:table_F_main_exp1} (rolling experience) and Table \ref{tab:table_F_main_exp2} (annualized cumulative).
+  \item Standarized bids section: Table \ref{tab:table_F_bids}.
+  \item Quality section: Table \ref{tab:table_F_quality}.
+\end{enumerate}
+
+
 \input{C:/repos/learn-doing/thesis/tables/table_F_main_exp1.txt}
 
 \input{C:/repos/learn-doing/thesis/tables/table_F_main_exp2.txt}
+
+\input{C:/repos/learn-doing/thesis/tables/table_F_bids.txt}
+
+\input{C:/repos/learn-doing/thesis/tables/table_F_quality.txt}
+
+
 \clearpage
 \section{Additional Sample Characterization}
 This section expands on the sample characterization of the Data chapter. Regional and market participants descriptions are included in the form of tables or graphs.
@@ -17,6 +32,8 @@ This section expands on the sample characterization of the Data chapter. Regiona
 \input{C:/repos/learn-doing/thesis/tables/topgov.txt}
 \small
 \input{C:/repos/learn-doing/thesis/tables/topfirms.txt}
+
+
 \clearpage
 
 
@@ -88,3 +105,52 @@ The progression of rankings over time is further illustrat ed with two firms whi
 \input{C:/repos/learn-doing/thesis/tables/rank_example_1.txt}
 
 \input{C:/repos/learn-doing/thesis/tables/rank_example_2.txt}
+\clearpage
+\section{Institutional framework of types of construction projects found in the dataset}
+\label{section:app_insti}
+Our sample is obtained by extracting observations which belong to the category of "construction projects" in a dataset that contains public purchases from a much wider array of categories of products. Since the classification is related to the type of product rather than the legal framework applicable, our dataset is heterogeneous in both the types of projects included and the institutional context relevant to each. We now get into more detail about the types of projects and the legal and institutional framework that applies to each one, focusing on the rules about the procurement process relevant to the current investigation.
+
+Since we do not have a single variable in the dataset that describes the framework applicable or the type of the project, the description is based on examination of the units and of the descriptions of the projects found most commonly in the dataset. Consequently, what follows may not constitute an exhaustive enumeration of the relevant regulation.
+
+\begin{enumerate}[wide, labelwidth=!,labelindent=0pt,label=\textbf{\arabic*}.]
+\item \textbf{Small maintenance and construction projects}:
+All government units require infrastructure to operate, in the form of offices or facilities. As such, they regularly need to procure small and medium contracts to improve or develop maintenance work on the buildings that they employ. In these cases, projects are usually directly procured by the unit interested in it under the legal framework of the Law of Public Purchases detailed before.
+
+We also consider under this category projects that improve or renovate facilities employed to deliver public services, like public schools, hospitals, communal health services, etc. If the project is relatively small and simple, so that it does not require specialized technical capabilities to evaluate proposals, it will fall under the same regulations stated above for purchases in general.
+
+\item \textbf{Urban works}: projects in this category are works destined to maintain, improve or build public spaces like parks, streets, etc. Both municipalities and SERVIUs (detailed below) can procure these types of projects.
+
+Municipalities can procure small construction works of communal development to attend to urban necessities, as specified in the law 18,695. These types of projects are usually low-to mid-size and subject to the procurement process specified in the Law of Public Purchases and the discretion of the Municipality. Examples of projects of this type found in the dataset are the construction and maintenance of parks, public graveyards, and communal meeting houses.
+
+Urban works can also be procured by a SERVIU as stated in the law. SERVIUs are the regional branches of the Ministry of Housing and Urbanism tasked with executing projects in the areas of urban improvement, housing and drainage. Compared to municipalities' urban projects, SERVIUs develops usually bigger and more complex ones. The procurement regulations of SERVIUS are contained in the decree N°236. It is stated that projects must be procured via an open call for proposals and that the awarding decision can be based on one or more criteria, giving emphasis to i) the quality of the project and ii) cost measures. The awarding process consists in two stages, where the first stage checks the inclusion of all required documents, and the second stage scores and ranks accepted proposals in the evaluation criteria of the project.
+
+To participate in any call for proposals, interested firms must first register in a special registry maintained by the Ministry of Housing, called RENAC. .
+
+\item \textbf{Urban Road Projects:} the dataset contains road projects executed within urban limits. These projects can be developed by Municipalities as stated in Law 18,695 or by SERVIUs. Many times, the projects are executed in a collaboration between the two government units.
+
+If the project is developed by the Municipality, it can employ its own set of directives following framework of the Public Purchases Law. If the project is developed by a SERVIU, it must abide by the same rules detailed before for SERVIUs.
+
+\item \textbf{Housing Projects:} SERVIUs execute housing projects to achieve the objectives defined by the social habitational policy of the Ministry of Housing and Urbanism. A key component of this policy is the Social Integration program, which since 2015 has executed more than 127,000 social houses in zones with good services and transport available. The rules for procurement are similar to other SERVIU projects.
+
+By virtue of law 18,138, Municipalities can also develop social housing projects, which must be targeted at unfavored sectors of their territory. The law mandates to employ an open call for proposals except in qualified cases like small sized projects and little time available, when the Municipality can employ direct award methods. Municipalities can also execute sewage projects to complement housing projects.
+
+\item \textbf{Water Drainage Projects:} law 19,525 assigns to SERVIUs the construction of part of the rainwater drainage network. The contracts of this type are subject to the same set of procurement regulations as other SERVIU contracts (i.e. registry, opening in two steps, and awarding decision).
+
+\item \textbf{Construction of Government Buildings:} we consider under this category the execution of complex buildings and facilities employed in the provision of public services, such as health, education, etc. It also includes the construction of facilities for the functioning of the different government units.
+
+Since most government units do not have the technical expertise to carry out a full procurement and delivery process for complex projects, they can mandate another government unit, with specialized construction knowledge, the execution of the procurement and delivery of the project. A common alternative is to delegate the project to the oversight of the Dirección de Arquitectura (\textit{Architecture Directorate}) of the Ministry of Public Works. The projects procured via the Architecture Directorate should be considerably less than the projects procured directly by the government units as the former is reserved for projects of increased complexity and size.  For example, in the case of hospitals, the Ministry of Health is in charge of defining the required hospital projects and the technical requirements. However, it signs agreements with the Ministry of Public Works delegating execution of the project to the Architecture Directorate.
+
+The contracts procured by the Architectural Directorate, and in general all contracts from the Ministry of Public Works, are regulated by the Decree N° 75. In its first article, it mandates that contracts will generally be procured employing an open call for proposals. Proposals are evaluated in two stages. The first stage is a technical evaluation which verifies the inclusion in the proposal of technical requisites specified in the project. Proposals that do not fulfill this requirement are rejected and discarded. The second stage is the economic evaluation. The economic evaluation considers only price as awarding criteria for some types of contracts, and in these projects the project is awarded to the most economic proposal. For other types of contracts, the project is awarded taking into consideration the project, the experience of the contractor, and the execution plan. The evaluation proceeds by making discounts to the final price offered by the contractor for the project based on positive evaluations of these items (article 14°, decree N° 109). Then, after discounts, the project is awarded to the most economic proposal.
+
+To participate in an auction from the Architecture Directorate, firms must be registered in the Contractor's Registry of the Ministry of Public Works, which imposes prerequisites on financial capacity, experience, and skills of the technical staff of the firm.
+
+\item \textbf{Projects from the Ministry of Public Works}: from 2017 onwards, our sample contains extensive auction data from the Ministry of Public Works. These contracts are mostly governed by the Decree N° 75, detailed in the previous item. Among the types of contracts developed by the Ministry of Public Works, we find:
+\begin{itemize}[itemsep=1pt]
+  \item Roads: the Roads Directorate develops inter-urban road projects or rural road construction and maintenance.
+  \item Hydraulic's works: irrigation projects, river management and water drainage projects.
+  \item Seaside Works: construction, improvement and maintenance of seaside borders, fishing facilities, etc.
+  \item Water monitoring works: the Water Directorate maintains a network of river monitoring stations that need periodic maintenace.
+\end{itemize}
+
+
+\end{enumerate}s

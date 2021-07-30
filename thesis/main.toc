@@ -1,47 +1,103 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {1}Experience and Outcomes }{4}{}%
+\contentsline {chapter}{\numberline {1}Introduction}{10}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.1}Data}{4}{}%
+\contentsline {chapter}{\numberline {2}Literature Review}{14}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.2}Empirical Strategy}{5}{}%
+\contentsline {chapter}{\numberline {3}Institutional context}{17}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.2.1}Endogeneity and Identification}{8}{}%
+\contentsline {section}{\numberline {3.1}Procurement and Public purchases in Chile}{17}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.2.2}Definition of a close win}{10}{}%
+\contentsline {subsection}{\numberline {3.1.1}Public purchases via open call for proposals}{17}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Close wins by price}{10}{}%
+\contentsline {subsection}{\numberline {3.1.2}Procurement And Information}{19}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Close wins by rank}{11}{}%
+\contentsline {section}{\numberline {3.2}Procurement of Construction Projects}{19}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.3}Main Results}{14}{}%
+\contentsline {chapter}{\numberline {4}Data sources and main features}{21}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.3.1}Comparing with contracts that do include experience in awarding score}{18}{}%
+\contentsline {section}{\numberline {4.1}Bidding Data}{21}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.4}Robustness checks}{19}{}%
+\contentsline {subsection}{\numberline {4.1.1}Source and cleaning steps}{21}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.1}Periods of outcomes}{19}{}%
+\contentsline {subsection}{\numberline {4.1.2}Description of Buyers, Sellers and Projects}{24}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.2}Definition of a close win - Price IVs}{20}{}%
+\contentsline {section}{\numberline {4.2}Awarding Criteria Data}{25}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {1.4.3}Definition of a close win - Rank IVs}{22}{}%
+\contentsline {chapter}{\numberline {5}Experience and Outcomes }{28}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {2}Operational Mechanisms of Experience Improvement}{25}{}%
+\contentsline {section}{\numberline {5.1}Empirical Strategy}{28}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.1}Bids and experience}{26}{}%
+\contentsline {subsection}{\numberline {5.1.1}Endogeneity and Identification}{29}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.1}Data}{26}{}%
+\contentsline {section}{\numberline {5.2}Data}{32}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.2}Empirical Strategy}{28}{}%
+\contentsline {subsection}{\numberline {5.2.1}Construction of the regression dataset}{32}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.3}Results}{29}{}%
+\contentsline {subsection}{\numberline {5.2.2}Definition of a close win}{34}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.2}Quality and Experience}{30}{}%
+\contentsline {subsubsection}{Close wins by price}{35}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2.1}Data}{32}{}%
+\contentsline {subsubsection}{Close wins by rank}{36}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2.2}Empirical Strategy}{33}{}%
+\contentsline {section}{\numberline {5.3}Main Results}{38}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2.3}Results}{34}{}%
+\contentsline {subsection}{\numberline {5.3.1}Comparing with contracts that do include experience in awarding score}{42}{}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {3}Appendix}{37}{}%
+\contentsline {section}{\numberline {5.4}Robustness checks}{43}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.4.1}Periods of outcomes}{43}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.4.2}Definition of a close win - Price IVs}{44}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.4.3}Definition of a close win - Rank IVs}{46}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {6}Operational Mechanisms of Experience Improvement}{48}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6.1}Bids and experience}{49}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.1.1}Data}{49}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.1.2}Empirical Strategy}{51}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.1.3}Results}{52}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6.2}Quality and Experience}{54}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2.1}Data}{55}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2.2}Empirical Strategy}{56}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2.3}Results}{56}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {7}Discussion}{59}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7.1}Experience and Outcomes}{59}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7.2}Operational Mechanisms of Experience}{61}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7.3}Implications for the market}{63}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {8}Conclusion}{65}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {A}Appendix}{67}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.1}First Stage Regressions and Relevance condition}{67}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.2}Additional Sample Characterization}{70}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.2.1}Regional Representation}{70}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.2.2}Top Market Participants}{71}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.3}Bids and Winning Probability}{72}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.4}ELO algorithm : theory and implementation}{74}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.4.1}Introduction}{74}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.4.2}Current Implementation}{75}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {A.4.3}Analysis of algorithm results}{76}{}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.5}Institutional framework of types of construction projects found in the dataset}{79}{}%
